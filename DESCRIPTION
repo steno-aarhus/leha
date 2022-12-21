@@ -12,5 +12,7 @@ Imports:
     ukbAid,
     usethis
 Encoding: UTF-8
-Remotes:  
+Remotes: 
     steno-aarhus/ukbAid
+URL: https://github.com/Fie-Langmann/leha
+BugReports: https://github.com/Fie-Langmann/leha/issues
