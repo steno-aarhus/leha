@@ -11,8 +11,10 @@ library(magrittr)
 # files into the history.
 
 # Uncomment if you messed up and need to start over.
-# ukbAid::project_variables %>%
-#     readr::write_csv(here::here("data-raw/project-variables.csv"))
+#project_variables_original <- ukbAid::project_variables %>%
+#     readr::write_csv(here::here("data-raw/project-variables_original.csv"))
+
+
 
 # Update if necessary.
 # ukbAid::rap_variables %>%
@@ -28,5 +30,5 @@ ukbAid::subset_rap_variables(instances = 0:9)
 # you need to re-create the dataset).
 
 # readr::read_csv(here::here("data-raw/rap-variables.csv")) %>%
-#     dplyr::pull(rap_variable_name) %>%
-#     ukbAid::create_csv_from_database()
+#     dplyr::pull(field_id) %>%
+#     ukbAid::create_csv_from_database(username="FieLangmann")
