@@ -6,17 +6,15 @@ author:
     affiliation: 1
   - name: Second Author
     affiliation : "1,2"
-
 affiliation:
   - id: 1
     institution: Steno Diabetes Center Aarhus, Denmark
   - id: 2
     institution: Aarhus University, Denmark
-
 date: "Last updated: `r Sys.Date()`"
 output: 
-    - ukbAid::protocol_document
     - prereg::prereg_pdf
+    - ukbAid::protocol_document
 # bibliography: "file/path"
 ---
 
