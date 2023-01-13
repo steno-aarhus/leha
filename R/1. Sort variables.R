@@ -34,7 +34,15 @@ data_kcal<-data %>%
     )
 
 
-#1.2. Covariables
+#1.2. outcomes
+nafld
+nash
+gallstone
+cholecystect
+cholecystitis
+end of follow-up
+
+#1.3. Covariables
 
 
 
