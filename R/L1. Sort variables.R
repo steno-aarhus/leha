@@ -37,12 +37,15 @@ data_kcal<-data %>%
 #1.2. outcomes
 nafld
 nash
-gallstone
-cholecystect
-cholecystitis
 end of follow-up
+death
+loss to follow-up
 
 #1.3. Covariables
+
+#For metabolic disease variable: hypertension, high cholesterol, diabetes
+p20002,"Non-cancer illness code, self-reported",387470,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=20002
+#p20002: hypertension, high cholesterol, type 2 diabetes
 
 
 

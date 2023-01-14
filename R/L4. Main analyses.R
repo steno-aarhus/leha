@@ -66,17 +66,16 @@ kable(table,"oprionshere")
 # g1+g2+g3
 
 #Set survival time
+#Set survival time
 data<-data %>%
-    mutate(startdate=date of first ICD reported,
-           enddate=date of first ICD reported OR date of death before end of follow-up OR lost to follow-up OR end-of-follow-up,
+    mutate(startdate=date of diagnosis,
+           enddate=date of diagnosis OR date of death before end of follow-up OR lost to follow-up OR end-of-follow-up if after start and before end of follow-up ,
            time=difftime(enddate, startdate)/365.25) #time in years
-#p131668,Date K75 first reported (other inflammatory liver diseases),3171,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=131668 (K75.8: NASH)
-#p131670,Date K76 first reported (other diseases of liver),14708,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=131670 (K76.0 NAFLD)
-# 1900-01-01 represents "Code has no event date"
-# 1901-01-01 represents "Code has event date before participant's date of birth"
-# 1902-02-02 represents "Code has event date matching participant's date of birth"
-# 1903-03-03 represents "Code has event date after participant's date of birth and falls in the same calendar year as date of birth"
-# 2037-07-07 represents "Code has event date in the future and is presumed to be a place-holder or other system default"
+# p41270,Diagnoses - ICD10,440017,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41270
+# p41280,Date of first in-patient diagnosis - ICD10,440014,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41280
+# #Fra web: The corresponding ICD-10 diagnosis codes can be found in data-field Field 41270 and the two fields can be linked using the array structure.
+        #Skal være diagnoserne K75.8 (NASH) og K76.0 (NAFLD)
+        #Hvordan fungerer koblingen mellem dato og diagnose?
 # p191,Date lost to follow-up,1298,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=191
 # p40000,Date of death,37897,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=40000
 

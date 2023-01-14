@@ -5,7 +5,7 @@
 #2.2. Cut-off for outcomes
 
 
-#2.3. stset ourcomes
+#2.3. stset outcomes
 Stset
 diagnosescode
 date of diagnosis
