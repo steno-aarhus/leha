@@ -1,8 +1,8 @@
-# TODO: Write your project abbreviated title and full title here.
+# LEHA: Legume consumption and hepatobiliary disease
 
 TODO: Give a brief description of what your project is about
 
-This project...
+This project investigates the association between substituting legumes for meats, fish, or poultry and the risk of developing NAFLD and gallbladder diseases. 
 
 # Installing and setting up the project 
 
