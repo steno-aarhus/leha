@@ -4,7 +4,7 @@
 #Grouping foods
 #by weight
 data_weight<-data %>%
-    mutate(Wlegumes=(beans+),
+    mutate(weight_legumes=(beans+),
            Wleg_pea= (Wlegumes + peas)
            Wmeats=(beef+lamb+...),
            Wpoultry=(),
