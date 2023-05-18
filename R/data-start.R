@@ -1,4 +1,3 @@
 
 here()
-data<-read.csv("/mnt/project/users/FieLangmann/data-leha.csv")
-
+data<-readr::read_csv(here::here("data/data.csv"))
