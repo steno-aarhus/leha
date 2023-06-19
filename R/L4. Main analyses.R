@@ -29,7 +29,7 @@ kable(table,"oprionshere")
 
 #Cox regression
 # Examples:
-# cox <- coxph(Surv(time,event= death) ~ cenc0,
+# cox <- coxph(Surv(time,event= death) ~ cenc0, <-- alle variable i modellen (kost, bælg, confoundere) kød/fisk/poultry er ikke med som variabel i analysen. Her skal man skalere sit indtag så det passer med modellen, fx pr 30g eller 30kcal
 #              data=azat,
 #              ties='breslow')
 # summary(cox) #gives estimate as log(HR)=coef, and HR=exp(coef)
@@ -84,7 +84,14 @@ coxnafld<-coxph(Surv(time, event=nafld)~exposure+covar1+covar2+covar3...,
                 data=dataname,
                 ties='breslow')
 #Hvordan laver man stset med mine data?
-#Hvad med eksponeringen, det er vel både fx. 30g legumes of 30g mindre kød? Hvordan gør man det? Er det noget ala legumes+30 og meats-30?
+#Hvad med eksponeringen, det er vel både fx. 30g legumes of 30g mindre kød? Hvordan gør man det? Er det noget ala legumes+30 og meats-30? Kan måske lade sig gøre.
+Fortolkning:
+    En måde: fjerner noget, men man kan ikke fjerne begge ting. Alt andet skal holdes lige, fx totalindtag eller totalenergi. Alt er inde i modellen, og så kan man trække kød og bælg fra hinanden og derved udtale sig om at spise mere af noget i stedet for det andet.
+
+Den anden måde: alle fødevarer er med, bortset fra den man gerne vil "spise" mindre af. I den model har man også totalenergi eller totalvægt, som er alt lagt sammen. Det kan tolkes som, at det samlede indtag af mad/kcal skal være det samme for de personer man sammenligner, men den ene har et højere indtag af
+Energiindtag skal være ens bortset fra indtaget af en fødevare, som ikke er med i modellen. Den ene fødevare bidrgaer stadig til totalindtag. Regressionskoef må komme fra den fødevare der ikke er inde i selve modellen, fordi det totale og alt andet, bortset fra den udtagne variabel, er med i modellen. Koefficienterne kan trækkes fra hinanden.
+
+
 legume - meats
         poultry
         fish

@@ -21,3 +21,4 @@ table<-data.frame(table)
 kable(table,"oprionshere")
 
 
+https://www.danieldsjoberg.com/gtsummary/ --> kan være et godt alternativ også.

@@ -1,6 +1,10 @@
 #1. Sort variables
 
+Long to wide to long data for at få gennemsnit af fødevareindtag
+
 # 1.1. Exposures
+#Data management
+Jeg har indtag i g af ærter+majs, og har antal portioner af ærter for hver deltager. 1 portion = 80 g, så jeg kan estimere deltagernes indtag af ærter og derefter trække det fra totalindtag af ærter+majs, så jeg har majs og ærter for sig.
 #Grouping foods
 #by weight
 data_weight<-data %>%
@@ -32,7 +36,7 @@ data_kcal<-data %>%
            Elegumes=(),
            Emeats=((beef*E)+(lamb*E)+...)*0.239kcal,
     )
-
+Kommer de variable som energibidrag?
 
 #1.2. outcomes
 nafld
@@ -46,6 +50,18 @@ loss to follow-up
 #For metabolic disease variable: hypertension, high cholesterol, diabetes
 p20002,"Non-cancer illness code, self-reported",387470,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=20002
 #p20002: hypertension, high cholesterol, type 2 diabetes
+    Egen sygdom – fra ID:
+    20002 (hypertension, diabetes)
+2443 (diabetes)
+120007 (diabetes)
+6177(medication for cholesterol, blood pressure, diabetes)
+41270 (ICD10 – før start på opfølgning)
+41271 (ICD9 –før start på opfølgning)
+
+Families sygdom - fra ID:
+20107
+20110
+20111
 
 
 
