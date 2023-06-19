@@ -8,7 +8,7 @@ Jeg har indtag i g af ærter+majs, og har antal portioner af ærter for hver del
 #Grouping foods
 #by weight
 data_weight<-data %>%
-    mutate(Wlegumes=(beans+),
+    mutate(weight_legumes=(beans+),
            Wleg_pea= (Wlegumes + peas)
            Wmeats=(beef+lamb+...),
            Wpoultry=(),
