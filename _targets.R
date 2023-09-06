@@ -2,13 +2,9 @@
 library(targets)
 # library(tarchetypes) # Load other packages as needed.
 
-# Tell targets your needed packages.
-package_deps <- desc::desc_get_deps()$package |>
-  stringr::str_subset("^R$", negate = TRUE)
-
 # Set target options:
 tar_option_set(
-  packages = package_deps,
+  packages = ukbAid::get_proj_dependencies(),
   format = "qs", # Optionally set the default storage format. qs is fast.
   #
   # This likely isn't necessary for most UK Biobank users at SDCA/AU.
