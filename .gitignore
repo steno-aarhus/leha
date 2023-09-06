@@ -3,3 +3,4 @@ data/data.csv
 .RData
 .DS_Store
 .Rproj.user
+data/data.parquet
