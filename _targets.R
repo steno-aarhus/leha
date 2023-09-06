@@ -24,10 +24,9 @@ tar_option_set(
 
 # Things to run in order to work.
 list(
-    # TODO: Uncomment this *after* finishing running `data-raw/create-data.R`
     tar_target(
         name = download_project_data,
-        command = ukbAid::download_project_data(username = "FieLangmann"),
+        command = ukbAid::download_data(username = "FieLangmann", file_ext = "parquet"),
         format = "file"
     )
 )
