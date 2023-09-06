@@ -1,4 +1,8 @@
+library(tidyverse)
+library(here)
 
-
-here()
-data<-readr::read_csv(here::here("data/data.csv"))
+# This is a "SQL" database object, but because dplyr connects to it, you don't
+# need to change your code. Keep using the tidyverse :D
+# If you ever want to convert the dataset into a "tibble"/"dataframe", use
+# `tibble::as_tibble()`.
+data <- ukbAid::read_parquet(here("data/data.parquet"))
