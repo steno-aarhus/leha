@@ -4,6 +4,8 @@ Version: 0.0.1
 URL: https://github.com/Fie-Langmann/leha
 BugReports: https://github.com/Fie-Langmann/leha/issues
 Imports:
+    arrow,
+    duckdb,
     gert,
     here,
     knitr,
