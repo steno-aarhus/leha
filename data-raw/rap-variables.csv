@@ -1,2 +1,626 @@
 field_id,rap_variable_name,id
 p31,Sex,p31
+p34,Year of birth,p34
+p52,Month of birth,p52
+p190,Reason lost to follow-up,p190
+p191,Date lost to follow-up,p191
+p738_i0,Average total household income before tax | Instance 0,p738
+p738_i1,Average total household income before tax | Instance 1,p738
+p738_i2,Average total household income before tax | Instance 2,p738
+p738_i3,Average total household income before tax | Instance 3,p738
+p1239_i0,Current tobacco smoking | Instance 0,p1239
+p1239_i1,Current tobacco smoking | Instance 1,p1239
+p1239_i2,Current tobacco smoking | Instance 2,p1239
+p1239_i3,Current tobacco smoking | Instance 3,p1239
+p1249_i0,Past tobacco smoking | Instance 0,p1249
+p1249_i1,Past tobacco smoking | Instance 1,p1249
+p1249_i2,Past tobacco smoking | Instance 2,p1249
+p1249_i3,Past tobacco smoking | Instance 3,p1249
+p1538_i0,Major dietary changes in the last 5 years | Instance 0,p1538
+p1538_i1,Major dietary changes in the last 5 years | Instance 1,p1538
+p1538_i2,Major dietary changes in the last 5 years | Instance 2,p1538
+p1538_i3,Major dietary changes in the last 5 years | Instance 3,p1538
+p1548_i0,Variation in diet | Instance 0,p1548
+p1548_i1,Variation in diet | Instance 1,p1548
+p1548_i2,Variation in diet | Instance 2,p1548
+p1548_i3,Variation in diet | Instance 3,p1548
+p2443_i0,Diabetes diagnosed by doctor | Instance 0,p2443
+p2443_i1,Diabetes diagnosed by doctor | Instance 1,p2443
+p2443_i2,Diabetes diagnosed by doctor | Instance 2,p2443
+p2443_i3,Diabetes diagnosed by doctor | Instance 3,p2443
+p2453_i0,Cancer diagnosed by doctor | Instance 0,p2453
+p2453_i1,Cancer diagnosed by doctor | Instance 1,p2453
+p2453_i2,Cancer diagnosed by doctor | Instance 2,p2453
+p2453_i3,Cancer diagnosed by doctor | Instance 3,p2453
+p2887_i0,Number of cigarettes previously smoked daily | Instance 0,p2887
+p2887_i1,Number of cigarettes previously smoked daily | Instance 1,p2887
+p2887_i2,Number of cigarettes previously smoked daily | Instance 2,p2887
+p2887_i3,Number of cigarettes previously smoked daily | Instance 3,p2887
+p3436_i0,Age started smoking in current smokers | Instance 0,p3436
+p3436_i1,Age started smoking in current smokers | Instance 1,p3436
+p3436_i2,Age started smoking in current smokers | Instance 2,p3436
+p3436_i3,Age started smoking in current smokers | Instance 3,p3436
+p3446_i0,Type of tobacco currently smoked | Instance 0,p3446
+p3446_i1,Type of tobacco currently smoked | Instance 1,p3446
+p3446_i2,Type of tobacco currently smoked | Instance 2,p3446
+p3446_i3,Type of tobacco currently smoked | Instance 3,p3446
+p3456_i0,Number of cigarettes currently smoked daily (current cigarette smokers) | Instance 0,p3456
+p3456_i1,Number of cigarettes currently smoked daily (current cigarette smokers) | Instance 1,p3456
+p3456_i2,Number of cigarettes currently smoked daily (current cigarette smokers) | Instance 2,p3456
+p3456_i3,Number of cigarettes currently smoked daily (current cigarette smokers) | Instance 3,p3456
+p6150_i0,Vascular/heart problems diagnosed by doctor | Instance 0,p6150
+p6150_i1,Vascular/heart problems diagnosed by doctor | Instance 1,p6150
+p6150_i2,Vascular/heart problems diagnosed by doctor | Instance 2,p6150
+p6152_i0,"Blood clot, DVT, bronchitis, emphysema, asthma, rhinitis, eczema, allergy diagnosed by doctor | Instance 0",p6152
+p6152_i1,"Blood clot, DVT, bronchitis, emphysema, asthma, rhinitis, eczema, allergy diagnosed by doctor | Instance 1",p6152
+p6152_i2,"Blood clot, DVT, bronchitis, emphysema, asthma, rhinitis, eczema, allergy diagnosed by doctor | Instance 2",p6152
+p6152_i3,"Blood clot, DVT, bronchitis, emphysema, asthma, rhinitis, eczema, allergy diagnosed by doctor | Instance 3",p6152
+p20002_i0,"Non-cancer illness code, self-reported | Instance 0",p20002
+p20002_i1,"Non-cancer illness code, self-reported | Instance 1",p20002
+p20002_i2,"Non-cancer illness code, self-reported | Instance 2",p20002
+p20002_i3,"Non-cancer illness code, self-reported | Instance 3",p20002
+p20077,Number of diet questionnaires completed,p20077
+p20107_i0,Illnesses of father | Instance 0,p20107
+p20107_i1,Illnesses of father | Instance 1,p20107
+p20107_i2,Illnesses of father | Instance 2,p20107
+p20107_i3,Illnesses of father | Instance 3,p20107
+p20110_i0,Illnesses of mother | Instance 0,p20110
+p20110_i1,Illnesses of mother | Instance 1,p20110
+p20110_i2,Illnesses of mother | Instance 2,p20110
+p20110_i3,Illnesses of mother | Instance 3,p20110
+p20111_i0,Illnesses of siblings | Instance 0,p20111
+p20111_i1,Illnesses of siblings | Instance 1,p20111
+p20111_i2,Illnesses of siblings | Instance 2,p20111
+p20111_i3,Illnesses of siblings | Instance 3,p20111
+p20116_i0,Smoking status | Instance 0,p20116
+p20116_i1,Smoking status | Instance 1,p20116
+p20116_i2,Smoking status | Instance 2,p20116
+p20116_i3,Smoking status | Instance 3,p20116
+p20117_i0,Alcohol drinker status | Instance 0,p20117
+p20117_i1,Alcohol drinker status | Instance 1,p20117
+p20117_i2,Alcohol drinker status | Instance 2,p20117
+p20117_i3,Alcohol drinker status | Instance 3,p20117
+p20160_i0,Ever smoked | Instance 0,p20160
+p20160_i1,Ever smoked | Instance 1,p20160
+p20160_i2,Ever smoked | Instance 2,p20160
+p20160_i3,Ever smoked | Instance 3,p20160
+p20161_i0,Pack years of smoking | Instance 0,p20161
+p20161_i1,Pack years of smoking | Instance 1,p20161
+p20161_i2,Pack years of smoking | Instance 2,p20161
+p20161_i3,Pack years of smoking | Instance 3,p20161
+p20162_i0,Pack years adult smoking as proportion of life span exposed to smoking | Instance 0,p20162
+p20162_i1,Pack years adult smoking as proportion of life span exposed to smoking | Instance 1,p20162
+p20162_i2,Pack years adult smoking as proportion of life span exposed to smoking | Instance 2,p20162
+p20162_i3,Pack years adult smoking as proportion of life span exposed to smoking | Instance 3,p20162
+p20403,Amount of alcohol drunk on a typical drinking day,p20403
+p21000_i0,Ethnic background | Instance 0,p21000
+p21000_i1,Ethnic background | Instance 1,p21000
+p21000_i2,Ethnic background | Instance 2,p21000
+p21000_i3,Ethnic background | Instance 3,p21000
+p21022,Age at recruitment,p21022
+p22040_i0,Summed MET minutes per week for all activity | Instance 0,p22040
+p22040_i1,Summed MET minutes per week for all activity | Instance 1,p22040
+p22040_i2,Summed MET minutes per week for all activity | Instance 2,p22040
+p22040_i3,Summed MET minutes per week for all activity | Instance 3,p22040
+p22200,Year of birth,p22200
+p22506,Tobacco smoking,p22506
+p22508,Amount of tobacco currently smoked,p22508
+p23104_i0,Body mass index (BMI) | Instance 0,p23104
+p23104_i1,Body mass index (BMI) | Instance 1,p23104
+p23104_i2,Body mass index (BMI) | Instance 2,p23104
+p23104_i3,Body mass index (BMI) | Instance 3,p23104
+p26000_i0,Total weight of all foods and beverages | Instance 0,p26000
+p26000_i1,Total weight of all foods and beverages | Instance 1,p26000
+p26000_i2,Total weight of all foods and beverages | Instance 2,p26000
+p26000_i3,Total weight of all foods and beverages | Instance 3,p26000
+p26000_i4,Total weight of all foods and beverages | Instance 4,p26000
+p26002_i0,Energy | Instance 0,p26002
+p26002_i1,Energy | Instance 1,p26002
+p26002_i2,Energy | Instance 2,p26002
+p26002_i3,Energy | Instance 3,p26002
+p26002_i4,Energy | Instance 4,p26002
+p26032_i0,Monounsaturated fatty acids | Instance 0,p26032
+p26032_i1,Monounsaturated fatty acids | Instance 1,p26032
+p26032_i2,Monounsaturated fatty acids | Instance 2,p26032
+p26032_i3,Monounsaturated fatty acids | Instance 3,p26032
+p26032_i4,Monounsaturated fatty acids | Instance 4,p26032
+p26062_i0,Animal fat spread lower fat | Instance 0,p26062
+p26062_i1,Animal fat spread lower fat | Instance 1,p26062
+p26062_i2,Animal fat spread lower fat | Instance 2,p26062
+p26062_i3,Animal fat spread lower fat | Instance 3,p26062
+p26062_i4,Animal fat spread lower fat | Instance 4,p26062
+p26063_i0,Animal fat spread normal | Instance 0,p26063
+p26063_i1,Animal fat spread normal | Instance 1,p26063
+p26063_i2,Animal fat spread normal | Instance 2,p26063
+p26063_i3,Animal fat spread normal | Instance 3,p26063
+p26063_i4,Animal fat spread normal | Instance 4,p26063
+p26064_i0,Added sugars and preserves | Instance 0,p26064
+p26064_i1,Added sugars and preserves | Instance 1,p26064
+p26064_i2,Added sugars and preserves | Instance 2,p26064
+p26064_i3,Added sugars and preserves | Instance 3,p26064
+p26064_i4,Added sugars and preserves | Instance 4,p26064
+p26065_i0,Allium vegetables | Instance 0,p26065
+p26065_i1,Allium vegetables | Instance 1,p26065
+p26065_i2,Allium vegetables | Instance 2,p26065
+p26065_i3,Allium vegetables | Instance 3,p26065
+p26065_i4,Allium vegetables | Instance 4,p26065
+p26066_i0,Beef | Instance 0,p26066
+p26066_i1,Beef | Instance 1,p26066
+p26066_i2,Beef | Instance 2,p26066
+p26066_i3,Beef | Instance 3,p26066
+p26066_i4,Beef | Instance 4,p26066
+p26067_i0,Beer and cider | Instance 0,p26067
+p26067_i1,Beer and cider | Instance 1,p26067
+p26067_i2,Beer and cider | Instance 2,p26067
+p26067_i3,Beer and cider | Instance 3,p26067
+p26067_i4,Beer and cider | Instance 4,p26067
+p26068_i0,Biscuits | Instance 0,p26068
+p26068_i1,Biscuits | Instance 1,p26068
+p26068_i2,Biscuits | Instance 2,p26068
+p26068_i3,Biscuits | Instance 3,p26068
+p26068_i4,Biscuits | Instance 4,p26068
+p26069_i0,Breaded/battered chicken | Instance 0,p26069
+p26069_i1,Breaded/battered chicken | Instance 1,p26069
+p26069_i2,Breaded/battered chicken | Instance 2,p26069
+p26069_i3,Breaded/battered chicken | Instance 3,p26069
+p26069_i4,Breaded/battered chicken | Instance 4,p26069
+p26070_i0,Breaded/battered fish | Instance 0,p26070
+p26070_i1,Breaded/battered fish | Instance 1,p26070
+p26070_i2,Breaded/battered fish | Instance 2,p26070
+p26070_i3,Breaded/battered fish | Instance 3,p26070
+p26070_i4,Breaded/battered fish | Instance 4,p26070
+p26071_i0,"Mixed bread (50/50), brown and seeded | Instance 0",p26071
+p26071_i1,"Mixed bread (50/50), brown and seeded | Instance 1",p26071
+p26071_i2,"Mixed bread (50/50), brown and seeded | Instance 2",p26071
+p26071_i3,"Mixed bread (50/50), brown and seeded | Instance 3",p26071
+p26071_i4,"Mixed bread (50/50), brown and seeded | Instance 4",p26071
+p26072_i0,Other bread | Instance 0,p26072
+p26072_i1,Other bread | Instance 1,p26072
+p26072_i2,Other bread | Instance 2,p26072
+p26072_i3,Other bread | Instance 3,p26072
+p26072_i4,Other bread | Instance 4,p26072
+p26073_i0,White bread | Instance 0,p26073
+p26073_i1,White bread | Instance 1,p26073
+p26073_i2,White bread | Instance 2,p26073
+p26073_i3,White bread | Instance 3,p26073
+p26073_i4,White bread | Instance 4,p26073
+p26074_i0,Wholemeal bread | Instance 0,p26074
+p26074_i1,Wholemeal bread | Instance 1,p26074
+p26074_i2,Wholemeal bread | Instance 2,p26074
+p26074_i3,Wholemeal bread | Instance 3,p26074
+p26074_i4,Wholemeal bread | Instance 4,p26074
+p26075_i0,Biscuit cereal | Instance 0,p26075
+p26075_i1,Biscuit cereal | Instance 1,p26075
+p26075_i2,Biscuit cereal | Instance 2,p26075
+p26075_i3,Biscuit cereal | Instance 3,p26075
+p26075_i4,Biscuit cereal | Instance 4,p26075
+p26076_i0,Bran cereal | Instance 0,p26076
+p26076_i1,Bran cereal | Instance 1,p26076
+p26076_i2,Bran cereal | Instance 2,p26076
+p26076_i3,Bran cereal | Instance 3,p26076
+p26076_i4,Bran cereal | Instance 4,p26076
+p26077_i0,Oat cereal (non sugar) | Instance 0,p26077
+p26077_i1,Oat cereal (non sugar) | Instance 1,p26077
+p26077_i2,Oat cereal (non sugar) | Instance 2,p26077
+p26077_i3,Oat cereal (non sugar) | Instance 3,p26077
+p26077_i4,Oat cereal (non sugar) | Instance 4,p26077
+p26078_i0,Oat cereal (sugar) | Instance 0,p26078
+p26078_i1,Oat cereal (sugar) | Instance 1,p26078
+p26078_i2,Oat cereal (sugar) | Instance 2,p26078
+p26078_i3,Oat cereal (sugar) | Instance 3,p26078
+p26078_i4,Oat cereal (sugar) | Instance 4,p26078
+p26079_i0,Other cereal (sugar) | Instance 0,p26079
+p26079_i1,Other cereal (sugar) | Instance 1,p26079
+p26079_i2,Other cereal (sugar) | Instance 2,p26079
+p26079_i3,Other cereal (sugar) | Instance 3,p26079
+p26079_i4,Other cereal (sugar) | Instance 4,p26079
+p26080_i0,Chocolate confectionery | Instance 0,p26080
+p26080_i1,Chocolate confectionery | Instance 1,p26080
+p26080_i2,Chocolate confectionery | Instance 2,p26080
+p26080_i3,Chocolate confectionery | Instance 3,p26080
+p26080_i4,Chocolate confectionery | Instance 4,p26080
+p26081_i0,"Coffee, caffeinated | Instance 0",p26081
+p26081_i1,"Coffee, caffeinated | Instance 1",p26081
+p26081_i2,"Coffee, caffeinated | Instance 2",p26081
+p26081_i3,"Coffee, caffeinated | Instance 3",p26081
+p26081_i4,"Coffee, caffeinated | Instance 4",p26081
+p26082_i0,"Coffee, decaffeinated | Instance 0",p26082
+p26082_i1,"Coffee, decaffeinated | Instance 1",p26082
+p26082_i2,"Coffee, decaffeinated | Instance 2",p26082
+p26082_i3,"Coffee, decaffeinated | Instance 3",p26082
+p26082_i4,"Coffee, decaffeinated | Instance 4",p26082
+p26083_i0,Savoury crackers | Instance 0,p26083
+p26083_i1,Savoury crackers | Instance 1,p26083
+p26083_i2,Savoury crackers | Instance 2,p26083
+p26083_i3,Savoury crackers | Instance 3,p26083
+p26083_i4,Savoury crackers | Instance 4,p26083
+p26084_i0,Milk-dairy desserts | Instance 0,p26084
+p26084_i1,Milk-dairy desserts | Instance 1,p26084
+p26084_i2,Milk-dairy desserts | Instance 2,p26084
+p26084_i3,Milk-dairy desserts | Instance 3,p26084
+p26084_i4,Milk-dairy desserts | Instance 4,p26084
+p26085_i0,Other desserts and cakes and pastries | Instance 0,p26085
+p26085_i1,Other desserts and cakes and pastries | Instance 1,p26085
+p26085_i2,Other desserts and cakes and pastries | Instance 2,p26085
+p26085_i3,Other desserts and cakes and pastries | Instance 3,p26085
+p26085_i4,Other desserts and cakes and pastries | Instance 4,p26085
+p26086_i0,Soy desserts and yogurt | Instance 0,p26086
+p26086_i1,Soy desserts and yogurt | Instance 1,p26086
+p26086_i2,Soy desserts and yogurt | Instance 2,p26086
+p26086_i3,Soy desserts and yogurt | Instance 3,p26086
+p26086_i4,Soy desserts and yogurt | Instance 4,p26086
+p26087_i0,Milk-based and powdered drinks | Instance 0,p26087
+p26087_i1,Milk-based and powdered drinks | Instance 1,p26087
+p26087_i2,Milk-based and powdered drinks | Instance 2,p26087
+p26087_i3,Milk-based and powdered drinks | Instance 3,p26087
+p26087_i4,Milk-based and powdered drinks | Instance 4,p26087
+p26088_i0,Egg and egg dishes | Instance 0,p26088
+p26088_i1,Egg and egg dishes | Instance 1,p26088
+p26088_i2,Egg and egg dishes | Instance 2,p26088
+p26088_i3,Egg and egg dishes | Instance 3,p26088
+p26088_i4,Egg and egg dishes | Instance 4,p26088
+p26089_i0,Apples and pears | Instance 0,p26089
+p26089_i1,Apples and pears | Instance 1,p26089
+p26089_i2,Apples and pears | Instance 2,p26089
+p26089_i3,Apples and pears | Instance 3,p26089
+p26089_i4,Apples and pears | Instance 4,p26089
+p26090_i0,Berries | Instance 0,p26090
+p26090_i1,Berries | Instance 1,p26090
+p26090_i2,Berries | Instance 2,p26090
+p26090_i3,Berries | Instance 3,p26090
+p26090_i4,Berries | Instance 4,p26090
+p26091_i0,Citrus | Instance 0,p26091
+p26091_i1,Citrus | Instance 1,p26091
+p26091_i2,Citrus | Instance 2,p26091
+p26091_i3,Citrus | Instance 3,p26091
+p26091_i4,Citrus | Instance 4,p26091
+p26092_i0,Dried fruit | Instance 0,p26092
+p26092_i1,Dried fruit | Instance 1,p26092
+p26092_i2,Dried fruit | Instance 2,p26092
+p26092_i3,Dried fruit | Instance 3,p26092
+p26092_i4,Dried fruit | Instance 4,p26092
+p26093_i0,Other fruit | Instance 0,p26093
+p26093_i1,Other fruit | Instance 1,p26093
+p26093_i2,Other fruit | Instance 2,p26093
+p26093_i3,Other fruit | Instance 3,p26093
+p26093_i4,Other fruit | Instance 4,p26093
+p26094_i0,Stewed fruit | Instance 0,p26094
+p26094_i1,Stewed fruit | Instance 1,p26094
+p26094_i2,Stewed fruit | Instance 2,p26094
+p26094_i3,Stewed fruit | Instance 3,p26094
+p26094_i4,Stewed fruit | Instance 4,p26094
+p26095_i0,Fruit juice | Instance 0,p26095
+p26095_i1,Fruit juice | Instance 1,p26095
+p26095_i2,Fruit juice | Instance 2,p26095
+p26095_i3,Fruit juice | Instance 3,p26095
+p26095_i4,Fruit juice | Instance 4,p26095
+p26096_i0,Full fat yogurt | Instance 0,p26096
+p26096_i1,Full fat yogurt | Instance 1,p26096
+p26096_i2,Full fat yogurt | Instance 2,p26096
+p26096_i3,Full fat yogurt | Instance 3,p26096
+p26096_i4,Full fat yogurt | Instance 4,p26096
+p26097_i0,Grain dishes - added fat | Instance 0,p26097
+p26097_i1,Grain dishes - added fat | Instance 1,p26097
+p26097_i2,Grain dishes - added fat | Instance 2,p26097
+p26097_i3,Grain dishes - added fat | Instance 3,p26097
+p26097_i4,Grain dishes - added fat | Instance 4,p26097
+p26098_i0,Green leafy/cabbages | Instance 0,p26098
+p26098_i1,Green leafy/cabbages | Instance 1,p26098
+p26098_i2,Green leafy/cabbages | Instance 2,p26098
+p26098_i3,Green leafy/cabbages | Instance 3,p26098
+p26098_i4,Green leafy/cabbages | Instance 4,p26098
+p26099_i0,High fat cheese | Instance 0,p26099
+p26099_i1,High fat cheese | Instance 1,p26099
+p26099_i2,High fat cheese | Instance 2,p26099
+p26099_i3,High fat cheese | Instance 3,p26099
+p26099_i4,High fat cheese | Instance 4,p26099
+p26100_i0,Lamb | Instance 0,p26100
+p26100_i1,Lamb | Instance 1,p26100
+p26100_i2,Lamb | Instance 2,p26100
+p26100_i3,Lamb | Instance 3,p26100
+p26100_i4,Lamb | Instance 4,p26100
+p26101_i0,Legumes and pulses | Instance 0,p26101
+p26101_i1,Legumes and pulses | Instance 1,p26101
+p26101_i2,Legumes and pulses | Instance 2,p26101
+p26101_i3,Legumes and pulses | Instance 3,p26101
+p26101_i4,Legumes and pulses | Instance 4,p26101
+p26102_i0,Low fat yogurt | Instance 0,p26102
+p26102_i1,Low fat yogurt | Instance 1,p26102
+p26102_i2,Low fat yogurt | Instance 2,p26102
+p26102_i3,Low fat yogurt | Instance 3,p26102
+p26102_i4,Low fat yogurt | Instance 4,p26102
+p26103_i0,Medium and low fat cheese | Instance 0,p26103
+p26103_i1,Medium and low fat cheese | Instance 1,p26103
+p26103_i2,Medium and low fat cheese | Instance 2,p26103
+p26103_i3,Medium and low fat cheese | Instance 3,p26103
+p26103_i4,Medium and low fat cheese | Instance 4,p26103
+p26104_i0,"Other meat, offal | Instance 0",p26104
+p26104_i1,"Other meat, offal | Instance 1",p26104
+p26104_i2,"Other meat, offal | Instance 2",p26104
+p26104_i3,"Other meat, offal | Instance 3",p26104
+p26104_i4,"Other meat, offal | Instance 4",p26104
+p26105_i0,Muesli | Instance 0,p26105
+p26105_i1,Muesli | Instance 1,p26105
+p26105_i2,Muesli | Instance 2,p26105
+p26105_i3,Muesli | Instance 3,p26105
+p26105_i4,Muesli | Instance 4,p26105
+p26106_i0,Nut-based spreads | Instance 0,p26106
+p26106_i1,Nut-based spreads | Instance 1,p26106
+p26106_i2,Nut-based spreads | Instance 2,p26106
+p26106_i3,Nut-based spreads | Instance 3,p26106
+p26106_i4,Nut-based spreads | Instance 4,p26106
+p26107_i0,Unsalted nuts and seeds | Instance 0,p26107
+p26107_i1,Unsalted nuts and seeds | Instance 1,p26107
+p26107_i2,Unsalted nuts and seeds | Instance 2,p26107
+p26107_i3,Unsalted nuts and seeds | Instance 3,p26107
+p26107_i4,Unsalted nuts and seeds | Instance 4,p26107
+p26108_i0,Salted nuts and seeds | Instance 0,p26108
+p26108_i1,Salted nuts and seeds | Instance 1,p26108
+p26108_i2,Salted nuts and seeds | Instance 2,p26108
+p26108_i3,Salted nuts and seeds | Instance 3,p26108
+p26108_i4,Salted nuts and seeds | Instance 4,p26108
+p26109_i0,Oily fish | Instance 0,p26109
+p26109_i1,Oily fish | Instance 1,p26109
+p26109_i2,Oily fish | Instance 2,p26109
+p26109_i3,Oily fish | Instance 3,p26109
+p26109_i4,Oily fish | Instance 4,p26109
+p26110_i0,Olive oil (drizzling/dunking) | Instance 0,p26110
+p26110_i1,Olive oil (drizzling/dunking) | Instance 1,p26110
+p26110_i2,Olive oil (drizzling/dunking) | Instance 2,p26110
+p26110_i3,Olive oil (drizzling/dunking) | Instance 3,p26110
+p26110_i4,Olive oil (drizzling/dunking) | Instance 4,p26110
+p26111_i0,Plant-based spread lower fat | Instance 0,p26111
+p26111_i1,Plant-based spread lower fat | Instance 1,p26111
+p26111_i2,Plant-based spread lower fat | Instance 2,p26111
+p26111_i3,Plant-based spread lower fat | Instance 3,p26111
+p26111_i4,Plant-based spread lower fat | Instance 4,p26111
+p26112_i0,Plant-based spread normal | Instance 0,p26112
+p26112_i1,Plant-based spread normal | Instance 1,p26112
+p26112_i2,Plant-based spread normal | Instance 2,p26112
+p26112_i3,Plant-based spread normal | Instance 3,p26112
+p26112_i4,Plant-based spread normal | Instance 4,p26112
+p26113_i0,White pasta and rice | Instance 0,p26113
+p26113_i1,White pasta and rice | Instance 1,p26113
+p26113_i2,White pasta and rice | Instance 2,p26113
+p26113_i3,White pasta and rice | Instance 3,p26113
+p26113_i4,White pasta and rice | Instance 4,p26113
+p26114_i0,"Wholemeal pasta, brown rice and other wholegrains | Instance 0",p26114
+p26114_i1,"Wholemeal pasta, brown rice and other wholegrains | Instance 1",p26114
+p26114_i2,"Wholemeal pasta, brown rice and other wholegrains | Instance 2",p26114
+p26114_i3,"Wholemeal pasta, brown rice and other wholegrains | Instance 3",p26114
+p26114_i4,"Wholemeal pasta, brown rice and other wholegrains | Instance 4",p26114
+p26115_i0,Peas and sweetcorn | Instance 0,p26115
+p26115_i1,Peas and sweetcorn | Instance 1,p26115
+p26115_i2,Peas and sweetcorn | Instance 2,p26115
+p26115_i3,Peas and sweetcorn | Instance 3,p26115
+p26115_i4,Peas and sweetcorn | Instance 4,p26115
+p26116_i0,Pizza | Instance 0,p26116
+p26116_i1,Pizza | Instance 1,p26116
+p26116_i2,Pizza | Instance 2,p26116
+p26116_i3,Pizza | Instance 3,p26116
+p26116_i4,Pizza | Instance 4,p26116
+p26117_i0,Pork | Instance 0,p26117
+p26117_i1,Pork | Instance 1,p26117
+p26117_i2,Pork | Instance 2,p26117
+p26117_i3,Pork | Instance 3,p26117
+p26117_i4,Pork | Instance 4,p26117
+p26118_i0,Potatoes and sweet potatoes (baked/boiled) | Instance 0,p26118
+p26118_i1,Potatoes and sweet potatoes (baked/boiled) | Instance 1,p26118
+p26118_i2,Potatoes and sweet potatoes (baked/boiled) | Instance 2,p26118
+p26118_i3,Potatoes and sweet potatoes (baked/boiled) | Instance 3,p26118
+p26118_i4,Potatoes and sweet potatoes (baked/boiled) | Instance 4,p26118
+p26119_i0,Fried/roast potatoes | Instance 0,p26119
+p26119_i1,Fried/roast potatoes | Instance 1,p26119
+p26119_i2,Fried/roast potatoes | Instance 2,p26119
+p26119_i3,Fried/roast potatoes | Instance 3,p26119
+p26119_i4,Fried/roast potatoes | Instance 4,p26119
+p26120_i0,Mashed potatoes | Instance 0,p26120
+p26120_i1,Mashed potatoes | Instance 1,p26120
+p26120_i2,Mashed potatoes | Instance 2,p26120
+p26120_i3,Mashed potatoes | Instance 3,p26120
+p26120_i4,Mashed potatoes | Instance 4,p26120
+p26121_i0,Poultry | Instance 0,p26121
+p26121_i1,Poultry | Instance 1,p26121
+p26121_i2,Poultry | Instance 2,p26121
+p26121_i3,Poultry | Instance 3,p26121
+p26121_i4,Poultry | Instance 4,p26121
+p26122_i0,Processed meat | Instance 0,p26122
+p26122_i1,Processed meat | Instance 1,p26122
+p26122_i2,Processed meat | Instance 2,p26122
+p26122_i3,Processed meat | Instance 3,p26122
+p26122_i4,Processed meat | Instance 4,p26122
+p26123_i0,Raw salad | Instance 0,p26123
+p26123_i1,Raw salad | Instance 1,p26123
+p26123_i2,Raw salad | Instance 2,p26123
+p26123_i3,Raw salad | Instance 3,p26123
+p26123_i4,Raw salad | Instance 4,p26123
+p26124_i0,Rice/oat milk | Instance 0,p26124
+p26124_i1,Rice/oat milk | Instance 1,p26124
+p26124_i2,Rice/oat milk | Instance 2,p26124
+p26124_i3,Rice/oat milk | Instance 3,p26124
+p26124_i4,Rice/oat milk | Instance 4,p26124
+p26125_i0,Root vegetables | Instance 0,p26125
+p26125_i1,Root vegetables | Instance 1,p26125
+p26125_i2,Root vegetables | Instance 2,p26125
+p26125_i3,Root vegetables | Instance 3,p26125
+p26125_i4,Root vegetables | Instance 4,p26125
+p26126_i0,Low/non sugar sugar-sweetened beverages | Instance 0,p26126
+p26126_i1,Low/non sugar sugar-sweetened beverages | Instance 1,p26126
+p26126_i2,Low/non sugar sugar-sweetened beverages | Instance 2,p26126
+p26126_i3,Low/non sugar sugar-sweetened beverages | Instance 3,p26126
+p26126_i4,Low/non sugar sugar-sweetened beverages | Instance 4,p26126
+p26127_i0,Sugar-sweetened beverages and other sugary drinks | Instance 0,p26127
+p26127_i1,Sugar-sweetened beverages and other sugary drinks | Instance 1,p26127
+p26127_i2,Sugar-sweetened beverages and other sugary drinks | Instance 2,p26127
+p26127_i3,Sugar-sweetened beverages and other sugary drinks | Instance 3,p26127
+p26127_i4,Sugar-sweetened beverages and other sugary drinks | Instance 4,p26127
+p26128_i0,"Samosa, pakora | Instance 0",p26128
+p26128_i1,"Samosa, pakora | Instance 1",p26128
+p26128_i2,"Samosa, pakora | Instance 2",p26128
+p26128_i3,"Samosa, pakora | Instance 3",p26128
+p26128_i4,"Samosa, pakora | Instance 4",p26128
+p26129_i0,Sauces and condiments (high fat) | Instance 0,p26129
+p26129_i1,Sauces and condiments (high fat) | Instance 1,p26129
+p26129_i2,Sauces and condiments (high fat) | Instance 2,p26129
+p26129_i3,Sauces and condiments (high fat) | Instance 3,p26129
+p26129_i4,Sauces and condiments (high fat) | Instance 4,p26129
+p26130_i0,Sauces and condiments (low fat) | Instance 0,p26130
+p26130_i1,Sauces and condiments (low fat) | Instance 1,p26130
+p26130_i2,Sauces and condiments (low fat) | Instance 2,p26130
+p26130_i3,Sauces and condiments (low fat) | Instance 3,p26130
+p26130_i4,Sauces and condiments (low fat) | Instance 4,p26130
+p26131_i0,Semi skimmed milk | Instance 0,p26131
+p26131_i1,Semi skimmed milk | Instance 1,p26131
+p26131_i2,Semi skimmed milk | Instance 2,p26131
+p26131_i3,Semi skimmed milk | Instance 3,p26131
+p26131_i4,Semi skimmed milk | Instance 4,p26131
+p26132_i0,Shellfish | Instance 0,p26132
+p26132_i1,Shellfish | Instance 1,p26132
+p26132_i2,Shellfish | Instance 2,p26132
+p26132_i3,Shellfish | Instance 3,p26132
+p26132_i4,Shellfish | Instance 4,p26132
+p26133_i0,Skimmed milk and cholesterol-lowering milk | Instance 0,p26133
+p26133_i1,Skimmed milk and cholesterol-lowering milk | Instance 1,p26133
+p26133_i2,Skimmed milk and cholesterol-lowering milk | Instance 2,p26133
+p26133_i3,Skimmed milk and cholesterol-lowering milk | Instance 3,p26133
+p26133_i4,Skimmed milk and cholesterol-lowering milk | Instance 4,p26133
+p26134_i0,Savoury snacks | Instance 0,p26134
+p26134_i1,Savoury snacks | Instance 1,p26134
+p26134_i2,Savoury snacks | Instance 2,p26134
+p26134_i3,Savoury snacks | Instance 3,p26134
+p26134_i4,Savoury snacks | Instance 4,p26134
+p26135_i0,Soups | Instance 0,p26135
+p26135_i1,Soups | Instance 1,p26135
+p26135_i2,Soups | Instance 2,p26135
+p26135_i3,Soups | Instance 3,p26135
+p26135_i4,Soups | Instance 4,p26135
+p26136_i0,Soy milk | Instance 0,p26136
+p26136_i1,Soy milk | Instance 1,p26136
+p26136_i2,Soy milk | Instance 2,p26136
+p26136_i3,Soy milk | Instance 3,p26136
+p26136_i4,Soy milk | Instance 4,p26136
+p26137_i0,Meat substitutes - soy | Instance 0,p26137
+p26137_i1,Meat substitutes - soy | Instance 1,p26137
+p26137_i2,Meat substitutes - soy | Instance 2,p26137
+p26137_i3,Meat substitutes - soy | Instance 3,p26137
+p26137_i4,Meat substitutes - soy | Instance 4,p26137
+p26138_i0,Spirits | Instance 0,p26138
+p26138_i1,Spirits | Instance 1,p26138
+p26138_i2,Spirits | Instance 2,p26138
+p26138_i3,Spirits | Instance 3,p26138
+p26138_i4,Spirits | Instance 4,p26138
+p26139_i0,Sushi | Instance 0,p26139
+p26139_i1,Sushi | Instance 1,p26139
+p26139_i2,Sushi | Instance 2,p26139
+p26139_i3,Sushi | Instance 3,p26139
+p26139_i4,Sushi | Instance 4,p26139
+p26140_i0,Other sweets | Instance 0,p26140
+p26140_i1,Other sweets | Instance 1,p26140
+p26140_i2,Other sweets | Instance 2,p26140
+p26140_i3,Other sweets | Instance 3,p26140
+p26140_i4,Other sweets | Instance 4,p26140
+p26141_i0,Tea | Instance 0,p26141
+p26141_i1,Tea | Instance 1,p26141
+p26141_i2,Tea | Instance 2,p26141
+p26141_i3,Tea | Instance 3,p26141
+p26141_i4,Tea | Instance 4,p26141
+p26142_i0,"Tea, decaffeinated | Instance 0",p26142
+p26142_i1,"Tea, decaffeinated | Instance 1",p26142
+p26142_i2,"Tea, decaffeinated | Instance 2",p26142
+p26142_i3,"Tea, decaffeinated | Instance 3",p26142
+p26142_i4,"Tea, decaffeinated | Instance 4",p26142
+p26143_i0,Tomatoes | Instance 0,p26143
+p26143_i1,Tomatoes | Instance 1,p26143
+p26143_i2,Tomatoes | Instance 2,p26143
+p26143_i3,Tomatoes | Instance 3,p26143
+p26143_i4,Tomatoes | Instance 4,p26143
+p26144_i0,Vegetable dips | Instance 0,p26144
+p26144_i1,Vegetable dips | Instance 1,p26144
+p26144_i2,Vegetable dips | Instance 2,p26144
+p26144_i3,Vegetable dips | Instance 3,p26144
+p26144_i4,Vegetable dips | Instance 4,p26144
+p26145_i0,Meat substitutes - vegetarian | Instance 0,p26145
+p26145_i1,Meat substitutes - vegetarian | Instance 1,p26145
+p26145_i2,Meat substitutes - vegetarian | Instance 2,p26145
+p26145_i3,Meat substitutes - vegetarian | Instance 3,p26145
+p26145_i4,Meat substitutes - vegetarian | Instance 4,p26145
+p26146_i0,"Other vegetables, including mushrooms, fruiting and mixed vegetables | Instance 0",p26146
+p26146_i1,"Other vegetables, including mushrooms, fruiting and mixed vegetables | Instance 1",p26146
+p26146_i2,"Other vegetables, including mushrooms, fruiting and mixed vegetables | Instance 2",p26146
+p26146_i3,"Other vegetables, including mushrooms, fruiting and mixed vegetables | Instance 3",p26146
+p26146_i4,"Other vegetables, including mushrooms, fruiting and mixed vegetables | Instance 4",p26146
+p26147_i0,Vegetable side dishes | Instance 0,p26147
+p26147_i1,Vegetable side dishes | Instance 1,p26147
+p26147_i2,Vegetable side dishes | Instance 2,p26147
+p26147_i3,Vegetable side dishes | Instance 3,p26147
+p26147_i4,Vegetable side dishes | Instance 4,p26147
+p26148_i0,Water (still and sparkling) | Instance 0,p26148
+p26148_i1,Water (still and sparkling) | Instance 1,p26148
+p26148_i2,Water (still and sparkling) | Instance 2,p26148
+p26148_i3,Water (still and sparkling) | Instance 3,p26148
+p26148_i4,Water (still and sparkling) | Instance 4,p26148
+p26149_i0,White fish and tinned tuna | Instance 0,p26149
+p26149_i1,White fish and tinned tuna | Instance 1,p26149
+p26149_i2,White fish and tinned tuna | Instance 2,p26149
+p26149_i3,White fish and tinned tuna | Instance 3,p26149
+p26149_i4,White fish and tinned tuna | Instance 4,p26149
+p26150_i0,Whole milk | Instance 0,p26150
+p26150_i1,Whole milk | Instance 1,p26150
+p26150_i2,Whole milk | Instance 2,p26150
+p26150_i3,Whole milk | Instance 3,p26150
+p26150_i4,Whole milk | Instance 4,p26150
+p26151_i0,Fortified wine | Instance 0,p26151
+p26151_i1,Fortified wine | Instance 1,p26151
+p26151_i2,Fortified wine | Instance 2,p26151
+p26151_i3,Fortified wine | Instance 3,p26151
+p26151_i4,Fortified wine | Instance 4,p26151
+p26152_i0,Red wine | Instance 0,p26152
+p26152_i1,Red wine | Instance 1,p26152
+p26152_i2,Red wine | Instance 2,p26152
+p26152_i3,Red wine | Instance 3,p26152
+p26152_i4,Red wine | Instance 4,p26152
+p26153_i0,White wine | Instance 0,p26153
+p26153_i1,White wine | Instance 1,p26153
+p26153_i2,White wine | Instance 2,p26153
+p26153_i3,White wine | Instance 3,p26153
+p26153_i4,White wine | Instance 4,p26153
+p26154_i0,Cream | Instance 0,p26154
+p26154_i1,Cream | Instance 1,p26154
+p26154_i2,Cream | Instance 2,p26154
+p26154_i3,Cream | Instance 3,p26154
+p26154_i4,Cream | Instance 4,p26154
+p26155_i0,Trans fatty acids | Instance 0,p26155
+p26155_i1,Trans fatty acids | Instance 1,p26155
+p26155_i2,Trans fatty acids | Instance 2,p26155
+p26155_i3,Trans fatty acids | Instance 3,p26155
+p26155_i4,Trans fatty acids | Instance 4,p26155
+p26410,Index of Multiple Deprivation (England),p26410
+p26426,Index of Multiple Deprivation (Wales),p26426
+p26427,Index of Multiple Deprivation (Scotland),p26427
+p40000_i0,Date of death | Instance 0,p40000
+p40000_i1,Date of death | Instance 1,p40000
+p41270,Diagnoses - ICD10,p41270
+p41271,Diagnoses - ICD9,p41271
+p41272,Operative procedures - OPCS4,p41272
+p41280,Date of first in-patient diagnosis - ICD10,p41280
+p41281,Date of first in-patient diagnosis - ICD9,p41281
+p41282,Date of first operative procedure - OPCS4,p41282
+p100001_i0,Food weight | Instance 0,p100001
+p100001_i1,Food weight | Instance 1,p100001
+p100001_i2,Food weight | Instance 2,p100001
+p100001_i3,Food weight | Instance 3,p100001
+p100001_i4,Food weight | Instance 4,p100001
+p100002_i0,Energy | Instance 0,p100002
+p100002_i1,Energy | Instance 1,p100002
+p100002_i2,Energy | Instance 2,p100002
+p100002_i3,Energy | Instance 3,p100002
+p100002_i4,Energy | Instance 4,p100002
+p104280_i0,Pea intake | Instance 0,p104280
+p104280_i1,Pea intake | Instance 1,p104280
+p104280_i2,Pea intake | Instance 2,p104280
+p104280_i3,Pea intake | Instance 3,p104280
+p104280_i4,Pea intake | Instance 4,p104280
+p131668,Date K75 first reported (other inflammatory liver diseases),p131668
+p131670,Date K76 first reported (other diseases of liver),p131670
+p131674,Date K80 first reported (cholelithiasis),p131674
+p131676,Date K81 first reported (cholecystitis),p131676
