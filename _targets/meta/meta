@@ -1,0 +1,3 @@
+name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
+download_project_data|stem|a583155f17bb85ea|929196b9df032aed|c3b5fc02cdc369c1|150584681|/home/rstudio-server/leha/data/data.csv|t19606.6218213162s|cf7cdf317d2a26a2|1544867151|file|local|vector|||8.478||
+package_deps|object|fac4c6e35c5bc815|||||||||||||||
