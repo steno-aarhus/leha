@@ -1,6 +1,8 @@
-Package: leha
 Type: Project
+Package: leha
 Version: 0.0.1
+URL: https://github.com/Fie-Langmann/leha
+BugReports: https://github.com/Fie-Langmann/leha/issues
 Imports:
     gert,
     here,
@@ -11,8 +13,6 @@ Imports:
     tidyverse,
     ukbAid,
     usethis
-Encoding: UTF-8
 Remotes: 
     steno-aarhus/ukbAid
-URL: https://github.com/Fie-Langmann/leha
-BugReports: https://github.com/Fie-Langmann/leha/issues
+Encoding: UTF-8
