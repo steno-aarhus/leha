@@ -1,3 +1,3 @@
 name|type|data|command|depend|seed|path|time|size|bytes|format|repository|iteration|parent|children|seconds|warnings|error
-download_project_data|stem|5377b4a30a641db1|924bdd870b7cfd71|c3b5fc02cdc369c1|150584681|/home/rstudio-server/leha/data/data.parquet|t19606.6819011627s|ce894faf865c8293|292732790|file|local|vector|||5.882||
+download_project_data|stem|5377b4a30a641db1|924bdd870b7cfd71|ef46db3751d8e999|150584681|/home/rstudio-server/leha/data/data.parquet|t19618.485474594s|ce894faf865c8293|292732790|file|local|vector|||6.593||
 package_deps|object|fac4c6e35c5bc815|||||||||||||||
