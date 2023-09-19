@@ -17,3 +17,13 @@ data <- data %>%
 
 
 # Long to wide to long data for at få gennemsnit af fødevareindtag
+# Using pivot_longer() from tidyr (Recommended for modern R workflows)
+install.packages("tidyr")
+library(tidyr)
+long_data <- wide_data %>%
+  pivot_longer(cols = -ID, names_to = "Variable", values_to = "Value")
+
+# Using melt() from reshape2
+install.packages("reshape2")
+library(reshape2)
+long_data <- melt(wide_data, id.vars = "ID")
