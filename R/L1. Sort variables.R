@@ -1,6 +1,6 @@
 #1. Sort variables
 
-Long to wide to long data for at få gennemsnit af fødevareindtag
+
 
 # 1.1. Exposures
 #Data management
