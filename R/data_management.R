@@ -6,14 +6,12 @@ library(dplyr)
 data <- data %>%
   dplyr::rename(sex = p31,
          birth_year = p34,
-         birth_month = p52)
+         birth_month = p52,
+         number_recall = p20077)
 
-# Create variable counting number of 24h recalls
-data <- data %>%
-  mutate(no_recalls = i0 + i1 + i2 + i3 + i4)
 
 # Remove participants with less than 2 24h recalls
-
+number_recalls >= 2
 
 
 # Long to wide to long data for at få gennemsnit af fødevareindtag
@@ -27,3 +25,4 @@ long_data <- wide_data %>%
 install.packages("reshape2")
 library(reshape2)
 long_data <- melt(wide_data, id.vars = "ID")
+across_all(^"_i")
