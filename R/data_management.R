@@ -162,6 +162,13 @@ p41272,Operative procedures - OPCS4,440159,https://biobank.ndph.ox.ac.uk/ukb/fie
 p41280,Date of first in-patient diagnosis - ICD10,440014,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41280
 p41281,Date of first in-patient diagnosis - ICD9,20299,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41281
 p41282,Date of first operative procedure - OPCS4,440153,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41282
+# Or should I just keep these:
+p131668,Date K75 first reported (other inflammatory liver diseases),3171,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=131668
+p131670,Date K76 first reported (other diseases of liver),14708,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=131670
+p131674,Date K80 first reported (cholelithiasis),33836,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=131674
+p131676,Date K81 first reported (cholecystitis),6509,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=131676
+# or should I make a combination of p42180 and p131668 etc to create a date of diagnosis?
+
 
 # Convert data to numerics
 # TO check if a variable is character, run this code
