@@ -1,40 +1,30 @@
 # Data management
+install.packages("dplyr")
+library(dplyr)
+
 # Summary overview of data
 str(data)
 
 # Delete variables that were not needed after all
-p20160 (have you ever smoked)
-p22506 (Do you smoke tobacco now?)
-p2887 (number of cigarettes previously smoked)
-p3436 (age started smoking for current smokers)
-p6152 (Blood clot, DVT, bronchitis, emphysema, asthma, rhinitis, eczema, allergy diagnosed by doctor)
-p20116 (smoking status)
-p20117 (alcohol drinker status)
-p20161 (pack years of smoking)
+variables_to_remove <- c("p20160", "p22506", "p2887", "p3436", "p6152", "p20116", "p20117")
 
+data1 <- data %>%
+  dplyr::select(-(starts_with(variables_to_remove)| ends_with("_i[1-4]")))
+
+
+
+p20161 (pack years of smoking) # is this relevant?
 p41270 # does not contain date of diagnoses, maybe not relevant?
 p41271 # does not contain date of diagnoses, maybe not relevant?
 p41272 # does not contain date of diagnoses, maybe not relevant?
 
 # Delete follow-up instances for confounder variables
-p738
-p1239
-p1249
-p1538
-p1548
-p3456
-p20107
-p20110
-p20111
-p20116
-p20162
-p21000
-p22040
-p22506
-p22508
-p23104
+variables_to_edit <- c("p738", "p1239", "p1249", "p1538", "p1548", "p3456",
+                       "p20107", "p20110", "p20111", "p20116", "p20162",
+                       "p21000", "p22040", "p22506", "p22508", "p23104")
 
-
+data1 <- data %>%
+  select(-matches(paste0(variables_to_edit, "_i[1-4]")))
 
 # Recode of variables across instances
 # If any instance of the following variables is "yes", they should be recoded as 1, otherwise as 0
