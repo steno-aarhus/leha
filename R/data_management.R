@@ -12,7 +12,9 @@ p20116 (smoking status)
 p20117 (alcohol drinker status)
 p20161 (pack years of smoking)
 
-
+p41270 # does not contain date of diagnoses, maybe not relevant?
+p41271 # does not contain date of diagnoses, maybe not relevant?
+p41272 # does not contain date of diagnoses, maybe not relevant?
 
 # Delete follow-up instances for confounder variables
 p738
@@ -33,6 +35,7 @@ p22508
 p23104
 
 
+
 # Recode of variables across instances
 # If any instance of the following variables is "yes", they should be recoded as 1, otherwise as 0
 p2443 (diabetes)
@@ -49,7 +52,7 @@ Combination of p1239 (smoking status) and p3456 (number of cigarettes currently 
 
 
 
-  # Diet data
+  # Diet data - all instances included; should be converted from wide to long? Or maybe just an average across columns?
   p26000,Total weight of all foods and beverages,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26000
 p26002,Energy,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26002
 p26032,Monounsaturated fatty acids,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26032
