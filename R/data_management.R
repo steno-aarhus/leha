@@ -2,12 +2,15 @@
 install.packages("dplyr")
 library(dplyr)
 
-# Summary overview of data
+
+# Summary overview --------------------------------------------------------
 str(data)
 
+
+
+# Remove variables and columns --------------------------------------------
 # Delete variables that were not needed after all
 variables_to_remove <- c("p20160", "p22506", "p2887", "p3436", "p3446", "p6152", "p20116", "p20117", "p20162", "p22200")
-
 data1 <- data %>%
   dplyr::select(-(starts_with(variables_to_remove)| ends_with("_i[1-4]")))
 
@@ -21,17 +24,29 @@ p41272 # does not contain date of diagnoses, maybe not relevant?
 variables_to_edit <- c("p738", "p1239", "p1249", "p1538", "p1548", "p3456",
                        "p20107", "p20110", "p20111", "p20116", "p20162",
                        "p21000", "p22040", "p22506", "p22508", "p23104")
-
 data1 <- data %>%
   select(-matches(paste0(variables_to_edit, "_i[1-4]")))
 
+
+
+# Recoding variables ------------------------------------------------------
 # Recode of variables across instances
 # If any instance of the following variables is "yes", they should be recoded as 1, otherwise as 0
+data1$diabetes_diagnosed_by_doctor <- ifelse(rowSums(df == "yes") > 0, 1, 0)
+data1 <- data1 %>%
+  mutate(diabetes_diagnosed_by_doctor = as.numeric(substring(starts_with("p2443"), 1, 3)== "yes"),
+         cancer_diagnosed_by_doctor = ifelse(rowSums(data1$p2443 == "yes") > 0, 1, 0))
+
+data1 <- data1 %>%
+  mutate(diabetes_diagnosed_by_doctor = if_any(starts_with("p2443"), ~grepl("yes", x = .x)))
+
+
 p2443 (diabetes)
 p2453 (cancer)
 
 
 # Other recoding
+
 p20002 (non-cancer illness code, self-reported) -> across any instance, CVD should be coded as 1, liver disease as 2, the rest as 0
 Combination of p1239 (smoking status) and p3456 (number of cigarettes currently smoked) to make categories: never smoker; previous smoker; current 1-15; current 15-25; current 25+
   Maybe p22506 (tobacco smoking) + p22508 (amount of tobacco) instead of cigarettes?
