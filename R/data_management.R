@@ -10,15 +10,15 @@ str(data)
 
 # Remove variables and columns --------------------------------------------
 # Delete variables that were not needed after all -> go to project-
-variables_to_remove <- c("p20160", "p22506", "p2887", "p3436", "p3446", "p6152", "p20116", "p20117", "p20162", "p22200")
+variables_to_remove <- c("p20160", "p22506", "p2887", "p3436", "p3446", "p6152",
+                         "p20116", "p20117", "p20162", "p22200", "p131668", "p131670",
+                         "p131674", "p131676")
 data1 <- data %>%
   dplyr::select(-(starts_with(variables_to_remove)| ends_with("_i[0-4]")))
 
 
 p20161 (pack years of smoking) # is this relevant?
-p41270 # does not contain date of diagnoses, maybe not relevant?
-p41271 # does not contain date of diagnoses, maybe not relevant?
-p41272 # does not contain date of diagnoses, maybe not relevant?
+
 
 # Delete follow-up instances for confounder variables
 variables_to_edit <- c("p738", "p1239", "p1249", "p1538", "p1548", "p3456", "p6150",
