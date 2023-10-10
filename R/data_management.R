@@ -7,7 +7,6 @@ library(tidyr)
 # Summary overview --------------------------------------------------------
 str(data)
 
-
 # Remove variables and columns --------------------------------------------
 # Delete variables that were not needed after all -> go to project-
 variables_to_remove <- c("p20160", "p22506", "p2887", "p3436", "p3446", "p6152",
@@ -16,9 +15,7 @@ variables_to_remove <- c("p20160", "p22506", "p2887", "p3436", "p3446", "p6152",
 data1 <- data %>%
   dplyr::select(-(starts_with(variables_to_remove)| ends_with("_i[0-4]")))
 
-
 p20161 (pack years of smoking) # is this relevant?
-
 
 # Delete follow-up instances for confounder variables
 variables_to_edit <- c("p738", "p1239", "p1249", "p1538", "p1548", "p3456", "p6150",
@@ -26,8 +23,6 @@ variables_to_edit <- c("p738", "p1239", "p1249", "p1538", "p1548", "p3456", "p61
                        "p21000", "p22040", "p22506", "p22508", "p23104")
 data1 <- data1 %>%
   select(-matches(paste0(variables_to_edit, "_i[1-4]")))
-
-
 
 # Recoding variables ------------------------------------------------------
 # Recode of variables across instances
@@ -56,6 +51,12 @@ Combination of p1239 (smoking status) and p3456 (number of cigarettes currently 
 # Can this be done with a call to the project-variables.csv file? It has ID and
 # UKB description, which are the ones I need. I could then snake-case the
 # variable names?
+names(data)
+rap_names <- readr::read_csv(here::here("data-raw/rap-variables.csv"))
+nrow(rap_names)
+names(data) <- rap_names$rap_variable_name
+
+
 dplyr::pull(field_id)
 field_id,rap_variable_name,id
 
@@ -77,7 +78,7 @@ data2 <- data %>%
 # Print the updated dataset
 view(data2)
 
-data2 <- data1 %>%
+data2 <- data %>%
   rename_with(function(id) {
     match_desc <- variable_mapping$rap_variable_name[variable_mapping$id == id]
     if (!is.na(match_desc) && length(match_desc) > 0) {
