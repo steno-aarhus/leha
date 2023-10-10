@@ -24,9 +24,9 @@ data_weight<-data %>%
            Wsweets=(),
            Walcohol=(),
 
-           )
+    )
 
-           )
+)
 
 
 #by energy
@@ -38,8 +38,8 @@ data_kcal<-data %>%
     )
 Kommer de variable som energibidrag?
 
-#1.2. outcomes
-nafld
+    #1.2. outcomes
+    nafld
 nash
 end of follow-up
 death
@@ -50,7 +50,7 @@ loss to follow-up
 #For metabolic disease variable: hypertension, high cholesterol, diabetes
 p20002,"Non-cancer illness code, self-reported",387470,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=20002
 #p20002: hypertension, high cholesterol, type 2 diabetes
-    Egen sygdom – fra ID:
+Egen sygdom – fra ID:
     20002 (hypertension, diabetes)
 2443 (diabetes)
 120007 (diabetes)
@@ -59,7 +59,7 @@ p20002,"Non-cancer illness code, self-reported",387470,https://biobank.ndph.ox.a
 41271 (ICD9 –før start på opfølgning)
 
 Families sygdom - fra ID:
-20107
+    20107
 20110
 20111
 
