@@ -3,7 +3,7 @@ install.packages("dplyr")
 library(dplyr)
 install.packages("magrittr")
 library(magrittr)
-
+library(tidyr)
 # Summary overview --------------------------------------------------------
 str(data)
 
@@ -32,8 +32,8 @@ data1 <- data1 %>%
 # Recoding variables ------------------------------------------------------
 # Recode of variables across instances
 # If any instance of the following variables is "yes", they should be recoded as 1, otherwise as 0
-## Using the if_any variant of across to apply grepl to each column ## and then combine the results
-# across the columns: Any TRUE will yield TRUE in the resulting variable
+## Using the if_any variant of across to apply grepl to each column and then combine the results
+# across the columns: Any TRUE will yield TRUE in the resulting variable. as.numeric will create 1 and 0
 data1 <- data1 %>%
   mutate(diabetes_diagnosed_by_doctor = as.numeric(if_any(starts_with("p2443"),
                                                           ~ grepl("Yes", x = .x))),
@@ -52,10 +52,61 @@ Combination of p1239 (smoking status) and p3456 (number of cigarettes currently 
 
 
 # New column names --------------------------------------------------------
-  # Change column names to understandable variables using dplyr::rename
-  # Can this be done with a call to the project-variables.csv file? It has ID and
-  # UKB description, which are the ones I need. I could then snake-case the
-  # variable names?
+# Change column names to understandable variables using dplyr::rename
+# Can this be done with a call to the project-variables.csv file? It has ID and
+# UKB description, which are the ones I need. I could then snake-case the
+# variable names?
+dplyr::pull(field_id)
+field_id,rap_variable_name,id
+
+
+# Step 2: Load the mapping from 'rap-variables.csv'
+variable_mapping <- readr::read_csv(here::here("data-raw/rap-variables.csv"))
+
+# Step 3: Rename variables based on 'rap_variable_name'
+data2 <- data %>%
+  rename_with(function(id) {
+    match_desc <- variable_mapping$rap_variable_name[variable_mapping$id == id]
+    if (!is.na(match_desc)) {
+      return(match_desc)
+    } else {
+      return(id)
+    }
+  }, starts_with("p"))
+
+# Print the updated dataset
+view(data2)
+
+data2 <- data1 %>%
+  rename_with(function(id) {
+    match_desc <- variable_mapping$rap_variable_name[variable_mapping$id == id]
+    if (!is.na(match_desc) && length(match_desc) > 0) {
+      return(match_desc)
+    } else {
+      return(id)
+    }
+  }, starts_with("p"))
+
+data2 <- data1 %>%
+  readr::write_csv("data1.csv")
+
+# Step 1: Load your dataset (replace 'your_dataset.csv' with your actual dataset)
+your_dataset <- read.csv("your_dataset.csv")
+
+# Step 2: Load the mapping from 'project_variables.csv'
+variable_mapping <- readr::read_csv(here::here("data-raw/rap-variables.csv"))
+
+# Step 3: Merge the dataset with the mapping
+merged_dataset <- inner_join(data1, variable_mapping, by = "id")
+
+# Step 4: Rename the variables based on 'ukb_variable_description'
+renamed_dataset <- merged_dataset %>%
+  select(-id) %>%
+  rename_with(~ukb_variable_description, starts_with("p"))
+
+# Print the updated dataset
+print(renamed_dataset)
+
 
 data1 <- data1 %>%
   dplyr::rename(sex = p31,
