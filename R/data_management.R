@@ -1,15 +1,15 @@
 # Data management
-install.packages("dplyr")
 library(dplyr)
-install.packages("magrittr")
 library(magrittr)
 library(tidyr)
+
+
 # Summary overview --------------------------------------------------------
 str(data)
 
 
 # Remove variables and columns --------------------------------------------
-# Delete variables that were not needed after all
+# Delete variables that were not needed after all -> go to project-
 variables_to_remove <- c("p20160", "p22506", "p2887", "p3436", "p3446", "p6152", "p20116", "p20117", "p20162", "p22200")
 data1 <- data %>%
   dplyr::select(-(starts_with(variables_to_remove)| ends_with("_i[0-4]")))
@@ -51,7 +51,7 @@ Combination of p1239 (smoking status) and p3456 (number of cigarettes currently 
 
 
 
-# New column names --------------------------------------------------------
+  # New column names --------------------------------------------------------
 # Change column names to understandable variables using dplyr::rename
 # Can this be done with a call to the project-variables.csv file? It has ID and
 # UKB description, which are the ones I need. I could then snake-case the
@@ -130,7 +130,7 @@ data1 <- data1 %>%
                 met_minutes_week = p22040,
                 bmi = p23104,
                 meat_substitutes_vegetarian = starts_with("p26145"),
-                )
+  )
 
 p3456,Number of cigarettes currently smoked daily (current cigarette smokers),36747,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=3456
 p20161,Pack years of smoking,152789,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=20161
