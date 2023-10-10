@@ -215,9 +215,16 @@ test_data <- data %>%
             p26154,Cream,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26154
             p26155,Trans fatty acids,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26155
 
+# Outcomes
+death
+emigration
+loss to follow-up
+K80 cholelithiasis
+K81 cholecystitis
+Removal of gallbladder
 
-            # Outcomes
-            p40000 date of death - two instances?
+
+            p40000 date of death - two instances - should be combined
 
               # How can I combine these?
               p41270,Diagnoses - ICD10,440017,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41270 # delete?
@@ -228,10 +235,5 @@ test_data <- data %>%
             p41281,Date of first in-patient diagnosis - ICD9,20299,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41281
             p41282,Date of first operative procedure - OPCS4,440153,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41282
             # Or should I just keep these:
-            p131668,Date K75 first reported (other inflammatory liver diseases),3171,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=131668
-            p131670,Date K76 first reported (other diseases of liver),14708,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=131670
-            p131674,Date K80 first reported (cholelithiasis),33836,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=131674
-            p131676,Date K81 first reported (cholecystitis),6509,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=131676
-            # or should I make a combination of p42180 and p131668 etc to create a date of diagnosis?
 
 
