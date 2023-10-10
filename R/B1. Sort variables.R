@@ -232,17 +232,13 @@ test_icd <- test %>%
 kopier variabel ud fra det antal gange der er en | i p41270
 names_sep = "|"
 
+
+
+# Split the 'variabel into separate variables based on delimiter "|"
 library(tidyr)
-
-# Split the 'info_variable' into separate variables based on "|"
-your_data <- test %>%
-    separate(p41270, into = c("var1", "var2", "var3", "var4", "var5", "var6", "var7", "var8", "var9", "var10", "var11", "var12", "var13", "var14", "var15", "var16"), sep = "|")
-
-# Replace NA values with empty strings
-your_data[is.na(your_data)] <- ""
-
-# Print the updated data frame
-print(your_data)
+data <- data %>%
+  +     separate_wider_delim(var1, delim = "|", names = c("var7", "var8"))
+Det kunne være fint med en funktion som kunne definere names automatisk ud fra antal splits i var1.
 
               if p41270 includes "K80" or "K81", include any p41280 arrays that matches this
               if p41271 includes starts_with"574" or "5750" or "5751", include any p41281 arrays that matches this
