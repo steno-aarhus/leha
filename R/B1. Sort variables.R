@@ -216,16 +216,37 @@ test_data <- data %>%
               p26155,Trans fatty acids,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26155
 
 # Outcomes
-death
+# death
 data1 <- data1 %>%
    mutate(date_of_death = if_else(is.na(p40000_i0), p40000_i1, p40000_i0))
 
-emigration
-              loss to follow-up
-              K80 cholelithiasis
-              if 42170 includes "K80" or "K81", include any p41280 arrays that matches this
-              if p42171 includes starts_with"574" or "5750" or "5751", include any p41281 arrays that matches this
-              if p42172 includes "J18", "J21.1 ", "J24.2", J24.3 J26.1, include any p41282 arrays that matches this
+# emigration
+# loss to follow-up
+
+# ICD10-codes
+# subset of data for overview
+test <- data %>%
+    select(p41270, starts_with("p41280")) %>%
+    slice(1:10)
+test_icd <- test %>%
+kopier variabel ud fra det antal gange der er en | i p41270
+names_sep = "|"
+
+library(tidyr)
+
+# Split the 'info_variable' into separate variables based on "|"
+your_data <- test %>%
+    separate(p41270, into = c("var1", "var2", "var3", "var4", "var5", "var6", "var7", "var8", "var9", "var10", "var11", "var12", "var13", "var14", "var15", "var16"), sep = "|")
+
+# Replace NA values with empty strings
+your_data[is.na(your_data)] <- ""
+
+# Print the updated data frame
+print(your_data)
+
+              if p41270 includes "K80" or "K81", include any p41280 arrays that matches this
+              if p41271 includes starts_with"574" or "5750" or "5751", include any p41281 arrays that matches this
+              if p41272 includes "J18", "J21.1 ", "J24.2", J24.3 J26.1, include any p41282 arrays that matches this
 
               Removal of gallbladder
 
