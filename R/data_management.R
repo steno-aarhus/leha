@@ -20,25 +20,12 @@ p20161 (pack years of smoking) # is this relevant?
 # Delete follow-up instances for confounder variables
 variables_to_edit <- c("p738", "p1239", "p1249", "p1538", "p1548", "p3456", "p6150",
                        "p20002","p20107", "p20110", "p20111", "p20161", "p20162",
-                       "p21000", "p22040", "p22506", "p22508", "p23104")
+                       "p21000", "p22040", "p22506", "p22508", "p23104", "p2443",
+                       "p2453")
 data1 <- data1 %>%
   select(-matches(paste0(variables_to_edit, "_i[1-4]")))
 
 # Recoding variables ------------------------------------------------------
-# Recode of variables across instances
-# If any instance of the following variables is "yes", they should be recoded as 1, otherwise as 0
-## Using the if_any variant of across to apply grepl to each column and then combine the results
-# across the columns: Any TRUE will yield TRUE in the resulting variable. as.numeric will create 1 and 0
-data1 <- data1 %>%
-  mutate(diabetes_diagnosed_by_doctor = as.numeric(if_any(starts_with("p2443"),
-                                                          ~ grepl("Yes", x = .x))),
-         cancer_diagnosed_by_doctor = as.numeric(if_any(starts_with("p2453"),
-                                                        ~ grepl("Yes", x = .x))))
-# Hereafter drop the p2443 and p2453 instance-variables
-diabetes_cancer <- c("p2443", "p2453")
-data1 <- data1 %>%
-  dplyr::select(-(starts_with(diabetes_cancer)| ends_with("_i[0-4]")))
-
 
 # Self-reported non-cancer illness. No diseases coded as 0, liver disease coded as 1, CVD coded as 2, other coded as 3
 Combination of p1239 (smoking status) and p3456 (number of cigarettes currently smoked) to make categories: never smoker; previous smoker; current 1-15; current 15-25; current 25+

@@ -215,9 +215,12 @@ test_data <- data %>%
               p26154,Cream,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26154
               p26155,Trans fatty acids,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26155
 
-              # Outcomes
-              death
-              emigration
+# Outcomes
+death
+data1 <- data1 %>%
+   mutate(date_of_death = if_else(is.na(p40000_i0), p40000_i1, p40000_i0))
+
+emigration
               loss to follow-up
               K80 cholelithiasis
               if 42170 includes "K80" or "K81", include any p41280 arrays that matches this
