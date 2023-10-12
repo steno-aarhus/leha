@@ -1,4 +1,7 @@
 #1. Sort variables
+# Packages
+library(tidyr)
+
 
 # 1.1. Exposures
 #Grouping foods
@@ -230,7 +233,6 @@ test <- data %>%
     slice(1:100)
 
 # Split the 'variable into separate variables based on delimiter "|"
-library(tidyr)
 test <- test %>%
   separate_wider_delim(p41270, delim = "|",
                        names_sep = "var_a", too_few = "debug")
@@ -291,9 +293,6 @@ This should apply the logic you described without the error you encountered.
 # if p41271 includes starts_with"574" or "5750" or "5751", include any p41281 arrays that matches this
 # if p41272 includes "J18", "J21.1 ", "J24.2", J24.3 J26.1, include any p41282 arrays that matches this
 
-
-
-# p40000_i0 date of death
 
               # How can I combine these?
               p41270,Diagnoses - ICD10,440017,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41270 # delete?
