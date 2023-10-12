@@ -109,30 +109,39 @@ test <- test %>%
 suffixes_to_match <- paste0("_a", 0:259)
 
 # Apply the logic to update the variables
-df <- test %>%
-  rowwise() %>%
-  mutate(
-    across(starts_with("p41270"), .fns = ~ {
-      case_when(
-        grepl("K80|K81", .) & grepl(paste0("(", paste(suffixes_to_match, collapse = "|"), ")$"), cur_column()) ~ .,
-        TRUE ~ "NA"
-      )
-    }),
-    across(starts_with("p41280"), .fns = ~ {
-      case_when(
-        grepl(paste0("(", paste(suffixes_to_match, collapse = "|"), ")$"), cur_column()) ~ .,
-        TRUE ~ "NA"
-      )
-    })
-  ) %>%
-  ungroup()
+# df <- test %>%
+#   rowwise() %>%
+#   mutate(
+#     across(starts_with("p41270"), .fns = ~ {
+#       case_when(
+#         grepl("K80|K81", .) & grepl(paste0("(", paste(suffixes_to_match, collapse = "|"), ")$"), cur_column()) ~ .,
+#         TRUE ~ "NA"
+#       )
+#     }),
+#     across(starts_with("p41280"), .fns = ~ {
+#       case_when(
+#         grepl(paste0("(", paste(suffixes_to_match, collapse = "|"), ")$"), cur_column()) ~ .,
+#         TRUE ~ "NA"
+#       )
+#     })
+#   ) %>%
+#   ungroup()
 
+> update_variable <- function(test, var_prefix, suffixes_to_match) {
+  +     var_names <- names(test)
+  +
+    +     for (suffix in suffixes_to_match) {
+      +         p41270_var_name <- paste0(var_prefix, suffix)
+      +         matching_var_names <- var_names[startsWith(var_names, p41270_var_name)]
+      +         matching_var_names <- matching_var_names[grepl("K80|K81", matching_var_names)]
+      +         test[, matching_var_names] <- ifelse(is.na(test[, matching_var_names]), "NA", test[, matching_var_names])
+      +     }
+  +
+    +     return(test)
+  + }
 
-In this modified code, we use rowwise() to process each row individually, which resolves the recycling error. The cur_column() function is used to get the name of the current column within the across() function. After processing the data rowwise, we use ungroup() to return to the standard data frame structure.
-
-This should apply the logic you described without the error you encountered.
-
-
+df <- update_variable(test, "p41270", suffixes_to_match)
+df <- update_variable(test, "p41280", suffixes_to_match)
 
 # When code works it should be rerun for ICD9 and OPSC4 codes below:
 # if p41271 includes starts_with"574" or "5750" or "5751", include any p41281 arrays that matches this
