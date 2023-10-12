@@ -227,17 +227,36 @@ data1 <- data1 %>%
 # subset of data for overview
 test <- data %>%
     select(p41270, starts_with("p41280")) %>%
-    slice(1:10)
-test_icd <- test %>%
-kopier variabel ud fra det antal gange der er en | i p41270
-names_sep = "|"
-
-
+    slice(1:100)
 
 # Split the 'variabel into separate variables based on delimiter "|"
 library(tidyr)
-data <- data %>%
-  +     separate_wider_delim(var1, delim = "|", names = c("var7", "var8"))
+
+test1 <- test %>%
+  separate_wider_delim(p41270, delim = "|",
+                       names_sep = "var_a", too_few = "debug")
+
+test2 <- data %>%
+  separate_wider_delim(p41270, delim = "|",
+                       names_sep = "var_a", too_few = "debug")
+
+
+long_test1 <- test2 %>%
+  pivot_longer(cols = matches("var_a"),
+               names_to = c(".value", "a"),
+               names_sep = "_")
+
+
+long_test <- test1 %>%
+  pivot_longer(cols = matches("var_a[0-258]$"),
+               names_to = c(".value", "a"),
+               names_sep = "_")
+
+long_test <- test1 %>%
+  pivot_longer(cols = matches("_a[0-258]$"),
+               names_to = c(".value", "a"),
+               names_sep = "_")
+
 Det kunne være fint med en funktion som kunne definere names automatisk ud fra antal splits i var1.
 
               if p41270 includes "K80" or "K81", include any p41280 arrays that matches this
