@@ -7,6 +7,12 @@ library(tidyr)
 # Summary overview --------------------------------------------------------
 str(data)
 
+
+# Add ID ------------------------------------------------------------------
+
+data <- data %>%
+  mutate(id = 1:n(), .before = everything())
+
 # Remove variables and columns --------------------------------------------
 # Delete variables that were not needed after all -> go to project-
 variables_to_remove <- c("p20160", "p22506", "p2887", "p3436", "p3446", "p6152",
@@ -36,8 +42,8 @@ Combination of p1239 (smoking status) and p3456 (number of cigarettes currently 
 
 
 
-# Remove participants with less than 2 24h recalls
-data <- data %>%
+  # Remove participants with less than 2 24h recalls
+  data <- data %>%
   dplyr::filter(number_recalls >= 2)
 
 
@@ -55,7 +61,7 @@ filter(data, is.na(temp) & !is.na(varname)) %>%
 # Now run diet-data-scripts (probably the sort variables.R scripts)
 
 
-  # New column names --------------------------------------------------------
+# New column names --------------------------------------------------------
 # Change column names to understandable variables using dplyr::rename
 # Can this be done with a call to the project-variables.csv file? It has ID and
 # UKB description, which are the ones I need. I could then snake-case the

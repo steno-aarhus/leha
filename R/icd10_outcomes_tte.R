@@ -1,4 +1,4 @@
-# ICD10-codes
+# This script will split p41270 (ICD10-codes) into columns and match the date of diagnosis with the
 # subset of data for overview
 test <- data %>%
   slice(1:100)
@@ -23,14 +23,12 @@ final <- test %>%
 
 final %>%  select(matches("_a[0-9]*$"))
 
-
-
-
 test %>%
+  select(matches("p41270|p41280")) %>%
   pivot_longer(cols = matches("_a[0-9]*$"),
                names_to = c(".value", "a"),
-               names_sep = "_")
-
+               names_sep = "_") %>%
+  View()
 
 # When code works, uncomment below and split variable for all observations
 # data <- data %>%
