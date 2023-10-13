@@ -15,10 +15,10 @@ library(magrittr)
 #     readr::write_csv(here::here("data-raw/project-variables_original.csv"))
 
 # Update if necessary.
-# ukbAid::rap_variables %>%
-#     readr::write_csv(here::here("data-raw/rap-variables.csv"))
-#
-# ukbAid::subset_rap_variables(instances = 0:9)
+ukbAid::rap_variables %>%
+readr::write_csv(here::here("data-raw/rap-variables.csv"))
+
+ukbAid::subset_rap_variables(instances = 0:9)
 
 # Create the project dataset and save inside RAP --------------------------
 

@@ -1,0 +1,16 @@
+processing
+
+#download data
+
+arrow::read_parquet()
+
+# DATA MANAGEMENT
+
+# Convert to the Parquet format. Why? Parquet is faster and a smaller
+# file size.
+arrow::write_parquet(data_csv, here("data/data.parquet"))
+
+# Upload to the project RAP folder.
+ukbAid::upload_data(here("data/data.parquet"), username = "FieLangmann")
+
+

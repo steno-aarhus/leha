@@ -15,10 +15,11 @@ variables_to_remove <- c("p20160", "p22506", "p2887", "p3436", "p3446", "p6152",
 data1 <- data %>%
   dplyr::select(-(starts_with(variables_to_remove)| ends_with("_i[0-4]")))
 
-p20161 (pack years of smoking) # is this relevant?
+p20161 (pack years of smoking) # is this relevant? Has information on all types
+# of smoking.
 
 # Delete follow-up instances for confounder variables
-variables_to_edit <- c("p738", "p1239", "p1249", "p1538", "p1548", "p3456", "p6150",
+variables_to_edit <- c("p738", "p1239", "p1538", "p1548", "p3456", "p6150",
                        "p20002","p20107", "p20110", "p20111", "p20161", "p20162",
                        "p21000", "p22040", "p22506", "p22508", "p23104", "p2443",
                        "p2453", "p40000")
