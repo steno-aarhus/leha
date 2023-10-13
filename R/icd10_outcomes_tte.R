@@ -31,7 +31,8 @@ icd10_subset <- icd10_subset %>%
 
 # Match variable content across p41270 and p41280 and remove irrelevant dates
 icd10_k80 <- icd10_subset %>%
-  mutate(p41280 = ifelse(str_detect(p41270var, "K80"), as.Date(p41280), "NA")) # This should be coded as.Date but does not?
+  mutate(p41280 = ifelse(str_detect(p41270var, "K80"), as.character(p41280), NA),
+         p41280 = as.Date(p41280, format = "%Y-%m-%d"))
 
 # When only the relevant dates are left in the data frame, you can transform
 # back to wide and remove irrelevant columns.
@@ -45,9 +46,13 @@ wide_data <- icd10_k80 %>%
   pivot_wider(names_from = new_column, values_from = p41280)
 
 
-
 Delete all diagnosis code and only keep the dates? Or can I make a new variable to
 merge the diagnosis code and date to create a variable called date_icd80, date_icd81, etc.?
+
+First time a date appears across p41280_a[0-258], the date should be added to a new
+column (icd10_k80_date). If there is no date across any of the columns for each observation,
+then "NA" should be added to the new variable instead.
+
 
 icd10_subset <- icd10_subset %>%
   rowwise() %>%
