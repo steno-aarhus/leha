@@ -7,23 +7,23 @@ library(tidyr)
 #Grouping foods
 #by weight
 data_weight<-data %>%
-   mutate(Wlegumes=(beans+),
-          Wleg_pea= (Wlegumes + peas)
-          Wmeats=(beef+lamb+...),
-          Wpoultry=(),
-          Wfish=(),
-          Wmixdish=(),
-          Wruits= (),
-          Wveggies=()
-          Wfats=(),
-          Wdrinks= (),
-          Wcereal = (),
-          Wdairy= (),
-          Wsauces=(),
-          Wsweets=(),
-          Walcohol=(),
+  mutate(Wlegumes=(beans+),
+         Wleg_pea= (Wlegumes + peas)
+         Wmeats=(beef+lamb+...),
+         Wpoultry=(),
+         Wfish=(),
+         Wmixdish=(),
+         Wruits= (),
+         Wveggies=()
+         Wfats=(),
+         Wdrinks= (),
+         Wcereal = (),
+         Wdairy= (),
+         Wsauces=(),
+         Wsweets=(),
+         Walcohol=(),
 
-   )
+  )
 
 )
 
@@ -31,10 +31,10 @@ data_weight<-data %>%
 #by energy
 #Energy provided per food <-- I will need to mutate as above with a multiplication for energy contributions from each foods, e.g. weight_beef/(100*E*0.239kcal)
 data_kcal<-data %>%
-   mutate(energy_foods=(p26002)*0.293,
-          Elegumes=(),
-          Emeats=((beef*E)+(lamb*E)+...)*0.239kcal,
-   )
+  mutate(energy_foods=(p26002)*0.293,
+         Elegumes=(),
+         Emeats=((beef*E)+(lamb*E)+...)*0.239kcal,
+  )
 
 
 #1.2. outcomes
@@ -66,7 +66,7 @@ p41280,Date of first in-patient diagnosis - ICD10,440014,https://biobank.ndph.ox
 # Outcomes
 # death
 data1 <- data1 %>%
-   mutate(date_of_death = if_else(is.na(p40000_i0), p40000_i1, p40000_i0))
+  mutate(date_of_death = if_else(is.na(p40000_i0), p40000_i1, p40000_i0))
 
 # emigration
 # loss to follow-up
@@ -74,13 +74,36 @@ data1 <- data1 %>%
 # ICD10-codes
 # subset of data for overview
 test <- data %>%
-    select(p41270, starts_with("p41280")) %>%
-    slice(1:100)
+  slice(1:100)
 
 # Split the 'variable into separate variables based on delimiter "|"
-test <- test %>%
+test1 <- test %>%
   separate_wider_delim(p41270, delim = "|",
                        names_sep = "var_a", too_few = "debug")
+
+test2 <- test |>
+  separate_wider_delim(p41270,
+                       delim = "|",
+                       names = paste0("p41270var_a", 1:259), too_few = "debug")
+
+# To check if test and test2 matches:
+all.equal(test, test2)
+
+final <- test %>%
+  separate_wider_delim(p41270,
+                       delim = "|",
+                       names = paste0("p41270var_a", 0:258), too_few = "debug")
+
+final %>%  select(matches("_a[0-9]*$"))
+
+
+
+
+test %>%
+  pivot_longer(cols = matches("_a[0-9]*$"),
+               names_to = c(".value", "a"),
+               names_sep = "_")
+
 
 # When code works, uncomment below and split variable for all observations
 # data <- data %>%
@@ -148,14 +171,14 @@ df <- update_variable(test, "p41280", suffixes_to_match)
 # if p41272 includes "J18", "J21.1 ", "J24.2", J24.3 J26.1, include any p41282 arrays that matches this
 
 
-              # How can I combine these?
-              p41270,Diagnoses - ICD10,440017,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41270 # delete?
-              p41271,Diagnoses - ICD9,20299,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41271 # delete?
-              p41272,Operative procedures - OPCS4,440159,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41272 # delete?
+# How can I combine these?
+p41270,Diagnoses - ICD10,440017,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41270 # delete?
+p41271,Diagnoses - ICD9,20299,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41271 # delete?
+p41272,Operative procedures - OPCS4,440159,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41272 # delete?
 
-              p41280,Date of first in-patient diagnosis - ICD10,440014,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41280
-              p41281,Date of first in-patient diagnosis - ICD9,20299,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41281
-              p41282,Date of first operative procedure - OPCS4,440153,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41282
+p41280,Date of first in-patient diagnosis - ICD10,440014,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41280
+p41281,Date of first in-patient diagnosis - ICD9,20299,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41281
+p41282,Date of first operative procedure - OPCS4,440153,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41282
 
 
 
