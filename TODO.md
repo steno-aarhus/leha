@@ -1,18 +1,9 @@
 TODO items to complete throughout the entire project lifecycle.
 
--   TODO: Open up the `README.md` file and fill in the project details
-    and complete the `TODO` items there
-
--   TODO: Review and select variables from the
-    `data-raw/project-variables.csv`
-
 -   TODO: Complete the `doc/protocol.qmd` document
 
 -   TODO: Have the protocol reviewed and then upload it on Zenodo
     (you'll get help)
-
--   TODO: Create the dataset by following the instructions in
-    `data-raw/create-data.R`
 
 -   TODO: Conduct code review mid-way
 
@@ -27,4 +18,3 @@ TODO items to complete throughout the entire project lifecycle.
 
 -   TODO: Upload your paper to preprint archive (e.g. medRxiv) or to
     Zenodo
-
