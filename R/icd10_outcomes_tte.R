@@ -5,7 +5,7 @@
 
 # On a subset of data -----------------------------------------------------
 # subset of data for overview
-test <- data %>%
+test <- data1 %>%
   slice(55001:60000)
 
 # Split the diagnosis-variable into separate column based on delimiter "|"
@@ -45,13 +45,21 @@ icd10_k80 <- icd10_k80 %>%
 wide_data <- icd10_k80 %>%
   pivot_wider(names_from = new_column, values_from = p41280)
 
+# Now I can remove rows where column p41270var does not contain any info or "NA"
+wide_data <- wide_data %>%
+  filter(!is.na(p41270var) & p41270var != "")
 
-Delete all diagnosis code and only keep the dates? Or can I make a new variable to
-merge the diagnosis code and date to create a variable called date_icd80, date_icd81, etc.?
+# Delete all diagnosis code and only keep the dates? Or can I make a new variable to
+# merge the diagnosis code and date to create a variable called date_icd80, date_icd81, etc.?
+wide_data <- wide_data %>%
+  mutate(icd10_k80_date = ifelse(str_detect(p41270var, "K80"), as.character(starts_with(p41280), NA),
+         icd10_k80_date = as.Date(icd10_k80_date, format = "%Y-%m-%d"))
+
 
 First time a date appears across p41280_a[0-258], the date should be added to a new
 column (icd10_k80_date). If there is no date across any of the columns for each observation,
 then "NA" should be added to the new variable instead.
+
 
 
 icd10_subset <- icd10_subset %>%
