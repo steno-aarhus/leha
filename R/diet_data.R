@@ -1,5 +1,13 @@
 # Diet data management
 # Diet data ---------------------------------------------------------------
+
+
+
+# Remove participants with less than 2 24h recalls
+data <- data %>%
+   dplyr::filter(number_recalls >= 2)
+
+
 # Would it be possible to just make an average across the instances for each food?
 diet_data <- data1 %>%
   select(starts_with("p26"), "p20077")
