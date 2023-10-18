@@ -40,14 +40,6 @@ Combination of p1239 (smoking status) and p3456 (number of cigarettes currently 
 
 
 
-
-
-  # Remove participants with less than 2 24h recalls
-  data <- data %>%
-  dplyr::filter(number_recalls >= 2)
-
-
-
 # Convert data to numerics
 # TO check if a variable is character, run this code
 table(grepl(" ", data$varname)) #table of all variables with spaces in the cell content;
