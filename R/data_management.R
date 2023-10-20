@@ -21,8 +21,7 @@ variables_to_remove <- c("p20160", "p22506", "p2887", "p3436", "p3446", "p6152",
 data1 <- data %>%
   dplyr::select(-(starts_with(variables_to_remove)| ends_with("_i[0-4]")))
 
-p20161 (pack years of smoking) # is this relevant? Has information on all types
-# of smoking.
+
 
 # Delete follow-up instances for confounder variables
 variables_to_edit <- c("p738", "p1239", "p1538", "p1548", "p3456", "p6150",
@@ -37,7 +36,10 @@ data1 <- data1 %>%
 # Self-reported non-cancer illness. No diseases coded as 0, liver disease coded as 1, CVD coded as 2, other coded as 3
 Combination of p1239 (smoking status) and p3456 (number of cigarettes currently smoked) to make categories: never smoker; previous smoker; current 1-15; current 15-25; current 25+
   Maybe p22506 (tobacco smoking) + p22508 (amount of tobacco) instead of cigarettes?
+p20161 (pack years of smoking) # is this relevant? Has information on all types
+# of smoking.
 
+Smoking: never, former, current (pack years)
 
 
 # Convert data to numerics
