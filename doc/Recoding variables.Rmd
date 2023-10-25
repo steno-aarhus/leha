@@ -35,15 +35,19 @@ the smoking variable.
 -   First recode number of cigarettes (p3456)\*
 
 ```{r}
+install.packages("dplyr")
 data <- data %>% 
-  dplyr::mutate(cigday_groups = ifelse(p3456<10), 0,
-                ifelse p3456<10 = 0, # leaving this here for now
+  dplyr::mutate(
+    cigday_groups = case_when(p3456 < 10 ~ 0,
+                              p3456 >= 10 & p3456 < 19 ~ 1,
+                              p3456 >= 19 ~ 2))
+                
+
                 
 data$new_variable <- "NA"
 data$new_variable[data$p3456_i0<10]<-0
 data$new_variable[(data$p3456_i0>10 & data$p3456_i0<=19)]<-1
 data$new_variable[data$p3456_i0>19]<-2
-
 ```
 
 -1 represents "Do not know" -3 represents "Prefer not to answer" Above
