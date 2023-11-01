@@ -79,10 +79,18 @@ elsewhere. [10]
 
 
 ### Townsend deprivation index
-Has previously been coded as a categorical variable ranging 1 to 5 with 1 being "most affluent" and 5 being "most deprived". Missing/unknown were coded as 9
+The Townsend Deprivation Score is an area based score of social deprivation (unemployment, overcrowding, non- car ownership and non- home ownership) that was determined immediately prior to the participant joining the Biobank, based on data from the preceding national census. Each participant was assigned a score corresponding to their postcode area based on the Index of Multiple Deprivation from Scotland, Wales and England.
+Townsend Deprivation Index has previously been coded as a categorical variable ranging 1 to 5 with 1 being "most affluent" and 5 being "most deprived" [2]. 
+
+Missing/unknown have in the Nuffield Dept. group been coded as 9 (REF)
+
+```{r}
+data <- data %>% 
+  dplyr::mutate(quintile = ntile(p22189, 5)
+```
 
 
-The Townsend Deprivation Score is an area- based score of social deprivation (unemployment, overcrowding, non- car ownership and non- home ownership) that was determined immediately prior to the participant joining the Biobank, based on data from the preceding national census. Each participant was assigned a score corresponding to their postcode area.
+[2] Woodward M, Peters SAE, Harris K. Social deprivation as a risk factor for COVID-19 mortality among women and men in the UK Biobank: nature of risk and context suggests that social interventions are essential to mitigate the effects of future pandemics. J Epidemiol Community Health. 2021 Nov;75(11):1050-1055. doi: 10.1136/jech-2020-215810. Epub 2021 Apr 27. PMID: 33906905; PMCID: PMC8098299.
 
 
 ## R Markdown
