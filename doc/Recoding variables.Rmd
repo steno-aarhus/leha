@@ -77,6 +77,14 @@ elsewhere. [10]
     and Mendelian randomisation study using the UK Biobank cohort.
     Thorax, 2022. 77(1): p. 65-73
 
+
+### Townsend deprivation index
+Has previously been coded as a categorical variable ranging 1 to 5 with 1 being "most affluent" and 5 being "most deprived". Missing/unknown were coded as 9
+
+
+The Townsend Deprivation Score is an area- based score of social deprivation (unemployment, overcrowding, non- car ownership and non- home ownership) that was determined immediately prior to the participant joining the Biobank, based on data from the preceding national census. Each participant was assigned a score corresponding to their postcode area.
+
+
 ## R Markdown
 
 This is an R Markdown document. Markdown is a simple formatting syntax
