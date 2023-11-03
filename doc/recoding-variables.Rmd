@@ -1,6 +1,6 @@
 ---
 title: "Recoding variables documentation"
-output: html_document
+format: html
 ---
 
 ```{r setup, include=FALSE}
