@@ -32,22 +32,15 @@ for participants immediately following the inclusion into the UK Biobank
 and thus only include the baseline measure of cigarettes smoked daily in
 the smoking variable.
 
--   First recode number of cigarettes (p3456)\*
+-   First recode number of cigarettes (p3456)
 
 ```{r}
-install.packages("dplyr")
-data <- data %>% 
-  dplyr::mutate(
-    cigday_groups = case_when(p3456 < 10 ~ 0,
-                              p3456 >= 10 & p3456 < 19 ~ 1,
-                              p3456 >= 19 ~ 2))
-                
-
-                
-data$new_variable <- "NA"
-data$new_variable[data$p3456_i0<10]<-0
-data$new_variable[(data$p3456_i0>10 & data$p3456_i0<=19)]<-1
-data$new_variable[data$p3456_i0>19]<-2
+data <- data %>%
+  mutate(cigday_groups = case_when(
+    p3456_i0 < 10 ~ 0,
+    p3456_i0 >= 10 & p3456_i0 < 19 ~ 1,
+    p3456_i0 >= 19 ~ 2
+  ))
 ```
 
 -1 represents "Do not know" -3 represents "Prefer not to answer" Above
