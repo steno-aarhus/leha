@@ -1,4 +1,3 @@
-
 # Keep only the necessary variables for RAP -------------------------------
 
 library(magrittr)
@@ -12,7 +11,7 @@ library(magrittr)
 
 # Update if necessary.
 ukbAid::rap_variables %>%
-    readr::write_csv(here::here("data-raw/rap-variables.csv"))
+  readr::write_csv(here::here("data-raw/rap-variables.csv"))
 
 ukbAid::subset_rap_variables(instances = 0:4)
 
@@ -24,6 +23,5 @@ ukbAid::subset_rap_variables(instances = 0:4)
 # you need to re-create the dataset).
 
 readr::read_csv(here::here("data-raw/rap-variables.csv")) %>%
-    dplyr::pull(field_id) %>%
-    ukbAid::create_csv_from_database(username="FieLangmann")
-
+  dplyr::pull(field_id) %>%
+  ukbAid::create_csv_from_database(username = "FieLangmann")
