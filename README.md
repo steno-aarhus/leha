@@ -23,6 +23,23 @@ code whenever you enter the RAP project.
 targets::tar_make()
 ```
 
+# Steps to select and download the data
+
+The `data-raw/` folder contains the scripts to select, process, and
+prepare the data on the RAP to eventually be downloaded.
+
+The steps to take to select the variables you want, create the CSV file
+on the RAP, convert it to Parquet format (for faster loading), and
+download to your project on RAP. The order is:
+
+1.  Select the variables you want in `data-raw/project-variables.csv`.
+2.  Follow the instructions in the `data-raw/create-data.R` script and
+    run it to create the CSV file on the RAP server.
+3.  Open and run the `data-raw/convert-to-parquet.R` script to convert
+    the CSV file to the Parquet format.
+4.  Run `targets::tar_make()` in the Console to download the Parquet
+    file and store in the `data/` folder.
+
 # Brief description of folder and file contents
 
 The following folders contain:
