@@ -5,7 +5,7 @@
 arrow::read_parquet()
 
 # DATA MANAGEMENT
-source data_management.r script
+# source data_management.r script
 
 # Convert to the Parquet format. Why? Parquet is faster and a smaller
 # file size.
