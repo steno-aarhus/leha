@@ -1,8 +1,10 @@
+library(tidyverse)
+
 # Processing
 
-#download data
+# download data
 
-arrow::read_parquet()
+ukb_data <- ukbAid::read_parquet(here::here("data/data.parquet"))
 
 # DATA MANAGEMENT
 # source data_management.r script
