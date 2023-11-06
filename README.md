@@ -35,10 +35,15 @@ download to your project on RAP. The order is:
 1.  Select the variables you want in `data-raw/project-variables.csv`.
 2.  Follow the instructions in the `data-raw/create-data.R` script and
     run it to create the CSV file on the RAP server.
-3.  Open and run the `data-raw/convert-to-parquet.R` script to convert
+3.  Open the `_targets.R` and change the `download_project_data` target
+    in `tar_target()` line from `"parquet"` to `"csv"`. Then run
+    `targets::tar_make()` to download the CSV file to `data/`.
+4.  Open and run the `data-raw/convert-to-parquet.R` script to convert
     the CSV file to the Parquet format.
-4.  Run `targets::tar_make()` in the Console to download the Parquet
-    file and store in the `data/` folder.
+5.  Go back into `_targets.R` and change the `"csv"` to `"parquet"` (the
+    opposite of what was done in item 3). Run `targets::tar_make()` in
+    the Console to download the Parquet file and store in the `data/`
+    folder.
 
 # Brief description of folder and file contents
 
@@ -56,3 +61,4 @@ The following folders contain:
 
 -   `R/`: Contains the R scripts and functions to create the figures,
     tables, and results for the project.
+
