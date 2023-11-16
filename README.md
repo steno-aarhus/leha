@@ -38,6 +38,12 @@ download to your project on RAP. The order is:
     the Console to download the Parquet file and store in the `data/`
     folder.
 
+# Processing and saving progress
+
+It is very timely to rerun all code every time you have made changes in
+the data, so you can save and reload your work along the way by
+following the layout in "data-raw/processing.r" script
+
 # Brief description of folder and file contents
 
 The following folders contain:
