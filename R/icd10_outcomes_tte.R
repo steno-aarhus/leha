@@ -2,7 +2,6 @@
 # diagnosis with the diagnosis code for that specific data. This is useful when
 # using ICD10 diagnoses as outcomes in time-to-event analyses
 
-
 # On a subset of data -----------------------------------------------------
 # subset of data for overview
 test <- data1 %>%
