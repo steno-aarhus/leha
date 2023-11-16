@@ -4,7 +4,7 @@
 
 # On a subset of data -----------------------------------------------------
 # subset of data for overview
-test <- data1 %>%
+test <- data %>%
   slice(55001:60000)
 
 # Split the diagnosis-variable into separate column based on delimiter "|"
