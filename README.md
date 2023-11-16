@@ -42,7 +42,14 @@ download to your project on RAP. The order is:
 
 It is very timely to rerun all code every time you have made changes in
 the data, so you can save and reload your work along the way by
-following the layout in "data-raw/processing.r" script
+following the layout in "data-raw/processing.r" script. This is also
+helpful to do, when you have completed all data management tasks and
+want to save your changes to have a "ready to go" data frame to run your
+analysis on.
+
+After having completed the data management and running the processing.R
+script, you can start doing descriptive and comparative analyses of your
+data.
 
 # Brief description of folder and file contents
 
