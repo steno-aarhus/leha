@@ -15,14 +15,6 @@ running this command in the console:
 pak::pak()
 ```
 
-Once you've created your dataset using `data-raw/create-data.R`, you can
-uncomment the lines in the `_targets.R` file and afterwards run this
-code whenever you enter the RAP project.
-
-``` r
-targets::tar_make()
-```
-
 # Steps to select and download the data
 
 The `data-raw/` folder contains the scripts to select, process, and
@@ -45,6 +37,14 @@ download to your project on RAP. The order is:
     the Console to download the Parquet file and store in the `data/`
     folder.
 
+Once you've created your dataset using `data-raw/create-data.R`, you can
+uncomment the lines in the `_targets.R` file and afterwards run this
+code whenever you enter the RAP project.
+
+``` r
+targets::tar_make()
+```
+
 # Brief description of folder and file contents
 
 The following folders contain:
@@ -61,4 +61,3 @@ The following folders contain:
 
 -   `R/`: Contains the R scripts and functions to create the figures,
     tables, and results for the project.
-
