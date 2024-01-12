@@ -3,6 +3,10 @@ library(dplyr)
 library(magrittr)
 library(tidyr)
 
+# Remove uneligible number of recalls ------------
+data <- data %>% 
+subset(p20077>=2)
+
 # Add ID ------------------------------------------------------------------
 data <- data %>%
   mutate(id = 1:n(), .before = everything())
