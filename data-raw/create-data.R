@@ -1,4 +1,3 @@
-
 # Keep only the necessary variables for RAP -------------------------------
 
 library(magrittr)
@@ -10,9 +9,14 @@ library(magrittr)
 # running this function, review the changes in Git and add and commit the changed
 # files into the history.
 
+# Uncomment if you messed up and need to start over.
+# project_variables_original <- ukbAid::project_variables %>%
+#     readr::write_csv(here::here("data-raw/project-variables_original.csv"))
+
+
 # Update if necessary.
 ukbAid::rap_variables %>%
-    readr::write_csv(here::here("data-raw/rap-variables.csv"))
+  readr::write_csv(here::here("data-raw/rap-variables.csv"))
 
 ukbAid::subset_rap_variables(instances = 0:4)
 
@@ -24,6 +28,5 @@ ukbAid::subset_rap_variables(instances = 0:4)
 # you need to re-create the dataset).
 
 readr::read_csv(here::here("data-raw/rap-variables.csv")) %>%
-    dplyr::pull(field_id) %>%
-    ukbAid::create_csv_from_database(username="FieLangmann")
-
+  dplyr::pull(field_id) %>%
+  ukbAid::create_csv_from_database(username = "FieLangmann")

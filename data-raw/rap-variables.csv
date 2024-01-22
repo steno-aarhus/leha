@@ -32,155 +32,26 @@ p3456_i0,Number of cigarettes currently smoked daily (current cigarette smokers)
 p3456_i1,Number of cigarettes currently smoked daily (current cigarette smokers) | Instance 1,p3456
 p3456_i2,Number of cigarettes currently smoked daily (current cigarette smokers) | Instance 2,p3456
 p3456_i3,Number of cigarettes currently smoked daily (current cigarette smokers) | Instance 3,p3456
-p6150_i0_a0,Vascular/heart problems diagnosed by doctor | Instance 0 | Array 0,p6150
-p6150_i0_a1,Vascular/heart problems diagnosed by doctor | Instance 0 | Array 1,p6150
-p6150_i0_a2,Vascular/heart problems diagnosed by doctor | Instance 0 | Array 2,p6150
-p6150_i0_a3,Vascular/heart problems diagnosed by doctor | Instance 0 | Array 3,p6150
-p6150_i1_a0,Vascular/heart problems diagnosed by doctor | Instance 1 | Array 0,p6150
-p6150_i1_a1,Vascular/heart problems diagnosed by doctor | Instance 1 | Array 1,p6150
-p6150_i1_a2,Vascular/heart problems diagnosed by doctor | Instance 1 | Array 2,p6150
-p6150_i1_a3,Vascular/heart problems diagnosed by doctor | Instance 1 | Array 3,p6150
-p6150_i2_a0,Vascular/heart problems diagnosed by doctor | Instance 2 | Array 0,p6150
-p6150_i2_a1,Vascular/heart problems diagnosed by doctor | Instance 2 | Array 1,p6150
-p6150_i2_a2,Vascular/heart problems diagnosed by doctor | Instance 2 | Array 2,p6150
-p6150_i2_a3,Vascular/heart problems diagnosed by doctor | Instance 2 | Array 3,p6150
+p6150_i0,Vascular/heart problems diagnosed by doctor | Instance 0,p6150
+p6150_i1,Vascular/heart problems diagnosed by doctor | Instance 1,p6150
+p6150_i2,Vascular/heart problems diagnosed by doctor | Instance 2,p6150
 p20002_i0,"Non-cancer illness code, self-reported | Instance 0",p20002
 p20002_i1,"Non-cancer illness code, self-reported | Instance 1",p20002
 p20002_i2,"Non-cancer illness code, self-reported | Instance 2",p20002
 p20002_i3,"Non-cancer illness code, self-reported | Instance 3",p20002
 p20077,Number of diet questionnaires completed,p20077
-p20107_i0_a0,Illnesses of father | Instance 0 | Array 0,p20107
-p20107_i0_a1,Illnesses of father | Instance 0 | Array 1,p20107
-p20107_i0_a2,Illnesses of father | Instance 0 | Array 2,p20107
-p20107_i0_a3,Illnesses of father | Instance 0 | Array 3,p20107
-p20107_i0_a4,Illnesses of father | Instance 0 | Array 4,p20107
-p20107_i0_a5,Illnesses of father | Instance 0 | Array 5,p20107
-p20107_i0_a6,Illnesses of father | Instance 0 | Array 6,p20107
-p20107_i0_a7,Illnesses of father | Instance 0 | Array 7,p20107
-p20107_i0_a8,Illnesses of father | Instance 0 | Array 8,p20107
-p20107_i0_a9,Illnesses of father | Instance 0 | Array 9,p20107
-p20107_i1_a0,Illnesses of father | Instance 1 | Array 0,p20107
-p20107_i1_a1,Illnesses of father | Instance 1 | Array 1,p20107
-p20107_i1_a2,Illnesses of father | Instance 1 | Array 2,p20107
-p20107_i1_a3,Illnesses of father | Instance 1 | Array 3,p20107
-p20107_i1_a4,Illnesses of father | Instance 1 | Array 4,p20107
-p20107_i1_a5,Illnesses of father | Instance 1 | Array 5,p20107
-p20107_i1_a6,Illnesses of father | Instance 1 | Array 6,p20107
-p20107_i1_a7,Illnesses of father | Instance 1 | Array 7,p20107
-p20107_i1_a8,Illnesses of father | Instance 1 | Array 8,p20107
-p20107_i1_a9,Illnesses of father | Instance 1 | Array 9,p20107
-p20107_i2_a0,Illnesses of father | Instance 2 | Array 0,p20107
-p20107_i2_a1,Illnesses of father | Instance 2 | Array 1,p20107
-p20107_i2_a2,Illnesses of father | Instance 2 | Array 2,p20107
-p20107_i2_a3,Illnesses of father | Instance 2 | Array 3,p20107
-p20107_i2_a4,Illnesses of father | Instance 2 | Array 4,p20107
-p20107_i2_a5,Illnesses of father | Instance 2 | Array 5,p20107
-p20107_i2_a6,Illnesses of father | Instance 2 | Array 6,p20107
-p20107_i2_a7,Illnesses of father | Instance 2 | Array 7,p20107
-p20107_i2_a8,Illnesses of father | Instance 2 | Array 8,p20107
-p20107_i2_a9,Illnesses of father | Instance 2 | Array 9,p20107
-p20107_i3_a0,Illnesses of father | Instance 3 | Array 0,p20107
-p20107_i3_a1,Illnesses of father | Instance 3 | Array 1,p20107
-p20107_i3_a2,Illnesses of father | Instance 3 | Array 2,p20107
-p20107_i3_a3,Illnesses of father | Instance 3 | Array 3,p20107
-p20107_i3_a4,Illnesses of father | Instance 3 | Array 4,p20107
-p20107_i3_a5,Illnesses of father | Instance 3 | Array 5,p20107
-p20107_i3_a6,Illnesses of father | Instance 3 | Array 6,p20107
-p20107_i3_a7,Illnesses of father | Instance 3 | Array 7,p20107
-p20107_i3_a8,Illnesses of father | Instance 3 | Array 8,p20107
-p20107_i3_a9,Illnesses of father | Instance 3 | Array 9,p20107
-p20110_i0_a0,Illnesses of mother | Instance 0 | Array 0,p20110
-p20110_i0_a1,Illnesses of mother | Instance 0 | Array 1,p20110
-p20110_i0_a2,Illnesses of mother | Instance 0 | Array 2,p20110
-p20110_i0_a3,Illnesses of mother | Instance 0 | Array 3,p20110
-p20110_i0_a4,Illnesses of mother | Instance 0 | Array 4,p20110
-p20110_i0_a5,Illnesses of mother | Instance 0 | Array 5,p20110
-p20110_i0_a6,Illnesses of mother | Instance 0 | Array 6,p20110
-p20110_i0_a7,Illnesses of mother | Instance 0 | Array 7,p20110
-p20110_i0_a8,Illnesses of mother | Instance 0 | Array 8,p20110
-p20110_i0_a9,Illnesses of mother | Instance 0 | Array 9,p20110
-p20110_i0_a10,Illnesses of mother | Instance 0 | Array 10,p20110
-p20110_i1_a0,Illnesses of mother | Instance 1 | Array 0,p20110
-p20110_i1_a1,Illnesses of mother | Instance 1 | Array 1,p20110
-p20110_i1_a2,Illnesses of mother | Instance 1 | Array 2,p20110
-p20110_i1_a3,Illnesses of mother | Instance 1 | Array 3,p20110
-p20110_i1_a4,Illnesses of mother | Instance 1 | Array 4,p20110
-p20110_i1_a5,Illnesses of mother | Instance 1 | Array 5,p20110
-p20110_i1_a6,Illnesses of mother | Instance 1 | Array 6,p20110
-p20110_i1_a7,Illnesses of mother | Instance 1 | Array 7,p20110
-p20110_i1_a8,Illnesses of mother | Instance 1 | Array 8,p20110
-p20110_i1_a9,Illnesses of mother | Instance 1 | Array 9,p20110
-p20110_i1_a10,Illnesses of mother | Instance 1 | Array 10,p20110
-p20110_i2_a0,Illnesses of mother | Instance 2 | Array 0,p20110
-p20110_i2_a1,Illnesses of mother | Instance 2 | Array 1,p20110
-p20110_i2_a2,Illnesses of mother | Instance 2 | Array 2,p20110
-p20110_i2_a3,Illnesses of mother | Instance 2 | Array 3,p20110
-p20110_i2_a4,Illnesses of mother | Instance 2 | Array 4,p20110
-p20110_i2_a5,Illnesses of mother | Instance 2 | Array 5,p20110
-p20110_i2_a6,Illnesses of mother | Instance 2 | Array 6,p20110
-p20110_i2_a7,Illnesses of mother | Instance 2 | Array 7,p20110
-p20110_i2_a8,Illnesses of mother | Instance 2 | Array 8,p20110
-p20110_i2_a9,Illnesses of mother | Instance 2 | Array 9,p20110
-p20110_i2_a10,Illnesses of mother | Instance 2 | Array 10,p20110
-p20110_i3_a0,Illnesses of mother | Instance 3 | Array 0,p20110
-p20110_i3_a1,Illnesses of mother | Instance 3 | Array 1,p20110
-p20110_i3_a2,Illnesses of mother | Instance 3 | Array 2,p20110
-p20110_i3_a3,Illnesses of mother | Instance 3 | Array 3,p20110
-p20110_i3_a4,Illnesses of mother | Instance 3 | Array 4,p20110
-p20110_i3_a5,Illnesses of mother | Instance 3 | Array 5,p20110
-p20110_i3_a6,Illnesses of mother | Instance 3 | Array 6,p20110
-p20110_i3_a7,Illnesses of mother | Instance 3 | Array 7,p20110
-p20110_i3_a8,Illnesses of mother | Instance 3 | Array 8,p20110
-p20110_i3_a9,Illnesses of mother | Instance 3 | Array 9,p20110
-p20110_i3_a10,Illnesses of mother | Instance 3 | Array 10,p20110
-p20111_i0_a0,Illnesses of siblings | Instance 0 | Array 0,p20111
-p20111_i0_a1,Illnesses of siblings | Instance 0 | Array 1,p20111
-p20111_i0_a2,Illnesses of siblings | Instance 0 | Array 2,p20111
-p20111_i0_a3,Illnesses of siblings | Instance 0 | Array 3,p20111
-p20111_i0_a4,Illnesses of siblings | Instance 0 | Array 4,p20111
-p20111_i0_a5,Illnesses of siblings | Instance 0 | Array 5,p20111
-p20111_i0_a6,Illnesses of siblings | Instance 0 | Array 6,p20111
-p20111_i0_a7,Illnesses of siblings | Instance 0 | Array 7,p20111
-p20111_i0_a8,Illnesses of siblings | Instance 0 | Array 8,p20111
-p20111_i0_a9,Illnesses of siblings | Instance 0 | Array 9,p20111
-p20111_i0_a10,Illnesses of siblings | Instance 0 | Array 10,p20111
-p20111_i0_a11,Illnesses of siblings | Instance 0 | Array 11,p20111
-p20111_i1_a0,Illnesses of siblings | Instance 1 | Array 0,p20111
-p20111_i1_a1,Illnesses of siblings | Instance 1 | Array 1,p20111
-p20111_i1_a2,Illnesses of siblings | Instance 1 | Array 2,p20111
-p20111_i1_a3,Illnesses of siblings | Instance 1 | Array 3,p20111
-p20111_i1_a4,Illnesses of siblings | Instance 1 | Array 4,p20111
-p20111_i1_a5,Illnesses of siblings | Instance 1 | Array 5,p20111
-p20111_i1_a6,Illnesses of siblings | Instance 1 | Array 6,p20111
-p20111_i1_a7,Illnesses of siblings | Instance 1 | Array 7,p20111
-p20111_i1_a8,Illnesses of siblings | Instance 1 | Array 8,p20111
-p20111_i1_a9,Illnesses of siblings | Instance 1 | Array 9,p20111
-p20111_i1_a10,Illnesses of siblings | Instance 1 | Array 10,p20111
-p20111_i1_a11,Illnesses of siblings | Instance 1 | Array 11,p20111
-p20111_i2_a0,Illnesses of siblings | Instance 2 | Array 0,p20111
-p20111_i2_a1,Illnesses of siblings | Instance 2 | Array 1,p20111
-p20111_i2_a2,Illnesses of siblings | Instance 2 | Array 2,p20111
-p20111_i2_a3,Illnesses of siblings | Instance 2 | Array 3,p20111
-p20111_i2_a4,Illnesses of siblings | Instance 2 | Array 4,p20111
-p20111_i2_a5,Illnesses of siblings | Instance 2 | Array 5,p20111
-p20111_i2_a6,Illnesses of siblings | Instance 2 | Array 6,p20111
-p20111_i2_a7,Illnesses of siblings | Instance 2 | Array 7,p20111
-p20111_i2_a8,Illnesses of siblings | Instance 2 | Array 8,p20111
-p20111_i2_a9,Illnesses of siblings | Instance 2 | Array 9,p20111
-p20111_i2_a10,Illnesses of siblings | Instance 2 | Array 10,p20111
-p20111_i2_a11,Illnesses of siblings | Instance 2 | Array 11,p20111
-p20111_i3_a0,Illnesses of siblings | Instance 3 | Array 0,p20111
-p20111_i3_a1,Illnesses of siblings | Instance 3 | Array 1,p20111
-p20111_i3_a2,Illnesses of siblings | Instance 3 | Array 2,p20111
-p20111_i3_a3,Illnesses of siblings | Instance 3 | Array 3,p20111
-p20111_i3_a4,Illnesses of siblings | Instance 3 | Array 4,p20111
-p20111_i3_a5,Illnesses of siblings | Instance 3 | Array 5,p20111
-p20111_i3_a6,Illnesses of siblings | Instance 3 | Array 6,p20111
-p20111_i3_a7,Illnesses of siblings | Instance 3 | Array 7,p20111
-p20111_i3_a8,Illnesses of siblings | Instance 3 | Array 8,p20111
-p20111_i3_a9,Illnesses of siblings | Instance 3 | Array 9,p20111
-p20111_i3_a10,Illnesses of siblings | Instance 3 | Array 10,p20111
-p20111_i3_a11,Illnesses of siblings | Instance 3 | Array 11,p20111
+p20107_i0,Illnesses of father | Instance 0,p20107
+p20107_i1,Illnesses of father | Instance 1,p20107
+p20107_i2,Illnesses of father | Instance 2,p20107
+p20107_i3,Illnesses of father | Instance 3,p20107
+p20110_i0,Illnesses of mother | Instance 0,p20110
+p20110_i1,Illnesses of mother | Instance 1,p20110
+p20110_i2,Illnesses of mother | Instance 2,p20110
+p20110_i3,Illnesses of mother | Instance 3,p20110
+p20111_i0,Illnesses of siblings | Instance 0,p20111
+p20111_i1,Illnesses of siblings | Instance 1,p20111
+p20111_i2,Illnesses of siblings | Instance 2,p20111
+p20111_i3,Illnesses of siblings | Instance 3,p20111
 p20116_i0,Smoking status | Instance 0,p20116
 p20116_i1,Smoking status | Instance 1,p20116
 p20116_i2,Smoking status | Instance 2,p20116
@@ -197,6 +68,7 @@ p20403,Amount of alcohol drunk on a typical drinking day,p20403
 p21000_i0,Ethnic background | Instance 0,p21000
 p21000_i1,Ethnic background | Instance 1,p21000
 p21000_i2,Ethnic background | Instance 2,p21000
+p21000_i3,Ethnic background | Instance 3,p21000
 p21022,Age at recruitment,p21022
 p22040_i0,Summed MET minutes per week for all activity | Instance 0,p22040
 p22508,Amount of tobacco currently smoked,p22508
@@ -694,420 +566,9 @@ p26426,Index of Multiple Deprivation (Wales),p26426
 p26427,Index of Multiple Deprivation (Scotland),p26427
 p40000_i0,Date of death | Instance 0,p40000
 p40000_i1,Date of death | Instance 1,p40000
-p41270_a0,Diagnoses - ICD10 | Array 0,p41270
-p41270_a1,Diagnoses - ICD10 | Array 1,p41270
-p41270_a2,Diagnoses - ICD10 | Array 2,p41270
-p41270_a3,Diagnoses - ICD10 | Array 3,p41270
-p41270_a4,Diagnoses - ICD10 | Array 4,p41270
-p41270_a5,Diagnoses - ICD10 | Array 5,p41270
-p41270_a6,Diagnoses - ICD10 | Array 6,p41270
-p41270_a7,Diagnoses - ICD10 | Array 7,p41270
-p41270_a8,Diagnoses - ICD10 | Array 8,p41270
-p41270_a9,Diagnoses - ICD10 | Array 9,p41270
-p41270_a10,Diagnoses - ICD10 | Array 10,p41270
-p41270_a11,Diagnoses - ICD10 | Array 11,p41270
-p41270_a12,Diagnoses - ICD10 | Array 12,p41270
-p41270_a13,Diagnoses - ICD10 | Array 13,p41270
-p41270_a14,Diagnoses - ICD10 | Array 14,p41270
-p41270_a15,Diagnoses - ICD10 | Array 15,p41270
-p41270_a16,Diagnoses - ICD10 | Array 16,p41270
-p41270_a17,Diagnoses - ICD10 | Array 17,p41270
-p41270_a18,Diagnoses - ICD10 | Array 18,p41270
-p41270_a19,Diagnoses - ICD10 | Array 19,p41270
-p41270_a20,Diagnoses - ICD10 | Array 20,p41270
-p41270_a21,Diagnoses - ICD10 | Array 21,p41270
-p41270_a22,Diagnoses - ICD10 | Array 22,p41270
-p41270_a23,Diagnoses - ICD10 | Array 23,p41270
-p41270_a24,Diagnoses - ICD10 | Array 24,p41270
-p41270_a25,Diagnoses - ICD10 | Array 25,p41270
-p41270_a26,Diagnoses - ICD10 | Array 26,p41270
-p41270_a27,Diagnoses - ICD10 | Array 27,p41270
-p41270_a28,Diagnoses - ICD10 | Array 28,p41270
-p41270_a29,Diagnoses - ICD10 | Array 29,p41270
-p41270_a30,Diagnoses - ICD10 | Array 30,p41270
-p41270_a31,Diagnoses - ICD10 | Array 31,p41270
-p41270_a32,Diagnoses - ICD10 | Array 32,p41270
-p41270_a33,Diagnoses - ICD10 | Array 33,p41270
-p41270_a34,Diagnoses - ICD10 | Array 34,p41270
-p41270_a35,Diagnoses - ICD10 | Array 35,p41270
-p41270_a36,Diagnoses - ICD10 | Array 36,p41270
-p41270_a37,Diagnoses - ICD10 | Array 37,p41270
-p41270_a38,Diagnoses - ICD10 | Array 38,p41270
-p41270_a39,Diagnoses - ICD10 | Array 39,p41270
-p41270_a40,Diagnoses - ICD10 | Array 40,p41270
-p41270_a41,Diagnoses - ICD10 | Array 41,p41270
-p41270_a42,Diagnoses - ICD10 | Array 42,p41270
-p41270_a43,Diagnoses - ICD10 | Array 43,p41270
-p41270_a44,Diagnoses - ICD10 | Array 44,p41270
-p41270_a45,Diagnoses - ICD10 | Array 45,p41270
-p41270_a46,Diagnoses - ICD10 | Array 46,p41270
-p41270_a47,Diagnoses - ICD10 | Array 47,p41270
-p41270_a48,Diagnoses - ICD10 | Array 48,p41270
-p41270_a49,Diagnoses - ICD10 | Array 49,p41270
-p41270_a50,Diagnoses - ICD10 | Array 50,p41270
-p41270_a51,Diagnoses - ICD10 | Array 51,p41270
-p41270_a52,Diagnoses - ICD10 | Array 52,p41270
-p41270_a53,Diagnoses - ICD10 | Array 53,p41270
-p41270_a54,Diagnoses - ICD10 | Array 54,p41270
-p41270_a55,Diagnoses - ICD10 | Array 55,p41270
-p41270_a56,Diagnoses - ICD10 | Array 56,p41270
-p41270_a57,Diagnoses - ICD10 | Array 57,p41270
-p41270_a58,Diagnoses - ICD10 | Array 58,p41270
-p41270_a59,Diagnoses - ICD10 | Array 59,p41270
-p41270_a60,Diagnoses - ICD10 | Array 60,p41270
-p41270_a61,Diagnoses - ICD10 | Array 61,p41270
-p41270_a62,Diagnoses - ICD10 | Array 62,p41270
-p41270_a63,Diagnoses - ICD10 | Array 63,p41270
-p41270_a64,Diagnoses - ICD10 | Array 64,p41270
-p41270_a65,Diagnoses - ICD10 | Array 65,p41270
-p41270_a66,Diagnoses - ICD10 | Array 66,p41270
-p41270_a67,Diagnoses - ICD10 | Array 67,p41270
-p41270_a68,Diagnoses - ICD10 | Array 68,p41270
-p41270_a69,Diagnoses - ICD10 | Array 69,p41270
-p41270_a70,Diagnoses - ICD10 | Array 70,p41270
-p41270_a71,Diagnoses - ICD10 | Array 71,p41270
-p41270_a72,Diagnoses - ICD10 | Array 72,p41270
-p41270_a73,Diagnoses - ICD10 | Array 73,p41270
-p41270_a74,Diagnoses - ICD10 | Array 74,p41270
-p41270_a75,Diagnoses - ICD10 | Array 75,p41270
-p41270_a76,Diagnoses - ICD10 | Array 76,p41270
-p41270_a77,Diagnoses - ICD10 | Array 77,p41270
-p41270_a78,Diagnoses - ICD10 | Array 78,p41270
-p41270_a79,Diagnoses - ICD10 | Array 79,p41270
-p41270_a80,Diagnoses - ICD10 | Array 80,p41270
-p41270_a81,Diagnoses - ICD10 | Array 81,p41270
-p41270_a82,Diagnoses - ICD10 | Array 82,p41270
-p41270_a83,Diagnoses - ICD10 | Array 83,p41270
-p41270_a84,Diagnoses - ICD10 | Array 84,p41270
-p41270_a85,Diagnoses - ICD10 | Array 85,p41270
-p41270_a86,Diagnoses - ICD10 | Array 86,p41270
-p41270_a87,Diagnoses - ICD10 | Array 87,p41270
-p41270_a88,Diagnoses - ICD10 | Array 88,p41270
-p41270_a89,Diagnoses - ICD10 | Array 89,p41270
-p41270_a90,Diagnoses - ICD10 | Array 90,p41270
-p41270_a91,Diagnoses - ICD10 | Array 91,p41270
-p41270_a92,Diagnoses - ICD10 | Array 92,p41270
-p41270_a93,Diagnoses - ICD10 | Array 93,p41270
-p41270_a94,Diagnoses - ICD10 | Array 94,p41270
-p41270_a95,Diagnoses - ICD10 | Array 95,p41270
-p41270_a96,Diagnoses - ICD10 | Array 96,p41270
-p41270_a97,Diagnoses - ICD10 | Array 97,p41270
-p41270_a98,Diagnoses - ICD10 | Array 98,p41270
-p41270_a99,Diagnoses - ICD10 | Array 99,p41270
-p41270_a100,Diagnoses - ICD10 | Array 100,p41270
-p41270_a101,Diagnoses - ICD10 | Array 101,p41270
-p41270_a102,Diagnoses - ICD10 | Array 102,p41270
-p41270_a103,Diagnoses - ICD10 | Array 103,p41270
-p41270_a104,Diagnoses - ICD10 | Array 104,p41270
-p41270_a105,Diagnoses - ICD10 | Array 105,p41270
-p41270_a106,Diagnoses - ICD10 | Array 106,p41270
-p41270_a107,Diagnoses - ICD10 | Array 107,p41270
-p41270_a108,Diagnoses - ICD10 | Array 108,p41270
-p41270_a109,Diagnoses - ICD10 | Array 109,p41270
-p41270_a110,Diagnoses - ICD10 | Array 110,p41270
-p41270_a111,Diagnoses - ICD10 | Array 111,p41270
-p41270_a112,Diagnoses - ICD10 | Array 112,p41270
-p41270_a113,Diagnoses - ICD10 | Array 113,p41270
-p41270_a114,Diagnoses - ICD10 | Array 114,p41270
-p41270_a115,Diagnoses - ICD10 | Array 115,p41270
-p41270_a116,Diagnoses - ICD10 | Array 116,p41270
-p41270_a117,Diagnoses - ICD10 | Array 117,p41270
-p41270_a118,Diagnoses - ICD10 | Array 118,p41270
-p41270_a119,Diagnoses - ICD10 | Array 119,p41270
-p41270_a120,Diagnoses - ICD10 | Array 120,p41270
-p41270_a121,Diagnoses - ICD10 | Array 121,p41270
-p41270_a122,Diagnoses - ICD10 | Array 122,p41270
-p41270_a123,Diagnoses - ICD10 | Array 123,p41270
-p41270_a124,Diagnoses - ICD10 | Array 124,p41270
-p41270_a125,Diagnoses - ICD10 | Array 125,p41270
-p41270_a126,Diagnoses - ICD10 | Array 126,p41270
-p41270_a127,Diagnoses - ICD10 | Array 127,p41270
-p41270_a128,Diagnoses - ICD10 | Array 128,p41270
-p41270_a129,Diagnoses - ICD10 | Array 129,p41270
-p41270_a130,Diagnoses - ICD10 | Array 130,p41270
-p41270_a131,Diagnoses - ICD10 | Array 131,p41270
-p41270_a132,Diagnoses - ICD10 | Array 132,p41270
-p41270_a133,Diagnoses - ICD10 | Array 133,p41270
-p41270_a134,Diagnoses - ICD10 | Array 134,p41270
-p41270_a135,Diagnoses - ICD10 | Array 135,p41270
-p41270_a136,Diagnoses - ICD10 | Array 136,p41270
-p41270_a137,Diagnoses - ICD10 | Array 137,p41270
-p41270_a138,Diagnoses - ICD10 | Array 138,p41270
-p41270_a139,Diagnoses - ICD10 | Array 139,p41270
-p41270_a140,Diagnoses - ICD10 | Array 140,p41270
-p41270_a141,Diagnoses - ICD10 | Array 141,p41270
-p41270_a142,Diagnoses - ICD10 | Array 142,p41270
-p41270_a143,Diagnoses - ICD10 | Array 143,p41270
-p41270_a144,Diagnoses - ICD10 | Array 144,p41270
-p41270_a145,Diagnoses - ICD10 | Array 145,p41270
-p41270_a146,Diagnoses - ICD10 | Array 146,p41270
-p41270_a147,Diagnoses - ICD10 | Array 147,p41270
-p41270_a148,Diagnoses - ICD10 | Array 148,p41270
-p41270_a149,Diagnoses - ICD10 | Array 149,p41270
-p41270_a150,Diagnoses - ICD10 | Array 150,p41270
-p41270_a151,Diagnoses - ICD10 | Array 151,p41270
-p41270_a152,Diagnoses - ICD10 | Array 152,p41270
-p41270_a153,Diagnoses - ICD10 | Array 153,p41270
-p41270_a154,Diagnoses - ICD10 | Array 154,p41270
-p41270_a155,Diagnoses - ICD10 | Array 155,p41270
-p41270_a156,Diagnoses - ICD10 | Array 156,p41270
-p41270_a157,Diagnoses - ICD10 | Array 157,p41270
-p41270_a158,Diagnoses - ICD10 | Array 158,p41270
-p41270_a159,Diagnoses - ICD10 | Array 159,p41270
-p41270_a160,Diagnoses - ICD10 | Array 160,p41270
-p41270_a161,Diagnoses - ICD10 | Array 161,p41270
-p41270_a162,Diagnoses - ICD10 | Array 162,p41270
-p41270_a163,Diagnoses - ICD10 | Array 163,p41270
-p41270_a164,Diagnoses - ICD10 | Array 164,p41270
-p41270_a165,Diagnoses - ICD10 | Array 165,p41270
-p41270_a166,Diagnoses - ICD10 | Array 166,p41270
-p41270_a167,Diagnoses - ICD10 | Array 167,p41270
-p41270_a168,Diagnoses - ICD10 | Array 168,p41270
-p41270_a169,Diagnoses - ICD10 | Array 169,p41270
-p41270_a170,Diagnoses - ICD10 | Array 170,p41270
-p41270_a171,Diagnoses - ICD10 | Array 171,p41270
-p41270_a172,Diagnoses - ICD10 | Array 172,p41270
-p41270_a173,Diagnoses - ICD10 | Array 173,p41270
-p41270_a174,Diagnoses - ICD10 | Array 174,p41270
-p41270_a175,Diagnoses - ICD10 | Array 175,p41270
-p41270_a176,Diagnoses - ICD10 | Array 176,p41270
-p41270_a177,Diagnoses - ICD10 | Array 177,p41270
-p41270_a178,Diagnoses - ICD10 | Array 178,p41270
-p41270_a179,Diagnoses - ICD10 | Array 179,p41270
-p41270_a180,Diagnoses - ICD10 | Array 180,p41270
-p41270_a181,Diagnoses - ICD10 | Array 181,p41270
-p41270_a182,Diagnoses - ICD10 | Array 182,p41270
-p41270_a183,Diagnoses - ICD10 | Array 183,p41270
-p41270_a184,Diagnoses - ICD10 | Array 184,p41270
-p41270_a185,Diagnoses - ICD10 | Array 185,p41270
-p41270_a186,Diagnoses - ICD10 | Array 186,p41270
-p41270_a187,Diagnoses - ICD10 | Array 187,p41270
-p41270_a188,Diagnoses - ICD10 | Array 188,p41270
-p41270_a189,Diagnoses - ICD10 | Array 189,p41270
-p41270_a190,Diagnoses - ICD10 | Array 190,p41270
-p41270_a191,Diagnoses - ICD10 | Array 191,p41270
-p41270_a192,Diagnoses - ICD10 | Array 192,p41270
-p41270_a193,Diagnoses - ICD10 | Array 193,p41270
-p41270_a194,Diagnoses - ICD10 | Array 194,p41270
-p41270_a195,Diagnoses - ICD10 | Array 195,p41270
-p41270_a196,Diagnoses - ICD10 | Array 196,p41270
-p41270_a197,Diagnoses - ICD10 | Array 197,p41270
-p41270_a198,Diagnoses - ICD10 | Array 198,p41270
-p41270_a199,Diagnoses - ICD10 | Array 199,p41270
-p41270_a200,Diagnoses - ICD10 | Array 200,p41270
-p41270_a201,Diagnoses - ICD10 | Array 201,p41270
-p41270_a202,Diagnoses - ICD10 | Array 202,p41270
-p41270_a203,Diagnoses - ICD10 | Array 203,p41270
-p41270_a204,Diagnoses - ICD10 | Array 204,p41270
-p41270_a205,Diagnoses - ICD10 | Array 205,p41270
-p41270_a206,Diagnoses - ICD10 | Array 206,p41270
-p41270_a207,Diagnoses - ICD10 | Array 207,p41270
-p41270_a208,Diagnoses - ICD10 | Array 208,p41270
-p41270_a209,Diagnoses - ICD10 | Array 209,p41270
-p41270_a210,Diagnoses - ICD10 | Array 210,p41270
-p41270_a211,Diagnoses - ICD10 | Array 211,p41270
-p41270_a212,Diagnoses - ICD10 | Array 212,p41270
-p41270_a213,Diagnoses - ICD10 | Array 213,p41270
-p41270_a214,Diagnoses - ICD10 | Array 214,p41270
-p41270_a215,Diagnoses - ICD10 | Array 215,p41270
-p41270_a216,Diagnoses - ICD10 | Array 216,p41270
-p41270_a217,Diagnoses - ICD10 | Array 217,p41270
-p41270_a218,Diagnoses - ICD10 | Array 218,p41270
-p41270_a219,Diagnoses - ICD10 | Array 219,p41270
-p41270_a220,Diagnoses - ICD10 | Array 220,p41270
-p41270_a221,Diagnoses - ICD10 | Array 221,p41270
-p41270_a222,Diagnoses - ICD10 | Array 222,p41270
-p41270_a223,Diagnoses - ICD10 | Array 223,p41270
-p41270_a224,Diagnoses - ICD10 | Array 224,p41270
-p41270_a225,Diagnoses - ICD10 | Array 225,p41270
-p41270_a226,Diagnoses - ICD10 | Array 226,p41270
-p41270_a227,Diagnoses - ICD10 | Array 227,p41270
-p41270_a228,Diagnoses - ICD10 | Array 228,p41270
-p41270_a229,Diagnoses - ICD10 | Array 229,p41270
-p41270_a230,Diagnoses - ICD10 | Array 230,p41270
-p41270_a231,Diagnoses - ICD10 | Array 231,p41270
-p41270_a232,Diagnoses - ICD10 | Array 232,p41270
-p41270_a233,Diagnoses - ICD10 | Array 233,p41270
-p41270_a234,Diagnoses - ICD10 | Array 234,p41270
-p41270_a235,Diagnoses - ICD10 | Array 235,p41270
-p41270_a236,Diagnoses - ICD10 | Array 236,p41270
-p41270_a237,Diagnoses - ICD10 | Array 237,p41270
-p41270_a238,Diagnoses - ICD10 | Array 238,p41270
-p41270_a239,Diagnoses - ICD10 | Array 239,p41270
-p41270_a240,Diagnoses - ICD10 | Array 240,p41270
-p41270_a241,Diagnoses - ICD10 | Array 241,p41270
-p41270_a242,Diagnoses - ICD10 | Array 242,p41270
-p41271_a0,Diagnoses - ICD9 | Array 0,p41271
-p41271_a1,Diagnoses - ICD9 | Array 1,p41271
-p41271_a2,Diagnoses - ICD9 | Array 2,p41271
-p41271_a3,Diagnoses - ICD9 | Array 3,p41271
-p41271_a4,Diagnoses - ICD9 | Array 4,p41271
-p41271_a5,Diagnoses - ICD9 | Array 5,p41271
-p41271_a6,Diagnoses - ICD9 | Array 6,p41271
-p41271_a7,Diagnoses - ICD9 | Array 7,p41271
-p41271_a8,Diagnoses - ICD9 | Array 8,p41271
-p41271_a9,Diagnoses - ICD9 | Array 9,p41271
-p41271_a10,Diagnoses - ICD9 | Array 10,p41271
-p41271_a11,Diagnoses - ICD9 | Array 11,p41271
-p41271_a12,Diagnoses - ICD9 | Array 12,p41271
-p41271_a13,Diagnoses - ICD9 | Array 13,p41271
-p41271_a14,Diagnoses - ICD9 | Array 14,p41271
-p41271_a15,Diagnoses - ICD9 | Array 15,p41271
-p41271_a16,Diagnoses - ICD9 | Array 16,p41271
-p41271_a17,Diagnoses - ICD9 | Array 17,p41271
-p41271_a18,Diagnoses - ICD9 | Array 18,p41271
-p41271_a19,Diagnoses - ICD9 | Array 19,p41271
-p41271_a20,Diagnoses - ICD9 | Array 20,p41271
-p41271_a21,Diagnoses - ICD9 | Array 21,p41271
-p41271_a22,Diagnoses - ICD9 | Array 22,p41271
-p41271_a23,Diagnoses - ICD9 | Array 23,p41271
-p41271_a24,Diagnoses - ICD9 | Array 24,p41271
-p41271_a25,Diagnoses - ICD9 | Array 25,p41271
-p41271_a26,Diagnoses - ICD9 | Array 26,p41271
-p41271_a27,Diagnoses - ICD9 | Array 27,p41271
-p41271_a28,Diagnoses - ICD9 | Array 28,p41271
-p41271_a29,Diagnoses - ICD9 | Array 29,p41271
-p41271_a30,Diagnoses - ICD9 | Array 30,p41271
-p41271_a31,Diagnoses - ICD9 | Array 31,p41271
-p41271_a32,Diagnoses - ICD9 | Array 32,p41271
-p41271_a33,Diagnoses - ICD9 | Array 33,p41271
-p41271_a34,Diagnoses - ICD9 | Array 34,p41271
-p41271_a35,Diagnoses - ICD9 | Array 35,p41271
-p41271_a36,Diagnoses - ICD9 | Array 36,p41271
-p41271_a37,Diagnoses - ICD9 | Array 37,p41271
-p41271_a38,Diagnoses - ICD9 | Array 38,p41271
-p41271_a39,Diagnoses - ICD9 | Array 39,p41271
-p41271_a40,Diagnoses - ICD9 | Array 40,p41271
-p41271_a41,Diagnoses - ICD9 | Array 41,p41271
-p41271_a42,Diagnoses - ICD9 | Array 42,p41271
-p41271_a43,Diagnoses - ICD9 | Array 43,p41271
-p41271_a44,Diagnoses - ICD9 | Array 44,p41271
-p41271_a45,Diagnoses - ICD9 | Array 45,p41271
-p41271_a46,Diagnoses - ICD9 | Array 46,p41271
-p41272_a0,Operative procedures - OPCS4 | Array 0,p41272
-p41272_a1,Operative procedures - OPCS4 | Array 1,p41272
-p41272_a2,Operative procedures - OPCS4 | Array 2,p41272
-p41272_a3,Operative procedures - OPCS4 | Array 3,p41272
-p41272_a4,Operative procedures - OPCS4 | Array 4,p41272
-p41272_a5,Operative procedures - OPCS4 | Array 5,p41272
-p41272_a6,Operative procedures - OPCS4 | Array 6,p41272
-p41272_a7,Operative procedures - OPCS4 | Array 7,p41272
-p41272_a8,Operative procedures - OPCS4 | Array 8,p41272
-p41272_a9,Operative procedures - OPCS4 | Array 9,p41272
-p41272_a10,Operative procedures - OPCS4 | Array 10,p41272
-p41272_a11,Operative procedures - OPCS4 | Array 11,p41272
-p41272_a12,Operative procedures - OPCS4 | Array 12,p41272
-p41272_a13,Operative procedures - OPCS4 | Array 13,p41272
-p41272_a14,Operative procedures - OPCS4 | Array 14,p41272
-p41272_a15,Operative procedures - OPCS4 | Array 15,p41272
-p41272_a16,Operative procedures - OPCS4 | Array 16,p41272
-p41272_a17,Operative procedures - OPCS4 | Array 17,p41272
-p41272_a18,Operative procedures - OPCS4 | Array 18,p41272
-p41272_a19,Operative procedures - OPCS4 | Array 19,p41272
-p41272_a20,Operative procedures - OPCS4 | Array 20,p41272
-p41272_a21,Operative procedures - OPCS4 | Array 21,p41272
-p41272_a22,Operative procedures - OPCS4 | Array 22,p41272
-p41272_a23,Operative procedures - OPCS4 | Array 23,p41272
-p41272_a24,Operative procedures - OPCS4 | Array 24,p41272
-p41272_a25,Operative procedures - OPCS4 | Array 25,p41272
-p41272_a26,Operative procedures - OPCS4 | Array 26,p41272
-p41272_a27,Operative procedures - OPCS4 | Array 27,p41272
-p41272_a28,Operative procedures - OPCS4 | Array 28,p41272
-p41272_a29,Operative procedures - OPCS4 | Array 29,p41272
-p41272_a30,Operative procedures - OPCS4 | Array 30,p41272
-p41272_a31,Operative procedures - OPCS4 | Array 31,p41272
-p41272_a32,Operative procedures - OPCS4 | Array 32,p41272
-p41272_a33,Operative procedures - OPCS4 | Array 33,p41272
-p41272_a34,Operative procedures - OPCS4 | Array 34,p41272
-p41272_a35,Operative procedures - OPCS4 | Array 35,p41272
-p41272_a36,Operative procedures - OPCS4 | Array 36,p41272
-p41272_a37,Operative procedures - OPCS4 | Array 37,p41272
-p41272_a38,Operative procedures - OPCS4 | Array 38,p41272
-p41272_a39,Operative procedures - OPCS4 | Array 39,p41272
-p41272_a40,Operative procedures - OPCS4 | Array 40,p41272
-p41272_a41,Operative procedures - OPCS4 | Array 41,p41272
-p41272_a42,Operative procedures - OPCS4 | Array 42,p41272
-p41272_a43,Operative procedures - OPCS4 | Array 43,p41272
-p41272_a44,Operative procedures - OPCS4 | Array 44,p41272
-p41272_a45,Operative procedures - OPCS4 | Array 45,p41272
-p41272_a46,Operative procedures - OPCS4 | Array 46,p41272
-p41272_a47,Operative procedures - OPCS4 | Array 47,p41272
-p41272_a48,Operative procedures - OPCS4 | Array 48,p41272
-p41272_a49,Operative procedures - OPCS4 | Array 49,p41272
-p41272_a50,Operative procedures - OPCS4 | Array 50,p41272
-p41272_a51,Operative procedures - OPCS4 | Array 51,p41272
-p41272_a52,Operative procedures - OPCS4 | Array 52,p41272
-p41272_a53,Operative procedures - OPCS4 | Array 53,p41272
-p41272_a54,Operative procedures - OPCS4 | Array 54,p41272
-p41272_a55,Operative procedures - OPCS4 | Array 55,p41272
-p41272_a56,Operative procedures - OPCS4 | Array 56,p41272
-p41272_a57,Operative procedures - OPCS4 | Array 57,p41272
-p41272_a58,Operative procedures - OPCS4 | Array 58,p41272
-p41272_a59,Operative procedures - OPCS4 | Array 59,p41272
-p41272_a60,Operative procedures - OPCS4 | Array 60,p41272
-p41272_a61,Operative procedures - OPCS4 | Array 61,p41272
-p41272_a62,Operative procedures - OPCS4 | Array 62,p41272
-p41272_a63,Operative procedures - OPCS4 | Array 63,p41272
-p41272_a64,Operative procedures - OPCS4 | Array 64,p41272
-p41272_a65,Operative procedures - OPCS4 | Array 65,p41272
-p41272_a66,Operative procedures - OPCS4 | Array 66,p41272
-p41272_a67,Operative procedures - OPCS4 | Array 67,p41272
-p41272_a68,Operative procedures - OPCS4 | Array 68,p41272
-p41272_a69,Operative procedures - OPCS4 | Array 69,p41272
-p41272_a70,Operative procedures - OPCS4 | Array 70,p41272
-p41272_a71,Operative procedures - OPCS4 | Array 71,p41272
-p41272_a72,Operative procedures - OPCS4 | Array 72,p41272
-p41272_a73,Operative procedures - OPCS4 | Array 73,p41272
-p41272_a74,Operative procedures - OPCS4 | Array 74,p41272
-p41272_a75,Operative procedures - OPCS4 | Array 75,p41272
-p41272_a76,Operative procedures - OPCS4 | Array 76,p41272
-p41272_a77,Operative procedures - OPCS4 | Array 77,p41272
-p41272_a78,Operative procedures - OPCS4 | Array 78,p41272
-p41272_a79,Operative procedures - OPCS4 | Array 79,p41272
-p41272_a80,Operative procedures - OPCS4 | Array 80,p41272
-p41272_a81,Operative procedures - OPCS4 | Array 81,p41272
-p41272_a82,Operative procedures - OPCS4 | Array 82,p41272
-p41272_a83,Operative procedures - OPCS4 | Array 83,p41272
-p41272_a84,Operative procedures - OPCS4 | Array 84,p41272
-p41272_a85,Operative procedures - OPCS4 | Array 85,p41272
-p41272_a86,Operative procedures - OPCS4 | Array 86,p41272
-p41272_a87,Operative procedures - OPCS4 | Array 87,p41272
-p41272_a88,Operative procedures - OPCS4 | Array 88,p41272
-p41272_a89,Operative procedures - OPCS4 | Array 89,p41272
-p41272_a90,Operative procedures - OPCS4 | Array 90,p41272
-p41272_a91,Operative procedures - OPCS4 | Array 91,p41272
-p41272_a92,Operative procedures - OPCS4 | Array 92,p41272
-p41272_a93,Operative procedures - OPCS4 | Array 93,p41272
-p41272_a94,Operative procedures - OPCS4 | Array 94,p41272
-p41272_a95,Operative procedures - OPCS4 | Array 95,p41272
-p41272_a96,Operative procedures - OPCS4 | Array 96,p41272
-p41272_a97,Operative procedures - OPCS4 | Array 97,p41272
-p41272_a98,Operative procedures - OPCS4 | Array 98,p41272
-p41272_a99,Operative procedures - OPCS4 | Array 99,p41272
-p41272_a100,Operative procedures - OPCS4 | Array 100,p41272
-p41272_a101,Operative procedures - OPCS4 | Array 101,p41272
-p41272_a102,Operative procedures - OPCS4 | Array 102,p41272
-p41272_a103,Operative procedures - OPCS4 | Array 103,p41272
-p41272_a104,Operative procedures - OPCS4 | Array 104,p41272
-p41272_a105,Operative procedures - OPCS4 | Array 105,p41272
-p41272_a106,Operative procedures - OPCS4 | Array 106,p41272
-p41272_a107,Operative procedures - OPCS4 | Array 107,p41272
-p41272_a108,Operative procedures - OPCS4 | Array 108,p41272
-p41272_a109,Operative procedures - OPCS4 | Array 109,p41272
-p41272_a110,Operative procedures - OPCS4 | Array 110,p41272
-p41272_a111,Operative procedures - OPCS4 | Array 111,p41272
-p41272_a112,Operative procedures - OPCS4 | Array 112,p41272
-p41272_a113,Operative procedures - OPCS4 | Array 113,p41272
-p41272_a114,Operative procedures - OPCS4 | Array 114,p41272
-p41272_a115,Operative procedures - OPCS4 | Array 115,p41272
-p41272_a116,Operative procedures - OPCS4 | Array 116,p41272
-p41272_a117,Operative procedures - OPCS4 | Array 117,p41272
-p41272_a118,Operative procedures - OPCS4 | Array 118,p41272
-p41272_a119,Operative procedures - OPCS4 | Array 119,p41272
-p41272_a120,Operative procedures - OPCS4 | Array 120,p41272
-p41272_a121,Operative procedures - OPCS4 | Array 121,p41272
-p41272_a122,Operative procedures - OPCS4 | Array 122,p41272
-p41272_a123,Operative procedures - OPCS4 | Array 123,p41272
+p41270,Diagnoses - ICD10,p41270
+p41271,Diagnoses - ICD9,p41271
+p41272,Operative procedures - OPCS4,p41272
 p41280_a0,Date of first in-patient diagnosis - ICD10 | Array 0,p41280
 p41280_a1,Date of first in-patient diagnosis - ICD10 | Array 1,p41280
 p41280_a2,Date of first in-patient diagnosis - ICD10 | Array 2,p41280
@@ -1351,6 +812,22 @@ p41280_a239,Date of first in-patient diagnosis - ICD10 | Array 239,p41280
 p41280_a240,Date of first in-patient diagnosis - ICD10 | Array 240,p41280
 p41280_a241,Date of first in-patient diagnosis - ICD10 | Array 241,p41280
 p41280_a242,Date of first in-patient diagnosis - ICD10 | Array 242,p41280
+p41280_a243,Date of first in-patient diagnosis - ICD10 | Array 243,p41280
+p41280_a244,Date of first in-patient diagnosis - ICD10 | Array 244,p41280
+p41280_a245,Date of first in-patient diagnosis - ICD10 | Array 245,p41280
+p41280_a246,Date of first in-patient diagnosis - ICD10 | Array 246,p41280
+p41280_a247,Date of first in-patient diagnosis - ICD10 | Array 247,p41280
+p41280_a248,Date of first in-patient diagnosis - ICD10 | Array 248,p41280
+p41280_a249,Date of first in-patient diagnosis - ICD10 | Array 249,p41280
+p41280_a250,Date of first in-patient diagnosis - ICD10 | Array 250,p41280
+p41280_a251,Date of first in-patient diagnosis - ICD10 | Array 251,p41280
+p41280_a252,Date of first in-patient diagnosis - ICD10 | Array 252,p41280
+p41280_a253,Date of first in-patient diagnosis - ICD10 | Array 253,p41280
+p41280_a254,Date of first in-patient diagnosis - ICD10 | Array 254,p41280
+p41280_a255,Date of first in-patient diagnosis - ICD10 | Array 255,p41280
+p41280_a256,Date of first in-patient diagnosis - ICD10 | Array 256,p41280
+p41280_a257,Date of first in-patient diagnosis - ICD10 | Array 257,p41280
+p41280_a258,Date of first in-patient diagnosis - ICD10 | Array 258,p41280
 p41281_a0,Date of first in-patient diagnosis - ICD9 | Array 0,p41281
 p41281_a1,Date of first in-patient diagnosis - ICD9 | Array 1,p41281
 p41281_a2,Date of first in-patient diagnosis - ICD9 | Array 2,p41281
@@ -1522,6 +999,8 @@ p41282_a120,Date of first operative procedure - OPCS4 | Array 120,p41282
 p41282_a121,Date of first operative procedure - OPCS4 | Array 121,p41282
 p41282_a122,Date of first operative procedure - OPCS4 | Array 122,p41282
 p41282_a123,Date of first operative procedure - OPCS4 | Array 123,p41282
+p41282_a124,Date of first operative procedure - OPCS4 | Array 124,p41282
+p41282_a125,Date of first operative procedure - OPCS4 | Array 125,p41282
 p100001_i0,Food weight | Instance 0,p100001
 p100001_i1,Food weight | Instance 1,p100001
 p100001_i2,Food weight | Instance 2,p100001
