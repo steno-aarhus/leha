@@ -54,7 +54,7 @@ in the title.*
 
 Western diets has been shown to cause a multitude of non-communicable
 diseases. Metabolic dysfunction-associated steatotic liver disease
-(MASLD) is the leading chronic disease globally and strongly associated
+(MAFLD) is the leading chronic disease globally and strongly associated
 with Western dietary patterns. Based on a combined environmental and
 health related focus, legumes are increasingly being recommended as a
 meat substitute, and this study therefore investigates the association
@@ -165,28 +165,18 @@ For instance, include that it is a cohort and cross-sectional (most
 likely).
 :::
 
-**Study population and setting** slret kursiv
+**Study population and setting**
 
 The initial recruitment of participants for the UK Biobank started in
 2006 and ran until June 2010. Of 9.2 million people identified from the
 National Health Service registers and invited to participate in the
 study, 5.5% participated, approximately 500,000 participants, aged 37-73
 years at baseline. The study protocol and more information are available
-elsewhere (41, 42). *At baseline, participants provided detailed
-information on several sociodemographic, physical, lifestyle, and
-health-related characteristics via self-completed touch-screen
-questionnaires and a computer assisted personal interview (43).
-Professionally trained staff did physical, anthropometric, and
-biomedical measures following standardized procedures (41). Diet was
-assessed through a touchscreen questionnaire at baseline and a 24-hour
-dietary assessment tool designed for the UK Biobank study. The 24-hour
-dietary assessment tool was completed by participants up to five times
-and 210,965 individuals completed one or more 24-hour dietary
-assessments (44).* All participants gave written, informed consent prior
-to baseline, and the study was approved by the National Information
-Governance Board for Health and Social Care and the National Health
-Service North West Multicentre Research Ethics Committee (reference
-number 06/MRE08/65).
+elsewhere (41, 42). All participants gave written, informed consent
+prior to baseline, and the study was approved by the National
+Information Governance Board for Health and Social Care and the National
+Health Service North West Multicentre Research Ethics Committee
+(reference number 06/MRE08/65).
 
 # Sampling plan
 
@@ -224,31 +214,18 @@ this way, we feel pre-analysis bias is minimal.
 
 ## Data collection procedures
 
-**Study population and setting** SLET kursiv
+**Study population and setting**
 
-*The initial recruitment of participants for the UK Biobank started in
-2006 and ran until June 2010. Of 9.2 million people identified from the
-National Health Service registers and invited to participate in the
-study, 5.5% participated, approximately 500,000 participants, aged 37-73
-years at baseline. The study protocol and more information are available
-elsewhere (41, 42).* At baseline, participants provided detailed
-information on several sociodemographic, physical, lifestyle, and
-health-related characteristics via self-completed touch-screen
-questionnaires and a computer assisted personal interview (43).
-Professionally trained staff did physical, anthropometric, and
-biomedical measures following standardized procedures (41). Diet was
-assessed through a touchscreen questionnaire at baseline and a 24-hour
-dietary assessment tool designed for the UK Biobank study. The 24-hour
-dietary assessment tool was completed by participants up to five times
-and 210,965 individuals completed one or more 24-hour dietary
-assessments (44). *All participants gave written, informed consent prior
-to baseline, and the study was approved by the National Information
-Governance Board for Health and Social Care and the National Health
-Service North West Multicentre Research Ethics Committee (reference
-number 06/MRE08/65). For this cohort study, only participants with two
-or more 24 h dietary assessments will be included in the analyses, while
-missing information on covariates will be filled in by statistical
-imputations where applicable.*
+At baseline, participants provided detailed information on several
+sociodemographic, physical, lifestyle, and health-related
+characteristics via self-completed touch-screen questionnaires and a
+computer assisted personal interview (43). Professionally trained staff
+did physical, anthropometric, and biomedical measures following
+standardized procedures (41). Diet was assessed through a touchscreen
+questionnaire at baseline and a 24-hour dietary assessment tool designed
+for the UK Biobank study. The 24-hour dietary assessment tool was
+completed by participants up to five times and 210,965 individuals
+completed one or more 24-hour dietary assessments (44).
 
 **Assessment of diet**
 
@@ -310,11 +287,11 @@ cases of MASLD are diagnosed based on ICD-10-code for NAFLD, K76.0, at
 first admission to hospital, while incident cases of MASH are diagnosed
 based on ICD-10-code for NASH, K75.8 (52).
 
-**Covariates** omskriv det med DAG
+**Covariates**
 
-The directed acyclic graph presented below (Figure 1) illustrates the
-potential and known association between covariates of the association
-between legume consumption and development of MASLD and NASH.
+Directed acyclic graphs were used to illustrate the potential and known
+association between covariates of the association between substituting
+meat, poultry or fish for legumes and development of MAFLD and MASH.
 Information on covariates will include information on all other dietary
 components based on total weight by food group intakes as g/day and
 kcal/day retrieved from the Oxford WebQ (fruits, vegetables, cereal
@@ -355,7 +332,10 @@ know your sample size.
 For this cohort study, only participants with two or more 24 h dietary
 assessments will be included in the analyses, while missing information
 on covariates will be filled in by statistical imputations where
-applicable. Er der nogle eksklusionskriterier? Beskriv dem her
+applicable. Individuals with alcohol intakes exceeding the 90th
+percentile will be excluded from the study to mitigate the risk of
+misclassifying the outcome by eliminating those with alcoholic fatty
+liver disease.
 
 ## Sample size rationale
 
@@ -373,7 +353,19 @@ available in the UK Biobank.
 List the exposure(s), outcome(s), and covariates
 :::
 
-Liste med eksponering, udfald, covariate
+**Exposures:** g/day and kcal/day consumption of legumes, meats,
+poultry, and fish
+
+**Outcomes:** metabolic dysfunction-associated fatty liver disease
+(MAFLD) and metabolic dysfunction-associated steatohepatitis (MASH)
+
+**Covariates:** g/day and kcal/day consumption of fruits, vegetables,
+cereal products, dairy products, egg products, nuts, mixed dishes,
+condiments, added sugar and sweets, non-alcoholic beverages, and
+alcoholic beverages. Sex, age, ethnic group, Townsend deprivation score,
+educational level, geographical region of recruitment (ten UK regions),
+lives with a wife or partner, BMI, physical activity, smoking status,
+and self-reported diabetes, hypertension, and high cholesterol.
 
 # Analysis plan
 
