@@ -27,6 +27,19 @@ table[2,1]glue("{x} ({lower};{upper})") #this will glue estimates defined earlie
 table<-data.frame(table)
 kable(table,"oprionshere")
 
+
+# Set survival time beginning and end
+# Age
+# How can I combine month and year of birth ?
+p34,Year of birth,502408,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=34
+p52,Month of birth,502408,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=52
+
+data <- data %>%
+    mutate(
+        birthday =
+    )
+
+# Entry into follow-up time should be middle of birthmonth
 #Cox regression
 # Examples:
 # cox <- coxph(Surv(time,event= death) ~ cenc0, <-- alle variable i modellen (kost, bælg, confoundere) kød/fisk/poultry er ikke med som variabel i analysen. Her skal man skalere sit indtag så det passer med modellen, fx pr 30g eller 30kcal
