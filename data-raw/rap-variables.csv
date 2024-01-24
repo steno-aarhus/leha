@@ -8,18 +8,6 @@ p738_i0,Average total household income before tax | Instance 0,p738
 p738_i1,Average total household income before tax | Instance 1,p738
 p738_i2,Average total household income before tax | Instance 2,p738
 p738_i3,Average total household income before tax | Instance 3,p738
-p1239_i0,Current tobacco smoking | Instance 0,p1239
-p1239_i1,Current tobacco smoking | Instance 1,p1239
-p1239_i2,Current tobacco smoking | Instance 2,p1239
-p1239_i3,Current tobacco smoking | Instance 3,p1239
-p1538_i0,Major dietary changes in the last 5 years | Instance 0,p1538
-p1538_i1,Major dietary changes in the last 5 years | Instance 1,p1538
-p1538_i2,Major dietary changes in the last 5 years | Instance 2,p1538
-p1538_i3,Major dietary changes in the last 5 years | Instance 3,p1538
-p1548_i0,Variation in diet | Instance 0,p1548
-p1548_i1,Variation in diet | Instance 1,p1548
-p1548_i2,Variation in diet | Instance 2,p1548
-p1548_i3,Variation in diet | Instance 3,p1548
 p2443_i0,Diabetes diagnosed by doctor | Instance 0,p2443
 p2443_i1,Diabetes diagnosed by doctor | Instance 1,p2443
 p2443_i2,Diabetes diagnosed by doctor | Instance 2,p2443
@@ -60,10 +48,6 @@ p20161_i0,Pack years of smoking | Instance 0,p20161
 p20161_i1,Pack years of smoking | Instance 1,p20161
 p20161_i2,Pack years of smoking | Instance 2,p20161
 p20161_i3,Pack years of smoking | Instance 3,p20161
-p20162_i0,Pack years adult smoking as proportion of life span exposed to smoking | Instance 0,p20162
-p20162_i1,Pack years adult smoking as proportion of life span exposed to smoking | Instance 1,p20162
-p20162_i2,Pack years adult smoking as proportion of life span exposed to smoking | Instance 2,p20162
-p20162_i3,Pack years adult smoking as proportion of life span exposed to smoking | Instance 3,p20162
 p20403,Amount of alcohol drunk on a typical drinking day,p20403
 p21000_i0,Ethnic background | Instance 0,p21000
 p21000_i1,Ethnic background | Instance 1,p21000

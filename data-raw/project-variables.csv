@@ -6,8 +6,6 @@ p190,Reason lost to follow-up,1298,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?i
 p191,Date lost to follow-up,1298,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=191
 p738,Average total household income before tax,497406,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=738
 p1239,Current tobacco smoking,501538,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=1239
-p1538,Major dietary changes in the last 5 years,501532,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=1538
-p1548,Variation in diet,498738,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=1548 
 p2443,Diabetes diagnosed by doctor,501498,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=2443
 p2453,Cancer diagnosed by doctor,501498,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=2453
 p3456,Number of cigarettes currently smoked daily (current cigarette smokers),36747,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=3456
@@ -19,7 +17,6 @@ p20110,Illnesses of mother,492917,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id
 p20111,Illnesses of siblings,434141,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=20111
 p20116,Smoking status,501500,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=20116
 p20161,Pack years of smoking,152789,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=20161
-p20162,Pack years adult smoking as proportion of life span exposed to smoking,152789,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=20162
 p20403,Amount of alcohol drunk on a typical drinking day,143636,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=20403
 p21000,Ethnic background,501517,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=21000
 p21022,Age at recruitment,502408,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=21022
