@@ -26,7 +26,7 @@ tar_option_set(
 list(
     tar_target(
         name = download_project_data,
-        command = ukbAid::download_data(username = "FieLangmann", file_ext = "parquet"),
+        command = ukbAid::download_data(username = "FieLangmann", file_ext = "csv"),
         format = "file"
     )
 )
