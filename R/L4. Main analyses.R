@@ -125,3 +125,26 @@ Model 1
         Model check
 Model 2
 
+**Model 1** will be minimally adjusted for strata of age at recruitment
+(\<45, 45-49, 50-54, 55-59, 60-64, ≤65 years) and geographical region of
+recruitment (ten UK regions), sex, and intake of all other dietary
+components apart from the substitute components (red and processed
+meats; poultry; fish). When substituting g legumes/day, the unit for all
+dietary components will be g/day and the analyses will be adjusted for
+total amount of consumed foods in g/day. When substituting calories of
+legumes, the unit for all dietary components will be calories/day and
+the analyses will be adjusted for total amount of consumed calories/day.
+
+**Model 2** will be further adjusted for alcohol consumption, ethnic
+group (white, mixed, Asian, black, other, unknown), socioeconomic status
+(Townsend deprivation score, educational level), living with a wife or
+partner (yes, no), physical activity (low \[0-9.9 METs/week\], moderate
+                                      \[10-49.9 METs/week\], and high \[≥50 METs/week\], unknown), smoking
+status (never, former, current 1-15 cigarettes per day, current ≥15
+        cigarettes per day, current but number of cigarettes per day unknown,
+        and smoking status unknown), and self-reported diagnosis of diabetes,
+hypertension, or high cholesterol (yes, no, unknown).
+
+**Model 3** will further adjust for anthropometry (BMI ≥ 30 kg/m2), as
+obesity may either confound or mediate the association between replacing
+red and processed meats, poultry, or fish with legumes and risk of MASLD
