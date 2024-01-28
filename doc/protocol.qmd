@@ -14,7 +14,7 @@ author:
 
 date: January 24, 2024
 format: html
-bibliography: "~leha/doc/mafld.bib"
+bibliography: "~leha/doc/masld.bib"
 execute: 
   echo: true
 editor: 
@@ -54,7 +54,7 @@ in the title.*
 
 Western diets has been shown to cause a multitude of non-communicable
 diseases. Metabolic dysfunction-associated steatotic liver disease
-(MAFLD) is the leading chronic disease globally and strongly associated
+(MASLD) is the leading chronic disease globally and strongly associated
 with Western dietary patterns. Based on a combined environmental and
 health related focus, legumes are increasingly being recommended as a
 meat substitute, and this study therefore investigates the association
