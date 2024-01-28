@@ -21,20 +21,26 @@ data <- data %>%
   select(-matches(paste0(variables_to_edit, "_i[1-4]")))
 
 
-# Recoding variables ------------------------------------------------------
+# Recoding covariables (not foods) ------------------------------------------------------
 
-# Self-reported non-cancer illness. No diseases coded as 0, liver disease coded as 1, CVD coded as 2, other coded as 3
-# Self-reported diseases should be coded as 0 for those who have not had any relevant
-# diseases, 1 for those who have had CVD but no liver disease, 2 for those who have had
-# liver disease but no CVD and 3 for those who had both liver and CVD.
-data <- data %>%
-  mutate(
-    non_cancer_illness= case_when(
-      str_detect(p20002_i0, "divert") ~ 0,
-      str_detect(p20002_i0, "heart") ~ 1,
-      TRUE ~ NA_integer_  # If none of the conditions match
-    )
-  )
+sex
+
+
+age
+strata of age at recruitment
+(\<45, 45-49, 50-54, 55-59, 60-64, ≤65 years)
+ethnic group
+
+townsend
+
+educational level
+
+Uk regions
+
+cohabitation
+
+physical activity
+
 
 # Smoking status categorized as never, former, current 1-15, current 15-25, current 25+, and no answer
 data <- data %>%
@@ -50,11 +56,23 @@ data <- data %>%
     )
   )
 
-p20107,Illnesses of father,488041,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=20107
-p20110,Illnesses of mother,492917,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=20110
-p20111
+# Self-reported non-cancer illness. No relevant diseases coded as "NA", other diseases of
+# relevance for liver disease combined.
+data <- data %>%
+  mutate(
+    non_cancer_illness= case_when(
+      str_detect(p20002_i0, "hypert") ~ 0, # hypertension
+      str_detect(p20002_i0, "myocardial") ~ 1, # MI
+      str_detect(p20002_i0, "stroke") | (p20002_i0, "ischaemic") | (p20002_i0, "haemorrhage")  ~ 2, # Stroke
+      str_detect(p20002_i0, "cholesterol") ~ 3, # high cholesterol
+      str_detect(p20002_i0, "cholangitis") | (p20002_i0, "cholelithiasis") | (p20002_i0, "cholecyst") | (p20002_i0, "primary biliary cirrhosis") ~ 4, #gallbladder problems
+      str_detect(p20002_i0, "alcoholic cirrhosis") ~ 5, #alcohol liver disease
+      TRUE ~ NA_integer_  # If none of the conditions match
+    )
+  )
 
-# Illness in closest family
+
+# Illness in closest family - skal den her være med?
 # Father
 data <- data %>%
   mutate(
@@ -90,6 +108,9 @@ data <- data %>%
       TRUE ~ NA_integer_  # If none of the conditions match
     )
   )
+
+
+# BMI cut-off 30
 
 
 # Convert data to numerics
