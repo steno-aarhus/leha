@@ -40,6 +40,17 @@ data <- data %>%
     )
 
 # Entry into follow-up time should be middle of birthmonth
+
+
+Age will be used as the underlying time scale in the analyses. Follow-up
+time will begin with participants' last completed Oxford WebQ. As
+participants in UKB are still followed-up today, participants will be
+right censored at the date of the most recent registry update of full
+follow-up for the outcomes. Otherwise, censoring will occur at the event
+of death, loss to follow-up from the study, or date of diagnosis of
+MASLD or MASH, whichever comes first. The substitution analyses will be
+conducted with different adjustment levels.
+
 #Cox regression
 # Examples:
 # cox <- coxph(Surv(time,event= death) ~ cenc0, <-- alle variable i modellen (kost, bælg, confoundere) kød/fisk/poultry er ikke med som variabel i analysen. Her skal man skalere sit indtag så det passer med modellen, fx pr 30g eller 30kcal
