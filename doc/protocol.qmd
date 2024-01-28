@@ -14,7 +14,7 @@ author:
 
 date: January 24, 2024
 format: html
-bibliography: "~leha\\doc\\mafld.bib"
+bibliography: "~leha/doc/mafld.bib"
 execute: 
   echo: true
 editor: 
