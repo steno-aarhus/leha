@@ -372,6 +372,4 @@ containing 1 or 0, for ratios or absolute measures respectively.
 
 # Other
 
-*add the references here*
-
 # References
