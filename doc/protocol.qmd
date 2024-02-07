@@ -2,13 +2,39 @@
 title: "Protocol: Legume consumption and risk of metabolic dysfunction-associated steatotic liver disease in the UK Biobank Study: a prospective follow-up" 
 author: 
   - name: Fie Langmann
-    affiliation: 
+    roles:
+      - "writing – original draft"
+      - "formal analysis"
+      - "investigation"
+    affiliations: 
       - name: Aarhus University
   - name: Daniel Borch Ibsen
-    affiliation: 
+    roles:
+      - "supervision"
+      - "project administration"
+      - "writing – review & editing"
+      - "conceptualization"
+    affiliations: 
       - name: Aarhus University
+      - name: Steno Diabetes Center Aarhus
+  - name: Luke W. Johnston
+    orcid: "0000-0003-4169-2616"
+    roles:
+      - "software"
+      - "project administration"
+      - "writing – review & editing"
+      - "data curation"
+      - "resources"
+    affiliations:
+      - name: Aarhus University
+      - name: Steno Diabetes Center Aarhus
   - name: Christina Catherine Dahm
-    affiliation: 
+    roles:
+      - "supervision"
+      - "project administration"
+      - "writing – review & editing"
+      - "conceptualization"
+    affiliations: 
       - name: Aarhus University
 date: January 24, 2024
 format:
