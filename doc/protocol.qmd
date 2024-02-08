@@ -10,7 +10,10 @@ author:
   - name: Christina Catherine Dahm
     affiliation: 
       - name: Aarhus University
-date: January 24, 2024
+  - name: Luke W. Johnston
+    affiliation: 
+      - name: Steno Diabetes Center Aarhus     
+date: February 8, 2024
 format: html
 bibliography: masld.bib
 execute: 
@@ -51,35 +54,36 @@ of developing MASLD.
 The EAT-Lancet reference diet was introduced in 2019 as a globally
 sustainable and healthy diet emphasizing plant-based proteins instead of
 animal-based proteins, e.g., with a recommendation of 100 g legumes
-daily @RN34411 (1-3). Legume consumption minimizes the risk of metabolic
-dysfunction-associated steatotic liver disease (MASLD) in animals, by
-reducing build-up of fats in the liver (10-14). MASLD is the most
-prevalent chronic liver disease in the Western countries with a
-prevalence of 15-45 % (15, 16). The disease is caused by Western diets
-high in red meat, fats, and sugars, obesity, physical inactivity, and
-smoking (15-18). As legumes are a source of both carbohydrates and
-proteins, research frequently compare legumes with other carbohydrate
-sources (9, 34-37). Observed associations for foods may be due the
-specific foods itself. However, the associations could also represent
-the effect of the dietary pattern in which the specific food is
-consumed. When individuals limit intake of certain food groups, they
+daily [@RN1; @RN2; @RN3]. Legume consumption minimizes the risk of
+metabolic dysfunction-associated steatotic liver disease (MASLD) in
+animals, by reducing build-up of fats in the liver [@RN10; @RN11; @RN12;
+@RN13; @RN14]. MASLD is the most prevalent chronic liver disease in the
+Western countries with a prevalence of 15-45 % [@RN15; @RN16]. The
+disease is caused by Western diets high in red meat, fats, and sugars,
+obesity, physical inactivity, and smoking [@RN15; @RN16; @RN17; @RN18].
+As legumes are a source of both carbohydrates and proteins, research
+frequently compares legumes with other carbohydrate sources [@RN34;
+@RN35; @RN36; @RN37; @RN9]. Observed associations for foods may be due
+to the specific foods themselves. However, the associations could also
+represent the effect of the dietary pattern in which the specific food
+is consumed. When individuals limit intake of certain food groups, they
 will most often increase the intake of certain other food groups, in an
-otherwise stable diet (38, 39). The association of such food intake will
-not only be caused by the increased consumption of one food, but rather
-the substitution effect including various foods. Replacing protein from
-animal sources with protein from plant sources has previously been
-associated with a substantially lower mortality rate and lower risk of
-MASLD (40, 11). Consumption of legumes in the Western countries has been
-negligible to date and the impact of markedly increasing intakes of
-legumes on hepatobiliary and other diseases is understudied. Therefore,
-this study aims to investigate the effect of replacing meats, poultry,
-or fish with legumes and the risk of metabolic dysfunction-associated
-steatohepatitis (MASH) or MASLD contingent on potential confounding
-factors. As it might be more feasible for Western populations to include
-legumes and substituting dietary components that are not meats, this
-study will also aim to investigate the effect of a non-specific
-substitution of dietary non-meat components for legumes on the risk of
-MASLD and MASH.
+otherwise stable diet [@RN38; @RN39]. The association of such food
+intake will not only be caused by the increased consumption of one food,
+but rather the substitution effect including various foods. Replacing
+protein from animal sources with protein from plant sources has
+previously been associated with a substantially lower mortality rate and
+lower risk of MASLD [@RN11; @RN40]. Consumption of legumes in Western
+countries has been negligible to date and the impact of markedly
+increasing intakes of legumes on hepatobiliary and other diseases is
+understudied. Therefore, this study aims to investigate the effect of
+replacing meats, poultry, or fish with legumes and the risk of metabolic
+dysfunction-associated steatohepatitis (MASH) or MASLD contingent on
+potential confounding factors. As it might be more feasible for Western
+populations to include legumes and substitute dietary components that
+are not meats, this study will also aim to investigate the effect of a
+non-specific substitution of dietary non-meat components for legumes on
+the risk of MASLD and MASH.
 
 **Hypothesis**
 
@@ -113,8 +117,8 @@ The initial recruitment of participants for the UK Biobank started in
 National Health Service registers and invited to participate in the
 study, 5.5% participated, approximately 500,000 participants, aged 37-73
 years at baseline. The study protocol and more information are available
-elsewhere (41, 42). All participants gave written, informed consent
-prior to baseline, and the study was approved by the National
+elsewhere [@RN41; @RN42]. All participants gave written, informed
+consent before baseline, and the study was approved by the National
 Information Governance Board for Health and Social Care and the National
 Health Service North West Multicentre Research Ethics Committee
 (reference number 06/MRE08/65).
@@ -153,13 +157,13 @@ this way, we feel pre-analysis bias is minimal.
 At baseline, participants provided detailed information on several
 sociodemographic, physical, lifestyle, and health-related
 characteristics via self-completed touch-screen questionnaires and a
-computer assisted personal interview (43). Professionally trained staff
-did physical, anthropometric, and biomedical measures following
-standardized procedures (41). Diet was assessed through a touchscreen
+computer assisted personal interview [@RN43]. Professionally trained
+staff did physical, anthropometric, and biomedical measures following
+standardized procedures [@RN41]. Diet was assessed through a touchscreen
 questionnaire at baseline and a 24-hour dietary assessment tool designed
 for the UK Biobank study. The 24-hour dietary assessment tool was
 completed by participants up to five times and 210,965 individuals
-completed one or more 24-hour dietary assessments (44).
+completed one or more 24-hour dietary assessments [@RN44].
 
 **Assessment of diet**
 
@@ -170,30 +174,31 @@ eaten food groups in the British population on the day before. The
 questionnaire aims to measure the type and quantity of food and
 beverages consumed in the last 24 hours and estimate nutrients from the
 entered information through the UK Nutrient Databank Food Composition
-Tables (45, 46). The Oxford WebQ was compared with interviewer
-administered 24-hour dietary recalls and validated for macronutrients
-and total energy intake using recovery biomarkers and comparing with a
-single food frequency questionnaire (45, 47, 48). Recently, the Oxford
-WebQ nutrient calculation was updated to provide more detailed
-information on nutrient intakes and to incorporate new dietary variables
-(46). Participants recruited between April 2009 and September 2010
-completed the Oxford WebQ at baseline (n=70,747). The Oxford WebQ was
-not available until April 2009 and participants recruited before that
-date who provided a valid email address were invited to complete the
-four subsequent 24-hour dietary assessments online (49).
+Tables [@RN45; @RN46]. The Oxford WebQ was compared with
+interviewer-administered 24-hour dietary recalls and validated for
+macronutrients and total energy intake using recovery biomarkers and
+compared with a single food frequency questionnaire [@RN45; @RN47;
+@RN48]. Recently, the Oxford WebQ nutrient calculation was updated to
+provide more detailed information on nutrient intakes and to incorporate
+new dietary variables [@RN46]. Participants recruited between April 2009
+and September 2010 completed the Oxford WebQ at baseline (n=70,747). The
+Oxford WebQ was not available until April 2009 and participants
+recruited before that date who provided a valid email address were
+invited to complete the four subsequent 24-hour dietary assessments
+online [@RN49].
 
 **Legumes**
 
-Legume consumption will be estimated based on participants reported
+Legume consumption will be estimated based on participants' reported
 diets from the self-administered online 24-hour dietary assessments, the
 Oxford WebQ. Consumption of legumes and pulses will be based on total
 weight by food group intakes estimated from participants' responses in
 the Oxford WebQ. Despite the high detail level of the Oxford WebQ, a
 single 24-hour dietary assessment cannot capture habitual intake of
-legumes in a UK-setting (50). Therefore, this study will include varying
-numbers of 24-hour dietary assessments to ensure that we capture usual
-intake of legumes. Usual intake will be estimated as a daily average
-across available 24-hour dietary assessments.
+legumes in a UK setting [@RN50]. Therefore, this study will include
+varying numbers of 24-hour dietary assessments to ensure that we capture
+the usual intake of legumes. Usual intake will be estimated as a daily
+average across available 24-hour dietary assessments.
 
 **Meat, poultry, and fish**
 
@@ -212,14 +217,14 @@ Incident cases of MASH and MAFLD will be assessed through linkage to the
 National Health Service registers where diagnosis after hospital
 admission or primary care visits are coded according to the
 International Classification of Diseases and Related Health Problems
-(ICD-10) (51). MASLD was previously known as non-alcoholic fatty liver
-disease (NAFLD), but the nomenclature was changed in 2023 to shift focus
-towards the metabolic factors underlying the disease and not merely the
-lack of alcohol consumption and to aid the prevention and early
-diagnoses of MASLD (22). Due to this change in nomenclature, incident
-cases of MASLD are diagnosed based on ICD-10-code for NAFLD, K76.0, at
-first admission to hospital, while incident cases of MASH are diagnosed
-based on ICD-10-code for NASH, K75.8 (52).
+(ICD-10) [@RN51]. MASLD was previously known as non-alcoholic fatty
+liver disease (NAFLD), but the nomenclature was changed in 2023 to shift
+focus towards the metabolic factors underlying the disease and not
+merely the lack of alcohol consumption and to aid the prevention and
+early diagnoses of MASLD [@RN22]. Due to this change in nomenclature,
+incident cases of MASLD are diagnosed based on ICD-10-code for NAFLD,
+K76.0, at first admission to hospital, while incident cases of MASH are
+diagnosed based on ICD-10-code for NASH, K75.8 [@RN52].
 
 **Covariates**
 
@@ -335,13 +340,13 @@ hepatobiliary disease risk, quintiles of legume intake (g/day) will be
 evaluated with adjustment levels similar to the substitution models.
 
 Peas are increasingly used as a plant-based meat alternative in the food
-industry (53). Despite this, peas are also included in the NHS 5 A Day
-recommendations for fruits and vegetables consumption in the UK (54).
-Therefore, in secondary analyses consumption of legumes will include
-participants self-reported intake of legumes and pulses together with
-consumed peas. The amount of peas consumed will be estimated based on
-participants' reported daily portions consumed with a portion size of
-peas weighing 80 g (55).
+industry [@RN53]. Despite this, peas are also included in the NHS 5 A
+Day recommendations for fruits and vegetables consumption in the UK
+[@RN54]. Therefore, in secondary analyses consumption of legumes will
+include participants self-reported intake of legumes and pulses together
+with consumed peas. The amount of peas consumed will be estimated based
+on participants' reported daily portions consumed with a portion size of
+peas weighing 80 g [@RN55].
 
 To evaluate the robustness of the main analyses, sensitivity analyses
 will include varying numbers of Oxford WebQ returns, and removal of
@@ -362,7 +367,7 @@ All analyses will be conducted in R with a significance level of 5%.
 All analyses will be evaluated based on two-sided p-values. Values below
 5% are classified as statistically significant. Inference on relevance
 and significance and the evaluation of, whether a result is meaningful
-will be based on the size of the estimate, confidence intervals
+will be based on the size of the estimate, and confidence intervals
 containing 1 or 0, for ratios or absolute measures respectively.
 
 ## Data exclusion
