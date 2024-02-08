@@ -263,8 +263,8 @@ liver disease.
 **Exposures:** g/day and kcal/day consumption of legumes, meats,
 poultry, and fish
 
-**Outcomes:** metabolic dysfunction-associated fatty liver disease
-(MAFLD) and metabolic dysfunction-associated steatohepatitis (MASH)
+**Outcomes:** metabolic dysfunction-associated steatotic liver disease
+(MASLD) and metabolic dysfunction-associated steatohepatitis (MASH)
 
 **Covariates:** g/day and kcal/day consumption of fruits, vegetables,
 cereal products, dairy products, egg products, nuts, mixed dishes,
@@ -313,15 +313,16 @@ total amount of consumed foods in g/day. When substituting calories of
 legumes, the unit for all dietary components will be calories/day and
 the analyses will be adjusted for total amount of consumed calories/day.
 
-**Model 2** will be further adjusted for alcohol consumption, ethnic
-group (white, mixed, Asian, black, other, unknown), socioeconomic status
-(Townsend deprivation score, educational level), living with a wife or
-partner (yes, no), physical activity (low \[0-9.9 METs/week\], moderate
-\[10-49.9 METs/week\], and high \[≥50 METs/week\], unknown), smoking
-status (never, former, current 1-15 cigarettes per day, current ≥15
-cigarettes per day, current but number of cigarettes per day unknown,
-and smoking status unknown), and self-reported diagnosis of diabetes,
-hypertension, or high cholesterol (yes, no, unknown).
+**Model 2** will be further adjusted for alcohol consumption (g/day as
+restricted cubic splines), ethnic group (white, mixed, Asian, black,
+other, unknown), socioeconomic status (Townsend deprivation score,
+educational level), living with a wife or partner (yes, no), physical
+activity (low \[0-9.9 METs/week\], moderate \[10-49.9 METs/week\], and
+high \[≥50 METs/week\], unknown), smoking status (never, former, current
+1-15 cigarettes per day, current ≥15 cigarettes per day, current but
+number of cigarettes per day unknown, and smoking status unknown), and
+self-reported diagnosis of diabetes, hypertension, or high cholesterol
+(yes, no, unknown).
 
 **Model 3** will further adjust for anthropometry (BMI ≥ 30 kg/m2), as
 obesity may either confound or mediate the association between replacing
