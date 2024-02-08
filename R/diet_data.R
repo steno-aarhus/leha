@@ -6,13 +6,6 @@ library(tidyverse)
 library(magrittr)
 
 # Average dietary intake of food groups -----------------------------------
-
-
-#energy intake
-energy = rowMeans(dplyr::across(dplyr::starts_with("p26002")), na.rm = TRUE) * 0.239,
-p26002 = energy
-
-
 # estimating average daily and weekly intakes of food groups in g
 diet_data <- data %>%
   #include foods from 24h recalls, number of recalls, and id's
@@ -239,8 +232,13 @@ vegetables includes 0.5*peas and sweetcorn - the other half goes into legumes as
 
 
 
+# estimating average daily and weekly intakes of energy from food groups in kcal
 
 
 
+
+#energy intake
+energy = rowMeans(dplyr::across(dplyr::starts_with("p26002")), na.rm = TRUE) * 0.239,
+p26002 = energy
 
 
