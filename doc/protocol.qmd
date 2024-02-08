@@ -2,13 +2,16 @@
 title: "Protocol: Legume consumption and risk of metabolic dysfunction-associated steatotic liver disease in the UK Biobank Study: a prospective follow-up" 
 author: 
   - name: Fie Langmann
+    orcid: "0000-0003-3474-9346"
     roles:
       - "writing – original draft"
       - "formal analysis"
       - "investigation"
+      - "conceptualization"
     affiliations: 
       - name: Aarhus University
   - name: Daniel Borch Ibsen
+    orcid: "0000-0002-7038-4770"
     roles:
       - "supervision"
       - "project administration"
@@ -29,6 +32,7 @@ author:
       - name: Aarhus University
       - name: Steno Diabetes Center Aarhus
   - name: Christina Catherine Dahm
+    orcid: "0000-0003-0481-2893"
     roles:
       - "supervision"
       - "project administration"
@@ -38,8 +42,7 @@ author:
       - name: Aarhus University
 date: February 8, 2024
 format: html
-  html:
-    embed-resources: true
+embed-resources: true
 bibliography: masld.bib
 # You can browse all the Citation Styles here: https://github.com/citation-style-language/styles
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/vancouver.csl
@@ -81,36 +84,38 @@ of developing MASLD.
 The EAT-Lancet reference diet was introduced in 2019 as a globally
 sustainable and healthy diet emphasizing plant-based proteins instead of
 animal-based proteins, e.g., with a recommendation of 100 g legumes
-daily [@RN1; @RN2; @RN3]. Legume consumption minimizes the risk of
-metabolic dysfunction-associated steatotic liver disease (MASLD) in
-animals, by reducing build-up of fats in the liver [@RN10; @RN11; @RN12;
-@RN13; @RN14]. MASLD is the most prevalent chronic liver disease in the
-Western countries with a prevalence of 15-45 % [@RN15; @RN16]. The
-disease is caused by Western diets high in red meat, fats, and sugars,
-obesity, physical inactivity, and smoking [@RN15; @RN16; @RN17; @RN18].
-As legumes are a source of both carbohydrates and proteins, research
-frequently compares legumes with other carbohydrate sources [@RN34;
-@RN35; @RN36; @RN37; @RN9]. Observed associations for foods may be due
-to the specific foods themselves. However, the associations could also
-represent the effect of the dietary pattern in which the specific food
-is consumed. When individuals limit intake of certain food groups, they
-will most often increase the intake of certain other food groups, in an
-otherwise stable diet [@RN38; @RN39]. The association of such food
-intake will not only be caused by the increased consumption of one food,
-but rather the substitution effect including various foods. Replacing
-protein from animal sources with protein from plant sources has
-previously been associated with a substantially lower mortality rate and
-lower risk of MASLD [@RN11; @RN40]. Consumption of legumes in Western
-countries has been negligible to date and the impact of markedly
-increasing intakes of legumes on hepatobiliary and other diseases is
-understudied. Therefore, this study aims to investigate the effect of
-replacing meats, poultry, or fish with legumes and the risk of metabolic
-dysfunction-associated steatohepatitis (MASH) or MASLD contingent on
-potential confounding factors. As it might be more feasible for Western
-populations to include legumes and substitute dietary components that
-are not meats, this study will also aim to investigate the effect of a
-non-specific substitution of dietary non-meat components for legumes on
-the risk of MASLD and MASH.
+daily [@Loken2020; @Springmann2020; @Willett2019]. Legume consumption
+minimizes the risk of metabolic dysfunction-associated steatotic liver
+disease (MASLD) in animals, by reducing build-up of fats in the liver
+[@Hong2016; @Zhang2023; @Bouchenak2013; @Son2014; @Rigotti1989]. MASLD
+is the most prevalent chronic liver disease in the Western countries
+with a prevalence of 15-45 % [@Benedict2017; @Younossi2016]. The disease
+is caused by Western diets high in red meat, fats, and sugars, obesity,
+physical inactivity, and smoking [@Benedict2017; @Younossi2016;
+@Younossi2018; @AlDayyat2018]. As legumes are a source of both
+carbohydrates and proteins, research frequently compares legumes with
+other carbohydrate sources [@Sievenpiper2009; @Jayalath2014;
+@Belski2011; @Linlawan2019; @Lee2008]. Observed associations for foods
+may be due to the specific foods themselves. However, the associations
+could also represent the effect of the dietary pattern in which the
+specific food is consumed. When individuals limit intake of certain food
+groups, they will most often increase the intake of certain other food
+groups, in an otherwise stable diet [@Ibsen2020; @Ibsen2022]. The
+association of such food intake will not only be caused by the increased
+consumption of one food, but rather the substitution effect including
+various foods. Replacing protein from animal sources with protein from
+plant sources has previously been associated with a substantially lower
+mortality rate and lower risk of MASLD [@Song2016; @Zhang2023].
+Consumption of legumes in Western countries has been negligible to date
+and the impact of markedly increasing intakes of legumes on
+hepatobiliary and other diseases is understudied. Therefore, this study
+aims to investigate the effect of replacing meats, poultry, or fish with
+legumes and the risk of metabolic dysfunction-associated steatohepatitis
+(MASH) or MASLD contingent on potential confounding factors. As it might
+be more feasible for Western populations to include legumes and
+substitute dietary components that are not meats, this study will also
+aim to investigate the effect of a non-specific substitution of dietary
+non-meat components for legumes on the risk of MASLD and MASH.
 
 **Hypothesis**
 
@@ -144,10 +149,10 @@ The initial recruitment of participants for the UK Biobank started in
 National Health Service registers and invited to participate in the
 study, 5.5% participated, approximately 500,000 participants, aged 37-73
 years at baseline. The study protocol and more information are available
-elsewhere [@RN41; @RN42]. All participants gave written, informed
-consent before baseline, and the study was approved by the National
-Information Governance Board for Health and Social Care and the National
-Health Service North West Multicentre Research Ethics Committee
+elsewhere [@Sudlow2015; @Biobank2007]. All participants gave written,
+informed consent before baseline, and the study was approved by the
+National Information Governance Board for Health and Social Care and the
+National Health Service North West Multicentre Research Ethics Committee
 (reference number 06/MRE08/65).
 
 # Sampling plan
@@ -184,13 +189,14 @@ this way, we feel pre-analysis bias is minimal.
 At baseline, participants provided detailed information on several
 sociodemographic, physical, lifestyle, and health-related
 characteristics via self-completed touch-screen questionnaires and a
-computer assisted personal interview [@RN43]. Professionally trained
+computer assisted personal interview [@Fry2017]. Professionally trained
 staff did physical, anthropometric, and biomedical measures following
-standardized procedures [@RN41]. Diet was assessed through a touchscreen
-questionnaire at baseline and a 24-hour dietary assessment tool designed
-for the UK Biobank study. The 24-hour dietary assessment tool was
-completed by participants up to five times and 210,965 individuals
-completed one or more 24-hour dietary assessments [@RN44].
+standardized procedures [@Sudlow2015]. Diet was assessed through a
+touchscreen questionnaire at baseline and a 24-hour dietary assessment
+tool designed for the UK Biobank study. The 24-hour dietary assessment
+tool was completed by participants up to five times and 210,965
+individuals completed one or more 24-hour dietary assessments
+[@Biobank2021].
 
 **Assessment of diet**
 
@@ -201,18 +207,18 @@ eaten food groups in the British population on the day before. The
 questionnaire aims to measure the type and quantity of food and
 beverages consumed in the last 24 hours and estimate nutrients from the
 entered information through the UK Nutrient Databank Food Composition
-Tables [@RN45; @RN46]. The Oxford WebQ was compared with
+Tables [@Liu2011; @PerezCornago2021]. The Oxford WebQ was compared with
 interviewer-administered 24-hour dietary recalls and validated for
 macronutrients and total energy intake using recovery biomarkers and
-compared with a single food frequency questionnaire [@RN45; @RN47;
-@RN48]. Recently, the Oxford WebQ nutrient calculation was updated to
-provide more detailed information on nutrient intakes and to incorporate
-new dietary variables [@RN46]. Participants recruited between April 2009
-and September 2010 completed the Oxford WebQ at baseline (n=70,747). The
-Oxford WebQ was not available until April 2009 and participants
-recruited before that date who provided a valid email address were
-invited to complete the four subsequent 24-hour dietary assessments
-online [@RN49].
+compared with a single food frequency questionnaire [@Liu2011;
+@Greenwood2019; @Carter2019]. Recently, the Oxford WebQ nutrient
+calculation was updated to provide more detailed information on nutrient
+intakes and to incorporate new dietary variables [@PerezCornago2021].
+Participants recruited between April 2009 and September 2010 completed
+the Oxford WebQ at baseline (n=70,747). The Oxford WebQ was not
+available until April 2009 and participants recruited before that date
+who provided a valid email address were invited to complete the four
+subsequent 24-hour dietary assessments online [@Kelly2021].
 
 **Legumes**
 
@@ -222,7 +228,7 @@ Oxford WebQ. Consumption of legumes and pulses will be based on total
 weight by food group intakes estimated from participants' responses in
 the Oxford WebQ. Despite the high detail level of the Oxford WebQ, a
 single 24-hour dietary assessment cannot capture habitual intake of
-legumes in a UK setting [@RN50]. Therefore, this study will include
+legumes in a UK setting [@FAO2018]. Therefore, this study will include
 varying numbers of 24-hour dietary assessments to ensure that we capture
 the usual intake of legumes. Usual intake will be estimated as a daily
 average across available 24-hour dietary assessments.
@@ -244,14 +250,15 @@ Incident cases of MASH and MAFLD will be assessed through linkage to the
 National Health Service registers where diagnosis after hospital
 admission or primary care visits are coded according to the
 International Classification of Diseases and Related Health Problems
-(ICD-10) [@RN51]. MASLD was previously known as non-alcoholic fatty
-liver disease (NAFLD), but the nomenclature was changed in 2023 to shift
-focus towards the metabolic factors underlying the disease and not
+(ICD-10) [@Digital2021]. MASLD was previously known as non-alcoholic
+fatty liver disease (NAFLD), but the nomenclature was changed in 2023 to
+shift focus towards the metabolic factors underlying the disease and not
 merely the lack of alcohol consumption and to aid the prevention and
-early diagnoses of MASLD [@RN22]. Due to this change in nomenclature,
-incident cases of MASLD are diagnosed based on ICD-10-code for NAFLD,
-K76.0, at first admission to hospital, while incident cases of MASH are
-diagnosed based on ICD-10-code for NASH, K75.8 [@RN52].
+early diagnoses of MASLD [@Thornton2023]. Due to this change in
+nomenclature, incident cases of MASLD are diagnosed based on ICD-10-code
+for NAFLD, K76.0, at first admission to hospital, while incident cases
+of MASH are diagnosed based on ICD-10-code for NASH, K75.8
+[@Biobank2020].
 
 **Covariates**
 
@@ -367,13 +374,13 @@ hepatobiliary disease risk, quintiles of legume intake (g/day) will be
 evaluated with adjustment levels similar to the substitution models.
 
 Peas are increasingly used as a plant-based meat alternative in the food
-industry [@RN53]. Despite this, peas are also included in the NHS 5 A
-Day recommendations for fruits and vegetables consumption in the UK
-[@RN54]. Therefore, in secondary analyses consumption of legumes will
-include participants self-reported intake of legumes and pulses together
-with consumed peas. The amount of peas consumed will be estimated based
-on participants' reported daily portions consumed with a portion size of
-peas weighing 80 g [@RN55].
+industry [@Maningat2022]. Despite this, peas are also included in the
+NHS 5 A Day recommendations for fruit and vegetables consumption in the
+UK [@Services2022]. Therefore, in secondary analyses consumption of
+legumes will include participants self-reported intake of legumes and
+pulses together with consumed peas. The amount of peas consumed will be
+estimated based on participants' reported daily portions consumed with a
+portion size of peas weighing 80 g [@Services2021].
 
 To evaluate the robustness of the main analyses, sensitivity analyses
 will include varying numbers of Oxford WebQ returns, and removal of
