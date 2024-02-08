@@ -1,6 +1,6 @@
 ---
-title: "Protocol: Legume consumption and risk of metabolic dysfunction-associated steatotic liver disease in the UK Biobank Study: a prospective follow-up" 
-author: 
+title: "Protocol: Legume consumption and risk of metabolic dysfunction-associated steatotic liver disease in the UK Biobank Study: a prospective follow-up"
+author:
   - name: Fie Langmann
     orcid: "0000-0003-3474-9346"
     roles:
@@ -8,7 +8,7 @@ author:
       - "formal analysis"
       - "investigation"
       - "conceptualization"
-    affiliations: 
+    affiliations:
       - name: Aarhus University
   - name: Daniel Borch Ibsen
     orcid: "0000-0002-7038-4770"
@@ -17,7 +17,7 @@ author:
       - "project administration"
       - "writing – review & editing"
       - "conceptualization"
-    affiliations: 
+    affiliations:
       - name: Aarhus University
       - name: Steno Diabetes Center Aarhus
   - name: Luke W. Johnston
@@ -38,7 +38,7 @@ author:
       - "project administration"
       - "writing – review & editing"
       - "conceptualization"
-    affiliations: 
+    affiliations:
       - name: Aarhus University
 date: February 8, 2024
 format: html
@@ -46,10 +46,10 @@ embed-resources: true
 bibliography: masld.bib
 # You can browse all the Citation Styles here: https://github.com/citation-style-language/styles
 csl: https://raw.githubusercontent.com/citation-style-language/styles/master/vancouver.csl
-execute: 
+execute:
   echo: true
-editor: 
-  markdown: 
+editor:
+  markdown:
     wrap: 72
 ---
 
@@ -343,7 +343,7 @@ MASLD or MASH, whichever comes first. The substitution analyses will be
 conducted with different adjustment levels.
 
 **Model 1** will be minimally adjusted for strata of age at recruitment
-(\<45, 45-49, 50-54, 55-59, 60-64, ≤65 years) and geographical region of
+(\>45, 45-49, 50-54, 55-59, 60-64, ≤65 years) and geographical region of
 recruitment (ten UK regions), sex, and intake of all other dietary
 components apart from the substitute components (red and processed
 meats; poultry; fish). When substituting g legumes/day, the unit for all
