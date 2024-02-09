@@ -41,10 +41,9 @@ calculate_food_intake <- function(diet_data) {
     dairy_daily = dairy_total/p20077,
     dairy_weekly = dairy_daily * 7,
     # fats and spread
-    fats_total = rowSums(select(., starts_with("p26032") | starts_with("p26062") |
+    fats_total = rowSums(select(., starts_with("p26112") | starts_with("p26062") |
                                   starts_with("p26063") | starts_with("p26155") |
-                                  starts_with("p26110") | starts_with("p26111") |
-                                  starts_with("p26112"))),
+                                  starts_with("p26110") | starts_with("p26111"))),
     fats_daily = fats_total/p20077,
     fats_weekly = fats_daily * 7,
     # fruit
