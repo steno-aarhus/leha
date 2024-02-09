@@ -75,6 +75,8 @@ sorted_data <- data %>% mutate(
     TRUE ~ NA_real_  # Handling cases not covered by the conditions
     ),
   smoking = as.factor(smoking),
+  alcohol_intake = rowSums(select(., starts_with("p26030"))),¨
+  alcohol_intake = as.numeric(alcohol_intake),
   # Self-reported and doctor diagnosed non-cancer illness.
   non_cancer_illness = case_when(
     str_detect(p20002_i0, "hypert") | (p6150_i0, "High") ~ "hypertension",
