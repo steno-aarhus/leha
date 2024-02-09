@@ -6,6 +6,8 @@ library(tidyr)
 # Remove ineligible number of recalls ------------
 data <- data %>%
 subset(p20077>=2)
+data <- data %>%
+  mutate(p20077 = as.numeric(p20077))
 
 # Add ID ------------------------------------------------------------------
 data <- data %>%
