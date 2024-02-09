@@ -6,237 +6,154 @@ library(tidyverse)
 library(magrittr)
 
 # Average dietary intake of food groups -----------------------------------
+calculate_food_intake <- function(diet_data) {
 # estimating average daily and weekly intakes of food groups in g
-diet_data <- data %>%
+  diet_data <- data %>%
   #include foods from 24h recalls, number of recalls, and id's
   select(starts_with("p26"), "p20077") %>%
   # creating food groups from UKB Aurora Perez
   mutate(
     # refined cereals
-
-
     cereal_refined_total = rowSums(select(., starts_with("p26113") | starts_with("p26079") |
                                             starts_with("p26071") | starts_with("p26072") |
                                             starts_with("p26073") | starts_with("p26075") |
-                                            starts_with("p26068") | starts_with("p26083")
-                                            ))
-
-
+                                            starts_with("p26068") | starts_with("p26083"))),
     cereal_refined_daily = cereal_refined_total/p20077,
     cereal_refined_weekly = cereal_refined_daily * 7,
     # whole-grain cereals
-    cereal_whole_total = rowSums(select(., starts_with("p26074") | starts_with("p26076") |
+    whole_grain_total = rowSums(select(., starts_with("p26074") | starts_with("p26076") |
                                           starts_with("p26077") | starts_with("p26078") |
                                           starts_with("p26105") | starts_with("p26114"))),
-
+    whole_grain_daily = whole_grain_total/p20077,
+    whole_grain_weekly = whole_grain_daily * 7,
     # mixed dishes
-
-    p26128,"Samosa, pakora",210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26128
-    p26097,Grain dishes - added fat,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26097
-    p26116,Pizza,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26116
-    p26135,Soups,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26135
-    p26139,Sushi,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26139
-
-
-Pizza	Pizza (including gluten free crust)
-Grain dishes - added fat	Double and single crust pies, crumble pies, Yorkshire pudding, snackpot noodles
-Samosa, pakora	Indian samosa, pakora snacks
-Soups	Soups, homemade, powdered and canned
-Sushi	Sushi
-  )
+    mixed_dish_total = rowSums(select(., starts_with("p26128") | starts_with("p26097") |
+                                        starts_with("p26116") | starts_with("p26135") |
+                                        starts_with("p26139"))),
+    mixed_dish_daily = mixed_dish_total/p20077,
+    mixed_dish_weekly = mixed_dish_daily * 7,
     # dairy
-p26154,Cream,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26154
-p26087,Milk-based and powdered drinks,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26087
-p26096,Full fat yogurt,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26096
-p26102,Low fat yogurt,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26102
-p26103,Medium and low fat cheese,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26103
-p26099,High fat cheese,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26099
-p26131,Semi skimmed milk,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26131
-p26133,Skimmed milk and cholesterol-lowering milk,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26133
-p26150,Whole milk,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26150
-
-
+    dairy_total = rowSums(select(., starts_with("p26154") | starts_with("p26087") |
+                                   starts_with("p26096") | starts_with("p26102") |
+                                   starts_with("p26103") | starts_with("p26099") |
+                                   starts_with("p26131") | starts_with("p26133") |
+                                   starts_with("p26150"))),
+    dairy_daily = dairy_total/p20077,
+    dairy_weekly = dairy_daily * 7,
     # fats and spread
-p26032
-p26062,Animal fat spread lower fat,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26062
-p26063,Animal fat spread normal,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26063
-p26155,Trans fatty acids,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26155
-p26110,Olive oil (drizzling/dunking),210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26110
-p26111,Plant-based spread lower fat,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26111
-p26112,Plant-based spread normal,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26112
-
-    # fruits
-p26089,Apples and pears,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26089
-p26090,Berries,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26090
-p26091,Citrus,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26091
-p26092,Dried fruit,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26092
-p26093,Other fruit,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26093
-p26094,Stewed fruit,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26094
-
-
-
-    # nuts and seeds
-Salted nuts & seeds	Salted peanuts and nuts
-Unsalted nuts & seeds	Unsalted peanuts and nuts
-p26107,Unsalted nuts and seeds,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26107
-p26108,Salted nuts and seeds,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26108
-
+    fats_total = rowSums(select(., starts_with("p26032") | starts_with("p26062") |
+                                  starts_with("p26063") | starts_with("p26155") |
+                                  starts_with("p26110") | starts_with("p26111") |
+                                  starts_with("p26112"))),
+    fats_daily = fats_total/p20077,
+    fats_weekly = fats_daily * 7,
+    # fruit
+    fruit_total = rowSums(select(., starts_with("p26089") | starts_with("p26090") |
+                                   starts_with("p26091") | starts_with("p26092") |
+                                   starts_with("p26093") | starts_with("p26094") |)),
+    fruit_daily = fruit_total/p20077,
+    fruit_weekly = fruit_daily * 7,
+        # nuts and seeds
+    nut_total = rowSums(select(., starts_with("p26107") | starts_with("p26108"))),
+    nut_daily = nut_total/p20077,
+    nut_weekly = nut_daily*7,
     # vegetables
-p26065,Allium vegetables,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26065
-p26098,Green leafy/cabbages,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26098
-p26115,Peas and sweetcorn,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26115
-p26123,Raw salad,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26123
-p26125,Root vegetables,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26125
-p26143,Tomatoes,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26143
-p26146,"Other vegetables, including mushrooms, fruiting and mixed vegetables",210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26146
-p26147,Vegetable side dishes,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26147
-p26144,Vegetable dips,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26144 # half hummus half guaca
-
-Raw salad 	Mixed side salad, lettuce, watercress
-Green leafy/cabbages	Broccoli, cabbage, kale, cauliflower, spinach, sprouts
-Root vegetables	Beetroot, carrots, celery, parsnip, turnip
-Tomatoes	Fresh and tinned tomatoes
-Allium vegetables	Garlic, leek, onion
-Other vegetables (mushrooms, fruiting, mixed)	Mushrooms, mixed vegetables, avocado, broad beans, green beans, butternut squash, courgettes, , peppers, other
-Peas/sweetcorn	Peas, sweetcorn
-Vegetable side dishes	Coleslaw, salad with added fat/mayonnaise
-Vegetable dips	Hummus, guacamole (half is hummus other half is guaca)
+    veggie_total = rowSums(select(., starts_with("p26065") | starts_with("p26098") |
+                                    starts_with("p26115") | starts_with("p26123") |
+                                    starts_with("p26125") | starts_with("p26143") |
+                                    starts_with("p26146") | starts_with("p26147") |
+                                    starts_with("p26144")*0.5)), #assuming half hummus half guacamole
+    veggie_daily = veggie_total/p20077,
+    veggie_weekly = veggie_daily * 7,
     # potatoes
-p26118,Potatoes and sweet potatoes (baked/boiled),210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26118
-p26119,Fried/roast potatoes,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26119
-p26120,Mashed potatoes,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26120
-
-Potatoes/sweet potatoes (baked/boiled)	Potatoes, sweet potatoes, boiled or baked
-Mashed potatoes	Potatoes, mashed
-Fried/roast potatoes 	Potatoes and chips, fried or roasted with fat
-
-    # legumes
-Soy drink	Soya drinks (including calcium fortified)
-Legumes/pulses	Baked beans, pulses
-Vegetable dips	Hummus, guacamole (half is hummus other half is guaca)
-Soya-based desserts & yogurt	Soya-based desserts
-p26086,Soy desserts and yogurt,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26086
-p26101,Legumes and pulses,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26101
-p26136,Soy milk,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26136
-p26137,Meat substitutes - soy,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26137
-p26144,Vegetable dips,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26144 # half hummus half guaca
-
-    # red meats
-p26066,Beef,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26066
-p26100,Lamb,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26100
-p26104,"Other meat, offal",210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26104
-p26117,Pork,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26117
-
-Pork	Pork
-Beef	Beef
-Lamb	Lamb
-Other meat, offal	Other meat including offal
-
-    # processed meat
-p26122,Processed meat,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26122
-
-Processed meat	Sausages, bacon (with and without fat), ham, liver pate
-    # poultry
-p26121,Poultry,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26121
-p26069,Breaded/battered chicken,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26069
-
-Poultry	Poultry (with/without skin)
-Breaded/battered Chicken	Fried poultry with batter/breadcrumbs
-    # fish
-p26070,Breaded/battered fish,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26070
-p26109,Oily fish,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26109
-p26132,Shellfish,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26132
-White fish & tinned tuna	Tinned tuna, white fish, other fish
-Shellfish	Prawns, lobster, crab, shellfish
-Oily fish	Oily fish, including salmon,
-Breaded/battered Fish	Fried fish with batter/breadcrumbs
-p26149,White fish and tinned tuna,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26149
-
+    potato_total = rowSums(select(., starts_with("p26118") | starts_with("p26119") |
+                                    starts_with("p26120"))),
+    potato_daily = potato_total/p20077,
+    potato_weekly = potato_daily * 7,
     # eggs
-Egg and egg dishes	Whole eggs and processed (omelette, scotch eggs, other)
-p26088,Egg and egg dishes,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26088
-
+    egg_total = rowSums(select(., starts_with("p26088"))),
+    egg_daily = egg_total/p20077
+    egg_weekly = egg_daily * 7,
     # meat substitutes
-p26145,Meat substitutes - vegetarian,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26145
-Vegetarian meals	Quorn-based and vegetarian burgers and products
-Soy-based meals 	Tofu-based products
+    meat_sub_total = rowSums(select(., starts_with("p26145"))),
+    meat_sub_daily = meat_sub_total/p20077,
+    meat_sub_weekly = meat_sub_daily * 7,
     # non-alcoholic beverages
-p26124,Rice/oat milk,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26124
-p26141,Tea,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26141
-p26142,"Tea, decaffeinated",210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26142
-p26148,Water (still and sparkling),210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26148
-
-p26081,"Coffee, caffeinated",210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26081
-p26082,"Coffee, decaffeinated",210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26082
-p26095,Fruit juice,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26095
-p26126,Low/non sugar sugar-sweetened beverages,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26126
-p26127,Sugar-sweetened beverages and other sugary drinks,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26127
-
-Rice/oat drink	Rice and oat vegetable drinks
-Fruit juice 	Orange, grapefruit drink and 100% fruit juice
-Coffee, caffeinated	Normal instant, filter, cappuccino, espresso coffee
-Coffee, decaffeinated	Decaffeinated instant, filter, cappuccino, espresso coffee
-Tea	Black, green and other tea
-Tea, decaffeinated	Decaffeinated black, herbal tea, rooibos
-SSBs & other sugary drinks	Fizzy sugary drinks, squash, fruit smoothies
-Low/non sugar SSBs	Low calorie fizzy drinks and squash
-Water/sparkling water	Plain water, sparkling water
-Milk-based & powdered drinks	Dairy-based smoothies, milk-based drinks, hot chocolate
-
+    non_alc_beverage_total = rowSums(select(., starts_with("p26124") | starts_with("p26141") |
+                                              starts_with("p26142") | starts_with("p26148") |
+                                              starts_with("p26081") | starts_with("p26082") |
+                                              starts_with("p26095") | starts_with("p26126") |
+                                              starts_with("p26127"))),
+    non_alc_beverage_daily = non_alc_beverage_total/p20077,
+    non_alc_beverages_weekly = non_alc_beverage_daily * 7,
     # alcoholic beverages
-p26151,Fortified wine,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26151
-p26152,Red wine,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26152
-p26153,White wine,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26153
-p26067,Beer and cider,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26067
-p26138,Spirits,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26138
-
-# sugar, preserves, cakes & confectionery, snacks
-p26106,Nut-based spreads,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26106
-p26140,Other sweets,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26140
-p26134,Savoury snacks,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26134
-Added sugars & preserves	Table sugar, honey, jam and preserves
-Chocolate confectionery	Chocolate bar (including white, milk and dark chocolate), chocolate-covered raisins, chocolate-covered sweets
-Other sweets	Hard and soft sweets (including sugar free)
-Savoury snacks	Crisps, savoury biscuits, cheese snacks, other savoury biscuits
-Biscuits	Chocolate biscuits, plain biscuits, sweet biscuits and cookies
-Milk-dairy desserts	Ice cream, milk puddings, milk-based desserts, cheesecake
-Desserts & cakes & pastries	Pancakes, croissant, Danish pastries, scones, fruitcakes, cakes, doughnuts, sponge puddings, other desserts, cereal bars, sweet snacks
-Nut-based spreads	Peanut-butter and chocolate-based spread
-p26084,Milk-dairy desserts,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26084
-p26085,Other desserts and cakes and pastries,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26085
-p26064,Added sugars and preserves,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26064
-p26080,Chocolate confectionery,210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26080
-
-# Sauces & condiments
-Sauces (higher fat)	Mayonnaise, salad dressing, pesto, cheese sauce, white sauce, gravy
-Sauces (lower fat)	Yeast, chutney, olives, ketchup, brown sauce, tomato sauce
-
-p26129,Sauces and condiments (high fat),210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26129
-p26130,Sauces and condiments (low fat),210965,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=26130
-
+    alc_beverage_total = rowSums(select(., starts_with("p26151") | starts_with("p26152") |
+                                          starts_with("p26153") | starts_with("p26067") |
+                                          starts_with("p26138"))),
+    alc_beverage_daily = alc_beverage_total/p20077,
+    alc_beverage_weekly = alc_beverage_daily * 7,
+    # sugar, preserves, cakes & confectionery, snacks
+    snack_total = rowSums(select(., starts_with("p26106") | starts_with("p26140") |
+                                   starts_with("p26134") | starts_with("p26084") |
+                                   starts_with("p26085") | starts_with("p26064") |
+                                   starts_with("p26080"))),
+    snack_daily = snack_total/p20077,
+    Snack_weekly = snack_daily * 7,
+    # Sauces & condiments
+    sauce_total = rowSums(select(., starts_with("p26129") | starts_with("p26130"))),
+    sauce_daily = sauce_total/p20077,
+    sauce_weekly = sauce_daily * 7,
+    # legumes
+    legume_total = rowSums(select(., starts_with("p26086") | starts_with("p26101") |
+                                    starts_with("p26136") | starts_with("p26137") |
+                                    starts_with("p26144")*0.5)), #assuming half hummus half guacamole
+    legume_daily = legume_total/p20077,
+    legume_weekly = legume_daily * 7,
+    # red meats
+    red_meat_total = rowSums(select(., starts_with("p26066") | starts_with("p26100") |
+                                      starts_with("p26104") | starts_with("p26117"))),
+    red_meat_daily = red_meat_total/p20077,
+    red_meat_weekly = red_meat_daily * 7,
+    # processed meat
+    proc_meat_total = rowSums(select(., starts_with("p26122"))),
+    proc_meat_daily = proc_meat_total/p20077,
+    proc_meat_weekly = proc_meat_daily * 7,
+    # poultry
+    poultry_total = rowSums(select(., starts_with("p26121") | starts_with("p26069"))),
+    poultry_daily = poultry_total/p20077,
+    poultry_weekly = poultry_daily * 7,
+    # fish
+    fish_total = rowSums(select(., starts_with("p26070") | starts_with("p26109") |
+                                  starts_with("p26132") | starts_with("p26149"))),
+    fish_daily = fish_total/p20077,
+    fish_weekly = fish_daily * 7,
     # total weight of all foods
-    total_weight_food = p26000
+    total_weight_food = p26000,
+    #for secondary analysis
+    # legumes
+    legume_pea_total = rowSums(select(., starts_with("p26086") | starts_with("p26101") |
+                                        starts_with("p26136") | starts_with("p26137") |
+                                        starts_with("p26115")*0.5 | #assuming half peas half sweetcorn
+                                        starts_with("p26144")*0.5)), #assuming half hummus half guacamole
+    legume_pea_daily = legume_pea_total/p20077,
+    legume_pea_weekly = legume_pea_daily * 7,
+    # vegetables
+    veggie_pea_total = rowSums(select(., starts_with("p26065") | starts_with("p26098") |
+                                starts_with("p26147") | starts_with("p26123") |
+                                starts_with("p26125") | starts_with("p26143") |
+                                starts_with("p26146") |
+                                starts_with("p26115")*0.5 | #assuming half peas half sweetcorn
+                                starts_with("p26144")*0.5)), #assuming half hummus half guacamole
+    veggie_pea_daily = veggie_pea_total/p20077,
+    veggie_pea_weekly = veggie_pea_daily * 7
+  )
+  return(diet_data)
+}
 
-    legumes_total = rowSums(select(., starts_with("p26086") | starts_with("p26101") | starts_with("p26136") | starts_with("p26137"))),
-    meats_total = rowSums(select(., starts_with("p26010") | starts_with("p26011") | starts_with("p26012") | starts_with("p26013") | starts_with("p26014") | starts_with("p26015"))),
-    legumes_daily = legumes_total / p20077,
-    meats_daily = meats_total / p20077,
-    legumes_weekly = legumes_daily * 7,
-    meats_weekly = meats_daily * 7
-
-
-# for sensitivity analyses
-vegetables includes 0.5*peas and sweetcorn - the other half goes into legumes as peas
-
-
-
+diet_data <- calculate_food_intake(diet_data)
 
 
 # estimating average daily and weekly intakes of energy from food groups in kcal
-
-
-
-
 #energy intake
 energy = rowMeans(dplyr::across(dplyr::starts_with("p26002")), na.rm = TRUE) * 0.239,
 p26002 = energy
