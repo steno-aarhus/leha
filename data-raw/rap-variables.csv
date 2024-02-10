@@ -20,6 +20,14 @@ p3456_i0,Number of cigarettes currently smoked daily (current cigarette smokers)
 p3456_i1,Number of cigarettes currently smoked daily (current cigarette smokers) | Instance 1,p3456
 p3456_i2,Number of cigarettes currently smoked daily (current cigarette smokers) | Instance 2,p3456
 p3456_i3,Number of cigarettes currently smoked daily (current cigarette smokers) | Instance 3,p3456
+p6138_i0,Qualifications | Instance 0,p6138
+p6138_i1,Qualifications | Instance 1,p6138
+p6138_i2,Qualifications | Instance 2,p6138
+p6138_i3,Qualifications | Instance 3,p6138
+p6141_i0,How are people in household related to participant | Instance 0,p6141
+p6141_i1,How are people in household related to participant | Instance 1,p6141
+p6141_i2,How are people in household related to participant | Instance 2,p6141
+p6141_i3,How are people in household related to participant | Instance 3,p6141
 p6150_i0,Vascular/heart problems diagnosed by doctor | Instance 0,p6150
 p6150_i1,Vascular/heart problems diagnosed by doctor | Instance 1,p6150
 p6150_i2,Vascular/heart problems diagnosed by doctor | Instance 2,p6150
@@ -48,14 +56,18 @@ p20161_i0,Pack years of smoking | Instance 0,p20161
 p20161_i1,Pack years of smoking | Instance 1,p20161
 p20161_i2,Pack years of smoking | Instance 2,p20161
 p20161_i3,Pack years of smoking | Instance 3,p20161
-p20403,Amount of alcohol drunk on a typical drinking day,p20403
+p20162_i0,Pack years adult smoking as proportion of life span exposed to smoking | Instance 0,p20162
+p20162_i1,Pack years adult smoking as proportion of life span exposed to smoking | Instance 1,p20162
+p20162_i2,Pack years adult smoking as proportion of life span exposed to smoking | Instance 2,p20162
+p20162_i3,Pack years adult smoking as proportion of life span exposed to smoking | Instance 3,p20162
+p20165_i0,FI1 : numeric addition test | Instance 0,p20165
 p21000_i0,Ethnic background | Instance 0,p21000
 p21000_i1,Ethnic background | Instance 1,p21000
 p21000_i2,Ethnic background | Instance 2,p21000
 p21000_i3,Ethnic background | Instance 3,p21000
 p21022,Age at recruitment,p21022
 p22040_i0,Summed MET minutes per week for all activity | Instance 0,p22040
-p22508,Amount of tobacco currently smoked,p22508
+p22189,Townsend deprivation index at recruitment,p22189
 p23104_i0,Body mass index (BMI) | Instance 0,p23104
 p23104_i1,Body mass index (BMI) | Instance 1,p23104
 p23104_i2,Body mass index (BMI) | Instance 2,p23104
@@ -70,11 +82,11 @@ p26002_i1,Energy | Instance 1,p26002
 p26002_i2,Energy | Instance 2,p26002
 p26002_i3,Energy | Instance 3,p26002
 p26002_i4,Energy | Instance 4,p26002
-p26032_i0,Monounsaturated fatty acids | Instance 0,p26032
-p26032_i1,Monounsaturated fatty acids | Instance 1,p26032
-p26032_i2,Monounsaturated fatty acids | Instance 2,p26032
-p26032_i3,Monounsaturated fatty acids | Instance 3,p26032
-p26032_i4,Monounsaturated fatty acids | Instance 4,p26032
+p26030_i0,Alcohol | Instance 0,p26030
+p26030_i1,Alcohol | Instance 1,p26030
+p26030_i2,Alcohol | Instance 2,p26030
+p26030_i3,Alcohol | Instance 3,p26030
+p26030_i4,Alcohol | Instance 4,p26030
 p26062_i0,Animal fat spread lower fat | Instance 0,p26062
 p26062_i1,Animal fat spread lower fat | Instance 1,p26062
 p26062_i2,Animal fat spread lower fat | Instance 2,p26062
@@ -545,9 +557,6 @@ p26155_i1,Trans fatty acids | Instance 1,p26155
 p26155_i2,Trans fatty acids | Instance 2,p26155
 p26155_i3,Trans fatty acids | Instance 3,p26155
 p26155_i4,Trans fatty acids | Instance 4,p26155
-p26410,Index of Multiple Deprivation (England),p26410
-p26426,Index of Multiple Deprivation (Wales),p26426
-p26427,Index of Multiple Deprivation (Scotland),p26427
 p40000_i0,Date of death | Instance 0,p40000
 p40000_i1,Date of death | Instance 1,p40000
 p41270,Diagnoses - ICD10,p41270
@@ -1000,3 +1009,8 @@ p104280_i1,Pea intake | Instance 1,p104280
 p104280_i2,Pea intake | Instance 2,p104280
 p104280_i3,Pea intake | Instance 3,p104280
 p104280_i4,Pea intake | Instance 4,p104280
+p105010_i0,When diet questionnaire completed | Instance 0,p105010
+p105010_i1,When diet questionnaire completed | Instance 1,p105010
+p105010_i2,When diet questionnaire completed | Instance 2,p105010
+p105010_i3,When diet questionnaire completed | Instance 3,p105010
+p105010_i4,When diet questionnaire completed | Instance 4,p105010
