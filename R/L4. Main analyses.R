@@ -27,17 +27,80 @@ table[2,1]glue("{x} ({lower};{upper})") #this will glue estimates defined earlie
 table<-data.frame(table)
 kable(table,"oprionshere")
 
+# Setting baseline age at last questionnaire completed --------------------
 
-# Set survival time beginning and end
-# Age
-# How can I combine month and year of birth ?
-p34,Year of birth,502408,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=34
-p52,Month of birth,502408,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=52
-
-data <- data %>%
-    mutate(
-        birthday =
+# Merging birth year and month of birth into one column:
+sorted_data <- data %>%
+    mutate(month_of_birth = p52,
+           year_of_birth = p34,
+           ques_comp_t0 = p105010_i0,
+           ques_comp_t1 = p105010_i1,
+           ques_comp_t2 = p105010_i2,
+           ques_comp_t3 = p105010_i3,
+           ques_comp_t4 = p105010_i4
     )
+months <- c("January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December")
+
+sorted_data <- sorted_data %>%
+    mutate(month_of_birth_num = sprintf("%02d", match(month_of_birth, months)))
+
+sorted_data <- sorted_data %>%
+    unite(birth, year_of_birth, month_of_birth_num, sep = "-")
+
+remove(months)
+sorted_data <- sorted_data %>%
+    select(-month_of_birth)
+
+# adding 15 as birthdate for all participants:
+
+sorted_data$birth <- as.Date(paste0(sorted_data$birth, "-15"))
+
+# Removing specific time stamp from date of completed questionnaires:
+sorted_data <- sorted_data %>%
+    mutate(ques_comp_t0 = substr(ques_comp_t0, 1, 10),
+           ques_comp_t1 = substr(ques_comp_t1, 1, 10),
+           ques_comp_t2 = substr(ques_comp_t2, 1, 10),
+           ques_comp_t3 = substr(ques_comp_t3, 1, 10),
+           ques_comp_t4 = substr(ques_comp_t4, 1, 10)
+    )
+
+# New column with baseline start date as last completed questionnaire
+sorted_data <- sorted_data %>%
+    # Gather questionnaire dates into long format
+    pivot_longer(cols = starts_with("ques_comp_t"),
+                 names_to = "questionnaire",
+                 values_to = "completion_date") %>%
+    # Remove rows with NA completion dates
+    filter(!is.na(completion_date)) %>%
+    group_by(id) %>%
+    # Arrange completion date for each participant
+    arrange(completion_date) %>%
+    # Create a lagged column to find the last completed questionnaire
+    mutate(last_questionnaire_date = lag(completion_date)) %>%
+    # Keep only the last completed questionnaire for each participant
+    filter(is.na(lead(completion_date))) %>%
+    # Rename the columns to match the desired output
+    rename(baseline_start_date = completion_date) %>%
+    select(-starts_with("ques_comp_t"))
+
+# Creating age at baseline
+sorted_data <- sorted_data %>%
+    mutate(age_at_baseline = year(baseline_start_date) - year(birth) -
+               ifelse(month(baseline_start_date) < month(birth) |
+                          (month(baseline_start_date) == month(birth) &
+                               day(baseline_start_date) < day(birth)), 1, 0))
+
+
+# Set survival time -------------------------------------------------------
+
+age at baseline
+death
+loss to follow-up
+incident disease
+
+event=matches(icd10_k80_date)
+
 
 # Entry into follow-up time should be middle of birthmonth
 
