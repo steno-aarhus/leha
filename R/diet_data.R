@@ -8,7 +8,7 @@ library(magrittr)
 # Average dietary intake of food groups -----------------------------------
 calculate_food_intake <- function(diet_data) {
 # estimating average daily and weekly intakes of food groups in g
-  diet_data <- data %>%
+  diet_data <- sorted_data %>%
   #include foods from 24h recalls, number of recalls, and id's
   select(starts_with("p26"), "p20077") %>%
   # creating food groups from UKB Aurora Perez
@@ -49,7 +49,7 @@ calculate_food_intake <- function(diet_data) {
     # fruit
     fruit_total = rowSums(select(., starts_with("p26089") | starts_with("p26090") |
                                    starts_with("p26091") | starts_with("p26092") |
-                                   starts_with("p26093") | starts_with("p26094") |)),
+                                   starts_with("p26093") | starts_with("p26094"))),
     fruit_daily = fruit_total/p20077,
     fruit_weekly = fruit_daily * 7,
         # nuts and seeds
@@ -71,7 +71,7 @@ calculate_food_intake <- function(diet_data) {
     potato_weekly = potato_daily * 7,
     # eggs
     egg_total = rowSums(select(., starts_with("p26088"))),
-    egg_daily = egg_total/p20077
+    egg_daily = egg_total/p20077,
     egg_weekly = egg_daily * 7,
     # meat substitutes
     meat_sub_total = rowSums(select(., starts_with("p26145"))),
@@ -157,4 +157,8 @@ diet_data <- calculate_food_intake(diet_data)
 energy = rowMeans(dplyr::across(dplyr::starts_with("p26002")), na.rm = TRUE) * 0.239,
 p26002 = energy
 
-
+data_kcal<-sorted_data %>%
+  mutate(energy_foods=(p26002)*0.293,
+         Elegumes=(legume_total*energy_foods),
+  )
+Kommer de variable som energibidrag?
