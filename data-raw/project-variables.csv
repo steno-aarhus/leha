@@ -2,6 +2,7 @@ id,ukb_variable_description,number_participants,link
 p31,Sex,502411,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=31
 p34,Year of birth,502408,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=34
 p52,Month of birth,502408,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=52
+p54,UK Biobank assessment centre,502366,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=54
 p190,Reason lost to follow-up,1298,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=190
 p191,Date lost to follow-up,1298,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=191
 p738,Average total household income before tax,497406,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=738
