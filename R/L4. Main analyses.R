@@ -11,6 +11,15 @@ library(gtsummary)
 library(ggsurvfit)
 
 
+# Load sorted-data --------------------------------------------------------
+sorted_data <- ukbAid::read_parquet(here("data/sorted_data.parquet"))
+# Converting the dataset into a tibble to work with for analyses
+sorted_data <-tibble::as_tibble(sorted_data)
+
+
+
+# Table matrices ----------------------------------------------------------
+
 #create table for results
 table<-matrix(NA,nrow=10, ncol=4) #fit rows and table numbers to content.
 #run analyses and get estimate (x), lowerCI, upperCI or percentiles
@@ -30,7 +39,7 @@ kable(table,"oprionshere")
 # Setting baseline age at last questionnaire completed --------------------
 
 # Merging birth year and month of birth into one column:
-sorted_data <- data %>%
+sorted_data <- sorted_data %>%
     mutate(month_of_birth = p52,
            year_of_birth = p34,
            ques_comp_t0 = p105010_i0,
