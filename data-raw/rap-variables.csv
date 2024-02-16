@@ -2,6 +2,10 @@ field_id,rap_variable_name,id
 p31,Sex,p31
 p34,Year of birth,p34
 p52,Month of birth,p52
+p54_i0,UK Biobank assessment centre | Instance 0,p54
+p54_i1,UK Biobank assessment centre | Instance 1,p54
+p54_i2,UK Biobank assessment centre | Instance 2,p54
+p54_i3,UK Biobank assessment centre | Instance 3,p54
 p190,Reason lost to follow-up,p190
 p191,Date lost to follow-up,p191
 p738_i0,Average total household income before tax | Instance 0,p738
@@ -557,6 +561,10 @@ p26155_i1,Trans fatty acids | Instance 1,p26155
 p26155_i2,Trans fatty acids | Instance 2,p26155
 p26155_i3,Trans fatty acids | Instance 3,p26155
 p26155_i4,Trans fatty acids | Instance 4,p26155
+p30620_i0,Alanine aminotransferase | Instance 0,p30620
+p30620_i1,Alanine aminotransferase | Instance 1,p30620
+p30650_i0,Aspartate aminotransferase | Instance 0,p30650
+p30650_i1,Aspartate aminotransferase | Instance 1,p30650
 p40000_i0,Date of death | Instance 0,p40000
 p40000_i1,Date of death | Instance 1,p40000
 p41270,Diagnoses - ICD10,p41270
