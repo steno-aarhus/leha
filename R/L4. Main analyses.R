@@ -111,6 +111,11 @@ incident disease
 event=matches(icd10_k80_date)
 
 
+# Recoding covariables
+# Alcohol as spline with 4 knots
+df <- 4
+sorted_data <- sorted_data %>%
+    mutate(alcohol_spline = predict(bs(alcohol_intake, df = df, degree = 3, knots = NULL)))
 # Entry into follow-up time should be middle of birthmonth
 
 
