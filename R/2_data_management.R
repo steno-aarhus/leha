@@ -50,9 +50,6 @@ sorted_data <- data %>% mutate(
   deprivation = p22189,
   deprivation_quint = ntile(deprivation, 5),
   deprivation_quint = as.factor(deprivation_quint),
-  region = case_when(
-    p54 == 11012 & p54 ==
-  )
   # categories from this paper: https://doi.org/10.1016/j.eclinm.2020.100658
   education_short = as.character(str_sub(p6138_i0, start = 1, end = 28)),
   education = case_when(
@@ -69,11 +66,11 @@ sorted_data <- data %>% mutate(
   education = as.factor(education),
   cohabitation = p6141_i0,
   physical_activity = case_when(
-    p22040_i0 >0 & p22040_i0 <=9.9 ~ "low",
-    p22040_i0 >9.9 & p22040_i0 <=49.9 ~ "moderate",
-    p22040_i0 >49.9 & p22040_i0 <=9.9 ~ "high",
+    p22040_i0 >0 & p22040_i0 <=918 ~ "low",
+    p22040_i0 >918 & p22040_i0 <=3706 ~ "moderate",
+    p22040_i0 >3706 ~ "high",
     TRUE ~ NA_real_  # Handling cases not covered by the conditions
-    ),
+    ),                                                                           MET-min/week\], unknown)
   smoking = case_when(
     str_detect(p20116_i0, "Never") ~ 0,
     str_detect(p20116_i0, "Previous") ~ 1,
@@ -125,10 +122,24 @@ df <- 4
 sorted_data <- sorted_data %>%
   mutate(alcohol_spline = predict(bs(alcohol, df = df, degree = 3, knots = NULL)))
 
-                                                                                                             background, Asian, black, other, and unknown), socioeconomic status
+sorted_data <- sorted_data %>% mutate(
+  region = case_when(
+    p54 == 11012 | p54 == 11018 | p54 == 11019 | p54 == 11020 ~ 1,
+    p54 == 11023 | p54 == 11022 | p54 == 11003 ~ 2,
+    p54 == 10003 | p54 == 11001 | p54 == 11016 | p54 == 11008 ~ 3,
+    p54 == 11009 | p54 == 11017 ~ 4,
+    p54 == 11010 | p54 == 11014 ~ 5,
+    p54 == 11006 | p54 == 11021 ~ 6,
+    p54 == 11013 | p54 == 11015 ~ 7,
+    p54 == 11002 | p54 == 11007 ~ 8,
+    p54 == 11011 ~ 9,
+    p54 == 11004 | p54 == 11005 ~ 10,
+  )
+)
 
-geographical region of recruitment (ten UK regions), lives with a wife
-or partner (yes, no), anthropometry (BMI \[kg/m2\]), physical activity
+
+physical activity
+
  smoking status (never, former, current 1-15
                                                                                                              cigarettes per day, current ≥15 cigarettes per day, current but number
                                                                                                              of cigarettes per day unknown, and smoking status unknown); metabolic
