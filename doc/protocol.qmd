@@ -268,7 +268,7 @@ geographical region of recruitment (ten UK regions), cohabitation (partner, chil
 (low \≤918 MET-min/week\], moderate \[918-3706 MET-min/week\], and high \[≥3706
 MET-min/week\], unknown) [@Cassidy2016], smoking status (never, former, current 1-15
 cigarettes per day, current ≥15 cigarettes per day, and smoking status unknown); metabolic
-risk factors (and self-reported \[yes, no, unknown\] diagnoses of
+risk factors (self-reported \[yes, no, unknown\] diagnoses of
 diabetes, hypertension, and high cholesterol).
 
 
