@@ -1,18 +1,21 @@
 # Diet data
-
-
 # Load packages -----------------------------------------------------------
 library(tidyverse)
 library(magrittr)
+library(dplyr)
+
+# Load sorted-data --------------------------------------------------------
+sorted_data <- ukbAid::read_parquet(here("data/sorted_data.parquet"))
+# # Converting the dataset into a tibble to work with for analyses
+sorted_data <-tibble::as_tibble(sorted_data)
+
 
 # Average dietary intake of food groups -----------------------------------
-calculate_food_intake <- function(diet_data) {
 # estimating average daily and weekly intakes of food groups in g
-  diet_data <- sorted_data %>%
-  #include foods from 24h recalls, number of recalls, and id's
-  select(starts_with("p26"), "p20077") %>%
+sorted_data <- sorted_data %>%
   # creating food groups from UKB Aurora Perez
   mutate(
+    p20077 = as.numeric(p20077),
     # refined cereals
     cereal_refined_total = rowSums(select(., starts_with("p26113") | starts_with("p26079") |
                                             starts_with("p26071") | starts_with("p26072") |
@@ -61,7 +64,7 @@ calculate_food_intake <- function(diet_data) {
                                     starts_with("p26115") | starts_with("p26123") |
                                     starts_with("p26125") | starts_with("p26143") |
                                     starts_with("p26146") | starts_with("p26147") |
-                                    starts_with("p26144")*0.5)), #assuming half hummus half guacamole
+                                    starts_with("p26144"))),
     veggie_daily = veggie_total/p20077,
     veggie_weekly = veggie_daily * 7,
     # potatoes
@@ -97,15 +100,14 @@ calculate_food_intake <- function(diet_data) {
                                    starts_with("p26085") | starts_with("p26064") |
                                    starts_with("p26080"))),
     snack_daily = snack_total/p20077,
-    Snack_weekly = snack_daily * 7,
+    snack_weekly = snack_daily * 7,
     # Sauces & condiments
     sauce_total = rowSums(select(., starts_with("p26129") | starts_with("p26130"))),
     sauce_daily = sauce_total/p20077,
     sauce_weekly = sauce_daily * 7,
     # legumes
     legume_total = rowSums(select(., starts_with("p26086") | starts_with("p26101") |
-                                    starts_with("p26136") | starts_with("p26137") |
-                                    starts_with("p26144")*0.5)), #assuming half hummus half guacamole
+                                    starts_with("p26136") | starts_with("p26137"))),
     legume_daily = legume_total/p20077,
     legume_weekly = legume_daily * 7,
     # red meats
@@ -127,38 +129,41 @@ calculate_food_intake <- function(diet_data) {
     fish_daily = fish_total/p20077,
     fish_weekly = fish_daily * 7,
     # total weight of all foods
-    total_weight_food = p26000,
+    total_weight_food = rowSums(select(., starts_with("p26000"))),
     #for secondary analysis
     # legumes
     legume_pea_total = rowSums(select(., starts_with("p26086") | starts_with("p26101") |
                                         starts_with("p26136") | starts_with("p26137") |
-                                        starts_with("p26115")*0.5 | #assuming half peas half sweetcorn
-                                        starts_with("p26144")*0.5)), #assuming half hummus half guacamole
+                                        "peas")), #1 serving = 80g
     legume_pea_daily = legume_pea_total/p20077,
     legume_pea_weekly = legume_pea_daily * 7,
     # vegetables
     veggie_pea_total = rowSums(select(., starts_with("p26065") | starts_with("p26098") |
                                 starts_with("p26147") | starts_with("p26123") |
                                 starts_with("p26125") | starts_with("p26143") |
-                                starts_with("p26146") |
-                                starts_with("p26115")*0.5 | #assuming half peas half sweetcorn
-                                starts_with("p26144")*0.5)), #assuming half hummus half guacamole
+                                starts_with("p26146")))-peas,
     veggie_pea_daily = veggie_pea_total/p20077,
     veggie_pea_weekly = veggie_pea_daily * 7
   )
-  return(diet_data)
-}
-
-diet_data <- calculate_food_intake(diet_data)
 
 
-# estimating average daily and weekly intakes of energy from food groups in kcal
-#energy intake
-energy = rowMeans(dplyr::across(dplyr::starts_with("p26002")), na.rm = TRUE) * 0.239,
-p26002 = energy
+# Drop p-variables for diet ------------------------------------------------------
+remove_diet <- c("p26113", "p26079", "p26071","p26072", "p26073", "p26075",
+                 "p26068", "p26083", "p26074", "p26076", "p26077", "p26078",
+                 "p26105", "p26114", "p26128", "p26097", "p26116", "p26135",
+                 "p26139", "p26154", "p26087", "p26096", "p26102", "p26103",
+                 "p26099", "p26131", "p26133", "p26150", "p26112", "p26062",
+                 "p26063", "p26155", "p26110", "p26111", "p26089", "p26090",
+                 "p26091", "p26092", "p26093", "p26094", "p26107", "p26108",
+                 "p26065", "p26098", "p26115", "p26123", "p26125", "p26143",
+                 "p26146", "p26147", "p26144", "p26118", "p26119", "p26120",
+                 "p26088", "p26145", "p26124", "p26141", "p26142", "p26148",
+                 "p26081", "p26082", "p26095", "p26126", "p26127", "p26151",
+                 "p26152", "p26153", "p26067", "p26138", "p26106", "p26140",
+                 "p26134", "p26084", "p26085", "p26064", "p26080", "p26129",
+                 "p26130", "p26086", "p26101", "p26136", "p26137", "p26066",
+                 "p26100", "p26104", "p26117", "p26122", "p26121", "p26069",
+                 "p26070", "p26109", "p26132", "p26149", "p26000")
 
-data_kcal<-sorted_data %>%
-  mutate(energy_foods=(p26002)*0.293,
-         Elegumes=(legume_total*energy_foods),
-  )
-Kommer de variable som energibidrag?
+sorted_data <- sorted_data %>%
+  select(-matches(remove_diet))
