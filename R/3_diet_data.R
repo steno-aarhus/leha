@@ -15,7 +15,6 @@ sorted_data <-tibble::as_tibble(sorted_data)
 sorted_data <- sorted_data %>%
   # creating food groups from UKB Aurora Perez
   mutate(
-    p20077 = as.numeric(p20077),
     # refined cereals
     cereal_refined_total = rowSums(select(., starts_with("p26113") | starts_with("p26079") |
                                             starts_with("p26071") | starts_with("p26072") |
