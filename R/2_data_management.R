@@ -138,14 +138,6 @@ sorted_data <- sorted_data %>% mutate(
 )
 
 
-physical activity
-
- smoking status (never, former, current 1-15
-                                                                                                             cigarettes per day, current ≥15 cigarettes per day, current but number
-                                                                                                             of cigarettes per day unknown, and smoking status unknown); metabolic
-risk factors (and self-reported \[yes, no, unknown\] diagnoses of
-              diabetes, hypertension, and high cholesterol).
-
 # Remove recoded variables from sorted_data -------------------------------
 
 variables_to_remove <- c("p20111_i0", "p20110_i0", "p20107_i0", "p23104_i0",
