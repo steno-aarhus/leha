@@ -264,13 +264,13 @@ beverages), sex (male, female), age (years), alcohol consumption (g
 ethanol/day as restricted cubic splines), ethnic group (white, mixed
 background, Asian, black, other, and unknown), socioeconomic status
 (Townsend deprivation score \[quintiles\], educational level),
-geographical region of recruitment (ten UK regions), lives with a wife
-or partner (yes, no), anthropometry (BMI \[kg/m2\]), physical activity
-(low \[0-9.9 METs/week\], moderate \[10-49.9 METs/week\], and high \[≥50
-METs/week\], unknown), smoking status (never, former, current 1-15
+geographical region of recruitment (ten UK regions), cohabitation (partner, children, sibling, parent, grandparent, grandchild, other related, other unrelated, no answer), anthropometry (BMI \[kg/m2\]), physical activity
+(low \≤918 MET-min/week\], moderate \[918-3706 MET-min/week\], and high \[≥3706
+MET-min/week\], unknown) [@Cassidy2016], smoking status (never, former, current 1-15
 cigarettes per day, current ≥15 cigarettes per day, and smoking status unknown); metabolic
 risk factors (and self-reported \[yes, no, unknown\] diagnoses of
 diabetes, hypertension, and high cholesterol).
+
 
 ## Sample size
 
