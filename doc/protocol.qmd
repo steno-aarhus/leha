@@ -161,13 +161,7 @@ National Health Service North West Multicentre Research Ethics Committee
 
 **Registration prior to analysis of the data**
 
-As of the date of submission, the data exist and you have accessed it,
-though no analysis has been conducted related to the research plan
-(including calculation of summary statistics). A common situation for
-this scenario when a large dataset exists that is used for many
-different studies over time, or when a data set is randomly split into a
-sample for exploratory analyses, and the other section of data is
-reserved for later confirmatory data analysis.
+All data was collected in UK Biobank prior to access and data analyses.
 
 ## Explanation of existing data
 
@@ -177,10 +171,6 @@ providing a data resource for researchers to use for health research.
 All information about collection procedures, limitations, and sources of
 bias are well established and described by the UK Biobank resource.
 
-Because of its size of data collected, it is near impossible to a priori
-see patterns in the data that might influence how the analysis will be
-conducted, unless specifically looked for or previously published on. In
-this way, we feel pre-analysis bias is minimal.
 
 ## Data collection procedures
 
@@ -258,7 +248,7 @@ early diagnoses of MASLD [@Thornton2023]. Due to this change in
 nomenclature, incident cases of MASLD are diagnosed based on ICD-10-code
 for NAFLD, K76.0, at first admission to hospital, while incident cases
 of MASH are diagnosed based on ICD-10-code for NASH, K75.8
-[@Biobank2020].
+[@Biobank2020; @Zhang2023a].
 
 **Covariates**
 
@@ -278,8 +268,7 @@ geographical region of recruitment (ten UK regions), lives with a wife
 or partner (yes, no), anthropometry (BMI \[kg/m2\]), physical activity
 (low \[0-9.9 METs/week\], moderate \[10-49.9 METs/week\], and high \[≥50
 METs/week\], unknown), smoking status (never, former, current 1-15
-cigarettes per day, current ≥15 cigarettes per day, current but number
-of cigarettes per day unknown, and smoking status unknown); metabolic
+cigarettes per day, current ≥15 cigarettes per day, and smoking status unknown); metabolic
 risk factors (and self-reported \[yes, no, unknown\] diagnoses of
 diabetes, hypertension, and high cholesterol).
 
@@ -287,7 +276,7 @@ diabetes, hypertension, and high cholesterol).
 
 For this cohort study, only participants with two or more 24 h dietary
 assessments will be included in the analyses, while missing information
-on covariates will be filled in by statistical imputations where
+on covariates will be filled in by multiple imputations where
 applicable. Individuals with alcohol intakes exceeding the 90th
 percentile will be excluded from the study to mitigate the risk of
 misclassifying the outcome by eliminating those with alcoholic fatty
@@ -330,9 +319,6 @@ legumes.
 -   Replacing red and processed meats, poultry, or fish with legumes
     (e.g., per 30 g/day)
 
--   Replacing red and processed meats, poultry, or fish with legumes
-    (e.g., per 40 kcal/day)
-
 Age will be used as the underlying time scale in the analyses. Follow-up
 time will begin with participants' last completed Oxford WebQ. As
 participants in UKB are still followed-up today, participants will be
@@ -348,9 +334,7 @@ recruitment (ten UK regions), sex, and intake of all other dietary
 components apart from the substitute components (red and processed
 meats; poultry; fish). When substituting g legumes/day, the unit for all
 dietary components will be g/day and the analyses will be adjusted for
-total amount of consumed foods in g/day. When substituting calories of
-legumes, the unit for all dietary components will be calories/day and
-the analyses will be adjusted for total amount of consumed calories/day.
+total amount of consumed foods in g/day.
 
 **Model 2** will be further adjusted for alcohol consumption (g/day as
 restricted cubic splines), ethnic group (white, mixed, Asian, black,
