@@ -31,7 +31,9 @@ icd10_subset <- test %>%
 
 # Filter for relevant rows and convert dates
 icd10_nafld <- icd10_subset %>%
-  mutate(icd10_nafld_date = ifelse(str_detect(p41270var, "K76.0"), as.character(p41280), NA),
+  mutate(icd10_nafld_date = ifelse(str_detect(p41270var, "K76.0"),
+                                   as.character(c_across(starts_with("p41280"))),
+                                   NA),
          icd10_nafld_date = as.Date(icd10_nafld_date, format = "%Y-%m-%d"))
 
 # Now you can merge the 'icd10_nafld_date' back into the original wide-format data frame
@@ -39,6 +41,8 @@ icd10_nafld <- icd10_subset %>%
 aggregated_icd10_nafld <- icd10_nafld %>%
   group_by(id) %>%
   summarise(icd10_nafld_date = first(icd10_nafld_date))  # Or use another summarization method
+
+sum(!is.na(aggregated_icd10_nafld$icd10_nafld_date))
 
 # Now you can merge the 'aggregated_icd10_nafld' back into the 'test' data frame
 merged_data <- test %>%
