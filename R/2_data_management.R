@@ -5,13 +5,13 @@ library(tidyr)
 library(splines)
 
 # Remove ineligible number of recalls ------------
-data <- data %>%
+sorted_data <- data %>%
 subset(p20077>=2)
-data <- data %>%
+sorted_data <- sorted_data %>%
   mutate(p20077 = as.numeric(p20077))
 
 # Add ID ------------------------------------------------------------------
-data <- data %>%
+sorted_data <- sorted_data %>%
   mutate(id = 1:n(), .before = everything())
 
 # Remove variables and columns --------------------------------------------
@@ -20,13 +20,14 @@ variables_to_edit <- c("p738", "p2443", "p2453", "p3456", "p6150",
                        "p20002","p20107", "p20110", "p20111", "p20161", "p20162",
                        "p21000", "p22040", "p22506", "p23104", "p2443",
                        "p2453", "p40000", "p6141")
-data <- data %>%
+sorted_data <- sorted_data %>%
   select(-matches(paste0(variables_to_edit, "_i[1-4]")))
 
 
 # Recoding covariables (not foods) ------------------------------------------------------
 
-sorted_data <- data %>% mutate(
+sorted_data <- sorted_data %>% mutate(
+  number_recalls = p20077,
   sex = p31,
   sex = as.factor(sex),
   age = p21022,
@@ -50,6 +51,7 @@ sorted_data <- data %>% mutate(
   deprivation = p22189,
   deprivation_quint = ntile(deprivation, 5),
   deprivation_quint = as.factor(deprivation_quint),
+  yearly_income = p738_i0,
   # categories from this paper: https://doi.org/10.1016/j.eclinm.2020.100658
   education_short = as.character(str_sub(p6138_i0, start = 1, end = 28)),
   education = case_when(
@@ -68,9 +70,8 @@ sorted_data <- data %>% mutate(
   physical_activity = case_when(
     p22040_i0 >0 & p22040_i0 <=918 ~ "low",
     p22040_i0 >918 & p22040_i0 <=3706 ~ "moderate",
-    p22040_i0 >3706 ~ "high",
-    TRUE ~ NA_real_  # Handling cases not covered by the conditions
-    ),                                                                           MET-min/week\], unknown)
+    p22040_i0 >3706 ~ "high"
+    ),
   smoking = case_when(
     str_detect(p20116_i0, "Never") ~ 0,
     str_detect(p20116_i0, "Previous") ~ 1,
@@ -117,39 +118,29 @@ sorted_data <- data %>% mutate(
   bmi30 = as.numeric(bmi30)
   )
 
-# Alcohol as spline with 4 knots
-df <- 4
-sorted_data <- sorted_data %>%
-  mutate(alcohol_spline = predict(bs(alcohol, df = df, degree = 3, knots = NULL)))
-
 sorted_data <- sorted_data %>% mutate(
   region = case_when(
-    p54 == 11012 | p54 == 11018 | p54 == 11019 | p54 == 11020 ~ 1,
-    p54 == 11023 | p54 == 11022 | p54 == 11003 ~ 2,
-    p54 == 10003 | p54 == 11001 | p54 == 11016 | p54 == 11008 ~ 3,
-    p54 == 11009 | p54 == 11017 ~ 4,
-    p54 == 11010 | p54 == 11014 ~ 5,
-    p54 == 11006 | p54 == 11021 ~ 6,
-    p54 == 11013 | p54 == 11015 ~ 7,
-    p54 == 11002 | p54 == 11007 ~ 8,
-    p54 == 11011 ~ 9,
-    p54 == 11004 | p54 == 11005 ~ 10,
-  )
+    str_detect(p54_i0, "Barts") | str_detect(p54_i0, "Croydon") | str_detect(p54_i0, "Hounslow")  ~ "London",
+    str_detect(p54_i0, "Cardiff") | str_detect(p54_i0, "Swansea") | str_detect(p54_i0, "Wrexham") ~ "Wales",
+    str_detect(p54_i0, "Bury") | str_detect(p54_i0, "Stockport") | str_detect(p54_i0, "Liverpool") | str_detect(p54_i0, "Manchester") ~ "North_West",
+    str_detect(p54_i0, "Newcastle") | str_detect(p54_i0, "Middlesborough") ~ "North_East",
+    str_detect(p54_i0, "Leeds") | str_detect(p54_i0, "Sheffield") ~ "Yorkshire_Humber",
+    str_detect(p54_i0, "Birmingham") | str_detect(p54_i0, "Cheadle")  ~ "West_Midlands",
+    str_detect(p54_i0, "Nottingham") | str_detect(p54_i0, "Stoke") ~ "East_Midlands",
+    str_detect(p54_i0, "Oxford") | str_detect(p54_i0, "Reading") ~ "South_East",
+    str_detect(p54_i0, "Bristol") ~ "South_West",
+    str_detect(p54_i0, "Edinburgh") | str_detect(p54_i0, "Glasgow") ~ "Scotland"
+  ),
+  region = as.character(region)
 )
-
 
 # Remove recoded variables from sorted_data -------------------------------
 
-variables_to_remove <- c("p20111_i0", "p20110_i0", "p20107_i0", "p23104_i0",
-                         "p2453_i0",p2443_i0 p6150_i0 p20002_i0 p20116_i0 starts_with("p26030"))
-p3456_i0
-p22040_i0
-p6141_i0
-p6138_i0
-p22189
-p21000_i0
-p21022
-p31
+variables_to_remove <- c("p20111", "p20110", "p20107", "p23104",
+                         "p2453", "p2443", "p6150", "p20002", "p31",
+                         "p20116", "p26030", "p3456", "p21022",
+                         "p22040", "p6141", "p6138", "p22189",
+                         "p21000", "p54", "p738", "p20077")
 
-sorted_data
-
+sorted_data <- sorted_data %>%
+  select(-matches(variables_to_remove))
