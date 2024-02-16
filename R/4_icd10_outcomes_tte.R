@@ -15,7 +15,7 @@ sorted_data <-tibble::as_tibble(sorted_data)
 # On a subset of data -----------------------------------------------------
 # subset of data for overview
 test <- sorted_data %>%
-  slice(100001:126812) %>%
+  slice(110000:120000) %>%
 # Split the diagnosis-variable into separate column based on delimiter "|"
   separate_wider_delim(p41270,
                        delim = "|",
