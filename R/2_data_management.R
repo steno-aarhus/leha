@@ -27,7 +27,6 @@ sorted_data <- sorted_data %>%
 # Recoding covariables (not foods) ------------------------------------------------------
 
 sorted_data <- sorted_data %>% mutate(
-  number_recalls = p20077,
   sex = p31,
   sex = as.factor(sex),
   age = p21022,
@@ -131,8 +130,20 @@ sorted_data <- sorted_data %>% mutate(
     str_detect(p54_i0, "Bristol") ~ "South_West",
     str_detect(p54_i0, "Edinburgh") | str_detect(p54_i0, "Glasgow") ~ "Scotland"
   ),
-  region = as.character(region)
-)
+  region = as.character(region),
+  pea_servings = case_when(
+    str_detect(p104280_i0, "1") | str_detect(p104280_i1, "1") | str_detect(p104280_i2, "1") |
+      str_detect(p104280_i3, "1") | str_detect(p104280_i4, "1") ~ 1,
+    str_detect(p104280_i0, "2") | str_detect(p104280_i1, "2") | str_detect(p104280_i2, "2") |
+      str_detect(p104280_i3, "2") | str_detect(p104280_i4, "2") ~ 2,
+    str_detect(p104280_i0, "3+") | str_detect(p104280_i1, "3+") | str_detect(p104280_i2, "3+") |
+      str_detect(p104280_i3, "3+") | str_detect(p104280_i4, "3+") ~ 3,
+    str_detect(p104280_i0, "half") | str_detect(p104280_i1, "half") | str_detect(p104280_i2, "half") |
+      str_detect(p104280_i3, "half") | str_detect(p104280_i4, "half") ~ 0.5,
+    str_detect(p104280_i0, "quarter") | str_detect(p104280_i1, "quarter") | str_detect(p104280_i2, "quarter") |
+      str_detect(p104280_i3, "quarter") | str_detect(p104280_i4, "quarter") ~ 0.25),
+  pea_servings = as.numeric(pea_servings),
+  peas = pea_servings * 80) #assuming 1 serving 80g
 
 # Remove recoded variables from sorted_data -------------------------------
 
@@ -140,7 +151,7 @@ variables_to_remove <- c("p20111", "p20110", "p20107", "p23104",
                          "p2453", "p2443", "p6150", "p20002", "p31",
                          "p20116", "p26030", "p3456", "p21022",
                          "p22040", "p6141", "p6138", "p22189",
-                         "p21000", "p54", "p738", "p20077")
+                         "p21000", "p54", "p738")
 
 sorted_data <- sorted_data %>%
   select(-matches(variables_to_remove))
