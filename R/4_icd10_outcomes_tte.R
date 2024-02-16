@@ -66,7 +66,9 @@ icd10_subset <- icd %>%
 
 # Filter for relevant rows and convert dates
 icd10_nafld <- icd10_subset %>%
-  mutate(icd10_nafld_date = ifelse(str_detect(p41270var, "K76.0"), as.character(p41280), NA),
+  mutate(icd10_nafld_date = ifelse(str_detect(p41270var, "K76.0"),
+                                   as.character(c_across(starts_with("p41280"))),
+                                   NA),
          icd10_nafld_date = as.Date(icd10_nafld_date, format = "%Y-%m-%d"))
 
 # Now you can merge the 'icd10_nafld_date' back into the original wide-format data frame
