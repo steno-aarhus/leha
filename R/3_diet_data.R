@@ -6,7 +6,7 @@ library(dplyr)
 
 # Load sorted-data --------------------------------------------------------
 sorted_data <- ukbAid::read_parquet(here("data/sorted_data.parquet"))
-# # Converting the dataset into a tibble to work with for analyses
+# # # Converting the dataset into a tibble to work with for analyses
 sorted_data <-tibble::as_tibble(sorted_data)
 
 
@@ -166,3 +166,7 @@ remove_diet <- c("p26113", "p26079", "p26071","p26072", "p26073", "p26075",
 
 sorted_data <- sorted_data %>%
   select(-matches(remove_diet))
+
+
+# Save data ---------------------------------------------------------------
+arrow::write_parquet(sorted_data, here("data/sorted_data.parquet"))
