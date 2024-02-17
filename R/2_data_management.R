@@ -155,3 +155,8 @@ variables_to_remove <- c("p20111", "p20110", "p20107", "p23104",
 
 sorted_data <- sorted_data %>%
   select(-matches(variables_to_remove))
+
+
+
+# Save data ---------------------------------------------------------------
+arrow::write_parquet(sorted_data, here("data/sorted_data.parquet"))
