@@ -5,13 +5,13 @@ library(tidyr)
 library(splines)
 
 # Remove ineligible number of recalls ------------
-sorted_data <- data %>%
+data <- data %>%
 subset(p20077>=2)
-sorted_data <- sorted_data %>%
+data <- data %>%
   mutate(p20077 = as.numeric(p20077))
 
 # Add ID ------------------------------------------------------------------
-sorted_data <- sorted_data %>%
+data <- data %>%
   mutate(id = 1:n(), .before = everything())
 
 # Remove variables and columns --------------------------------------------
@@ -20,13 +20,13 @@ variables_to_edit <- c("p738", "p2443", "p2453", "p3456", "p6150",
                        "p20002","p20107", "p20110", "p20111", "p20161", "p20162",
                        "p21000", "p22040", "p22506", "p23104", "p2443",
                        "p2453", "p40000", "p6141")
-sorted_data <- sorted_data %>%
+data <- data %>%
   select(-matches(paste0(variables_to_edit, "_i[1-4]")))
 
 
 # Recoding covariables (not foods) ------------------------------------------------------
 
-sorted_data <- sorted_data %>% mutate(
+data <- data %>% mutate(
   sex = p31,
   sex = as.factor(sex),
   age = p21022,
@@ -117,7 +117,7 @@ sorted_data <- sorted_data %>% mutate(
   bmi30 = as.numeric(bmi30)
   )
 
-sorted_data <- sorted_data %>% mutate(
+data <- data %>% mutate(
   region = case_when(
     str_detect(p54_i0, "Barts") | str_detect(p54_i0, "Croydon") | str_detect(p54_i0, "Hounslow")  ~ "London",
     str_detect(p54_i0, "Cardiff") | str_detect(p54_i0, "Swansea") | str_detect(p54_i0, "Wrexham") ~ "Wales",
@@ -145,18 +145,24 @@ sorted_data <- sorted_data %>% mutate(
   pea_servings = as.numeric(pea_servings),
   peas = pea_servings * 80) #assuming 1 serving 80g
 
+data <- data %>%
+  rename(alt = p30620_i0,
+         ast = p30650_i0)
+
 # Remove recoded variables from sorted_data -------------------------------
 
 variables_to_remove <- c("p20111", "p20110", "p20107", "p23104",
                          "p2453", "p2443", "p6150", "p20002", "p31",
                          "p20116", "p26030", "p3456", "p21022",
                          "p22040", "p6141", "p6138", "p22189",
-                         "p21000", "p54", "p738")
+                         "p21000", "p54", "p738", "p30650",
+                         "p30620", "p41272", "p20165", "p100002",
+                         "p100001", "p41282")
 
-sorted_data <- sorted_data %>%
+data <- data %>%
   select(-matches(variables_to_remove))
 
 
 
 # Save data ---------------------------------------------------------------
-arrow::write_parquet(sorted_data, here("data/sorted_data.parquet"))
+arrow::write_parquet(data, here("data/data.parquet"))
