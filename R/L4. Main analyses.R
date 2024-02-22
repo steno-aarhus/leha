@@ -12,9 +12,9 @@ library(ggsurvfit)
 
 
 # Load sorted-data --------------------------------------------------------
-sorted_data <- ukbAid::read_parquet(here("data/sorted_data.parquet"))
-# Converting the dataset into a tibble to work with for analyses
-sorted_data <-tibble::as_tibble(sorted_data)
+targets::tar_make()
+# Restart session
+source(here::here("R/1_data_start.R"))
 
 
 
@@ -102,6 +102,19 @@ sorted_data <- sorted_data %>%
 
 
 # Set survival time -------------------------------------------------------
+
+# Set cut-off date for follow-up ------------------------------------------
+# Estimated last follow-up date for ICD10 codes (stagnation of diagnoses)
+# proportionen for hvornår der ikke kommer flere bælgfrugtsindtag
+# Den første måling (folk nogensinde har) og antallet der spiser bælgfrugter?
+#   % der spiser bælg - vælge start ud fra stagnering
+# JA % - 25 - 30 - 40 - 40 -
+#   Nej
+#
+# NASH, K75.8
+# NAFLD, K76.0,
+
+
 
 age at baseline
 death
