@@ -4,15 +4,12 @@ library(tidyverse)
 library(magrittr)
 library(dplyr)
 
-# Load sorted-data --------------------------------------------------------
-sorted_data <- ukbAid::read_parquet(here("data/sorted_data.parquet"))
-# # # Converting the dataset into a tibble to work with for analyses
-sorted_data <-tibble::as_tibble(sorted_data)
+
 
 
 # Average dietary intake of food groups -----------------------------------
 # estimating average daily and weekly intakes of food groups in g
-sorted_data <- sorted_data %>%
+data <- data %>%
   # creating food groups from UKB Aurora Perez
   mutate(
     # refined cereals
@@ -164,9 +161,9 @@ remove_diet <- c("p26113", "p26079", "p26071","p26072", "p26073", "p26075",
                  "p26100", "p26104", "p26117", "p26122", "p26121", "p26069",
                  "p26070", "p26109", "p26132", "p26149", "p26000")
 
-sorted_data <- sorted_data %>%
+data <- data %>%
   select(-matches(remove_diet))
 
 
 # Save data ---------------------------------------------------------------
-arrow::write_parquet(sorted_data, here("data/sorted_data.parquet"))
+arrow::write_parquet(data, here("data/data.parquet"))
