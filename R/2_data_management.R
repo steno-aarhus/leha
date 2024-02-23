@@ -42,10 +42,10 @@ data <- data %>% mutate(
   age_strata = as.factor(age),
   ethnicity = case_when(
     p21000_i0 == "White" | p21000_i0 == "British" | p21000_i0 == "Irish" | p21000_i0 == "Any other white background" ~ "white",
-    p21000_i0 == "Mixed" | p21000_i0 == "White and Black Caribbean" |p21000_i0 == "White and Black African" | p21000_i0 == "White and Asian" | p21000_i0 == "Any other mixed background" ~ "mixed",
     p21000_i0 == "Chinese" | p21000_i0 == "Asian or Asian British" | p21000_i0 =="Indian" | p21000_i0 == "Pakistani" | p21000_i0 == "Bangladeshi" | p21000_i0 == "Any other Asian background" ~ "asian",
     p21000_i0 == "Black or Black British" | p21000_i0 == "Caribbean" | p21000_i0 == "African" | p21000_i0 == "Any other Black background" ~ "black",
-    p21000_i0 == "Other ethnic group" | p21000_i0 == "Do not know" | p21000_i0 == "Prefer not to answer" | str_detect(p21000_i0, "NA") ~ "other"
+    p21000_i0 == "Mixed" | p21000_i0 == "White and Black Caribbean" |p21000_i0 == "White and Black African" | p21000_i0 == "White and Asian" | p21000_i0 == "Any other mixed background" |
+    p21000_i0 == "Other ethnic group" | p21000_i0 == "Do not know" | p21000_i0 == "Prefer not to answer" | str_detect(p21000_i0, "NA") ~ "mixed or other"
     ),
   deprivation = p22189,
   deprivation_quint = ntile(deprivation, 5),
@@ -136,11 +136,11 @@ data <- data %>% mutate(
     p22040_i0 >3706 ~ "high"
     ),
   smoking = case_when(
-    str_detect(p20116_i0, "Never") ~ 0,
-    str_detect(p20116_i0, "Previous") ~ 1,
-    str_detect(p20116_i0, "Current") & p3456_i0 > 0 & p3456_i0 <= 15 ~ 2,
-    str_detect(p20116_i0, "Current") & p3456_i0 > 15 ~ 3,
-    str_detect(p20116_i0, "answer") ~ 4,
+    str_detect(p20116_i0, "Never") ~ "never",
+    str_detect(p20116_i0, "Previous") ~ "former",
+    str_detect(p20116_i0, "Current") & p3456_i0 > 0 & p3456_i0 <= 15 ~ "current <15",
+    str_detect(p20116_i0, "Current") & p3456_i0 > 15 ~ "current > 15",
+    str_detect(p20116_i0, "answer") ~ "No answer",
     TRUE ~ NA_real_  # Handling cases not covered by the conditions
     ),
   # remove NA from alcohol intake (it should be 0)
@@ -153,7 +153,9 @@ data <- data %>% mutate(
   alcohol_daily = alcohol_intake/p20077,
   alcohol_intake = as.numeric(alcohol_intake),
   # Self-reported and doctor diagnosed non-cancer illness.
+  p6150_i0 = ifelse(is.na(p6150_i0), "None", p6150_i0),
   p6150_i0 = as.character(p6150_i0),
+  p20002_i0 = ifelse(is.na(p20002_i0), "None", p20002_i0),
   p20002_i0 = as.character(p20002_i0),
   non_cancer_illness = case_when(
     str_detect(p20002_i0, "hypert") | str_detect(p6150_i0, "High") ~ "hypertension",
@@ -163,12 +165,16 @@ data <- data %>% mutate(
     str_detect(p20002_i0, "cholangitis") | str_detect(p20002_i0, "cholelithiasis") | str_detect(p20002_i0, "cholecyst") | str_detect(p20002_i0, "primary biliary cirrhosis") ~ "gbd",
     str_detect(p20002_i0, "alcoholic cirrhosis") ~ "alcoholic liver disease",
     str_detect(p6150_i0, "Angina") ~ "angina",
+    p6150_i0 == "None" | p20002_i0 == "None" ~ "none of the above",
     TRUE ~ NA_character_  # If none of the conditions match
     ),
   non_cancer_illness = as.factor(non_cancer_illness),
   diabetes = p2443_i0,
   diabetes = as.factor(diabetes),
   # illness in closest family
+  p20107_i0 = ifelse(is.na(p20107_i0), "None", p20107_i0),
+  p20110_i0 = ifelse(is.na(p20110_i0), "None", p20110_i0),
+  p20111_i0 = ifelse(is.na(p20111_i0), "None", p20111_i0),
   p20107_i0 = as.character(p20107_i0),
   p20110_i0 = as.character(p20110_i0),
   p20111_i0 = as.character(p20111_i0),
@@ -177,6 +183,7 @@ data <- data %>% mutate(
     str_detect(p20107_i0, "High blood pressure") | str_detect(p20110_i0, "High blood pressure") | str_detect(p20111_i0, "High blood pressure") ~ "hypertension",
     str_detect(p20107_i0, "Stroke") | str_detect(p20110_i0, "Stroke") | str_detect(p20111_i0, "Stroke")~ "stroke",
     str_detect(p20107_i0, "Heart disease") | str_detect(p20110_i0, "Heart disease") | str_detect(p20111_i0, "Heart disease") ~ "heart disease",
+    p20107_i0 == "None" | p20110_i0 == "None" | p20111_i0 == "None" ~ "none of the above",
     TRUE ~ NA_character_ # If none of the conditions match
     ),
   family_illness = as.factor(family_illness),
