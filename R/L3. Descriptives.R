@@ -4,8 +4,16 @@
 
 
 install.packages(glue)
-library(glue)
-library(scales)
+library(dplyr)
+library(magrittr)
+library(tidyr)
+library(splines)
+install.packages("openxlsx")
+library(openxlsx)
+install.packages("gtsummary")
+library(gtsummary)
+install.packages("flextable")
+library(flextable)
 
 
 # Load data ---------------------------------------------------------------
@@ -16,62 +24,27 @@ source(here::here("R/1_data_start.R"))
 
 
 # Table 1 -----------------------------------------------------------------
-# Create a matrix to feed results into
-table <- matrix(NA,nrow=20, ncol=3) #fit rows and table numbers to content.
-#run analyses and get estimate (x), lowerCI, upperCI or percentiles
-x<-number(x, accuracy=0.01) #will specify a new object X from the last run code with 2dp
-lower<-number(10p, accuracy=0.01) #will specify 10 percentile with 2dp
-upper<-number(90p, accuracy=0.01) #will specify 90 percentile with 2dp
-percent <- number(x/ nrows() *100, accuracy = 0.01) # will specify percentage with 2dp
-5p<-number(x, accuracy=0.01)
-95p<-number(x, accuracy=0.01)
-
-table[1,1]<-"Characteristics"
-table[1,2]<-"All participants"
-table[1,3]<-"Individuals with NAFLD or NASH"
-table[2,1] <-"Sex, female"
-table[2,2]glue("{x}, {percent}")
-table[2,3]glue("{x}, {percent}")
-table[3,1] <- "Age at recruitment, years"
-table[3,2]glue("{x} ({lower};{upper})")
-table[3,3]glue("{x} ({lower};{upper})")
-table[4,1] <-
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-table[4,1]glue("{x} ({lower};{upper})")
-
-glue("{x} ({lower};{upper})") #this will glue estimates defined earlier into my matrix-table. Should be done for all content before next code
-table<-data.frame(table)
-kable(table,"optionshere")
 
 
 
 
+data <- data %>%
+  mutate(nafld = case_when(
+    !is.na(icd10_nafld_date) | !is.na(icd10_nash_date) |
+      !is.na(icd9_nafld_date) | !is.na(icd9_nash_date) ~ 1,
+    TRUE ~ 0))
+
+table1 <- data %>%
+  select(nafld, age, sex, yearly_income, education, deprivation, cohabitation, ethnicity, physical_activity, smoking, alcohol_daily, region, bmi30, diabetes, non_cancer_illness, cancer, family_illness) %>%
+  tbl_summary(by = nafld,
+              statistic = list(all_continuous() ~  "{median} ({p10}, {p90})",
+                               all_categorical() ~ "{n} ({p}%)"),
+              digits = all_continuous() ~ 1,
+              missing_text = "n missing") %>%
+  add_overall() %>%
+  bold_labels() %>%
+  modify_caption("Table 1.") %>%
+  as_flex_table()
+
+save_as_html(table1, path = here("data", "table1.html"))
 
