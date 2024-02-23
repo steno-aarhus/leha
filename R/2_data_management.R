@@ -51,8 +51,7 @@ data <- data %>% mutate(
   deprivation_quint = ntile(deprivation, 5),
   deprivation_quint = as.factor(deprivation_quint),
   yearly_income = p738_i0,
-  yearly_income = as.factor(yearly_income)
-  # categories from this paper: https://doi.org/10.1016/j.eclinm.2020.100658
+  yearly_income = as.factor(yearly_income),
   education_short = as.character(str_sub(p6138_i0, start = 1, end = 28)),
   education = case_when(
     education_short == "College or University degree" ~ "High",
@@ -66,7 +65,71 @@ data <- data %>% mutate(
     education_short == "None of the above" ~ "Low"
     ),
   education = as.factor(education),
-  cohabitation = p6141_i0,
+  cohabitation = case_when(
+    p6141_i0 == "Husband, wife or partner"
+    ~ "partner",
+    p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)"
+    ~ "partner and children",
+    p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Brother and/or sister" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandchild" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandchild|Other related" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Other related" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father|Other related" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Brother and/or sister|Other related" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandparent" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandparent|Grandchild" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father|Grandchild" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father|Other related" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father|Other unrelated" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Other unrelated" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandchild|Other related|Other unrelated" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandchild|Other unrelated" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father|Grandchild|Other unrelated" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father|Other unrelated" |
+      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Other related|Other unrelated"
+    ~ "partner, children, and others ",
+    p6141_i0 == "Son and/or daughter (include step-children)"
+    ~ "children",
+    p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister"
+    ~ "children and siblings",
+      p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father"
+    ~ "children and parents",
+    p6141_i0 == "Son and/or daughter (include step-children)|Other related" |
+      p6141_i0 == "Son and/or daughter (include step-children)|Grandchild" |
+      p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other related" |
+      p6141_i0 == "Son and/or daughter (include step-children)|Grandparent"|
+      p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other related|Other unrelated" |
+      p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other unrelated" |
+      p6141_i0 == "Son and/or daughter (include step-children)|Other related|Other unrelated" |
+      p6141_i0 == "Son and/or daughter (include step-children)|Other unrelated"
+    ~ "children and others",
+    p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Other related" |
+      p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Other unrelated"
+    ~ "children, siblings, and others",
+    p6141_i0 == "Mother and/or father"
+    ~ "parents",
+    p6141_i0 == "Mother and/or father|Grandchild" |
+      p6141_i0 == "Mother and/or father|Grandparent" |
+      p6141_i0 == "Mother and/or father|Other related" |
+      p6141_i0 == "Mother and/or father|Other unrelated"
+    ~ "parents and others",
+    p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father"
+    ~ "children, parents, and siblings",
+    p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Grandchild"|
+      p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Other related" |
+      p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Other unrelated" |
+      p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Grandchild|Other unrelated"
+    ~ "children, parents, others",
+    p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father|Other related"
+    ~ "children, parents, siblings, and other relatives",
+    p6141_i0 == "Other related" |
+      p6141_i0 == "Other unrelated"
+    ~ "other relative or non-relative",
+    p6141_i0 == "Prefer not to answer"
+      ~ "no answer"
+  ),
   physical_activity = case_when(
     p22040_i0 >0 & p22040_i0 <=918 ~ "low",
     p22040_i0 >918 & p22040_i0 <=3706 ~ "moderate",
@@ -80,7 +143,12 @@ data <- data %>% mutate(
     str_detect(p20116_i0, "answer") ~ 4,
     TRUE ~ NA_real_  # Handling cases not covered by the conditions
     ),
-  p26030 =
+  # remove NA from alcohol intake (it should be 0)
+  p26030_i0 = ifelse(is.na(p26030_i0), 0, p26030_i0),
+  p26030_i1 = ifelse(is.na(p26030_i1), 0, p26030_i1),
+  p26030_i2 = ifelse(is.na(p26030_i2), 0, p26030_i2),
+  p26030_i3 = ifelse(is.na(p26030_i3), 0, p26030_i3),
+  p26030_i4 = ifelse(is.na(p26030_i4), 0, p26030_i4),
   alcohol_intake = rowSums(select(., starts_with("p26030"))),
   alcohol_daily = alcohol_intake/p20077,
   alcohol_intake = as.numeric(alcohol_intake),
