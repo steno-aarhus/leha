@@ -51,6 +51,7 @@ data <- data %>% mutate(
   deprivation_quint = ntile(deprivation, 5),
   deprivation_quint = as.factor(deprivation_quint),
   yearly_income = p738_i0,
+  yearly_income = as.factor(yearly_income)
   # categories from this paper: https://doi.org/10.1016/j.eclinm.2020.100658
   education_short = as.character(str_sub(p6138_i0, start = 1, end = 28)),
   education = case_when(
@@ -79,7 +80,9 @@ data <- data %>% mutate(
     str_detect(p20116_i0, "answer") ~ 4,
     TRUE ~ NA_real_  # Handling cases not covered by the conditions
     ),
+  p26030 =
   alcohol_intake = rowSums(select(., starts_with("p26030"))),
+  alcohol_daily = alcohol_intake/p20077,
   alcohol_intake = as.numeric(alcohol_intake),
   # Self-reported and doctor diagnosed non-cancer illness.
   p6150_i0 = as.character(p6150_i0),
@@ -130,7 +133,7 @@ data <- data %>% mutate(
     str_detect(p54_i0, "Bristol") ~ "South_West",
     str_detect(p54_i0, "Edinburgh") | str_detect(p54_i0, "Glasgow") ~ "Scotland"
   ),
-  region = as.character(region),
+  region = as.factor(region),
   pea_servings = case_when(
     str_detect(p104280_i0, "1") | str_detect(p104280_i1, "1") | str_detect(p104280_i2, "1") |
       str_detect(p104280_i3, "1") | str_detect(p104280_i4, "1") ~ 1,
