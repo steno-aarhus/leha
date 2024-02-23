@@ -3,6 +3,7 @@ library(dplyr)
 library(magrittr)
 library(tidyr)
 library(splines)
+library(stringr)
 
 # Remove ineligible number of recalls ------------
 data <- data %>%
@@ -138,10 +139,10 @@ data <- data %>% mutate(
   smoking = case_when(
     str_detect(p20116_i0, "Never") ~ "never",
     str_detect(p20116_i0, "Previous") ~ "former",
-    str_detect(p20116_i0, "Current") & p3456_i0 > 0 & p3456_i0 <= 15 ~ "current <15",
-    str_detect(p20116_i0, "Current") & p3456_i0 > 15 ~ "current > 15",
+    str_detect(p20116_i0, "Current") & as.numeric(p3456_i0) > 0 & as.numeric(p3456_i0) <= 15 ~ "current <15",
+    str_detect(p20116_i0, "Current") & as.numeric(p3456_i0) > 15 ~ "current > 15",
     str_detect(p20116_i0, "answer") ~ "No answer",
-    TRUE ~ NA_real_  # Handling cases not covered by the conditions
+    TRUE ~ NA_character_  # Handling cases not covered by the conditions
     ),
   # remove NA from alcohol intake (it should be 0)
   p26030_i0 = ifelse(is.na(p26030_i0), 0, p26030_i0),
