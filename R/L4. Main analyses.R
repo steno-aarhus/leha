@@ -2,111 +2,110 @@
 
 #Load packages
 library(tidyverse)
+install.packages("patchwork")
 library(patchwork)
+install.packages("Hmisc")
 library(Hmisc)
+install.packages("survival")
 library(survival)
+install.packages("lubridate")
 library(lubridate)
+install.packages("Publish")
 library(Publish)
 library(gtsummary)
+install.packages("ggsurvfit")
 library(ggsurvfit)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(here)
 
 
-# Load sorted-data --------------------------------------------------------
+# Load data --------------------------------------------------------
 targets::tar_make()
 # Restart session
 source(here::here("R/1_data_start.R"))
 
-# Set survival time -------------------------------------------------------
 
 # Set cut-off date for follow-up ------------------------------------------
 # Estimated last follow-up date for ICD10 codes (stagnation of diagnoses)
-# proportionen for hvornår der ikke kommer flere bælgfrugtsindtag
-# Den første måling (folk nogensinde har) og antallet der spiser bælgfrugter?
-#   % der spiser bælg - vælge start ud fra stagnering
-# JA % - 25 - 30 - 40 - 40 -
-#   Nej
-#
-# NASH, K75.8
-# NAFLD, K76.0,
+# Create the plot
+ggplot(data, aes(x = icd10_nafld_date, y = id)) +
+    geom_point() + # Use points to show individual data points
+    geom_smooth(method = "lm", se = FALSE) + # Add linear regression line
+    annotate("text", x = max(data$icd10_nafld_date), y = min(data$id),
+             label = paste("Last observed date:", max(data$icd10_nafld_date)),
+             hjust = 1, vjust = -0.5, size = 4) +  # Add annotation for the last observed date
+    labs(title = "Dates of Disease Over Time", x = "Date of Disease", y = "Participant ID")
+
+# The density is very high in the right of the plot - I will estimate the last
+# diagnosis date in data:
+
+dates <- data %>%
+    subset(!is.na(icd10_nafld_date))
+
+# Find the last date of diagnosis
+last_date <- max(dates$icd10_nafld_date)
+
+# Print or use the last date as needed
+print(last_date)
+
+# Administrative censoring at October 31st, 2022
+data <- data %>%
+    mutate(censoring = as.Date("2022-10-31"))
+
+
+# nafld analysis ----------------------------------------------------------
+## Set survival time -------------------------------------------------------
+data <- data %>% mutate(
+    startdate = age_at_baseline,
+    enddate = icd10_nafld_date | icd9_nafld_date | loss_to_follow_up | date_of_death | censoring,
+    time = difftime(enddate, startdate)/365.25)
+
+# Daily substituting 30 g legumes for 30g meat, poultry and fish
+# defining 30 g/day variable for each food
+data <- data %>%
+    mutate(legumes30 = legumes_daily + 30,
+           meats30 = meats_daily + 30,
+           poultry30 = poultry_daily + 30,
+           fish30 = fish_daily + 30)
+
+# HR for NAFLD when substituting meat for legumes - unadjusted analysis (ua)
+nafld_meats_ua <- coxph(Surv(time, event = icd10_nafld_date) ~ legumes_daily*30 +
+                         cereal_refined_daily + whole_grain_daily + mixed_dish_daily +
+                         dairy_daily + fats_daily + fruit_daily + nut_daily +
+                         veggie_daily + potato_daily + egg_daily + meat_sub_daily +
+                         non_alc_beverage_daily + alc_beverage_daily + snack_daily +
+                         sauce_daily + meats_daily + poultry_daily + fish_daily +
+                         total_weight_food)
+
+
+                     cereal_refined_weekly = cereal_refined_daily * 7,
+                     whole_grain_weekly = whole_grain_daily * 7,
+                     mixed_dish_weekly = mixed_dish_daily * 7,
+                     dairy_weekly = dairy_daily * 7,
+                     fats_weekly = fats_daily * 7,
+                     fruit_weekly = fruit_daily * 7,
+                     nut_weekly = nut_daily*7,
+                     veggie_weekly = veggie_daily * 7,
+                     potato_weekly = potato_daily * 7,
+                     egg_weekly = egg_daily * 7,
+                     meat_sub_weekly = meat_sub_daily * 7,
+                     non_alc_beverages_weekly = non_alc_beverage_daily * 7,
+                     alc_beverage_weekly = alc_beverage_daily * 7,
+                     snack_weekly = snack_daily * 7,
+                     sauce_weekly = sauce_daily * 7,
+                     meats_weekly
+                     poultry_weekly = poultry_daily * 7,
+                     fish_weekly = fish_daily * 7,
+                     # total weight of all foods
+                     total_weight_food = rowSums(select(., starts_with("p26000"))),
 
 
 
-age at baseline
-death
-loss to follow-up
-incident disease
-
-event=matches(icd10_k80_date)
+# Weekly substituting 80 g legumes for meat (NHS 1 portion beans = 80 g) https://www.nhs.uk/live-well/eat-well/5-a-day/5-a-day-what-counts/
 
 
-# Recoding covariables
-# Alcohol as spline with 4 knots
-df <- 4
-sorted_data <- sorted_data %>%
-    mutate(alcohol_spline = predict(bs(alcohol_intake, df = df, degree = 3, knots = NULL)))
-# Entry into follow-up time should be middle of birthmonth
-
-
-Age will be used as the underlying time scale in the analyses. Follow-up
-time will begin with participants' last completed Oxford WebQ. As
-participants in UKB are still followed-up today, participants will be
-right censored at the date of the most recent registry update of full
-follow-up for the outcomes. Otherwise, censoring will occur at the event
-of death, loss to follow-up from the study, or date of diagnosis of
-MASLD or MASH, whichever comes first. The substitution analyses will be
-conducted with different adjustment levels.
-
-#Cox regression
-# Examples:
-# cox <- coxph(Surv(time,event= death) ~ cenc0, <-- alle variable i modellen (kost, bælg, confoundere) kød/fisk/poultry er ikke med som variabel i analysen. Her skal man skalere sit indtag så det passer med modellen, fx pr 30g eller 30kcal
-#              data=azat,
-#              ties='breslow')
-# summary(cox) #gives estimate as log(HR)=coef, and HR=exp(coef)
-# publish(cox) #to get estimate as HR with 95%CI
-# tbl_regression(cox, exponentiate=TRUE) #to get estimate as HR with 95%CI
-#
-# fit.azat <- survfit(Surv(time,event= death) ~ cenc0,
-#                     data=azat,
-#                     conf.type = 'log-log')
-#
-# #log-log plot
-# plot(fit.azat,
-#      col=1:2,
-#      fun='cloglog',
-#      main='Ex 8.2, log-log plot')
-# And to check the second assumption of linearity between log hazards (=HR) and each covariate (residual plot)
-#
-# azat$res<-predict(cox)
-# g1<-azat %>%
-#     ggplot(aes(res,age)) +
-#     geom_point()+
-#     geom_smooth(method='coxph', formula= y~x)
-#
-# g2<-azat %>%
-#     ggplot(aes(res,logb0)) +
-#     geom_point()+
-#     geom_smooth(method='coxph', formula= y~x)
-#
-# g3<-azat %>%
-#     ggplot(aes(res,alb0)) +
-#     geom_point()+
-#     geom_smooth(method='coxph', formula= y~x)
-#
-# g1+g2+g3
-
-#Set survival time
-#Set survival time
-data<-data %>%
-    mutate(startdate=date of diagnosis,
-           enddate=date of diagnosis OR date of death before end of follow-up OR lost to follow-up OR end-of-follow-up if after start and before end of follow-up ,
-           time=difftime(enddate, startdate)/365.25) #time in years
-# p41270,Diagnoses - ICD10,440017,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41270
-# p41280,Date of first in-patient diagnosis - ICD10,440014,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41280
-# #Fra web: The corresponding ICD-10 diagnosis codes can be found in data-field Field 41270 and the two fields can be linked using the array structure.
-        #Skal være diagnoserne K75.8 (NASH) og K76.0 (NAFLD)
-        #Hvordan fungerer koblingen mellem dato og diagnose?
-# p191,Date lost to follow-up,1298,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=191
-# p40000,Date of death,37897,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=40000
 
 #NAFLD/NASH
 coxnafld<-coxph(Surv(time, event=nafld)~exposure+covar1+covar2+covar3...,
@@ -153,6 +152,46 @@ hypertension, or high cholesterol (yes, no, unknown).
 **Model 3** will further adjust for anthropometry (BMI ≥ 30 kg/m2), as
 obesity may either confound or mediate the association between replacing
 red and processed meats, poultry, or fish with legumes and risk of MASLD
+
+
+#Cox regression
+# Examples:
+# cox <- coxph(Surv(time,event= death) ~ cenc0, <-- alle variable i modellen (kost, bælg, confoundere) kød/fisk/poultry er ikke med som variabel i analysen. Her skal man skalere sit indtag så det passer med modellen, fx pr 30g eller 30kcal
+#              data=azat,
+#              ties='breslow')
+# summary(cox) #gives estimate as log(HR)=coef, and HR=exp(coef)
+# publish(cox) #to get estimate as HR with 95%CI
+# tbl_regression(cox, exponentiate=TRUE) #to get estimate as HR with 95%CI
+#
+# fit.azat <- survfit(Surv(time,event= death) ~ cenc0,
+#                     data=azat,
+#                     conf.type = 'log-log')
+#
+# #log-log plot
+# plot(fit.azat,
+#      col=1:2,
+#      fun='cloglog',
+#      main='Ex 8.2, log-log plot')
+# And to check the second assumption of linearity between log hazards (=HR) and each covariate (residual plot)
+#
+# azat$res<-predict(cox)
+# g1<-azat %>%
+#     ggplot(aes(res,age)) +
+#     geom_point()+
+#     geom_smooth(method='coxph', formula= y~x)
+#
+# g2<-azat %>%
+#     ggplot(aes(res,logb0)) +
+#     geom_point()+
+#     geom_smooth(method='coxph', formula= y~x)
+#
+# g3<-azat %>%
+#     ggplot(aes(res,alb0)) +
+#     geom_point()+
+#     geom_smooth(method='coxph', formula= y~x)
+#
+# g1+g2+g3
+
 
 
 
