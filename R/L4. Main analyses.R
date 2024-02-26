@@ -12,6 +12,7 @@ install.packages("lubridate")
 library(lubridate)
 install.packages("Publish")
 library(Publish)
+install.packages("gtsummary")
 library(gtsummary)
 install.packages("ggsurvfit")
 library(ggsurvfit)
@@ -54,13 +55,26 @@ print(last_date)
 data <- data %>%
     mutate(censoring = as.Date("2022-10-31"))
 
+# end date variables as dates
+data < data %>%
+  mutate(icd10_nafld_date = as.Date(icd10_nafld_date, format = "%Y-%m-%d"),
+         icd9_nafld_date = as.Date(icd9_nafld_date, format = "%Y-%m-%d"),
+         loss_to_follow_up = as.Date(loss_to_follow_up, format = "%Y-%m-%d"),
+         date_of_death = as.Date(date_of_death, format = "%Y-%m-%d"),
+         censoring = as.Date(censoring, format = "%Y-%m-%d"))
+
 
 # nafld analysis ----------------------------------------------------------
 ## Set survival time -------------------------------------------------------
-data <- data %>% mutate(
-    startdate = age_at_baseline,
-    enddate = icd10_nafld_date | icd9_nafld_date | loss_to_follow_up | date_of_death | censoring,
-    time = difftime(enddate, startdate)/365.25)
+data <- data %>%
+  mutate(
+    startdate = as.Date(age_at_baseline, origin = age_at_baseline),
+    enddate = as.Date(coalesce(icd10_nafld_date, icd9_nafld_date, loss_to_follow_up, date_of_death, censoring)),
+    time = as.numeric(difftime(enddate, startdate, units = "days")) / 365.25
+  )
+
+
+
 
 # Daily substituting 30 g legumes for 30g meat, poultry and fish
 # defining 30 g/day variable for each food
