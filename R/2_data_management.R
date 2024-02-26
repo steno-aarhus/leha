@@ -239,6 +239,71 @@ data <- data %>%
   rename(alt = p30620_i0,
          ast = p30650_i0)
 
+
+# Setting baseline age at last questionnaire completed --------------------
+
+# Merging birth year and month of birth into one column:
+data <- data %>%
+  mutate(month_of_birth = p52,
+         year_of_birth = p34,
+         ques_comp_t0 = p105010_i0,
+         ques_comp_t1 = p105010_i1,
+         ques_comp_t2 = p105010_i2,
+         ques_comp_t3 = p105010_i3,
+         ques_comp_t4 = p105010_i4
+  )
+months <- c("January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December")
+
+data <- data %>%
+  mutate(month_of_birth_num = sprintf("%02d", match(month_of_birth, months)))
+
+data <- data %>%
+  unite(birth, year_of_birth, month_of_birth_num, sep = "-")
+
+remove(months)
+data <- data %>%
+  select(-month_of_birth)
+
+# adding 15 as birth date for all participants:
+
+data$birth <- as.Date(paste0(data$birth, "-15"))
+
+# Removing specific time stamp from date of completed questionnaires:
+data <- data %>%
+  mutate(ques_comp_t0 = substr(ques_comp_t0, 1, 10),
+         ques_comp_t1 = substr(ques_comp_t1, 1, 10),
+         ques_comp_t2 = substr(ques_comp_t2, 1, 10),
+         ques_comp_t3 = substr(ques_comp_t3, 1, 10),
+         ques_comp_t4 = substr(ques_comp_t4, 1, 10)
+  )
+
+# New column with baseline start date as last completed questionnaire
+data <- data %>%
+  # Gather questionnaire dates into long format
+  pivot_longer(cols = starts_with("ques_comp_t"),
+               names_to = "questionnaire",
+               values_to = "completion_date") %>%
+  # Remove rows with NA completion dates
+  filter(!is.na(completion_date)) %>%
+  group_by(id) %>%
+  # Arrange completion date for each participant
+  arrange(completion_date) %>%
+  # Create a lagged column to find the last completed questionnaire
+  mutate(last_questionnaire_date = lag(completion_date)) %>%
+  # Keep only the last completed questionnaire for each participant
+  filter(is.na(lead(completion_date))) %>%
+  # Rename the columns to match the desired output
+  rename(baseline_start_date = completion_date) %>%
+  select(-starts_with("ques_comp_t"))
+
+# Creating age at baseline
+data <- data %>%
+  mutate(age_at_baseline = year(baseline_start_date) - year(birth) -
+           ifelse(month(baseline_start_date) < month(birth) |
+                    (month(baseline_start_date) == month(birth) &
+                       day(baseline_start_date) < day(birth)), 1, 0))
+
 # Remove recoded variables from sorted_data -------------------------------
 
 variables_to_remove <- c("p20111", "p20110", "p20107", "p23104",
