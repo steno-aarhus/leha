@@ -20,6 +20,7 @@ library(ggplot2)
 library(dplyr)
 library(tidyr)
 library(here)
+library(splines)
 
 
 # Load data --------------------------------------------------------
@@ -70,22 +71,23 @@ data <- data %>%
   mutate(
     startdate = as.Date(age_at_baseline, origin = age_at_baseline),
     enddate = as.Date(coalesce(icd10_nafld_date, icd9_nafld_date, loss_to_follow_up, date_of_death, censoring)),
-    time = as.numeric(difftime(enddate, startdate, units = "days")) / 365.25
+    time = as.numeric(difftime(enddate, startdate, units = 'days')) / 365.25
   )
-
-
 
 
 # Daily substituting 30 g legumes for 30g meat, poultry and fish
 # defining 30 g/day variable for each food
-data <- data %>%
-    mutate(legumes30 = legumes_daily + 30,
-           meats30 = meats_daily + 30,
-           poultry30 = poultry_daily + 30,
-           fish30 = fish_daily + 30)
+# Changing unit to 30 g (nutri epi inspired)
 
-# HR for NAFLD when substituting meat for legumes - unadjusted analysis (ua)
-nafld_meats_ua <- coxph(Surv(time, event = icd10_nafld_date) ~ legumes_daily*30 +
+data <- data %>%
+    mutate(legumes30 = legumes_daily/30,
+           meats30 = meats_daily/30,
+           poultry30 = poultry_daily/30,
+           fish30 = fish_daily/30)
+
+# HR for NAFLD when substituting 30g meat for 30g legumes
+# unadjusted analysis (ua) partition model (alpha1-alpha2)
+nafld_meats_ua <- coxph(Surv(time, event = icd10_nafld_date = !is.na(icd10_nafld_date)) ~ legumes_daily +
                          cereal_refined_daily + whole_grain_daily + mixed_dish_daily +
                          dairy_daily + fats_daily + fruit_daily + nut_daily +
                          veggie_daily + potato_daily + egg_daily + meat_sub_daily +
@@ -93,8 +95,19 @@ nafld_meats_ua <- coxph(Surv(time, event = icd10_nafld_date) ~ legumes_daily*30 
                          sauce_daily + meats_daily + poultry_daily + fish_daily +
                          total_weight_food)
 
+hr1 <- exp(cbind(
+  coef(nafld_meats_ua),
+  confint(nafld_meats_ua)
+))
 
-library(splines)
+# summary(cox1) fra undervisning biostat
+# publish(cox1)
+
+# subtracting legumes from meats (same as dividing OR1 with OR2)
+estimate1 <- hr1[legumes30]/hr1[meats30]
+CI??
+
+
 # Alcohol as spline with 4 knots for adjustment
 df <- 4
 data <- data %>%
