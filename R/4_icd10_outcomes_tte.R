@@ -119,7 +119,7 @@ data <- data %>%
 
 
 
-
+# Date of death
 data <- data %>%
   mutate(date_of_death = if_else(!is.na(p40000_i0), p40000_i0, p40000_i1),
          date_of_death = as.Date(date_of_death),
