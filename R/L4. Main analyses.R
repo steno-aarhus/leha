@@ -80,6 +80,13 @@ nafld_meats_ua <- coxph(Surv(time, event = icd10_nafld_date) ~ legumes_daily*30 
                          total_weight_food)
 
 
+library(splines)
+# Alcohol as spline with 4 knots for adjustment
+df <- 4
+data <- data %>%
+  mutate(alcohol_spline = predict(bs(alcohol_daily, df = df, degree = 3, knots = NULL)))
+
+
                      cereal_refined_weekly = cereal_refined_daily * 7,
                      whole_grain_weekly = whole_grain_daily * 7,
                      mixed_dish_weekly = mixed_dish_daily * 7,
