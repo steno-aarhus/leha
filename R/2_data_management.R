@@ -20,7 +20,7 @@ data <- data %>%
 variables_to_edit <- c("p738", "p2443", "p2453", "p3456", "p6150",
                        "p20002","p20107", "p20110", "p20111", "p20161", "p20162",
                        "p21000", "p22040", "p22506", "p23104", "p2443",
-                       "p2453", "p40000", "p6141")
+                       "p2453", "p6141")
 data <- data %>%
   select(-matches(paste0(variables_to_edit, "_i[1-4]")))
 
@@ -207,6 +207,11 @@ data <- data %>% mutate(
 data <- data %>% mutate(
   alcohol_weekly = alcohol_daily * 7)
 
+# Alcohol as spline with 4 knots
+df <- 4
+data <- data %>%
+  mutate(alcohol_spline = predict(bs(alcohol_daily, df = df, degree = 3, knots = NULL)))
+
 data <- data %>% mutate(
   region = case_when(
     str_detect(p54_i0, "Barts") | str_detect(p54_i0, "Croydon") | str_detect(p54_i0, "Hounslow")  ~ "London",
@@ -239,6 +244,11 @@ data <- data %>%
   rename(alt = p30620_i0,
          ast = p30650_i0)
 
+data <- data %>%
+  mutate(date_of_death = if_else(!is.na(p40000_i0), p40000_i0, p40000_i1),
+         date_of_death = as.Date(date_of_death),
+         loss_to_follow_up = p191,
+         loss_to_follow_up = as.Date(loss_to_follow_up))
 
 # Setting baseline age at last questionnaire completed --------------------
 
