@@ -71,15 +71,6 @@ data <- data %>% mutate(
     p22040_i0 >918 & p22040_i0 <=3706 ~ "moderate",
     p22040_i0 >3706 ~ "high"
     ),
-  # remove NA from alcohol intake (it should be 0)
-  p26030_i0 = ifelse(is.na(p26030_i0), 0, p26030_i0),
-  p26030_i1 = ifelse(is.na(p26030_i1), 0, p26030_i1),
-  p26030_i2 = ifelse(is.na(p26030_i2), 0, p26030_i2),
-  p26030_i3 = ifelse(is.na(p26030_i3), 0, p26030_i3),
-  p26030_i4 = ifelse(is.na(p26030_i4), 0, p26030_i4),
-  alcohol_intake = rowSums(select(., starts_with("p26030"))),
-  alcohol_daily = alcohol_intake/p20077,
-  alcohol_intake = as.numeric(alcohol_intake),
   # Self-reported and doctor diagnosed non-cancer illness.
   p6150_i0 = ifelse(is.na(p6150_i0), "None", p6150_i0),
   p6150_i0 = as.character(p6150_i0),
@@ -200,6 +191,21 @@ data <- data %>% mutate(
     TRUE ~ NA_character_  # Handling cases not covered by the conditions
     ))
 
+data <- data %>% mutate(
+  p26030_i0 = ifelse(is.na(p26030_i0), 0, p26030_i0),
+  p26030_i1 = ifelse(is.na(p26030_i1), 0, p26030_i1),
+  p26030_i2 = ifelse(is.na(p26030_i2), 0, p26030_i2),
+  p26030_i3 = ifelse(is.na(p26030_i3), 0, p26030_i3),
+  p26030_i4 = ifelse(is.na(p26030_i4), 0, p26030_i4))
+
+data <- data %>% mutate(
+  alcohol_intake = rowSums(select(., starts_with("p26030"))))
+
+data <- data %>% mutate(
+  alcohol_daily = alcohol_intake/p20077)
+
+data <- data %>% mutate(
+  alcohol_weekly = alcohol_daily * 7)
 
 data <- data %>% mutate(
   region = case_when(
