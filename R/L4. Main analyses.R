@@ -56,6 +56,30 @@ print(last_date)
 data <- data %>%
     mutate(censoring = as.Date("2022-10-31"))
 
+# Load the survival package
+library(survival)
+
+# Assuming you have a dataframe named "data" with columns date_of_death, icd10_date, or end_of_followup,
+# status, age_at_baseline
+
+# Convert date_of_death, icd10_date, loss_to_follow_up and censoring to Date objects if they are not already
+# data$date_of_death <- as.Date(data$date_of_death)
+# data$icd10_nafld_date <- as.Date(data$icd10_nafld_date)
+# data$loss_to_follow_up <- as.Date(data$loss_to_follow_up)
+#
+# # Convert age_at_baseline to numeric (if not already) and scale it to years
+# data$age_at_baseline_years <- data$age_at_baseline / 365.25
+#
+# # Create the survival object
+# surv_obj <- Surv(time = data$age_at_baseline_years,
+#                  event = data$status,
+#                  entry = data$age_at_baseline_years,
+#                  origin = data$age_at_baseline_years)
+
+# Now, you can use the `surv_obj` object in survival analysis functions in R, such as `coxph()` for Cox proportional hazards regression.
+
+
+
 # end date variables as dates
 data < data %>%
   mutate(icd10_nafld_date = as.Date(icd10_nafld_date, format = "%Y-%m-%d"),
