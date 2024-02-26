@@ -1,6 +1,7 @@
-# This script will split p41270 (ICD10-codes) into columns and match the date of
-# diagnosis with the diagnosis code for that specific data. This is useful when
-# using ICD10 diagnoses as outcomes in time-to-event analyses
+# This script will split p41270 (ICD10-codes) and p41271 (ICD9-codes) into
+# columns and match the date of diagnosis with the diagnosis code for that
+# specific data. This is useful when using ICD10 diagnoses as outcomes in
+# time-to-event analyses
 
 # Load packages -----------------------------------------------------------
 library(tidyverse)
@@ -56,18 +57,11 @@ first_non_na_nash <- icd10_nash %>%
 data <- data %>%
   left_join(first_non_na_nash %>% select(id, icd10_nash_date), by = "id")
 
-
-# Save data ---------------------------------------------------------------
-arrow::write_parquet(data, here("data/data.parquet"))
-
-
 # Delete old ICD10 diagnosis and dates ------------------------------------
 delete <- c("p41280", "p41270")
 data <- data %>%
   select(-matches(paste0(delete)))
 
-# Save data ---------------------------------------------------------------
-arrow::write_parquet(data, here("data/data.parquet"))
 
 
 
@@ -125,3 +119,4 @@ data <- data %>%
 
 # Save data ---------------------------------------------------------------
 arrow::write_parquet(data, here("data/data.parquet"))
+ukbAid::upload_data(here("data/data.parquet"), username = "FieLangmann")
