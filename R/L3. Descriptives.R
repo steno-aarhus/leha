@@ -1,18 +1,17 @@
 #3. Descriptive
 
-# Load packages -----------------------------------------------------------
+# Install and load packages -----------------------------------------------------------
+install.packages("openxlsx")
+install.packages("gtsummary")
+install.packages("flextable")
 
-
-install.packages(glue)
+library(tidyverse)
 library(dplyr)
 library(magrittr)
 library(tidyr)
 library(splines)
-install.packages("openxlsx")
 library(openxlsx)
-install.packages("gtsummary")
 library(gtsummary)
-install.packages("flextable")
 library(flextable)
 
 
@@ -24,10 +23,6 @@ source(here::here("R/1_data_start.R"))
 
 
 # Table 1 -----------------------------------------------------------------
-
-
-
-
 data <- data %>%
   mutate(nafld = case_when(
     !is.na(icd10_nafld_date) | !is.na(icd10_nash_date) |
@@ -43,7 +38,7 @@ table1 <- data %>%
               missing_text = "n missing") %>%
   add_overall() %>%
   bold_labels() %>%
-  modify_caption("Table 1.") %>%
+  modify_caption("Table 1. Baseline characteristics of participants in the UK Biobank Cohort") %>%
   as_flex_table()
 
 save_as_html(table1, path = here("data", "table1.html"))
