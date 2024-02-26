@@ -66,7 +66,65 @@ data <- data %>% mutate(
     education_short == "None of the above" ~ "Low"
     ),
   education = as.factor(education),
-  cohabitation = case_when(
+  physical_activity = case_when(
+    p22040_i0 >0 & p22040_i0 <=918 ~ "low",
+    p22040_i0 >918 & p22040_i0 <=3706 ~ "moderate",
+    p22040_i0 >3706 ~ "high"
+    ),
+  # remove NA from alcohol intake (it should be 0)
+  p26030_i0 = ifelse(is.na(p26030_i0), 0, p26030_i0),
+  p26030_i1 = ifelse(is.na(p26030_i1), 0, p26030_i1),
+  p26030_i2 = ifelse(is.na(p26030_i2), 0, p26030_i2),
+  p26030_i3 = ifelse(is.na(p26030_i3), 0, p26030_i3),
+  p26030_i4 = ifelse(is.na(p26030_i4), 0, p26030_i4),
+  alcohol_intake = rowSums(select(., starts_with("p26030"))),
+  alcohol_daily = alcohol_intake/p20077,
+  alcohol_intake = as.numeric(alcohol_intake),
+  # Self-reported and doctor diagnosed non-cancer illness.
+  p6150_i0 = ifelse(is.na(p6150_i0), "None", p6150_i0),
+  p6150_i0 = as.character(p6150_i0),
+  p20002_i0 = ifelse(is.na(p20002_i0), "None", p20002_i0),
+  p20002_i0 = as.character(p20002_i0),
+  non_cancer_illness = case_when(
+    str_detect(p20002_i0, "hypert") | str_detect(p6150_i0, "High") ~ "hypertension",
+    str_detect(p20002_i0, "myocardial") | str_detect(p6150_i0, "Heart") ~ "mi",
+    str_detect(p20002_i0, "stroke") | str_detect(p20002_i0, "ischaemic") | str_detect(p20002_i0, "haemorrhage") | str_detect(p6150_i0, "Stroke")~ "stroke",
+    str_detect(p20002_i0, "cholesterol") ~ "cholesterolemia",
+    str_detect(p20002_i0, "cholangitis") | str_detect(p20002_i0, "cholelithiasis") | str_detect(p20002_i0, "cholecyst") | str_detect(p20002_i0, "primary biliary cirrhosis") ~ "gbd",
+    str_detect(p20002_i0, "alcoholic cirrhosis") ~ "alcoholic liver disease",
+    str_detect(p6150_i0, "Angina") ~ "angina",
+    p6150_i0 == "None" | p20002_i0 == "None" ~ "none of the above",
+    TRUE ~ NA_character_  # If none of the conditions match
+    ),
+  non_cancer_illness = as.factor(non_cancer_illness),
+  diabetes = p2443_i0,
+  diabetes = as.factor(diabetes),
+  # illness in closest family
+  p20107_i0 = ifelse(is.na(p20107_i0), "None", p20107_i0),
+  p20110_i0 = ifelse(is.na(p20110_i0), "None", p20110_i0),
+  p20111_i0 = ifelse(is.na(p20111_i0), "None", p20111_i0),
+  p20107_i0 = as.character(p20107_i0),
+  p20110_i0 = as.character(p20110_i0),
+  p20111_i0 = as.character(p20111_i0),
+  family_illness= case_when(
+    str_detect(p20107_i0, "Diabetes") | str_detect(p20110_i0, "Diabetes") | str_detect(p20111_i0, "Diabetes")~ "diabetes",
+    str_detect(p20107_i0, "High blood pressure") | str_detect(p20110_i0, "High blood pressure") | str_detect(p20111_i0, "High blood pressure") ~ "hypertension",
+    str_detect(p20107_i0, "Stroke") | str_detect(p20110_i0, "Stroke") | str_detect(p20111_i0, "Stroke")~ "stroke",
+    str_detect(p20107_i0, "Heart disease") | str_detect(p20110_i0, "Heart disease") | str_detect(p20111_i0, "Heart disease") ~ "heart disease",
+    p20107_i0 == "None" | p20110_i0 == "None" | p20111_i0 == "None" ~ "none of the above",
+    TRUE ~ NA_character_ # If none of the conditions match
+    ),
+  family_illness = as.factor(family_illness),
+    cancer = p2453_i0,
+  cancer = as.factor(cancer),
+    bmi = p23104_i0,
+  bmi = as.numeric(bmi),
+    bmi30 = ifelse(p23104_i0 >= 30, 1, 0),
+  bmi30 = as.numeric(bmi30)
+  )
+
+data <- data %>% mutate(
+   cohabitation = case_when(
     p6141_i0 == "Husband, wife or partner"
     ~ "partner",
     p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)"
@@ -130,71 +188,18 @@ data <- data %>% mutate(
     ~ "other relative or non-relative",
     p6141_i0 == "Prefer not to answer"
       ~ "no answer"
-  ),
-  physical_activity = case_when(
-    p22040_i0 >0 & p22040_i0 <=918 ~ "low",
-    p22040_i0 >918 & p22040_i0 <=3706 ~ "moderate",
-    p22040_i0 >3706 ~ "high"
-    ),
-  smoking = case_when(
+  ))
+
+data <- data %>% mutate(
+    smoking = case_when(
     str_detect(p20116_i0, "Never") ~ "never",
     str_detect(p20116_i0, "Previous") ~ "former",
     str_detect(p20116_i0, "Current") & as.numeric(p3456_i0) > 0 & as.numeric(p3456_i0) <= 15 ~ "current <15",
     str_detect(p20116_i0, "Current") & as.numeric(p3456_i0) > 15 ~ "current > 15",
     str_detect(p20116_i0, "answer") ~ "No answer",
     TRUE ~ NA_character_  # Handling cases not covered by the conditions
-    ),
-  # remove NA from alcohol intake (it should be 0)
-  p26030_i0 = ifelse(is.na(p26030_i0), 0, p26030_i0),
-  p26030_i1 = ifelse(is.na(p26030_i1), 0, p26030_i1),
-  p26030_i2 = ifelse(is.na(p26030_i2), 0, p26030_i2),
-  p26030_i3 = ifelse(is.na(p26030_i3), 0, p26030_i3),
-  p26030_i4 = ifelse(is.na(p26030_i4), 0, p26030_i4),
-  alcohol_intake = rowSums(select(., starts_with("p26030"))),
-  alcohol_daily = alcohol_intake/p20077,
-  alcohol_intake = as.numeric(alcohol_intake),
-  # Self-reported and doctor diagnosed non-cancer illness.
-  p6150_i0 = ifelse(is.na(p6150_i0), "None", p6150_i0),
-  p6150_i0 = as.character(p6150_i0),
-  p20002_i0 = ifelse(is.na(p20002_i0), "None", p20002_i0),
-  p20002_i0 = as.character(p20002_i0),
-  non_cancer_illness = case_when(
-    str_detect(p20002_i0, "hypert") | str_detect(p6150_i0, "High") ~ "hypertension",
-    str_detect(p20002_i0, "myocardial") | str_detect(p6150_i0, "Heart") ~ "mi",
-    str_detect(p20002_i0, "stroke") | str_detect(p20002_i0, "ischaemic") | str_detect(p20002_i0, "haemorrhage") | str_detect(p6150_i0, "Stroke")~ "stroke",
-    str_detect(p20002_i0, "cholesterol") ~ "cholesterolemia",
-    str_detect(p20002_i0, "cholangitis") | str_detect(p20002_i0, "cholelithiasis") | str_detect(p20002_i0, "cholecyst") | str_detect(p20002_i0, "primary biliary cirrhosis") ~ "gbd",
-    str_detect(p20002_i0, "alcoholic cirrhosis") ~ "alcoholic liver disease",
-    str_detect(p6150_i0, "Angina") ~ "angina",
-    p6150_i0 == "None" | p20002_i0 == "None" ~ "none of the above",
-    TRUE ~ NA_character_  # If none of the conditions match
-    ),
-  non_cancer_illness = as.factor(non_cancer_illness),
-  diabetes = p2443_i0,
-  diabetes = as.factor(diabetes),
-  # illness in closest family
-  p20107_i0 = ifelse(is.na(p20107_i0), "None", p20107_i0),
-  p20110_i0 = ifelse(is.na(p20110_i0), "None", p20110_i0),
-  p20111_i0 = ifelse(is.na(p20111_i0), "None", p20111_i0),
-  p20107_i0 = as.character(p20107_i0),
-  p20110_i0 = as.character(p20110_i0),
-  p20111_i0 = as.character(p20111_i0),
-  family_illness= case_when(
-    str_detect(p20107_i0, "Diabetes") | str_detect(p20110_i0, "Diabetes") | str_detect(p20111_i0, "Diabetes")~ "diabetes",
-    str_detect(p20107_i0, "High blood pressure") | str_detect(p20110_i0, "High blood pressure") | str_detect(p20111_i0, "High blood pressure") ~ "hypertension",
-    str_detect(p20107_i0, "Stroke") | str_detect(p20110_i0, "Stroke") | str_detect(p20111_i0, "Stroke")~ "stroke",
-    str_detect(p20107_i0, "Heart disease") | str_detect(p20110_i0, "Heart disease") | str_detect(p20111_i0, "Heart disease") ~ "heart disease",
-    p20107_i0 == "None" | p20110_i0 == "None" | p20111_i0 == "None" ~ "none of the above",
-    TRUE ~ NA_character_ # If none of the conditions match
-    ),
-  family_illness = as.factor(family_illness),
-    cancer = p2453_i0,
-  cancer = as.factor(cancer),
-    bmi = p23104_i0,
-  bmi = as.numeric(bmi),
-    bmi30 = ifelse(p23104_i0 >= 30, 1, 0),
-  bmi30 = as.numeric(bmi30)
-  )
+    ))
+
 
 data <- data %>% mutate(
   region = case_when(
