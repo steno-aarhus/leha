@@ -64,7 +64,6 @@ p20162_i0,Pack years adult smoking as proportion of life span exposed to smoking
 p20162_i1,Pack years adult smoking as proportion of life span exposed to smoking | Instance 1,p20162
 p20162_i2,Pack years adult smoking as proportion of life span exposed to smoking | Instance 2,p20162
 p20162_i3,Pack years adult smoking as proportion of life span exposed to smoking | Instance 3,p20162
-p20165_i0,FI1 : numeric addition test | Instance 0,p20165
 p21000_i0,Ethnic background | Instance 0,p21000
 p21000_i1,Ethnic background | Instance 1,p21000
 p21000_i2,Ethnic background | Instance 2,p21000
@@ -1002,16 +1001,6 @@ p41282_a122,Date of first operative procedure - OPCS4 | Array 122,p41282
 p41282_a123,Date of first operative procedure - OPCS4 | Array 123,p41282
 p41282_a124,Date of first operative procedure - OPCS4 | Array 124,p41282
 p41282_a125,Date of first operative procedure - OPCS4 | Array 125,p41282
-p100001_i0,Food weight | Instance 0,p100001
-p100001_i1,Food weight | Instance 1,p100001
-p100001_i2,Food weight | Instance 2,p100001
-p100001_i3,Food weight | Instance 3,p100001
-p100001_i4,Food weight | Instance 4,p100001
-p100002_i0,Energy | Instance 0,p100002
-p100002_i1,Energy | Instance 1,p100002
-p100002_i2,Energy | Instance 2,p100002
-p100002_i3,Energy | Instance 3,p100002
-p100002_i4,Energy | Instance 4,p100002
 p104280_i0,Pea intake | Instance 0,p104280
 p104280_i1,Pea intake | Instance 1,p104280
 p104280_i2,Pea intake | Instance 2,p104280
