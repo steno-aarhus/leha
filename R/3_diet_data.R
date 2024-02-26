@@ -113,6 +113,9 @@ data <- data %>%
     proc_meat_total = rowSums(select(., starts_with("p26122"))),
     proc_meat_daily = proc_meat_total/p20077,
     proc_meat_weekly = proc_meat_daily * 7,
+    # red and processed
+    meats_daily = proc_meat_daily + red_meat_daily,
+    meats_weekly = proc_meat_weekly + red_meat_weekly,
     # poultry
     poultry_total = rowSums(select(., starts_with("p26121") | starts_with("p26069"))),
     poultry_daily = poultry_total/p20077,
