@@ -5,8 +5,6 @@ library(magrittr)
 library(dplyr)
 
 
-
-
 # Average dietary intake of food groups -----------------------------------
 # estimating average daily and weekly intakes of food groups in g
 data <- data %>%
@@ -167,3 +165,4 @@ data <- data %>%
 
 # Save data ---------------------------------------------------------------
 arrow::write_parquet(data, here("data/data.parquet"))
+ukbAid::upload_data(here("data/data.parquet"), username = "FieLangmann")
