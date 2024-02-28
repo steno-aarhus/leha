@@ -29,74 +29,6 @@ targets::tar_make()
 source(here::here("R/1_data_start.R"))
 
 
-# Set cut-off date for follow-up ------------------------------------------
-# Estimated last follow-up date for ICD10 codes (stagnation of diagnoses)
-# Create the plot
-ggplot(data, aes(x = icd10_nafld_date, y = id)) +
-    geom_point() + # Use points to show individual data points
-    geom_smooth(method = "lm", se = FALSE) + # Add linear regression line
-    annotate("text", x = max(data$icd10_nafld_date), y = min(data$id),
-             label = paste("Last observed date:", max(data$icd10_nafld_date)),
-             hjust = 1, vjust = -0.5, size = 4) +  # Add annotation for the last observed date
-    labs(title = "Dates of Disease Over Time", x = "Date of Disease", y = "Participant ID")
-
-# The density is very high in the right of the plot - I will estimate the last
-# diagnosis date in data:
-
-dates <- data %>%
-    subset(!is.na(icd10_nafld_date))
-
-# Find the last date of diagnosis
-last_date <- max(dates$icd10_nafld_date)
-
-# Print or use the last date as needed
-print(last_date)
-
-# Administrative censoring at October 31st, 2022
-data <- data %>%
-    mutate(censoring = as.Date("2022-10-31"))
-
-# Load the survival package
-library(survival)
-
-# Assuming you have a dataframe named "data" with columns date_of_death, icd10_date, or end_of_followup,
-# status, age_at_baseline
-
-# Convert date_of_death, icd10_date, loss_to_follow_up and censoring to Date objects if they are not already
-# data$date_of_death <- as.Date(data$date_of_death)
-# data$icd10_nafld_date <- as.Date(data$icd10_nafld_date)
-# data$loss_to_follow_up <- as.Date(data$loss_to_follow_up)
-#
-# # Convert age_at_baseline to numeric (if not already) and scale it to years
-# data$age_at_baseline_years <- data$age_at_baseline / 365.25
-#
-# # Create the survival object
-# surv_obj <- Surv(time = data$age_at_baseline_years,
-#                  event = data$status,
-#                  entry = data$age_at_baseline_years,
-#                  origin = data$age_at_baseline_years)
-
-# Now, you can use the `surv_obj` object in survival analysis functions in R, such as `coxph()` for Cox proportional hazards regression.
-
-
-
-# end date variables as dates
-data < data %>%
-  mutate(icd10_nafld_date = as.Date(icd10_nafld_date, format = "%Y-%m-%d"),
-         icd9_nafld_date = as.Date(icd9_nafld_date, format = "%Y-%m-%d"),
-         loss_to_follow_up = as.Date(loss_to_follow_up, format = "%Y-%m-%d"),
-         date_of_death = as.Date(date_of_death, format = "%Y-%m-%d"),
-         censoring = as.Date(censoring, format = "%Y-%m-%d"))
-
-
-# nafld analysis ----------------------------------------------------------
-## Set survival time -------------------------------------------------------
-data <- data %>%
-  mutate(
-    startdate = as.Date(age_at_baseline, origin = age_at_baseline),
-    enddate = as.Date(coalesce(icd10_nafld_date, icd9_nafld_date, loss_to_follow_up, date_of_death, censoring)),
-    time = as.numeric(difftime(enddate, startdate, units = 'days')) / 365.25
-  )
 
 
 # Daily substituting 30 g legumes for 30g meat, poultry and fish
@@ -104,32 +36,34 @@ data <- data %>%
 # Changing unit to 30 g (nutri epi inspired)
 
 data <- data %>%
-    mutate(legumes30 = legumes_daily/30,
+    mutate(legumes30 = legume_daily/30,
            meats30 = meats_daily/30,
            poultry30 = poultry_daily/30,
            fish30 = fish_daily/30)
 
 # HR for NAFLD when substituting 30g meat for 30g legumes
 # unadjusted analysis (ua) partition model (alpha1-alpha2)
-nafld_meats_ua <- coxph(Surv(time, event = icd10_nafld_date = !is.na(icd10_nafld_date)) ~ legumes_daily +
-                         cereal_refined_daily + whole_grain_daily + mixed_dish_daily +
-                         dairy_daily + fats_daily + fruit_daily + nut_daily +
-                         veggie_daily + potato_daily + egg_daily + meat_sub_daily +
-                         non_alc_beverage_daily + alc_beverage_daily + snack_daily +
-                         sauce_daily + meats_daily + poultry_daily + fish_daily +
-                         total_weight_food)
+cox_meat_ua <- coxph(Surv(survival_time, nafld == 1) ~
+                       # how to add the 30 g substitution?
+                       legume_daily + meats_daily + poultry_daily + fish_daily +
+                       #other food components
+                       cereal_refined_daily + whole_grain_daily + mixed_dish_daily +
+                       dairy_daily + fats_daily + fruit_daily + nut_daily +
+                       veggie_daily + potato_daily + egg_daily + meat_sub_daily +
+                       non_alc_beverage_daily + alc_beverage_daily + snack_daily +
+                       sauce_daily + total_weight_food, data = data, ties='breslow')
 
-hr1 <- exp(cbind(
-  coef(nafld_meats_ua),
-  confint(nafld_meats_ua)
-))
-
-# summary(cox1) fra undervisning biostat
-# publish(cox1)
+summary(cox_meat_ua)
+Publish::publish(cox_meat_ua)
 
 # subtracting legumes from meats (same as dividing OR1 with OR2)
 estimate1 <- hr1[legumes30]/hr1[meats30]
 CI??
+
+
+
+# Model check
+
 
 
 # Alcohol as spline with 4 knots for adjustment
@@ -165,27 +99,6 @@ data <- data %>%
 
 
 
-#NAFLD/NASH
-coxnafld<-coxph(Surv(time, event=nafld)~exposure+covar1+covar2+covar3...,
-                data=dataname,
-                ties='breslow')
-#Hvordan laver man stset med mine data?
-#Hvad med eksponeringen, det er vel både fx. 30g legumes of 30g mindre kød? Hvordan gør man det? Er det noget ala legumes+30 og meats-30? Kan måske lade sig gøre.
-Fortolkning:
-    En måde: fjerner noget, men man kan ikke fjerne begge ting. Alt andet skal holdes lige, fx totalindtag eller totalenergi. Alt er inde i modellen, og så kan man trække kød og bælg fra hinanden og derved udtale sig om at spise mere af noget i stedet for det andet.
-
-Den anden måde: alle fødevarer er med, bortset fra den man gerne vil "spise" mindre af. I den model har man også totalenergi eller totalvægt, som er alt lagt sammen. Det kan tolkes som, at det samlede indtag af mad/kcal skal være det samme for de personer man sammenligner, men den ene har et højere indtag af
-Energiindtag skal være ens bortset fra indtaget af en fødevare, som ikke er med i modellen. Den ene fødevare bidrgaer stadig til totalindtag. Regressionskoef må komme fra den fødevare der ikke er inde i selve modellen, fordi det totale og alt andet, bortset fra den udtagne variabel, er med i modellen. Koefficienterne kan trækkes fra hinanden.
-
-
-legume - meats
-        poultry
-        fish
-
-Model 1
-
-        Model check
-Model 2
 
 **Model 1** will be minimally adjusted for strata of age at recruitment
 (\<45, 45-49, 50-54, 55-59, 60-64, ≤65 years) and geographical region of
@@ -193,9 +106,7 @@ recruitment (ten UK regions), sex, and intake of all other dietary
 components apart from the substitute components (red and processed
 meats; poultry; fish). When substituting g legumes/day, the unit for all
 dietary components will be g/day and the analyses will be adjusted for
-total amount of consumed foods in g/day. When substituting calories of
-legumes, the unit for all dietary components will be calories/day and
-the analyses will be adjusted for total amount of consumed calories/day.
+total amount of consumed foods in g/day.
 
 **Model 2** will be further adjusted for alcohol consumption, ethnic
 group (white, mixed, Asian, black, other, unknown), socioeconomic status
