@@ -117,7 +117,7 @@ data <- data %>% mutate(
 data <- data %>% mutate(
    cohabitation = case_when(
      p709_i0 == 1 ~ "alone",
-     str_detect(p6141_i0 ="Husband, wife or partner") ~ "with spouse/partner",
+     str_detect(p6141_i0, "Husband, wife or partner") ~ "with spouse/partner",
      p6141_i0 == "Son and/or daughter (include step-children)" |
        p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister"|
        p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father" |
@@ -218,7 +218,7 @@ variables_to_remove <- c("p20111", "p20110", "p20107", "p23104",
                          "p22040", "p6141", "p6138", "p22189",
                          "p21000", "p54", "p738", "p30650",
                          "p30620", "p41272", "p20165", "p100002",
-                         "p100001", "p41282")
+                         "p100001", "p41282", "p709")
 
 data <- data %>%
   select(-matches(variables_to_remove))

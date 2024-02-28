@@ -8,6 +8,10 @@ p54_i2,UK Biobank assessment centre | Instance 2,p54
 p54_i3,UK Biobank assessment centre | Instance 3,p54
 p190,Reason lost to follow-up,p190
 p191,Date lost to follow-up,p191
+p709_i0,Number in household | Instance 0,p709
+p709_i1,Number in household | Instance 1,p709
+p709_i2,Number in household | Instance 2,p709
+p709_i3,Number in household | Instance 3,p709
 p738_i0,Average total household income before tax | Instance 0,p738
 p738_i1,Average total household income before tax | Instance 1,p738
 p738_i2,Average total household income before tax | Instance 2,p738
