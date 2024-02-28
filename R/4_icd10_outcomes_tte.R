@@ -8,6 +8,7 @@ library(tidyverse)
 library(magrittr)
 library(dplyr)
 library(here)
+library(ggplot2)
 
 
 # ICD10 codes ---------------------------------------------------------
@@ -119,76 +120,106 @@ data <- data %>%
 
 
 
-# Date of death
+# Define variables for survival analysis ----------------------------------
+# Date of death and loss to follow up
 data <- data %>%
   mutate(date_of_death = if_else(!is.na(p40000_i0), p40000_i0, p40000_i1),
          date_of_death = as.Date(date_of_death),
          loss_to_follow_up = p191,
          loss_to_follow_up = as.Date(loss_to_follow_up))
 
-# Setting baseline age at last questionnaire completed --------------------
-
-# Merging birth year and month of birth into one column:
+# remove p-values
+remove <- c("p191", "p40000_i0", "p40000_i1")
 data <- data %>%
-  mutate(month_of_birth = p52,
-         year_of_birth = p34,
-         ques_comp_t0 = p105010_i0,
+  select(-matches(remove))
+
+# time of last completed 24h recall as baseline date
+data <- data %>%
+  mutate(ques_comp_t0 = p105010_i0,
          ques_comp_t1 = p105010_i1,
          ques_comp_t2 = p105010_i2,
          ques_comp_t3 = p105010_i3,
-         ques_comp_t4 = p105010_i4
-  )
-months <- c("January", "February", "March", "April", "May", "June",
-            "July", "August", "September", "October", "November", "December")
-
-data <- data %>%
-  mutate(month_of_birth_num = sprintf("%02d", match(month_of_birth, months)))
-
-data <- data %>%
-  unite(birth, year_of_birth, month_of_birth_num, sep = "-")
-
-remove(months)
-data <- data %>%
-  select(-month_of_birth)
-
-# adding 15 as birth date for all participants:
-
-data$birth <- as.Date(paste0(data$birth, "-15"))
-
-# Removing specific time stamp from date of completed questionnaires:
-data <- data %>%
-  mutate(ques_comp_t0 = substr(ques_comp_t0, 1, 10),
+         ques_comp_t4 = p105010_i4,
+         # Removing specific time stamp
+         ques_comp_t0 = substr(ques_comp_t0, 1, 10),
          ques_comp_t1 = substr(ques_comp_t1, 1, 10),
          ques_comp_t2 = substr(ques_comp_t2, 1, 10),
          ques_comp_t3 = substr(ques_comp_t3, 1, 10),
          ques_comp_t4 = substr(ques_comp_t4, 1, 10)
-  )
+         )
+
 
 # New column with baseline start date as last completed questionnaire
 data <- data %>%
-  # Gather questionnaire dates into long format
-  pivot_longer(cols = starts_with("ques_comp_t"),
-               names_to = "questionnaire",
-               values_to = "completion_date") %>%
-  # Remove rows with NA completion dates
-  filter(!is.na(completion_date)) %>%
+  # Convert ques_0 to ques_4 to date format
+  mutate(across(starts_with("ques_"), as.Date)) %>%
+  # Gather all columns into key-value pairs
+  pivot_longer(cols = starts_with("ques_"), names_to = "questionnaire", values_to = "date_filled") %>%
+  # Group by participant ID and select the row with the latest date_filled for each participant
   group_by(id) %>%
-  # Arrange completion date for each participant
-  arrange(completion_date) %>%
-  # Create a lagged column to find the last completed questionnaire
-  mutate(last_questionnaire_date = lag(completion_date)) %>%
-  # Keep only the last completed questionnaire for each participant
-  filter(is.na(lead(completion_date))) %>%
-  # Rename the columns to match the desired output
-  rename(baseline_start_date = completion_date) %>%
-  select(-starts_with("ques_comp_t"))
+  slice(which.max(date_filled)) %>%
+  ungroup() %>%
+  # Rename the remaining column to indicate the last filled questionnaire
+  rename(last_filled_questionnaire = questionnaire)
 
-# Creating age at baseline
+
+remove <- c("p105010_i0", "p105010_i1", "p105010_i2", "p105010_i3","p105010_i4")
 data <- data %>%
-  mutate(age_at_baseline = year(baseline_start_date) - year(birth) -
-           ifelse(month(baseline_start_date) < month(birth) |
-                    (month(baseline_start_date) == month(birth) &
-                       day(baseline_start_date) < day(birth)), 1, 0))
+  select(-matches(remove))
+
+
+
+# Set cut-off date for follow-up ------------------------------------------
+# Estimated last follow-up date for ICD10 codes (stagnation of diagnoses)
+# Create the plot
+ggplot(data, aes(x = icd10_nafld_date, y = id)) +
+  geom_point() + # Use points to show individual data points
+  geom_smooth(method = "lm", se = FALSE) + # Add linear regression line
+  annotate("text", x = max(data$icd10_nafld_date), y = min(data$id),
+           label = paste("Last observed date:", max(data$icd10_nafld_date)),
+           hjust = 1, vjust = -0.5, size = 4) +  # Add annotation for the last observed date
+  labs(title = "Dates of Disease Over Time", x = "Date of Disease", y = "Participant ID")
+
+# The density is very high in the right of the plot - I will estimate the last
+# diagnosis date in data:
+
+dates <- data %>%
+  subset(!is.na(icd10_nafld_date))
+
+# Find the last date of diagnosis
+last_date <- max(dates$icd10_nafld_date)
+
+# Print or use the last date as needed
+print(last_date)
+
+# Administrative censoring at October 31st, 2022
+data <- data %>%
+  mutate(censoring = as.Date("2022-10-31"))
+
+
+# estimate survival time
+data <- data %>%
+  mutate(
+    survival_time_tmp = case_when(
+      !is.na(icd10_nafld_date) ~ as.numeric(difftime(icd10_nafld_date, date_filled, units = "days")),
+      !is.na(icd10_nash_date) ~ as.numeric(difftime(icd10_nash_date, date_filled, units = "days")),
+      !is.na(date_of_death) ~ as.numeric(difftime(date_of_death, date_filled, units = "days")),
+      !is.na(loss_to_follow_up) ~ as.numeric(difftime(loss_to_follow_up, date_filled, units = "days")),
+      TRUE ~ as.numeric(difftime(censoring, date_filled, units = "days"))
+    ),
+    # Use pmin to get the minimum survival time across columns
+    survival_time = pmin(survival_time_tmp, na.rm = TRUE),
+    # Remove temporary variable
+    survival_time_tmp = NULL
+  )
+
+# binary variable to indicate if nafld happened
+data <- data %>%
+  mutate(nafld = case_when(
+    !is.na(icd10_nafld_date) | !is.na(icd10_nash_date) |
+      !is.na(icd9_nafld_date) | !is.na(icd9_nash_date) ~ 1,
+    TRUE ~ 0))
+
 # Save data ---------------------------------------------------------------
 arrow::write_parquet(data, here("data/data.parquet"))
 ukbAid::upload_data(here("data/data.parquet"), username = "FieLangmann")
