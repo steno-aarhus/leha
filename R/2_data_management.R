@@ -19,7 +19,7 @@ data <- data %>%
 variables_to_edit <- c("p738", "p2443", "p2453", "p3456", "p6150",
                        "p20002","p20107", "p20110", "p20111", "p20161", "p20162",
                        "p21000", "p22040", "p22506", "p23104", "p2443",
-                       "p2453", "p6141")
+                       "p2453", "p6141", "p709")
 data <- data %>%
   select(-matches(paste0(variables_to_edit, "_i[1-4]")))
 
@@ -114,71 +114,38 @@ data <- data %>% mutate(
   )
 
 
-alone, with spouse/partner, other non-partner, missing 
 data <- data %>% mutate(
    cohabitation = case_when(
-    p6141_i0 == "Husband, wife or partner"
-    ~ "partner",
-    p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)"
-    ~ "partner and children",
-    p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Brother and/or sister" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandchild" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandchild|Other related" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Other related" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father|Other related" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Brother and/or sister|Other related" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandparent" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandparent|Grandchild" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father|Grandchild" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father|Other related" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father|Other unrelated" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Other unrelated" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandchild|Other related|Other unrelated" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandchild|Other unrelated" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father|Grandchild|Other unrelated" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father|Other unrelated" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Other related|Other unrelated"
-    ~ "partner, children, and others ",
-    p6141_i0 == "Son and/or daughter (include step-children)"
-    ~ "children",
-    p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister"
-    ~ "children and siblings",
-      p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father"
-    ~ "children and parents",
-    p6141_i0 == "Son and/or daughter (include step-children)|Other related" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Grandchild" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other related" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Grandparent"|
-      p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other related|Other unrelated" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other unrelated" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Other related|Other unrelated" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Other unrelated"
-    ~ "children and others",
-    p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Other related" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Other unrelated"
-    ~ "children, siblings, and others",
-    p6141_i0 == "Mother and/or father"
-    ~ "parents",
-    p6141_i0 == "Mother and/or father|Grandchild" |
-      p6141_i0 == "Mother and/or father|Grandparent" |
-      p6141_i0 == "Mother and/or father|Other related" |
-      p6141_i0 == "Mother and/or father|Other unrelated"
-    ~ "parents and others",
-    p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father"
-    ~ "children, parents, and siblings",
-    p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Grandchild"|
-      p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Other related" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Other unrelated" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Grandchild|Other unrelated"
-    ~ "children, parents, others",
-    p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father|Other related"
-    ~ "children, parents, siblings, and other relatives",
-    p6141_i0 == "Other related" |
-      p6141_i0 == "Other unrelated"
-    ~ "other relative or non-relative",
-    p6141_i0 == "Prefer not to answer"
+     p709_i0 == 1 ~ "alone",
+     str_detect(p6141_i0 ="Husband, wife or partner") ~ "with spouse/partner",
+     p6141_i0 == "Son and/or daughter (include step-children)" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister"|
+       p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Other related" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Grandchild" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other related" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Grandparent"|
+       p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other related|Other unrelated" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other unrelated" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Other related|Other unrelated" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Other unrelated" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Other related" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Other unrelated" |
+       p6141_i0 == "Mother and/or father" |
+       p6141_i0 == "Mother and/or father|Grandchild" |
+       p6141_i0 == "Mother and/or father|Grandparent" |
+       p6141_i0 == "Mother and/or father|Other related" |
+       p6141_i0 == "Mother and/or father|Other unrelated" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Grandchild"|
+       p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Other related" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Other unrelated" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Grandchild|Other unrelated" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father|Other related" |
+       p6141_i0 == "Other related" |
+       p6141_i0 == "Other unrelated"
+     ~ "other non-partner",
+     p6141_i0 == "Prefer not to answer"
       ~ "no answer"
   ))
 
