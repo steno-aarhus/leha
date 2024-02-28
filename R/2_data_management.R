@@ -113,6 +113,8 @@ data <- data %>% mutate(
   bmi30 = as.numeric(bmi30)
   )
 
+
+alone, with spouse/partner, other non-partner, missing 
 data <- data %>% mutate(
    cohabitation = case_when(
     p6141_i0 == "Husband, wife or partner"
