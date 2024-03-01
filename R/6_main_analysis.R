@@ -29,100 +29,330 @@ targets::tar_make()
 source(here::here("R/1_data_start.R"))
 
 
-
-
-# Daily substituting 30 g legumes for 30g meat, poultry and fish
-# defining 30 g/day variable for each food
-# Changing unit to 30 g (nutri epi inspired)
-
+# Weekly substituting 80 g legumes (NHS 1 portion beans = 80 g) https://www.nhs.uk/live-well/eat-well/5-a-day/5-a-day-what-counts/
+# defining 80 g/week variable for each food
 data <- data %>%
-    mutate(legumes30 = legume_daily/30,
-           meats30 = meats_daily/30,
-           poultry30 = poultry_daily/30,
-           fish30 = fish_daily/30)
+    mutate(legumes80 = legume_weekly/80,
+           meats80 = meats_weekly/80,
+           poultry80 = poultry_weekly/80,
+           fish80 = fish_weekly/80)
 
-# HR for NAFLD when substituting 30g meat for 30g legumes
-# unadjusted analysis (ua) partition model (alpha1-alpha2)
+
+# Crude analysis ----------------------------------------------------------
+# leave one out model
+# meats
 cox_meat_ua <- coxph(Surv(survival_time, nafld == 1) ~
-                       # how to add the 30 g substitution?
-                       legume_daily + meats_daily + poultry_daily + fish_daily +
+                         # removing meat
+                         legumes80 + poultry80 + fish80+
+                         #other food components
+                         cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                         dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                         veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                         non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                         sauce_weekly + weight_weekly, data = data, ties='breslow')
+
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(cox_meat_ua)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(cox_meat_ua)[1, ]
+CI <- exp(CI)
+# Convert to dataframe
+meat_ua <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+
+# poultry
+cox_poultry_ua <- coxph(Surv(survival_time, nafld == 1) ~
+                       # removing meat
+                       legumes80 + meats80 + fish80+
                        #other food components
-                       cereal_refined_daily + whole_grain_daily + mixed_dish_daily +
-                       dairy_daily + fats_daily + fruit_daily + nut_daily +
-                       veggie_daily + potato_daily + egg_daily + meat_sub_daily +
-                       non_alc_beverage_daily + alc_beverage_daily + snack_daily +
-                       sauce_daily + total_weight_food, data = data, ties='breslow')
+                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                       sauce_weekly + weight_weekly, data = data, ties='breslow')
 
-summary(cox_meat_ua)
-Publish::publish(cox_meat_ua)
-
-# subtracting legumes from meats (same as dividing OR1 with OR2)
-estimate1 <- hr1[legumes30]/hr1[meats30]
-CI??
-
-
-
-# Model check
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(cox_poultry_ua)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(cox_poultry_ua)[1, ]
+CI <- exp(CI)
+# Convert to dataframe
+poultry_ua <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
 
 
+# fish
+cox_fish_ua <- coxph(Surv(survival_time, nafld == 1) ~
+                          # removing meat
+                          legumes80 + meats80 + poultry80+
+                          #other food components
+                          cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                          dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                          veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                          non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                          sauce_weekly + weight_weekly, data = data, ties='breslow')
 
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(cox_fish_ua)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(cox_fish_ua)[1, ]
+CI <- exp(CI)
+# Convert to dataframe
+fish_ua <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+
+
+
+# model 1 -----------------------------------------------------------------
+# meats
+meat_model1 <- coxph(Surv(survival_time, nafld == 1) ~
+                       # removing meat
+                       legumes80 + poultry80 + fish80+
+                       #other food components
+                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                       sauce_weekly + weight_weekly + age_strata + region + sex,
+                     data = data, ties='breslow')
+
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(meat_model1)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(meat_model1)[1, ]
+CI <- exp(CI)
+# Convert to dataframe
+meat_model1 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+
+# poultry
+poultry_model1 <- coxph(Surv(survival_time, nafld == 1) ~
+                          # removing meat
+                          legumes80 + meats80 + fish80+
+                          #other food components
+                          cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                          dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                          veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                          non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                          sauce_weekly + weight_weekly + age_strata + region + sex,
+                        data = data, ties='breslow')
+
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(poultry_model1)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(poultry_model1)[1, ]
+CI <- exp(CI)
+# Convert to dataframe
+poultry_model1 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+
+
+# fish
+fish_model1 <- coxph(Surv(survival_time, nafld == 1) ~
+                       # removing meat
+                       legumes80 + meats80 + poultry80+
+                       #other food components
+                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                       sauce_weekly + weight_weekly + age_strata + region + sex,
+                     data = data, ties='breslow')
+
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(fish_model1)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(fish_model1)[1, ]
+CI <- exp(CI)
+# Convert to dataframe
+fish_model1 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+
+
+
+# model 2 -----------------------------------------------------------------
 # Alcohol as spline with 4 knots for adjustment
 df <- 4
 data <- data %>%
-  mutate(alcohol_spline = predict(bs(alcohol_daily, df = df, degree = 3, knots = NULL)))
+  mutate(alcohol_spline = predict(bs(alcohol_weekly, df = df, degree = 3, knots = NULL)))
+
+# meats
+meat_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+                       # removing meat
+                       legumes80 + poultry80 + fish80+
+                       #other food components
+                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                       sauce_weekly + weight_weekly + age_strata + region + sex +
+                       alcohol_spline + ethnicity + deprivation_quint + education +
+                       cohabitation + physical_activity + smoking + diabetes + cancer +
+                       non_cancer_illness + family_illness + yearly_income + alcohol_daily,
+                     data = data, ties='breslow')
+
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(meat_model2)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(meat_model2)[1, ]
+CI <- exp(CI)
+# Convert to dataframe
+meat_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+
+# poultry
+poultry_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+                          # removing meat
+                          legumes80 + meats80 + fish80+
+                          #other food components
+                          cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                          dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                          veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                          non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                          sauce_weekly + weight_weekly + age_strata + region + sex +
+                          alcohol_spline + ethnicity + deprivation_quint + education +
+                          cohabitation + physical_activity + smoking + diabetes + cancer +
+                          non_cancer_illness + family_illness + yearly_income + alcohol_daily,
+                        data = data, ties='breslow')
+
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(poultry_model2)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(poultry_model2)[1, ]
+CI <- exp(CI)
+# Convert to dataframe
+poultry_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
 
 
-                     cereal_refined_weekly = cereal_refined_daily * 7,
-                     whole_grain_weekly = whole_grain_daily * 7,
-                     mixed_dish_weekly = mixed_dish_daily * 7,
-                     dairy_weekly = dairy_daily * 7,
-                     fats_weekly = fats_daily * 7,
-                     fruit_weekly = fruit_daily * 7,
-                     nut_weekly = nut_daily*7,
-                     veggie_weekly = veggie_daily * 7,
-                     potato_weekly = potato_daily * 7,
-                     egg_weekly = egg_daily * 7,
-                     meat_sub_weekly = meat_sub_daily * 7,
-                     non_alc_beverages_weekly = non_alc_beverage_daily * 7,
-                     alc_beverage_weekly = alc_beverage_daily * 7,
-                     snack_weekly = snack_daily * 7,
-                     sauce_weekly = sauce_daily * 7,
-                     meats_weekly
-                     poultry_weekly = poultry_daily * 7,
-                     fish_weekly = fish_daily * 7,
-                     # total weight of all foods
-                     total_weight_food = rowSums(select(., starts_with("p26000"))),
+# fish
+fish_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+                       # removing meat
+                       legumes80 + meats80 + poultry80+
+                       #other food components
+                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                       sauce_weekly + weight_weekly + age_strata + region + sex +
+                       alcohol_spline + ethnicity + deprivation_quint + education +
+                       cohabitation + physical_activity + smoking + diabetes + cancer +
+                       non_cancer_illness + family_illness + yearly_income + alcohol_daily,
+                     data = data, ties='breslow')
+
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(fish_model2)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(fish_model2)[1, ]
+CI <- exp(CI)
+# Convert to dataframe
+fish_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
 
 
 
-# Weekly substituting 80 g legumes for meat (NHS 1 portion beans = 80 g) https://www.nhs.uk/live-well/eat-well/5-a-day/5-a-day-what-counts/
+# Model 3 -----------------------------------------------------------------
+# meats
+meat_model3 <- coxph(Surv(survival_time, nafld == 1) ~
+                       # removing meat
+                       legumes80 + poultry80 + fish80+
+                       #other food components
+                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                       sauce_weekly + weight_weekly + age_strata + region + sex +
+                       alcohol_spline + ethnicity + deprivation_quint + education +
+                       cohabitation + physical_activity + smoking + diabetes + cancer +
+                       non_cancer_illness + family_illness + yearly_income + alcohol_daily
+                     + bmi30,
+                     data = data, ties='breslow')
+
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(meat_model3)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(meat_model3)[1, ]
+CI <- exp(CI)
+# Convert to dataframe
+meat_model3 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+
+# poultry
+poultry_model3 <- coxph(Surv(survival_time, nafld == 1) ~
+                          # removing meat
+                          legumes80 + meats80 + fish80+
+                          #other food components
+                          cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                          dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                          veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                          non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                          sauce_weekly + weight_weekly + age_strata + region + sex +
+                          alcohol_spline + ethnicity + deprivation_quint + education +
+                          cohabitation + physical_activity + smoking + diabetes + cancer +
+                          non_cancer_illness + family_illness + yearly_income + alcohol_daily
+                        + bmi30,
+                        data = data, ties='breslow')
+
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(poultry_model3)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(poultry_model3)[1, ]
+CI <- exp(CI)
+# Convert to dataframe
+poultry_model3 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+
+
+# fish
+fish_model3 <- coxph(Surv(survival_time, nafld == 1) ~
+                       # removing meat
+                       legumes80 + meats80 + poultry80+
+                       #other food components
+                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                       sauce_weekly + weight_weekly + age_strata + region + sex +
+                       alcohol_spline + ethnicity + deprivation_quint + education +
+                       cohabitation + physical_activity + smoking + diabetes + cancer +
+                       non_cancer_illness + family_illness + yearly_income + alcohol_daily
+                     + bmi30,
+                     data = data, ties='breslow')
+
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(fish_model3)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(fish_model3)[1, ]
+CI <- exp(CI)
+# Convert to dataframe
+fish_model3 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
 
 
 
-
-**Model 1** will be minimally adjusted for strata of age at recruitment
-(\<45, 45-49, 50-54, 55-59, 60-64, ≤65 years) and geographical region of
-recruitment (ten UK regions), sex, and intake of all other dietary
-components apart from the substitute components (red and processed
-meats; poultry; fish). When substituting g legumes/day, the unit for all
-dietary components will be g/day and the analyses will be adjusted for
-total amount of consumed foods in g/day.
-
-**Model 2** will be further adjusted for alcohol consumption, ethnic
-group (white, mixed, Asian, black, other, unknown), socioeconomic status
-(Townsend deprivation score, educational level), living with a wife or
-partner (yes, no), physical activity (low \[0-9.9 METs/week\], moderate
-                                      \[10-49.9 METs/week\], and high \[≥50 METs/week\], unknown), smoking
-status (never, former, current 1-15 cigarettes per day, current ≥15
-        cigarettes per day, current but number of cigarettes per day unknown,
-        and smoking status unknown), and self-reported diagnosis of diabetes,
-hypertension, or high cholesterol (yes, no, unknown).
-
-**Model 3** will further adjust for anthropometry (BMI ≥ 30 kg/m2), as
-obesity may either confound or mediate the association between replacing
-red and processed meats, poultry, or fish with legumes and risk of MASLD
+# Extract results ---------------------------------------------------------
+# combine first row from each model in df
+first_row_df1 <- meat_ua[1, ]
+first_row_df2 <- meat_model1[1, ]
+first_row_df3 <- meat_model2[1, ]
+first_row_df4 <- meat_model3[1, ]
+first_row_df5 <- poultry_ua[1, ]
+first_row_df6 <- poultry_model1[1, ]
+first_row_df7 <- poultry_model2[1, ]
+first_row_df8 <- poultry_model3[1, ]
+first_row_df9 <- fish_ua[1, ]
+first_row_df10 <- fish_model1[1, ]
+first_row_df11 <- fish_model2[1, ]
+first_row_df12 <- fish_model3[1, ]
+first_rows_combined <- rbind(first_row_df1, first_row_df2, first_row_df3, first_row_df4,
+                             first_row_df5, first_row_df6, first_row_df7, first_row_df8,
+                             first_row_df9, first_row_df10, first_row_df11, first_row_df12)
+rownames(first_rows_combined) <- c("meat_ua", "meat_model1", "meat_model2", "meat_model3",
+                                   "poultry_ua", "poultry_model1", "poultry_model2", "poultry_model3",
+                                   "fish_ua", "fish_model1", "fish_model2", "fish_model3")
 
 
+first_rows_combined
 #Cox regression
 # Examples:
 # cox <- coxph(Surv(time,event= death) ~ cenc0, <-- alle variable i modellen (kost, bælg, confoundere) kød/fisk/poultry er ikke med som variabel i analysen. Her skal man skalere sit indtag så det passer med modellen, fx pr 30g eller 30kcal
