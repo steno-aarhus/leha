@@ -81,7 +81,7 @@ data <- data %>%
                                               starts_with("p26095") | starts_with("p26126") |
                                               starts_with("p26127")), na.rm = TRUE),
     non_alc_beverage_daily = non_alc_beverage_total/p20077,
-    non_alc_beverages_weekly = non_alc_beverage_daily * 7,
+    non_alc_beverage_weekly = non_alc_beverage_daily * 7,
     # alcoholic beverages
     alc_beverage_total = rowSums(select(., starts_with("p26151") | starts_with("p26152") |
                                           starts_with("p26153") | starts_with("p26067") |
@@ -140,8 +140,17 @@ data <- data %>%
                                 starts_with("p26125") | starts_with("p26143") |
                                 starts_with("p26146")), na.rm = TRUE)-peas,
     veggie_pea_daily = veggie_pea_total/p20077,
-    veggie_pea_weekly = veggie_pea_daily * 7
+    veggie_pea_weekly = veggie_pea_daily * 7,
+    weight_daily = cereal_refined_daily + whole_grain_daily + mixed_dish_daily +
+      dairy_daily + fats_daily + fruit_daily + nut_daily + veggie_daily + potato_daily +
+      egg_daily + meat_sub_daily + non_alc_beverage_daily + alc_beverage_daily +
+      snack_daily + sauce_daily + legume_daily + meats_daily + poultry_daily + fish_daily,
+    weight_weekly = cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+      dairy_weekly + fats_weekly + fruit_weekly + nut_weekly + veggie_weekly + potato_weekly +
+      egg_weekly + meat_sub_weekly + non_alc_beverage_weekly + alc_beverage_weekly +
+      snack_weekly + sauce_weekly + legume_weekly + meats_weekly + poultry_weekly + fish_weekly
   )
+
 
 
 # Drop p-variables for diet ------------------------------------------------------
