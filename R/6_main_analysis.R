@@ -353,59 +353,23 @@ rownames(first_rows_combined) <- c("meat_ua", "meat_model1", "meat_model2", "mea
 
 
 first_rows_combined
-#Cox regression
-# Examples:
-# cox <- coxph(Surv(time,event= death) ~ cenc0, <-- alle variable i modellen (kost, bælg, confoundere) kød/fisk/poultry er ikke med som variabel i analysen. Her skal man skalere sit indtag så det passer med modellen, fx pr 30g eller 30kcal
-#              data=azat,
-#              ties='breslow')
-# summary(cox) #gives estimate as log(HR)=coef, and HR=exp(coef)
-# publish(cox) #to get estimate as HR with 95%CI
-# tbl_regression(cox, exponentiate=TRUE) #to get estimate as HR with 95%CI
 #
-# fit.azat <- survfit(Surv(time,event= death) ~ cenc0,
-#                     data=azat,
-#                     conf.type = 'log-log')
 #
-# #log-log plot
-# plot(fit.azat,
-#      col=1:2,
-#      fun='cloglog',
-#      main='Ex 8.2, log-log plot')
-# And to check the second assumption of linearity between log hazards (=HR) and each covariate (residual plot)
 #
-# azat$res<-predict(cox)
-# g1<-azat %>%
-#     ggplot(aes(res,age)) +
-#     geom_point()+
-#     geom_smooth(method='coxph', formula= y~x)
 #
-# g2<-azat %>%
-#     ggplot(aes(res,logb0)) +
-#     geom_point()+
-#     geom_smooth(method='coxph', formula= y~x)
 #
-# g3<-azat %>%
-#     ggplot(aes(res,alb0)) +
-#     geom_point()+
-#     geom_smooth(method='coxph', formula= y~x)
+# # Create table with results
 #
-# g1+g2+g3
-
-
-
-
-# Create table with results
-
-table2 <- data %>%
-  select([outcome], [results]) %>%
-  tbl_summary(by = nafld,
-              statistic = list(all_continuous() ~  "{coef} ({ci_lower}, {ci_upper})", # for incidence rate
-                                all_continuous() ~  "{coef} ({ci_lower}, {ci_upper})", # for HR
-                               all_categorical() ~ "{n} ({p}%)"),
-              digits = all_continuous() ~ 2) %>%
-  add_overall() %>%
-  bold_labels() %>%
-  modify_caption("Table 2. Risk of incident non-alcoholic fatty liver disease when substituting 30 g/day legumes for meat in UK Biobank cohort (N=126812)") %>%
-  as_flex_table()
-
-flextable::save_as_html(table2, path = here("doc", "table2.html"))
+# table2 <- data %>%
+#   select([outcome], [results]) %>%
+#   tbl_summary(by = nafld,
+#               statistic = list(all_continuous() ~  "{coef} ({ci_lower}, {ci_upper})", # for incidence rate
+#                                 all_continuous() ~  "{coef} ({ci_lower}, {ci_upper})", # for HR
+#                                all_categorical() ~ "{n} ({p}%)"),
+#               digits = all_continuous() ~ 2) %>%
+#   add_overall() %>%
+#   bold_labels() %>%
+#   modify_caption("Table 2. Risk of incident non-alcoholic fatty liver disease when substituting 30 g/day legumes for meat in UK Biobank cohort (N=126812)") %>%
+#   as_flex_table()
+#
+# flextable::save_as_html(table2, path = here("doc", "table2.html"))
