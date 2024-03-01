@@ -167,6 +167,24 @@ remove <- c("p105010_i0", "p105010_i1", "p105010_i2", "p105010_i3","p105010_i4")
 data <- data %>%
   select(-matches(remove))
 
+# Defining birth date as origin for survival analysis
+# Merging birth year and month of birth into one column:
+
+month_names <- c("January", "February", "March", "April", "May", "June",
+                 "July", "August", "September", "October", "November", "December")
+
+data <- data %>%
+  mutate(month_of_birth_num = sprintf("%02d", match(p52, month_names)))
+
+data <- data %>%
+  unite(date_birth, p34, month_of_birth_num, sep = "-")
+
+remove(month_names)
+
+
+# adding 15 as DD for all participants:
+
+data$date_birth <- as.Date(paste0(data$date_birth, "-15"))
 
 
 # Set cut-off date for follow-up ------------------------------------------
@@ -201,14 +219,15 @@ data <- data %>%
 data <- data %>%
   mutate(
     survival_time_tmp = case_when(
-      !is.na(icd10_nafld_date) ~ as.numeric(difftime(icd10_nafld_date, date_filled, units = "days")),
-      !is.na(icd10_nash_date) ~ as.numeric(difftime(icd10_nash_date, date_filled, units = "days")),
-      !is.na(date_of_death) ~ as.numeric(difftime(date_of_death, date_filled, units = "days")),
-      !is.na(loss_to_follow_up) ~ as.numeric(difftime(loss_to_follow_up, date_filled, units = "days")),
-      TRUE ~ as.numeric(difftime(censoring, date_filled, units = "days"))
+      !is.na(icd10_nafld_date) ~ as.numeric(difftime(icd10_nafld_date, date_birth, units = "days")),
+      !is.na(icd10_nash_date) ~ as.numeric(difftime(icd10_nash_date, date_birth, units = "days")),
+      !is.na(date_of_death) ~ as.numeric(difftime(date_of_death, date_birth, units = "days")),
+      !is.na(loss_to_follow_up) ~ as.numeric(difftime(loss_to_follow_up, date_birth, units = "days")),
+      TRUE ~ as.numeric(difftime(censoring, date_birth, units = "days"))
     ),
     # Use pmin to get the minimum survival time across columns
     survival_time = pmin(survival_time_tmp, na.rm = TRUE),
+    survival_time = survival_time/365.25,
     # Remove temporary variable
     survival_time_tmp = NULL
   )
