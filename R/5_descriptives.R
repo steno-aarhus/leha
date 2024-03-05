@@ -13,14 +13,12 @@ library(splines)
 library(openxlsx)
 library(gtsummary)
 library(flextable)
-
+library()
 
 # Load data ---------------------------------------------------------------
 targets::tar_make()
 # Restart session
 source(here::here("R/1_data_start.R"))
-
-
 
 # Table 1 -----------------------------------------------------------------
 table1 <- data %>%
