@@ -419,7 +419,7 @@ normal_liver <- data %>%
   subset(alt !=1 & ast != 1)
 
 
-# Running main analysis on subsample --------------------------------------
+## Running main analysis on subsample --------------------------------------
 
 # Weekly substituting 80 g legumes (NHS 1 portion beans = 80 g) https://www.nhs.uk/live-well/eat-well/5-a-day/5-a-day-what-counts/
 # defining 80 g/week variable for each food
@@ -430,7 +430,7 @@ normal_liver <- normal_liver %>%
          fish80 = fish_weekly/80)
 
 
-# Crude analysis ----------------------------------------------------------
+## Crude analysis ----------------------------------------------------------
 # leave one out model
 # meats
 cox_meat_ua <- coxph(Surv(survival_time, nafld == 1) ~
@@ -504,7 +504,7 @@ fish_ua <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI =
 
 
 
-# model 1 -----------------------------------------------------------------
+## model 1 -----------------------------------------------------------------
 # meats
 meat_model1 <- coxph(Surv(survival_time, nafld == 1) ~
                        # removing meat
@@ -580,7 +580,7 @@ fish_model1 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_
 
 
 
-# model 2 -----------------------------------------------------------------
+## model 2 -----------------------------------------------------------------
 # Alcohol as spline with 4 knots for adjustment
 df <- 4
 normal_liver <- normal_liver %>%
@@ -670,7 +670,7 @@ fish_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_
 
 
 
-# Model 3 -----------------------------------------------------------------
+## model 3 -----------------------------------------------------------------
 # meats
 meat_model3 <- coxph(Surv(survival_time, nafld == 1) ~
                        # removing meat
@@ -755,7 +755,7 @@ fish_model3 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_
 
 
 
-# Extract results ---------------------------------------------------------
+### Extract results ---------------------------------------------------------
 # combine first row from each model in df
 first_row_df1 <- meat_ua[1, ]
 first_row_df2 <- meat_model1[1, ]
