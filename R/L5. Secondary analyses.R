@@ -1,21 +1,15 @@
 #5. Secondary analyses
 
 #Load packages
-install.packages("patchwork")
 install.packages("Hmisc")
 install.packages("survival")
-install.packages("lubridate")
-install.packages("Publish")
 install.packages("gtsummary")
 install.packages("ggsurvfit")
 install.packages("kableExtra")
 
 library(tidyverse)
-library(patchwork)
 library(Hmisc)
 library(survival)
-library(lubridate)
-library(Publish)
 library(gtsummary)
 library(ggsurvfit)
 library(ggplot2)
@@ -30,15 +24,8 @@ library(kableExtra)
 
 
 ## Crude -------------------------------------------------------------------
-nonspecific_ua <- coxph(Surv(survival_time, nafld == 1) ~
-                       # removing legumes
-                       meats80 + poultry80 + fish80+
-                       #other food components
-                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
-                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly, data = data, ties='breslow')
+nonspecific_ua <- coxph(Surv(survival_time, nafld == 1) ~ legumes80 +
+                        weight_weekly, data = data, ties='breslow')
 
 # Extract HR and 95% CI for the first coefficient
 coef_summary <- summary(nonspecific_ua)$coefficients
@@ -55,15 +42,8 @@ nonspecific_ua <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upp
 
 
 ## model 1 -----------------------------------------------------------------
-nonspecific_model1 <- coxph(Surv(survival_time, nafld == 1) ~
-                              # removing legumes
-                              meats80 + poultry80 + fish80+
-                              #other food components
-                              cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                              dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                              veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
-                              non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                              sauce_weekly + weight_weekly + age_strata + region + sex,
+nonspecific_model1 <- coxph(Surv(survival_time, nafld == 1) ~ legumes80 +
+                               weight_weekly + age_strata + region + sex,
                             data = data, ties='breslow')
 
 # Extract HR and 95% CI for the first coefficient
@@ -85,15 +65,8 @@ df <- 4
 data <- data %>%
   mutate(alcohol_spline = predict(bs(alcohol_weekly, df = df, degree = 3, knots = NULL)))
 
-nonspecific_model2 <- coxph(Surv(survival_time, nafld == 1) ~
-                              # removing legumes
-                              meats80 + poultry80 + fish80+
-                              #other food components
-                              cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                              dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                              veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
-                              non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                              sauce_weekly + weight_weekly + age_strata + region + sex +
+nonspecific_model2 <- coxph(Surv(survival_time, nafld == 1) ~ legumes80 +
+                              weight_weekly + age_strata + region + sex +
                               alcohol_spline + ethnicity + deprivation_quint + education +
                               cohabitation + physical_activity + smoking + diabetes + cancer +
                               non_cancer_illness + family_illness + yearly_income,
@@ -114,15 +87,8 @@ nonspecific_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1],
 
 
 ## model 3 -----------------------------------------------------------------
-nonspecific_model3 <- coxph(Surv(survival_time, nafld == 1) ~
-                              # removing legumes
-                              meats80 + poultry80 + fish80+
-                              #other food components
-                              cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                              dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                              veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
-                              non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                              sauce_weekly + weight_weekly + age_strata + region + sex +
+nonspecific_model3 <- coxph(Surv(survival_time, nafld == 1) ~ legumes80 +
+                              weight_weekly + age_strata + region + sex +
                               alcohol_spline + ethnicity + deprivation_quint + education +
                               cohabitation + physical_activity + smoking + diabetes + cancer +
                               non_cancer_illness + family_illness + yearly_income + bmi30,
@@ -142,32 +108,26 @@ nonspecific_model3 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1],
 
 
 ### Extract results ---------------------------------------------------------
-# combine first rows from each model in df
-first_row_ua <- nonspecific_ua[1, ]
-first_row_model1 <- nonspecific_model1[1, ]
-first_row_model2 <- nonspecific_model2[1, ]
-first_row_model3 <- nonspecific_model3[1, ]
-second_row_ua <- nonspecific_ua[2, ]
-second_row_model1 <- nonspecific_model1[2, ]
-second_row_model2 <- nonspecific_model2[2, ]
-second_row_model3 <- nonspecific_model3[2, ]
-third_row_ua <- nonspecific_ua[3, ]
-third_row_model1 <- nonspecific_model1[3, ]
-third_row_model2 <- nonspecific_model2[3, ]
-third_row_model3 <- nonspecific_model3[3, ]
-
-rows_combined <- rbind(first_row_ua, first_row_model1, first_row_model2, first_row_model3,
-                       second_row_ua, second_row_model1, second_row_model2, second_row_model3,
-                       third_row_ua, third_row_model1, third_row_model2, third_row_model3)
-rownames(rows_combined) <- c("meat_ua", "meat_model1", "meat_model2", "meat_model3",
-                             "poultry_ua", "poultry_model1", "poultry_model2", "poultry_model3",
-                             "fish_ua", "fish_model1", "fish_model2", "fish_model3")
-
 #create html table
-nonspecific <- rows_combined %>%
+nonspecific_ua <- nonspecific_ua %>%
   kable("html") %>%
   kable_styling()
-# flextable::save_as_html(nonspecific, path = here("doc", "nonspecific_substitution.html"))
+flextable::save_as_html(nonspecific_ua, path = here("doc", "nonspecific_ua.html"))
+
+nonspecific_model1 <- nonspecific_model1 %>%
+  kable("html") %>%
+  kable_styling()
+flextable::save_as_html(nonspecific_model1, path = here("doc", "nonspecific_model1.html"))
+
+nonspecific_model2 <- nonspecific_model2 %>%
+  kable("html") %>%
+  kable_styling()
+flextable::save_as_html(nonspecific_model2, path = here("doc", "nonspecific_model2.html"))
+
+nonspecific_model3 <- nonspecific_model3 %>%
+  kable("html") %>%
+  kable_styling()
+flextable::save_as_html(nonspecific_model3, path = here("doc", "nonspecific_model3.html"))
 
 # Pseudo observational method ---------------------------------------------
 # using survival model from main analysis
