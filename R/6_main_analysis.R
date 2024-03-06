@@ -1,21 +1,15 @@
 #6. Main analyses
 
 #Load packages
-install.packages("patchwork")
 install.packages("Hmisc")
 install.packages("survival")
-install.packages("lubridate")
-install.packages("Publish")
 install.packages("gtsummary")
 install.packages("ggsurvfit")
 install.packages("kableExtra")
 
 library(tidyverse)
-library(patchwork)
 library(Hmisc)
 library(survival)
-library(lubridate)
-library(Publish)
 library(gtsummary)
 library(ggsurvfit)
 library(ggplot2)
@@ -391,4 +385,4 @@ rownames(first_rows_combined) <- c("meat_ua", "meat_model1", "meat_model2", "mea
 main_analysis <- first_rows_combined %>%
   kable("html") %>%
   kable_styling()
-# flextable::save_as_html(main_analysis, path = here("doc", "main_analysis.html"))
+flextable::save_as_html(main_analysis, path = here("doc", "main_analysis.html"))
