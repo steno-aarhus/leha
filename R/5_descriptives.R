@@ -13,7 +13,6 @@ library(splines)
 library(openxlsx)
 library(gtsummary)
 library(flextable)
-library()
 
 # Load data ---------------------------------------------------------------
 targets::tar_make()
