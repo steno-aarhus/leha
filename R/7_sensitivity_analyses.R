@@ -1,21 +1,15 @@
 #7. Sensitivity analyses
 
 #Load packages
-install.packages("patchwork")
 install.packages("Hmisc")
 install.packages("survival")
-install.packages("lubridate")
-install.packages("Publish")
 install.packages("gtsummary")
 install.packages("ggsurvfit")
 install.packages("kableExtra")
 
 library(tidyverse)
-library(patchwork)
 library(Hmisc)
 library(survival)
-library(lubridate)
-library(Publish)
 library(gtsummary)
 library(ggsurvfit)
 library(ggplot2)
@@ -396,7 +390,7 @@ rownames(first_rows_combined) <- c("meat_ua", "meat_model1", "meat_model2", "mea
 legume_pea_analysis <- first_rows_combined %>%
   kable("html") %>%
   kable_styling()
-# flextable::save_as_html(legume_pea_analysis, path = here("doc", "sensitivity1.html"))
+flextable::save_as_html(legume_pea_analysis, path = here("doc", "sensitivity1.html"))
 
 
 
@@ -404,19 +398,19 @@ legume_pea_analysis <- first_rows_combined %>%
 # Removing high ALT and AST from analysis-----------------------------------------------
 # removing high ALT and AST
 data <- data %>% mutate(
-  alt = case_when(
-    p30620 <= 45 & sex == "Female" | p30620 <= 70 & sex == "Male" ~ 0,
-    p30620 > 45 & sex == "Female" | p30620 > 70 & sex == "Male" ~ 1
+  alt_level = case_when(
+    alt <= 45 & sex == "Female" | alt <= 70 & sex == "Male" ~ 0,
+    alt > 45 & sex == "Female" | alt > 70 & sex == "Male" ~ 1
   ),
-  ast = case_when(
-    p30650 <= 35 & sex == "Female" | p30650 <= 45 & sex == "Male" ~ 0,
-    p30650 > 35 & sex == "Female" | p30650 > 45 & sex == "Male" ~ 1
+  ast_level = case_when(
+    ast <= 35 & sex == "Female" | ast <= 45 & sex == "Male" ~ 0,
+    ast > 35 & sex == "Female" | ast > 45 & sex == "Male" ~ 1
   )
 )
 
 # Subsetting data
 normal_liver <- data %>%
-  subset(alt !=1 & ast != 1)
+  subset(alt_level !=1 & ast_level != 1)
 
 
 ## Running main analysis on subsample --------------------------------------
@@ -780,4 +774,4 @@ rownames(first_rows_combined) <- c("meat_ua", "meat_model1", "meat_model2", "mea
 normal_liver <- first_rows_combined %>%
   kable("html") %>%
   kable_styling()
-# flextable::save_as_html(normal_liver, path = here("doc", "sensitivity2.html"))
+flextable::save_as_html(normal_liver, path = here("doc", "sensitivity2.html"))
