@@ -32,14 +32,14 @@ data <- data %>% mutate(
   age = p21022,
   age = as.numeric(age),
   age_strata = case_when(
-    p21022 < 45 ~ 0,
-    p21022 >= 45 & p21022 <= 49 ~ 1,
-    p21022 >= 50 & p21022 <= 54 ~ 2,
-    p21022 >= 55 & p21022 <= 59 ~ 3,
-    p21022 >= 60 & p21022 <= 64 ~ 4,
-    p21022 >= 65 ~ 5
+    age < 45 ~ 0,
+    age >= 45 & age <= 49 ~ 1,
+    age >= 50 & age <= 54 ~ 2,
+    age >= 55 & age <= 59 ~ 3,
+    age >= 60 & age <= 64 ~ 4,
+    age >= 65 ~ 5
     ),
-  age_strata = as.factor(age),
+  age_strata = as.factor(age_strata),
   ethnicity = case_when(
     p21000_i0 == "White" | p21000_i0 == "British" | p21000_i0 == "Irish" | p21000_i0 == "Any other white background" ~ "white",
     p21000_i0 == "Chinese" | p21000_i0 == "Asian or Asian British" | p21000_i0 =="Indian" | p21000_i0 == "Pakistani" | p21000_i0 == "Bangladeshi" | p21000_i0 == "Any other Asian background" ~ "asian",
