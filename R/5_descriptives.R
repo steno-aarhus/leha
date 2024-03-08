@@ -1,7 +1,6 @@
 #3. Descriptive
 
 # Install and load packages -----------------------------------------------------------
-install.packages("openxlsx")
 install.packages("gtsummary")
 install.packages("flextable")
 
@@ -10,7 +9,6 @@ library(dplyr)
 library(magrittr)
 library(tidyr)
 library(splines)
-library(openxlsx)
 library(gtsummary)
 library(flextable)
 
@@ -33,4 +31,3 @@ table1 <- data %>%
   as_flex_table()
 
 flextable::save_as_html(table1, path = here("doc", "table1.html"))
-
