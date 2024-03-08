@@ -386,3 +386,4 @@ main_analysis <- first_rows_combined %>%
   kable("html") %>%
   kable_styling()
 flextable::save_as_html(main_analysis, path = here("doc", "main_analysis.html"))
+flextable::save_as_docx(main_analysis, path = here("doc", "main_analysis.docx"))

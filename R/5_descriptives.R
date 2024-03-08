@@ -30,4 +30,5 @@ table1 <- data %>%
   modify_caption("Table 1. Baseline characteristics of participants in the UK Biobank Cohort") %>%
   as_flex_table()
 
-flextable::save_as_html(table1, path = here("doc", "table1.html"))
+# flextable::save_as_html(table1, path = here("doc", "table1.html"))
+flextable::save_as_docx(table1, path = here("doc", "table1.docx"))
