@@ -133,40 +133,6 @@ remove <- c("p191", "p40000_i0", "p40000_i1")
 data <- data %>%
   select(-matches(remove))
 
-# time of last completed 24h recall as baseline date
-data <- data %>%
-  mutate(ques_comp_t0 = p105010_i0,
-         ques_comp_t1 = p105010_i1,
-         ques_comp_t2 = p105010_i2,
-         ques_comp_t3 = p105010_i3,
-         ques_comp_t4 = p105010_i4,
-         # Removing specific time stamp
-         ques_comp_t0 = substr(ques_comp_t0, 1, 10),
-         ques_comp_t1 = substr(ques_comp_t1, 1, 10),
-         ques_comp_t2 = substr(ques_comp_t2, 1, 10),
-         ques_comp_t3 = substr(ques_comp_t3, 1, 10),
-         ques_comp_t4 = substr(ques_comp_t4, 1, 10)
-         )
-
-
-# New column with baseline start date as last completed questionnaire
-data <- data %>%
-  # Convert ques_0 to ques_4 to date format
-  mutate(across(starts_with("ques_"), as.Date)) %>%
-  # Gather all columns into key-value pairs
-  pivot_longer(cols = starts_with("ques_"), names_to = "questionnaire", values_to = "date_filled") %>%
-  # Group by participant ID and select the row with the latest date_filled for each participant
-  group_by(id) %>%
-  slice(which.max(date_filled)) %>%
-  ungroup() %>%
-  # Rename the remaining column to indicate the last filled questionnaire
-  rename(last_filled_questionnaire = questionnaire)
-
-
-remove <- c("p105010_i0", "p105010_i1", "p105010_i2", "p105010_i3","p105010_i4")
-data <- data %>%
-  select(-matches(remove))
-
 # Defining birth date as origin for survival analysis
 # Merging birth year and month of birth into one column:
 
