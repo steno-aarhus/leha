@@ -225,7 +225,7 @@ data <- data %>%
       !is.na(loss_to_follow_up) ~ as.numeric(difftime(loss_to_follow_up, date_birth, units = "days")),
       TRUE ~ as.numeric(difftime(censoring, date_birth, units = "days"))
     ),
-    # Use pmin to get the minimum survival time across columns
+    # Use min to get the minimum survival time across columns
     survival_time = pmin(survival_time_tmp, na.rm = TRUE),
     survival_time = survival_time/365.25,
     # Remove temporary variable
