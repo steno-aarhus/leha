@@ -50,7 +50,16 @@ data <- data %>% mutate(
   deprivation = p22189,
   deprivation_quint = ntile(deprivation, 5),
   deprivation_quint = as.factor(deprivation_quint),
-  yearly_income = p738_i0,
+  yearly_income = case_when(
+    str_detect(p738_i0, "18,000 to") ~ "18,000-30,999",
+    str_detect(p738_i0, "31,000") ~ "31,000-51,999",
+    str_detect(p738_i0, "52,000") ~ "52,000-100,000",
+    str_detect(p738_i0, "know") ~ "don't know",
+    str_detect(p738_i0, "Greater") ~ ">100,000",
+    str_detect(p738_i0, "Less") ~ "<18,000",
+    str_detect(p738_i0, "answer") ~ "no answer",
+    TRUE ~ "no answer"
+  ),
   yearly_income = as.factor(yearly_income),
   education_short = as.character(str_sub(p6138_i0, start = 1, end = 28)),
   education = case_when(
@@ -68,26 +77,33 @@ data <- data %>% mutate(
   physical_activity = case_when(
     p22040_i0 >0 & p22040_i0 <=918 ~ "low",
     p22040_i0 >918 & p22040_i0 <=3706 ~ "moderate",
-    p22040_i0 >3706 ~ "high"
+    p22040_i0 >3706 ~ "high",
+    TRUE ~ "unknown"
     ),
   # Self-reported and doctor diagnosed non-cancer illness.
   p6150_i0 = ifelse(is.na(p6150_i0), "None", p6150_i0),
   p6150_i0 = as.character(p6150_i0),
   p20002_i0 = ifelse(is.na(p20002_i0), "None", p20002_i0),
   p20002_i0 = as.character(p20002_i0),
-  # non_cancer_illness = case_when(
-  #   str_detect(p20002_i0, "hypert") | str_detect(p6150_i0, "High") ~ "hypertension",
-  #   str_detect(p20002_i0, "myocardial") | str_detect(p6150_i0, "Heart") ~ "mi",
-  #   str_detect(p20002_i0, "stroke") | str_detect(p20002_i0, "ischaemic") | str_detect(p20002_i0, "haemorrhage") | str_detect(p6150_i0, "Stroke")~ "stroke",
-  #   str_detect(p20002_i0, "cholesterol") ~ "cholesterolemia",
-  #   str_detect(p20002_i0, "cholangitis") | str_detect(p20002_i0, "cholelithiasis") | str_detect(p20002_i0, "cholecyst") | str_detect(p20002_i0, "primary biliary cirrhosis") ~ "gbd",
-  #   str_detect(p20002_i0, "alcoholic cirrhosis") ~ "alcoholic liver disease",
-  #   str_detect(p6150_i0, "Angina") ~ "angina",
-  #   p6150_i0 == "None" | p20002_i0 == "None" ~ "none of the above",
-  #   TRUE ~ NA_character_  # If none of the conditions match
-  #   ),
+  non_cancer_illness = case_when(
+    str_detect(p20002_i0, "hypert") | str_detect(p6150_i0, "High") ~ "hypertension",
+    str_detect(p20002_i0, "myocardial") | str_detect(p6150_i0, "Heart") ~ "mi",
+    str_detect(p20002_i0, "stroke") | str_detect(p20002_i0, "ischaemic") | str_detect(p20002_i0, "haemorrhage") | str_detect(p6150_i0, "Stroke")~ "stroke",
+    str_detect(p20002_i0, "cholesterol") ~ "cholesterolemia",
+    str_detect(p20002_i0, "cholangitis") | str_detect(p20002_i0, "cholelithiasis") | str_detect(p20002_i0, "cholecyst") | str_detect(p20002_i0, "primary biliary cirrhosis") ~ "gbd",
+    str_detect(p20002_i0, "alcoholic cirrhosis") ~ "alcoholic liver disease",
+    str_detect(p6150_i0, "Angina") ~ "angina",
+    p6150_i0 == "None" | p20002_i0 == "None" ~ "none of the above",
+    TRUE ~ "none of the above"
+    ),
   non_cancer_illness = as.factor(non_cancer_illness),
-  diabetes = p2443_i0,
+  diabetes = case_when(
+    str_detect(p2443_i0, "know") ~ "don't know",
+    str_detect(p2443_i0, "answer") ~ "no answer",
+    p2443_i0 == "No" ~ "no",
+    p2443_i0 == "Yes" ~ "yes",
+    TRUE ~ "no answer"
+    ),
   diabetes = as.factor(diabetes),
   # illness in closest family
   p20107_i0 = ifelse(is.na(p20107_i0), "None", p20107_i0),
@@ -102,10 +118,16 @@ data <- data %>% mutate(
     str_detect(p20107_i0, "Stroke") | str_detect(p20110_i0, "Stroke") | str_detect(p20111_i0, "Stroke")~ "stroke",
     str_detect(p20107_i0, "Heart disease") | str_detect(p20110_i0, "Heart disease") | str_detect(p20111_i0, "Heart disease") ~ "heart disease",
     p20107_i0 == "None" | p20110_i0 == "None" | p20111_i0 == "None" ~ "none of the above",
-    TRUE ~ NA_character_ # If none of the conditions match
+    TRUE ~ "none of the above" # If none of the conditions match
     ),
   family_illness = as.factor(family_illness),
-    cancer = p2453_i0,
+  cancer = case_when(
+    str_detect(p2453_i0, "Do not know") ~ "don't know",
+    str_detect(p2453_i0, "Yes") ~ "yes",
+    p2453_i0 == "No" ~ "no",
+    str_detect(p2453_i0, "answer") ~ "no answer",
+    TRUE ~ "no answer"
+    ),
   cancer = as.factor(cancer),
     bmi = p23104_i0,
   bmi = as.numeric(bmi),
@@ -155,8 +177,8 @@ data <- data %>% mutate(
     str_detect(p20116_i0, "Previous") ~ "former",
     str_detect(p20116_i0, "Current") & as.numeric(p3456_i0) > 0 & as.numeric(p3456_i0) <= 15 ~ "current <15",
     str_detect(p20116_i0, "Current") & as.numeric(p3456_i0) > 15 ~ "current > 15",
-    str_detect(p20116_i0, "answer") ~ "No answer",
-    TRUE ~ NA_character_  # Handling cases not covered by the conditions
+    str_detect(p20116_i0, "answer") ~ "no answer",
+    TRUE ~ "no answer"  # Handling cases not covered by the conditions
     ))
 
 data <- data %>% mutate(
@@ -211,10 +233,10 @@ data <- data %>%
 
 
 # Remove recoded variables from sorted_data -------------------------------
-"p20111", "p20110", "p20107"
- "p6150", "p20002",
-variables_to_remove <- c("p23104",
-                         "p2453", "p2443", "p31",
+
+
+variables_to_remove <- c("p20111", "p20110", "p20107", "p23104",
+                         "p6150", "p20002", "p2453", "p2443", "p31",
                          "p20116", "p26030", "p3456", "p21022",
                          "p22040", "p6141", "p6138", "p22189",
                          "p21000", "p54", "p738", "p30650",
