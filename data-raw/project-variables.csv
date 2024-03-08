@@ -19,8 +19,6 @@ p20107,Illnesses of father,488041,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id
 p20110,Illnesses of mother,492917,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=20110
 p20111,Illnesses of siblings,434141,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=20111
 p20116,Smoking status,501500,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=20116
-p20161,Pack years of smoking,152789,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=20161
-p20162,Pack years adult smoking as proportion of life span exposed to smoking,153151,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=20162
 p21000,Ethnic background,501517,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=21000
 p21022,Age at recruitment,502408,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=21022
 p22040,Summed MET minutes per week for all activity,402303,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=22040
@@ -133,4 +131,3 @@ p41280,Date of first in-patient diagnosis - ICD10,440014,https://biobank.ndph.ox
 p41281,Date of first in-patient diagnosis - ICD9,20299,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41281
 p41282,Date of first operative procedure - OPCS4,440153,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=41282
 p104280,Pea intake,51147,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=104280
-p105010,When diet questionnaire completed,210948,https://biobank.ndph.ox.ac.uk/ukb/field.cgi?id=105010
