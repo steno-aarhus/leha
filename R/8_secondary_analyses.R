@@ -1,4 +1,4 @@
-#5. Secondary analyses
+#8. Secondary analyses
 
 #Load packages
 install.packages("Hmisc")
@@ -27,7 +27,12 @@ data <- data %>%
          meats80 = meats_weekly/80,
          poultry80 = poultry_weekly/80,
          fish80 = fish_weekly/80)
-cox_meat_ua <- coxph(Surv(survival_time, nafld == 1) ~
+
+data <- data %>%
+  mutate(alcohol_spline = predict(bs(alcohol_weekly, df = 4, degree = 3, knots = NULL)))
+
+# meats
+meat_pseudo <- coxph(Surv(survival_time, nafld == 1) ~
                        # removing meat
                        legumes80 + poultry80 + fish80+
                        #other food components
@@ -35,14 +40,30 @@ cox_meat_ua <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly, data = data, ties='breslow')
+                       sauce_weekly + weight_weekly + age_strata + region + sex +
+                       alcohol_spline + ethnicity + deprivation_quint + education +
+                       cohabitation + physical_activity + smoking + diabetes + cancer +
+                       non_cancer_illness + family_illness + yearly_income,
+                     data = data, ties='breslow')
+
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(meat_pseudo)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(meat_pseudo)[1, ]
+CI <- exp(CI)
+# Round to two decimals
+HR <- round(HR, 2)
+CI <- round(CI, 2)
+# Convert to dataframe
+meat_pseudo <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
 
 # Calculate predicted survival probabilities
-predicted_survival <- survfit(cox_meat_ua)
+predicted_survival <- survfit(meat_pseudo)
 
 # Create time points for pseudo-observations
 time_points <- seq(0, max(predicted_survival$survival_time), by = 1)
-# time_points <- seq(0, 3000, by = 1)
+# time_points <- seq(0, 1000000, by = 1)
 
 # Initialize a matrix to store pseudo-observations
 pseudo_observations <- matrix(0, nrow = length(time_points), ncol = nrow(predicted_survival$surv))
@@ -59,12 +80,71 @@ pseudo_km <- survfit(Surv(time_points, colSums(pseudo_observations)) ~ 1)
 plot(pseudo_km, xlab = "Time", ylab = "Survival Probability", main = "Estimated Survival Function using Pseudo-Observations")
 
 
+# poultry
+poultry_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+                          # removing meat
+                          legumes80 + meats80 + fish80+
+                          #other food components
+                          cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                          dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                          veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                          non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                          sauce_weekly + weight_weekly + age_strata + region + sex +
+                          alcohol_spline + ethnicity + deprivation_quint + education +
+                          cohabitation + physical_activity + smoking + diabetes + cancer +
+                          non_cancer_illness + family_illness + yearly_income,
+                        data = data, ties='breslow')
+
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(poultry_model2)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(poultry_model2)[1, ]
+CI <- exp(CI)
+# Round to two decimals
+HR <- round(HR, 2)
+CI <- round(CI, 2)
+# Convert to dataframe
+poultry_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+
+
+# fish
+fish_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+                       # removing meat
+                       legumes80 + meats80 + poultry80+
+                       #other food components
+                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                       sauce_weekly + weight_weekly + age_strata + region + sex +
+                       alcohol_spline + ethnicity + deprivation_quint + education +
+                       cohabitation + physical_activity + smoking + diabetes + cancer +
+                       non_cancer_illness + family_illness + yearly_income,
+                     data = data, ties='breslow')
+
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(fish_model2)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(fish_model2)[1, ]
+CI <- exp(CI)
+# Round to two decimals
+HR <- round(HR, 2)
+CI <- round(CI, 2)
+# Convert to dataframe
+fish_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+
+
+
+
+
 
 
 # Non specific substitutions ----------------------------------------------
 # Leaving one portion of legumes (80g) out weekly
 data <- data %>%
-  mutate(legumepea80 = legume_pea_weekly/80)
+  mutate(legumes80 = legume_weekly/80)
 
 
 ## model 2 -----------------------------------------------------------------
@@ -98,6 +178,6 @@ nonspecific_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1],
 nonspecific_model2 <- nonspecific_model2 %>%
   kable("html") %>%
   kable_styling()
-flextable::save_as_html(nonspecific_model2, path = here("doc", "nonspecific_model2.html"))
+flextable::save_as_html(nonspecific_model2, path = here("doc", "secondary_nonspecific_model2.html"))
 
 
