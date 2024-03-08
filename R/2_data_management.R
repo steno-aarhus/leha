@@ -75,17 +75,17 @@ data <- data %>% mutate(
   p6150_i0 = as.character(p6150_i0),
   p20002_i0 = ifelse(is.na(p20002_i0), "None", p20002_i0),
   p20002_i0 = as.character(p20002_i0),
-  non_cancer_illness = case_when(
-    str_detect(p20002_i0, "hypert") | str_detect(p6150_i0, "High") ~ "hypertension",
-    str_detect(p20002_i0, "myocardial") | str_detect(p6150_i0, "Heart") ~ "mi",
-    str_detect(p20002_i0, "stroke") | str_detect(p20002_i0, "ischaemic") | str_detect(p20002_i0, "haemorrhage") | str_detect(p6150_i0, "Stroke")~ "stroke",
-    str_detect(p20002_i0, "cholesterol") ~ "cholesterolemia",
-    str_detect(p20002_i0, "cholangitis") | str_detect(p20002_i0, "cholelithiasis") | str_detect(p20002_i0, "cholecyst") | str_detect(p20002_i0, "primary biliary cirrhosis") ~ "gbd",
-    str_detect(p20002_i0, "alcoholic cirrhosis") ~ "alcoholic liver disease",
-    str_detect(p6150_i0, "Angina") ~ "angina",
-    p6150_i0 == "None" | p20002_i0 == "None" ~ "none of the above",
-    TRUE ~ NA_character_  # If none of the conditions match
-    ),
+  # non_cancer_illness = case_when(
+  #   str_detect(p20002_i0, "hypert") | str_detect(p6150_i0, "High") ~ "hypertension",
+  #   str_detect(p20002_i0, "myocardial") | str_detect(p6150_i0, "Heart") ~ "mi",
+  #   str_detect(p20002_i0, "stroke") | str_detect(p20002_i0, "ischaemic") | str_detect(p20002_i0, "haemorrhage") | str_detect(p6150_i0, "Stroke")~ "stroke",
+  #   str_detect(p20002_i0, "cholesterol") ~ "cholesterolemia",
+  #   str_detect(p20002_i0, "cholangitis") | str_detect(p20002_i0, "cholelithiasis") | str_detect(p20002_i0, "cholecyst") | str_detect(p20002_i0, "primary biliary cirrhosis") ~ "gbd",
+  #   str_detect(p20002_i0, "alcoholic cirrhosis") ~ "alcoholic liver disease",
+  #   str_detect(p6150_i0, "Angina") ~ "angina",
+  #   p6150_i0 == "None" | p20002_i0 == "None" ~ "none of the above",
+  #   TRUE ~ NA_character_  # If none of the conditions match
+  #   ),
   non_cancer_illness = as.factor(non_cancer_illness),
   diabetes = p2443_i0,
   diabetes = as.factor(diabetes),
@@ -211,9 +211,10 @@ data <- data %>%
 
 
 # Remove recoded variables from sorted_data -------------------------------
-
-variables_to_remove <- c("p20111", "p20110", "p20107", "p23104",
-                         "p2453", "p2443", "p6150", "p20002", "p31",
+"p20111", "p20110", "p20107"
+ "p6150", "p20002",
+variables_to_remove <- c("p23104",
+                         "p2453", "p2443", "p31",
                          "p20116", "p26030", "p3456", "p21022",
                          "p22040", "p6141", "p6138", "p22189",
                          "p21000", "p54", "p738", "p30650",
