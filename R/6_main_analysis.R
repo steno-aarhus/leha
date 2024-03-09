@@ -385,5 +385,6 @@ rownames(first_rows_combined) <- c("meat_ua", "meat_model1", "meat_model2", "mea
 main_analysis <- first_rows_combined %>%
   kable("html") %>%
   kable_styling()
+writeLines(as.character(main_analysis), "main_analysis_table.html")
 flextable::save_as_html(main_analysis, path = here("doc", "main_analysis.html"))
 flextable::save_as_docx(main_analysis, path = here("doc", "main_analysis.docx"))
