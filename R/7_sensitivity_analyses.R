@@ -137,8 +137,7 @@ rownames(first_rows_combined) <- c("meat_model2", "poultry_model2", "fish_model2
 legume_pea_analysis <- first_rows_combined %>%
   kable("html") %>%
   kable_styling()
-flextable::save_as_html(legume_pea_analysis, path = here("doc", "sensitivity_legume_pea.html"))
-
+writeLines(as.character(legume_pea_analysis), "doc/sensitivity_legume_pea.html")
 
 
 # Varying 24h recalls -----------------------------------------------------
@@ -440,9 +439,7 @@ rownames(first_rows_combined) <- c("meat_data2", "meat_data3", "meat_data4", "me
 diff_recalls <- first_rows_combined %>%
   kable("html") %>%
   kable_styling()
-flextable::save_as_html(diff_recalls, path = here("doc", "sensitivity_diff_recalls.html"))
-
-
+writeLines(as.character(diff_recalls), "doc/sensitivity_diff_recalls.html")
 
 # Removing high ALT and AST from analysis-----------------------------------------------
 # removing high ALT and AST
@@ -569,9 +566,7 @@ rownames(first_rows_combined) <- c("meat_model2", "poultry_model2", "fish_model2
 normal_liver <- first_rows_combined %>%
   kable("html") %>%
   kable_styling()
-flextable::save_as_html(normal_liver, path = here("doc", "sensitivity_normal_liver.html"))
-
-
+writeLines(as.character(normal_liver), "doc/sensitivity_normal_liver.html")
 
 # Remove high alcohol intake --------------------------------------------------
 percentile_90 <- quantile(data$alcohol_weekly, probs = 0.90, na.rm = TRUE)
@@ -675,5 +670,4 @@ rownames(first_rows_combined) <- c("meat_model2", "poultry_model2", "fish_model2
 lower_alc <- first_rows_combined %>%
   kable("html") %>%
   kable_styling()
-flextable::save_as_html(lower_alc, path = here("doc", "sensitivity_lower_alc.html"))
-
+writeLines(as.character(lower_alc), "doc/sensitivity_lower_alc.html")
