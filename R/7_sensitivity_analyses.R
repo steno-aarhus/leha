@@ -141,12 +141,102 @@ writeLines(as.character(legume_pea_analysis), "doc/sensitivity_legume_pea.html")
 
 
 # Varying 24h recalls -----------------------------------------------------
+data2 <- data
 data3 <- data %>%
   subset(p20077>=3)
 data4 <- data %>%
   subset(p20077>=4)
 data5 <- data %>%
   subset(p20077>=5)
+
+
+## data2 = two 24h recalls -------------------------------------------------
+
+df <- 4
+data2 <- data2 %>%
+  mutate(alcohol_spline = predict(bs(alcohol_weekly, df = df, degree = 3, knots = NULL)))
+
+# meats
+meat_data2 <- coxph(Surv(survival_time, nafld == 1) ~
+                       # removing meat
+                       legumes80 + poultry80 + fish80+
+                       #other food components
+                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                       sauce_weekly + weight_weekly + age_strata + region + sex +
+                       alcohol_spline + ethnicity + deprivation_quint + education +
+                       cohabitation + physical_activity + smoking + diabetes + cancer +
+                       non_cancer_illness + family_illness + yearly_income,
+                     data = data2, ties='breslow')
+
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(meat_data2)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(meat_data2)[1, ]
+CI <- exp(CI)
+# Round to two decimals
+HR <- round(HR, 2)
+CI <- round(CI, 2)
+# Convert to dataframe
+meat_data2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+
+# poultry
+poultry_data2 <- coxph(Surv(survival_time, nafld == 1) ~
+                          # removing meat
+                          legumes80 + meats80 + fish80+
+                          #other food components
+                          cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                          dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                          veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                          non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                          sauce_weekly + weight_weekly + age_strata + region + sex +
+                          alcohol_spline + ethnicity + deprivation_quint + education +
+                          cohabitation + physical_activity + smoking + diabetes + cancer +
+                          non_cancer_illness + family_illness + yearly_income,
+                        data = data2, ties='breslow')
+
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(poultry_data2)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(poultry_data2)[1, ]
+CI <- exp(CI)
+# Round to two decimals
+HR <- round(HR, 2)
+CI <- round(CI, 2)
+# Convert to dataframe
+poultry_data2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+
+
+# fish
+fish_data2 <- coxph(Surv(survival_time, nafld == 1) ~
+                       # removing meat
+                       legumes80 + meats80 + poultry80+
+                       #other food components
+                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                       sauce_weekly + weight_weekly + age_strata + region + sex +
+                       alcohol_spline + ethnicity + deprivation_quint + education +
+                       cohabitation + physical_activity + smoking + diabetes + cancer +
+                       non_cancer_illness + family_illness + yearly_income,
+                     data = data2, ties='breslow')
+
+# Extract HR and 95% CI for the first coefficient
+coef_summary <- summary(fish_data2)$coefficients
+row_name <- rownames(coef_summary)
+HR <- exp(coef_summary[1, "coef"])
+CI <- confint(fish_data2)[1, ]
+CI <- exp(CI)
+# Round to two decimals
+HR <- round(HR, 2)
+CI <- round(CI, 2)
+# Convert to dataframe
+fish_data2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
 
 ## data3 = three 24h recalls -----------------------------------------------------------------
 # Alcohol as spline with 4 knots for adjustment
@@ -415,17 +505,15 @@ fish_data5 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_C
 
 
 ### Extract results ---------------------------------------------------------
-# To combine different 24h recalls with main analysis results,
-# run model 2 in "6_main_analysis.R" first
-first_row_df1 <- meat_model2[1, ]
+first_row_df1 <- meat_data2[1, ]
 first_row_df2 <- meat_data3[1, ]
 first_row_df3 <- meat_data4[1, ]
 first_row_df4 <- meat_data5[1, ]
-first_row_df5 <- poultry_model2[1, ]
+first_row_df5 <- poultry_data2[1, ]
 first_row_df6 <- poultry_data3[1, ]
 first_row_df7 <- poultry_data4[1, ]
 first_row_df8 <- poultry_data5[1, ]
-first_row_df9 <- fish_model2[1, ]
+first_row_df9 <- fish_data2[1, ]
 first_row_df10 <- fish_data3[1, ]
 first_row_df11 <- fish_data4[1, ]
 first_row_df12 <- fish_data5[1, ]
