@@ -6,6 +6,7 @@ install.packages("survival")
 install.packages("gtsummary")
 install.packages("ggsurvfit")
 install.packages("kableExtra")
+install.packages("flextable")
 
 library(tidyverse)
 library(Hmisc)
@@ -18,6 +19,7 @@ library(tidyr)
 library(here)
 library(splines)
 library(kableExtra)
+library(flextable)
 
 # Pseudo observational method ---------------------------------------------
 # using survival model from main analysis
@@ -178,6 +180,4 @@ nonspecific_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1],
 nonspecific_model2 <- nonspecific_model2 %>%
   kable("html") %>%
   kable_styling()
-flextable::save_as_html(nonspecific_model2, path = here("doc", "secondary_nonspecific_model2.html"))
-
-
+writeLines(as.character(nonspecific_model2), "doc/secondary_nonspecific_model2.html")
