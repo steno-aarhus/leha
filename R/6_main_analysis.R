@@ -8,6 +8,7 @@ install.packages("ggsurvfit")
 install.packages("kableExtra")
 
 library(tidyverse)
+library(broom)
 library(Hmisc)
 library(survival)
 library(gtsummary)
