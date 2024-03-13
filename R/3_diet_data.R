@@ -4,7 +4,6 @@ library(tidyverse)
 library(magrittr)
 library(dplyr)
 
-
 # Average dietary intake of food groups -----------------------------------
 calculate_total <- function(columns) {
   sum(dplyr::c_cross(columns), na.rm = TRUE)
@@ -22,7 +21,7 @@ calculate_weekly <- function(data) {
     dplyr::rename_with(~ stringr::str_replace("_total_weekly", "_weekyl"))
 }
 
-calculate_food_intake <- function(diet_data) {
+calculate_food_intake <- function(data) {
   # estimating average daily and weekly intakes of food groups in g
   data <- data %>%
     # creating food groups from UKB Aurora Perez
@@ -80,6 +79,7 @@ remove_diet <- c(
 )
 
 data <- data %>%
+  calculate_food_intake() %>%
   select(-matches(remove_diet))
 
 # Save data ---------------------------------------------------------------
