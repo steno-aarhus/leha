@@ -1,12 +1,14 @@
-# This script will split p41270 (ICD10-codes) into columns and match the date of
-# diagnosis with the diagnosis code for that specific data. This is useful when
-# using ICD10 diagnoses as outcomes in time-to-event analyses
+# This script will split p41270 (ICD10-codes) and p41271 (ICD9-codes) into
+# columns and match the date of diagnosis with the diagnosis code for that
+# specific data. This is useful when using ICD10 diagnoses as outcomes in
+# time-to-event analyses
 
 # Load packages -----------------------------------------------------------
 library(tidyverse)
 library(magrittr)
 library(dplyr)
 library(here)
+library(ggplot2)
 
 
 # ICD10 codes ---------------------------------------------------------
@@ -56,18 +58,11 @@ first_non_na_nash <- icd10_nash %>%
 data <- data %>%
   left_join(first_non_na_nash %>% select(id, icd10_nash_date), by = "id")
 
-
-# Save data ---------------------------------------------------------------
-arrow::write_parquet(data, here("data/data.parquet"))
-
-
 # Delete old ICD10 diagnosis and dates ------------------------------------
 delete <- c("p41280", "p41270")
 data <- data %>%
   select(-matches(paste0(delete)))
 
-# Save data ---------------------------------------------------------------
-arrow::write_parquet(data, here("data/data.parquet"))
 
 
 
@@ -123,5 +118,93 @@ delete <- c("p41281", "p41271")
 data <- data %>%
   select(-matches(paste0(delete)))
 
+
+
+# Define variables for survival analysis ----------------------------------
+# Date of death and loss to follow up
+data <- data %>%
+  mutate(date_of_death = if_else(!is.na(p40000_i0), p40000_i0, p40000_i1),
+         date_of_death = as.Date(date_of_death),
+         loss_to_follow_up = p191,
+         loss_to_follow_up = as.Date(loss_to_follow_up))
+
+# remove p-values
+remove <- c("p191", "p40000_i0", "p40000_i1")
+data <- data %>%
+  select(-matches(remove))
+
+# Defining birth date as origin for survival analysis
+# Merging birth year and month of birth into one column:
+
+month_names <- c("January", "February", "March", "April", "May", "June",
+                 "July", "August", "September", "October", "November", "December")
+
+data <- data %>%
+  mutate(month_of_birth_num = sprintf("%02d", match(p52, month_names)))
+
+data <- data %>%
+  unite(date_birth, p34, month_of_birth_num, sep = "-")
+
+remove(month_names)
+
+
+# adding 15 as DD for all participants:
+
+data$date_birth <- as.Date(paste0(data$date_birth, "-15"))
+
+
+# Set cut-off date for follow-up ------------------------------------------
+# Estimated last follow-up date for ICD10 codes (stagnation of diagnoses)
+# Create the plot
+ggplot(data, aes(x = icd10_nafld_date, y = id)) +
+  geom_point() + # Use points to show individual data points
+  geom_smooth(method = "lm", se = FALSE) + # Add linear regression line
+  annotate("text", x = max(data$icd10_nafld_date), y = min(data$id),
+           label = paste("Last observed date:", max(data$icd10_nafld_date)),
+           hjust = 1, vjust = -0.5, size = 4) +  # Add annotation for the last observed date
+  labs(title = "Dates of Disease Over Time", x = "Date of Disease", y = "Participant ID")
+
+# The density is very high in the right of the plot - I will estimate the last
+# diagnosis date in data:
+
+dates <- data %>%
+  subset(!is.na(icd10_nafld_date))
+
+# Find the last date of diagnosis
+last_date <- max(dates$icd10_nafld_date)
+
+# Print or use the last date as needed
+print(last_date)
+
+# Administrative censoring at October 31st, 2022
+data <- data %>%
+  mutate(censoring = as.Date("2022-10-31"))
+
+
+# estimate survival time
+data <- data %>%
+  mutate(
+    survival_time_tmp = case_when(
+      !is.na(icd10_nafld_date) ~ as.numeric(difftime(icd10_nafld_date, date_birth, units = "days")),
+      !is.na(icd10_nash_date) ~ as.numeric(difftime(icd10_nash_date, date_birth, units = "days")),
+      !is.na(date_of_death) ~ as.numeric(difftime(date_of_death, date_birth, units = "days")),
+      !is.na(loss_to_follow_up) ~ as.numeric(difftime(loss_to_follow_up, date_birth, units = "days")),
+      TRUE ~ as.numeric(difftime(censoring, date_birth, units = "days"))
+    ),
+    # Use min to get the minimum survival time across columns
+    survival_time = pmin(survival_time_tmp, na.rm = TRUE),
+    survival_time = survival_time/365.25,
+    # Remove temporary variable
+    survival_time_tmp = NULL
+  )
+
+# binary variable to indicate if nafld happened
+data <- data %>%
+  mutate(nafld = case_when(
+    !is.na(icd10_nafld_date) | !is.na(icd10_nash_date) |
+      !is.na(icd9_nafld_date) | !is.na(icd9_nash_date) ~ 1,
+    TRUE ~ 0))
+
 # Save data ---------------------------------------------------------------
 arrow::write_parquet(data, here("data/data.parquet"))
+ukbAid::upload_data(here("data/data.parquet"), username = "FieLangmann")

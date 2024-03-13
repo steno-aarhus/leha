@@ -1,39 +1,23 @@
 #3. Descriptive
 
-# Load packages -----------------------------------------------------------
+# Install and load packages -----------------------------------------------------------
+install.packages("gtsummary")
+install.packages("flextable")
 
-
-install.packages(glue)
+library(tidyverse)
 library(dplyr)
 library(magrittr)
 library(tidyr)
 library(splines)
-install.packages("openxlsx")
-library(openxlsx)
-install.packages("gtsummary")
 library(gtsummary)
-install.packages("flextable")
 library(flextable)
-
 
 # Load data ---------------------------------------------------------------
 targets::tar_make()
 # Restart session
 source(here::here("R/1_data_start.R"))
 
-
-
 # Table 1 -----------------------------------------------------------------
-
-
-
-
-data <- data %>%
-  mutate(nafld = case_when(
-    !is.na(icd10_nafld_date) | !is.na(icd10_nash_date) |
-      !is.na(icd9_nafld_date) | !is.na(icd9_nash_date) ~ 1,
-    TRUE ~ 0))
-
 table1 <- data %>%
   select(nafld, age, sex, yearly_income, education, deprivation, cohabitation, ethnicity, physical_activity, smoking, alcohol_daily, region, bmi30, diabetes, non_cancer_illness, cancer, family_illness) %>%
   tbl_summary(by = nafld,
@@ -43,8 +27,8 @@ table1 <- data %>%
               missing_text = "n missing") %>%
   add_overall() %>%
   bold_labels() %>%
-  modify_caption("Table 1.") %>%
+  modify_caption("Table 1. Baseline characteristics of participants in the UK Biobank Cohort") %>%
   as_flex_table()
 
-save_as_html(table1, path = here("data", "table1.html"))
-
+# flextable::save_as_html(table1, path = here("doc", "table1.html"))
+flextable::save_as_docx(table1, path = here("doc", "table1.docx"))

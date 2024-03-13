@@ -2,7 +2,6 @@
 library(dplyr)
 library(magrittr)
 library(tidyr)
-library(splines)
 library(stringr)
 
 # Remove ineligible number of recalls ------------
@@ -20,7 +19,7 @@ data <- data %>%
 variables_to_edit <- c("p738", "p2443", "p2453", "p3456", "p6150",
                        "p20002","p20107", "p20110", "p20111", "p20161", "p20162",
                        "p21000", "p22040", "p22506", "p23104", "p2443",
-                       "p2453", "p40000", "p6141")
+                       "p2453", "p6141", "p709")
 data <- data %>%
   select(-matches(paste0(variables_to_edit, "_i[1-4]")))
 
@@ -33,14 +32,14 @@ data <- data %>% mutate(
   age = p21022,
   age = as.numeric(age),
   age_strata = case_when(
-    p21022 < 45 ~ 0,
-    p21022 >= 45 & p21022 <= 49 ~ 1,
-    p21022 >= 50 & p21022 <= 54 ~ 2,
-    p21022 >= 55 & p21022 <= 59 ~ 3,
-    p21022 >= 60 & p21022 <= 64 ~ 4,
-    p21022 >= 65 ~ 5
+    age < 45 ~ 0,
+    age >= 45 & age <= 49 ~ 1,
+    age >= 50 & age <= 54 ~ 2,
+    age >= 55 & age <= 59 ~ 3,
+    age >= 60 & age <= 64 ~ 4,
+    age >= 65 ~ 5
     ),
-  age_strata = as.factor(age),
+  age_strata = as.factor(age_strata),
   ethnicity = case_when(
     p21000_i0 == "White" | p21000_i0 == "British" | p21000_i0 == "Irish" | p21000_i0 == "Any other white background" ~ "white",
     p21000_i0 == "Chinese" | p21000_i0 == "Asian or Asian British" | p21000_i0 =="Indian" | p21000_i0 == "Pakistani" | p21000_i0 == "Bangladeshi" | p21000_i0 == "Any other Asian background" ~ "asian",
@@ -51,7 +50,16 @@ data <- data %>% mutate(
   deprivation = p22189,
   deprivation_quint = ntile(deprivation, 5),
   deprivation_quint = as.factor(deprivation_quint),
-  yearly_income = p738_i0,
+  yearly_income = case_when(
+    str_detect(p738_i0, "18,000 to") ~ "18,000-30,999",
+    str_detect(p738_i0, "31,000") ~ "31,000-51,999",
+    str_detect(p738_i0, "52,000") ~ "52,000-100,000",
+    str_detect(p738_i0, "know") ~ "don't know",
+    str_detect(p738_i0, "Greater") ~ ">100,000",
+    str_detect(p738_i0, "Less") ~ "<18,000",
+    str_detect(p738_i0, "answer") ~ "no answer",
+    TRUE ~ "no answer"
+  ),
   yearly_income = as.factor(yearly_income),
   education_short = as.character(str_sub(p6138_i0, start = 1, end = 28)),
   education = case_when(
@@ -69,17 +77,9 @@ data <- data %>% mutate(
   physical_activity = case_when(
     p22040_i0 >0 & p22040_i0 <=918 ~ "low",
     p22040_i0 >918 & p22040_i0 <=3706 ~ "moderate",
-    p22040_i0 >3706 ~ "high"
+    p22040_i0 >3706 ~ "high",
+    TRUE ~ "unknown"
     ),
-  # remove NA from alcohol intake (it should be 0)
-  p26030_i0 = ifelse(is.na(p26030_i0), 0, p26030_i0),
-  p26030_i1 = ifelse(is.na(p26030_i1), 0, p26030_i1),
-  p26030_i2 = ifelse(is.na(p26030_i2), 0, p26030_i2),
-  p26030_i3 = ifelse(is.na(p26030_i3), 0, p26030_i3),
-  p26030_i4 = ifelse(is.na(p26030_i4), 0, p26030_i4),
-  alcohol_intake = rowSums(select(., starts_with("p26030"))),
-  alcohol_daily = alcohol_intake/p20077,
-  alcohol_intake = as.numeric(alcohol_intake),
   # Self-reported and doctor diagnosed non-cancer illness.
   p6150_i0 = ifelse(is.na(p6150_i0), "None", p6150_i0),
   p6150_i0 = as.character(p6150_i0),
@@ -94,10 +94,16 @@ data <- data %>% mutate(
     str_detect(p20002_i0, "alcoholic cirrhosis") ~ "alcoholic liver disease",
     str_detect(p6150_i0, "Angina") ~ "angina",
     p6150_i0 == "None" | p20002_i0 == "None" ~ "none of the above",
-    TRUE ~ NA_character_  # If none of the conditions match
+    TRUE ~ "none of the above"
     ),
   non_cancer_illness = as.factor(non_cancer_illness),
-  diabetes = p2443_i0,
+  diabetes = case_when(
+    str_detect(p2443_i0, "know") ~ "don't know",
+    str_detect(p2443_i0, "answer") ~ "no answer",
+    p2443_i0 == "No" ~ "no",
+    p2443_i0 == "Yes" ~ "yes",
+    TRUE ~ "no answer"
+    ),
   diabetes = as.factor(diabetes),
   # illness in closest family
   p20107_i0 = ifelse(is.na(p20107_i0), "None", p20107_i0),
@@ -112,10 +118,16 @@ data <- data %>% mutate(
     str_detect(p20107_i0, "Stroke") | str_detect(p20110_i0, "Stroke") | str_detect(p20111_i0, "Stroke")~ "stroke",
     str_detect(p20107_i0, "Heart disease") | str_detect(p20110_i0, "Heart disease") | str_detect(p20111_i0, "Heart disease") ~ "heart disease",
     p20107_i0 == "None" | p20110_i0 == "None" | p20111_i0 == "None" ~ "none of the above",
-    TRUE ~ NA_character_ # If none of the conditions match
+    TRUE ~ "none of the above" # If none of the conditions match
     ),
   family_illness = as.factor(family_illness),
-    cancer = p2453_i0,
+  cancer = case_when(
+    str_detect(p2453_i0, "Do not know") ~ "don't know",
+    str_detect(p2453_i0, "Yes") ~ "yes",
+    p2453_i0 == "No" ~ "no",
+    str_detect(p2453_i0, "answer") ~ "no answer",
+    TRUE ~ "no answer"
+    ),
   cancer = as.factor(cancer),
     bmi = p23104_i0,
   bmi = as.numeric(bmi),
@@ -123,70 +135,39 @@ data <- data %>% mutate(
   bmi30 = as.numeric(bmi30)
   )
 
+
 data <- data %>% mutate(
    cohabitation = case_when(
-    p6141_i0 == "Husband, wife or partner"
-    ~ "partner",
-    p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)"
-    ~ "partner and children",
-    p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Brother and/or sister" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandchild" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandchild|Other related" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Other related" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father|Other related" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Brother and/or sister|Other related" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandparent" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandparent|Grandchild" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father|Grandchild" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father|Other related" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father|Other unrelated" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Other unrelated" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandchild|Other related|Other unrelated" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Grandchild|Other unrelated" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father|Grandchild|Other unrelated" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Mother and/or father|Other unrelated" |
-      p6141_i0 == "Husband, wife or partner|Son and/or daughter (include step-children)|Other related|Other unrelated"
-    ~ "partner, children, and others ",
-    p6141_i0 == "Son and/or daughter (include step-children)"
-    ~ "children",
-    p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister"
-    ~ "children and siblings",
-      p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father"
-    ~ "children and parents",
-    p6141_i0 == "Son and/or daughter (include step-children)|Other related" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Grandchild" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other related" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Grandparent"|
-      p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other related|Other unrelated" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other unrelated" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Other related|Other unrelated" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Other unrelated"
-    ~ "children and others",
-    p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Other related" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Other unrelated"
-    ~ "children, siblings, and others",
-    p6141_i0 == "Mother and/or father"
-    ~ "parents",
-    p6141_i0 == "Mother and/or father|Grandchild" |
-      p6141_i0 == "Mother and/or father|Grandparent" |
-      p6141_i0 == "Mother and/or father|Other related" |
-      p6141_i0 == "Mother and/or father|Other unrelated"
-    ~ "parents and others",
-    p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father"
-    ~ "children, parents, and siblings",
-    p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Grandchild"|
-      p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Other related" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Other unrelated" |
-      p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Grandchild|Other unrelated"
-    ~ "children, parents, others",
-    p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father|Other related"
-    ~ "children, parents, siblings, and other relatives",
-    p6141_i0 == "Other related" |
-      p6141_i0 == "Other unrelated"
-    ~ "other relative or non-relative",
-    p6141_i0 == "Prefer not to answer"
+     p709_i0 == 1 ~ "alone",
+     str_detect(p6141_i0, "Husband, wife or partner") ~ "with spouse/partner",
+     p6141_i0 == "Son and/or daughter (include step-children)" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister"|
+       p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Other related" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Grandchild" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other related" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Grandparent"|
+       p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other related|Other unrelated" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other unrelated" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Other related|Other unrelated" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Other unrelated" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Other related" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Other unrelated" |
+       p6141_i0 == "Mother and/or father" |
+       p6141_i0 == "Mother and/or father|Grandchild" |
+       p6141_i0 == "Mother and/or father|Grandparent" |
+       p6141_i0 == "Mother and/or father|Other related" |
+       p6141_i0 == "Mother and/or father|Other unrelated" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Grandchild"|
+       p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Other related" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Other unrelated" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Grandchild|Other unrelated" |
+       p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father|Other related" |
+       p6141_i0 == "Other related" |
+       p6141_i0 == "Other unrelated"
+     ~ "other non-partner",
+     p6141_i0 == "Prefer not to answer"
       ~ "no answer"
   ))
 
@@ -196,9 +177,25 @@ data <- data %>% mutate(
     str_detect(p20116_i0, "Previous") ~ "former",
     str_detect(p20116_i0, "Current") & as.numeric(p3456_i0) > 0 & as.numeric(p3456_i0) <= 15 ~ "current <15",
     str_detect(p20116_i0, "Current") & as.numeric(p3456_i0) > 15 ~ "current > 15",
-    str_detect(p20116_i0, "answer") ~ "No answer",
-    TRUE ~ NA_character_  # Handling cases not covered by the conditions
+    str_detect(p20116_i0, "answer") ~ "no answer",
+    TRUE ~ "no answer"  # Handling cases not covered by the conditions
     ))
+
+data <- data %>% mutate(
+  p26030_i0 = ifelse(is.na(p26030_i0), 0, p26030_i0),
+  p26030_i1 = ifelse(is.na(p26030_i1), 0, p26030_i1),
+  p26030_i2 = ifelse(is.na(p26030_i2), 0, p26030_i2),
+  p26030_i3 = ifelse(is.na(p26030_i3), 0, p26030_i3),
+  p26030_i4 = ifelse(is.na(p26030_i4), 0, p26030_i4))
+
+data <- data %>% mutate(
+  alcohol_intake = rowSums(select(., starts_with("p26030"))))
+
+data <- data %>% mutate(
+  alcohol_daily = alcohol_intake/p20077)
+
+data <- data %>% mutate(
+  alcohol_weekly = alcohol_daily * 7)
 
 
 data <- data %>% mutate(
@@ -233,20 +230,20 @@ data <- data %>%
   rename(alt = p30620_i0,
          ast = p30650_i0)
 
+
+
 # Remove recoded variables from sorted_data -------------------------------
 
+
 variables_to_remove <- c("p20111", "p20110", "p20107", "p23104",
-                         "p2453", "p2443", "p6150", "p20002", "p31",
+                         "p6150", "p20002", "p2453", "p2443", "p31",
                          "p20116", "p26030", "p3456", "p21022",
                          "p22040", "p6141", "p6138", "p22189",
                          "p21000", "p54", "p738", "p30650",
                          "p30620", "p41272", "p20165", "p100002",
-                         "p100001", "p41282")
+                         "p100001", "p41282", "p709")
 
 data <- data %>%
   select(-matches(variables_to_remove))
 
 
-
-# Save data ---------------------------------------------------------------
-arrow::write_parquet(data, here("data/data.parquet"))
