@@ -17,8 +17,8 @@ calculate_daily <- function(data) {
 
 calculate_weekly <- function(data) {
   data |>
-    dplyr::mutate(dplyr::across(dplyr::ends_with("_total"), list(daily = ~ (.x / p20077) * 7))) |>
-    dplyr::rename_with(~ stringr::str_replace("_total_weekly", "_weekyl"))
+    dplyr::mutate(dplyr::across(dplyr::ends_with("_total"), list(weekly = ~ (.x / p20077) * 7))) |>
+    dplyr::rename_with(~ stringr::str_replace("_total_weekly", "_weekly"))
 }
 
 calculate_food_intake <- function(data) {
