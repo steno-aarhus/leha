@@ -1,8 +1,6 @@
 #3. Descriptive
 
-# Install and load packages -----------------------------------------------------------
-install.packages("gtsummary")
-install.packages("flextable")
+# Load packages -----------------------------------------------------------
 
 library(tidyverse)
 library(dplyr)

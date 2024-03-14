@@ -1,11 +1,6 @@
 #7. Sensitivity analyses
 
-#Load packages
-install.packages("Hmisc")
-install.packages("survival")
-install.packages("gtsummary")
-install.packages("ggsurvfit")
-install.packages("kableExtra")
+# Load packages
 
 library(tidyverse)
 library(Hmisc)
