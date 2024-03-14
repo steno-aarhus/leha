@@ -1,12 +1,6 @@
 #8. Secondary analyses
 
-#Load packages
-install.packages("Hmisc")
-install.packages("survival")
-install.packages("gtsummary")
-install.packages("ggsurvfit")
-install.packages("kableExtra")
-install.packages("flextable")
+# Load packages
 
 library(tidyverse)
 library(Hmisc)
