@@ -6,7 +6,7 @@ library(dplyr)
 
 # Average dietary intake of food groups -----------------------------------
 calculate_total <- function(columns) {
-  sum(dplyr::c_cross(columns), na.rm = TRUE)
+  sum(dplyr::c_across(columns), na.rm = TRUE)
 }
 
 calculate_daily <- function(data) {
