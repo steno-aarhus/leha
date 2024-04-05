@@ -231,10 +231,26 @@ data <- data %>%
          ast = p30650_i0)
 
 
+# recoding variables for analyses -----------------------------------------
+data <- data %>%
+  mutate(
+    related_disease = case_when(
+      str_detect(non_cancer_illness, "hypertension") | str_detect(non_cancer_illness, "mi") |
+        str_detect(non_cancer_illness, "stroke") | str_detect(non_cancer_illness, "angina") |
+        str_detect(non_cancer_illness, "cholesterolemia") | str_detect(non_cancer_illness, "gbd")|
+        str_detect(non_cancer_illness, "alcoholic liver disease") | diabetes == "yes" ~ "yes",
+      non_cancer_illness == "none of the above" |  diabetes == "no" |
+        diabetes == "no answer" |diabetes == "don't know" ~ "none of the above"
+    ),
+    disease_family = case_when(
+      family_illness == "diabetes" | family_illness == "hypertension" |
+        family_illness == "stroke" | family_illness == "heart disease" ~ "yes",
+      family_illness == "none of the above" ~ "no"
+    )
+  )
+
 
 # Remove recoded variables from sorted_data -------------------------------
-
-
 variables_to_remove <- c("p20111", "p20110", "p20107", "p23104",
                          "p6150", "p20002", "p2453", "p2443", "p31",
                          "p20116", "p26030", "p3456", "p21022",
