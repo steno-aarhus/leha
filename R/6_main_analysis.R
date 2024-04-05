@@ -136,12 +136,13 @@ meat_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                        veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                        sauce_weekly + weight_weekly + age_strata + region + sex +
-                       alcohol_spline + ethnicity + deprivation_quint + education +
-                       cohabitation + physical_activity + smoking + diabetes + cancer +
+                       alcohol_spline + ethnicity + deprivation + education +
+                       cohabitation + physical_activity + smoking + diabetes +
                        non_cancer_illness + family_illness + yearly_income,
                      data = data, ties='breslow')
 
-meat_model2 <- tidy(meat_model2, exponentiate = TRUE, conf.int = TRUE)
+
+meat_model2 <- tidy(meat_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2) # not 2 digits?
 
 # poultry
 poultry_model2 <- coxph(Surv(survival_time, nafld == 1) ~
