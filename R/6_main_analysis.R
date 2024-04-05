@@ -135,14 +135,16 @@ meat_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly + age_strata + region + sex +
+                       sauce_weekly + weight_weekly +
+                       #other variables
+                       age_strata + region + sex +
                        alcohol_spline + ethnicity + deprivation + education +
-                       cohabitation + physical_activity + smoking + diabetes +
-                       non_cancer_illness + family_illness + yearly_income,
+                       cohabitation + physical_activity + smoking +
+                       related_disease + disease_family + yearly_income,
                      data = data, ties='breslow')
 
 
-meat_model2 <- tidy(meat_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2) # not 2 digits?
+meat_model2 <- tidy(meat_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2 digits doesn't work
 
 # poultry
 poultry_model2 <- coxph(Surv(survival_time, nafld == 1) ~
@@ -153,13 +155,15 @@ poultry_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                           veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                          sauce_weekly + weight_weekly + age_strata + region + sex +
-                          alcohol_spline + ethnicity + deprivation_quint + education +
-                          cohabitation + physical_activity + smoking + diabetes + cancer +
-                          non_cancer_illness + family_illness + yearly_income,
+                          sauce_weekly + weight_weekly +
+                          #other variables
+                          age_strata + region + sex +
+                          alcohol_spline + ethnicity + deprivation + education +
+                          cohabitation + physical_activity + smoking +
+                          related_disease + disease_family + yearly_income,
                         data = data, ties='breslow')
 
-poultry_model2 <- tidy(poultry_model2, exponentiate = TRUE, conf.int = TRUE)
+poultry_model2 <- tidy(poultry_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2)
 
 
 # fish
@@ -171,13 +175,15 @@ fish_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly + age_strata + region + sex +
-                       alcohol_spline + ethnicity + deprivation_quint + education +
-                       cohabitation + physical_activity + smoking + diabetes + cancer +
-                       non_cancer_illness + family_illness + yearly_income,
+                       sauce_weekly + weight_weekly +
+                       #other variables
+                       age_strata + region + sex +
+                       alcohol_spline + ethnicity + deprivation + education +
+                       cohabitation + physical_activity + smoking +
+                       related_disease + disease_family + yearly_income,
                      data = data, ties='breslow')
 
-fish_model2 <- tidy(fish_model2, exponentiate = TRUE, conf.int = TRUE)
+fish_model2 <- tidy(fish_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2)
 
 
 
@@ -191,13 +197,15 @@ meat_model3 <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly + age_strata + region + sex +
-                       alcohol_spline + ethnicity + deprivation_quint + education +
-                       cohabitation + physical_activity + smoking + diabetes + cancer +
-                       non_cancer_illness + family_illness + yearly_income + bmi30,
+                       sauce_weekly + weight_weekly +
+                       #other variables
+                       age_strata + region + sex +
+                       alcohol_spline + ethnicity + deprivation + education +
+                       cohabitation + physical_activity + smoking +
+                       related_disease + disease_family + yearly_income + bmi30,
                      data = data, ties='breslow')
 
-meat_model3 <- tidy(meat_model3, exponentiate = TRUE, conf.int = TRUE)
+meat_model3 <- tidy(meat_model3, exponentiate = TRUE, conf.int = TRUE, digits = 2)
 
 # poultry
 poultry_model3 <- coxph(Surv(survival_time, nafld == 1) ~
@@ -208,13 +216,15 @@ poultry_model3 <- coxph(Surv(survival_time, nafld == 1) ~
                           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                           veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                          sauce_weekly + weight_weekly + age_strata + region + sex +
-                          alcohol_spline + ethnicity + deprivation_quint + education +
-                          cohabitation + physical_activity + smoking + diabetes + cancer +
-                          non_cancer_illness + family_illness + yearly_income + bmi30,
+                          sauce_weekly + weight_weekly +
+                          #other variables
+                          age_strata + region + sex +
+                          alcohol_spline + ethnicity + deprivation + education +
+                          cohabitation + physical_activity + smoking +
+                          related_disease + disease_family + yearly_income + bmi30,
                         data = data, ties='breslow')
 
-poultry_model3 <- tidy(poultry_model3, exponentiate = TRUE, conf.int = TRUE)
+poultry_model3 <- tidy(poultry_model3, exponentiate = TRUE, conf.int = TRUE, digits = 2)
 
 
 # fish
@@ -226,13 +236,15 @@ fish_model3 <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly + age_strata + region + sex +
-                       alcohol_spline + ethnicity + deprivation_quint + education +
-                       cohabitation + physical_activity + smoking + diabetes + cancer +
-                       non_cancer_illness + family_illness + yearly_income + bmi30,
+                       sauce_weekly + weight_weekly +
+                       #other variables
+                       age_strata + region + sex +
+                       alcohol_spline + ethnicity + deprivation + education +
+                       cohabitation + physical_activity + smoking +
+                       related_disease + disease_family + yearly_income + bmi30,
                      data = data, ties='breslow')
 
-fish_model3 <- tidy(fish_model3, exponentiate = TRUE, conf.int = TRUE)
+fish_model3 <- tidy(fish_model3, exponentiate = TRUE, conf.int = TRUE, digits = 2)
 
 # Extract results ---------------------------------------------------------
 # combine first row from each model in df

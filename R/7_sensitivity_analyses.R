@@ -14,12 +14,10 @@ library(here)
 library(splines)
 library(kableExtra)
 
-
 # Load data --------------------------------------------------------
 targets::tar_make()
 # Restart session
 source(here::here("R/1_data_start.R"))
-
 
 # Legumes including peas; substitution models ------------------------------
 # Weekly substituting 80 g legumes including peas (NHS 1 portion beans = 80 g)
@@ -46,11 +44,15 @@ meat_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_pea_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly + age_strata + region + sex +
-                       alcohol_spline + ethnicity + deprivation_quint + education +
-                       cohabitation + physical_activity + smoking + diabetes + cancer +
-                       non_cancer_illness + family_illness + yearly_income + alcohol_spline,
+                       sauce_weekly + weight_weekly +
+                       #other variables
+                       age_strata + region + sex +
+                       alcohol_spline + ethnicity + deprivation + education +
+                       cohabitation + physical_activity + smoking +
+                       related_disease + disease_family + yearly_income,
                      data = data, ties='breslow')
+
+meat_model2 <- tidy(meat_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2 digits doesn't work
 
 # Extract HR and 95% CI for the first coefficient
 coef_summary <- summary(meat_model2)$coefficients
@@ -73,11 +75,15 @@ poultry_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                           veggie_pea_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                          sauce_weekly + weight_weekly + age_strata + region + sex +
-                          alcohol_spline + ethnicity + deprivation_quint + education +
-                          cohabitation + physical_activity + smoking + diabetes + cancer +
-                          non_cancer_illness + family_illness + yearly_income + alcohol_spline,
+                          sauce_weekly + weight_weekly +
+                          #other variables
+                          age_strata + region + sex +
+                          alcohol_spline + ethnicity + deprivation + education +
+                          cohabitation + physical_activity + smoking +
+                          related_disease + disease_family + yearly_income,
                         data = data, ties='breslow')
+
+meat_model2 <- tidy(meat_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2 digits doesn't work
 
 # Extract HR and 95% CI for the first coefficient
 coef_summary <- summary(poultry_model2)$coefficients
@@ -101,11 +107,15 @@ fish_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_pea_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly + age_strata + region + sex +
-                       alcohol_spline + ethnicity + deprivation_quint + education +
-                       cohabitation + physical_activity + smoking + diabetes + cancer +
-                       non_cancer_illness + family_illness + yearly_income + alcohol_spline,
+                       sauce_weekly + weight_weekly +
+                       #other variables
+                       age_strata + region + sex +
+                       alcohol_spline + ethnicity + deprivation + education +
+                       cohabitation + physical_activity + smoking +
+                       related_disease + disease_family + yearly_income,
                      data = data, ties='breslow')
+
+meat_model2 <- tidy(meat_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2 digits doesn't work
 
 # Extract HR and 95% CI for the first coefficient
 coef_summary <- summary(fish_model2)$coefficients
@@ -160,11 +170,13 @@ meat_data2 <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly + age_strata + region + sex +
-                       alcohol_spline + ethnicity + deprivation_quint + education +
-                       cohabitation + physical_activity + smoking + diabetes + cancer +
-                       non_cancer_illness + family_illness + yearly_income,
-                     data = data2, ties='breslow')
+                       sauce_weekly + weight_weekly +
+                      #other variables
+                      age_strata + region + sex +
+                      alcohol_spline + ethnicity + deprivation + education +
+                      cohabitation + physical_activity + smoking +
+                      related_disease + disease_family + yearly_income,
+                    data = data, ties='breslow')
 
 # Extract HR and 95% CI for the first coefficient
 coef_summary <- summary(meat_data2)$coefficients
@@ -187,11 +199,13 @@ poultry_data2 <- coxph(Surv(survival_time, nafld == 1) ~
                           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                           veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                          sauce_weekly + weight_weekly + age_strata + region + sex +
-                          alcohol_spline + ethnicity + deprivation_quint + education +
-                          cohabitation + physical_activity + smoking + diabetes + cancer +
-                          non_cancer_illness + family_illness + yearly_income,
-                        data = data2, ties='breslow')
+                          sauce_weekly + weight_weekly +
+                         #other variables
+                         age_strata + region + sex +
+                         alcohol_spline + ethnicity + deprivation + education +
+                         cohabitation + physical_activity + smoking +
+                         related_disease + disease_family + yearly_income,
+                       data = data, ties='breslow')
 
 # Extract HR and 95% CI for the first coefficient
 coef_summary <- summary(poultry_data2)$coefficients
@@ -215,11 +229,13 @@ fish_data2 <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly + age_strata + region + sex +
-                       alcohol_spline + ethnicity + deprivation_quint + education +
-                       cohabitation + physical_activity + smoking + diabetes + cancer +
-                       non_cancer_illness + family_illness + yearly_income,
-                     data = data2, ties='breslow')
+                       sauce_weekly + weight_weekly +
+                      #other variables
+                      age_strata + region + sex +
+                      alcohol_spline + ethnicity + deprivation + education +
+                      cohabitation + physical_activity + smoking +
+                      related_disease + disease_family + yearly_income,
+                    data = data, ties='breslow')
 
 # Extract HR and 95% CI for the first coefficient
 coef_summary <- summary(fish_data2)$coefficients
@@ -248,11 +264,13 @@ meat_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly + age_strata + region + sex +
-                       alcohol_spline + ethnicity + deprivation_quint + education +
-                       cohabitation + physical_activity + smoking + diabetes + cancer +
-                       non_cancer_illness + family_illness + yearly_income,
-                     data = data3, ties='breslow')
+                       sauce_weekly + weight_weekly +
+                      #other variables
+                      age_strata + region + sex +
+                      alcohol_spline + ethnicity + deprivation + education +
+                      cohabitation + physical_activity + smoking +
+                      related_disease + disease_family + yearly_income,
+                    data = data, ties='breslow')
 
 # Extract HR and 95% CI for the first coefficient
 coef_summary <- summary(meat_data3)$coefficients
@@ -275,11 +293,13 @@ poultry_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                           veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                          sauce_weekly + weight_weekly + age_strata + region + sex +
-                          alcohol_spline + ethnicity + deprivation_quint + education +
-                          cohabitation + physical_activity + smoking + diabetes + cancer +
-                          non_cancer_illness + family_illness + yearly_income,
-                        data = data3, ties='breslow')
+                          sauce_weekly + weight_weekly +
+                         #other variables
+                         age_strata + region + sex +
+                         alcohol_spline + ethnicity + deprivation + education +
+                         cohabitation + physical_activity + smoking +
+                         related_disease + disease_family + yearly_income,
+                       data = data, ties='breslow')
 
 # Extract HR and 95% CI for the first coefficient
 coef_summary <- summary(poultry_data3)$coefficients
@@ -303,11 +323,13 @@ fish_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly + age_strata + region + sex +
-                       alcohol_spline + ethnicity + deprivation_quint + education +
-                       cohabitation + physical_activity + smoking + diabetes + cancer +
-                       non_cancer_illness + family_illness + yearly_income,
-                     data = data3, ties='breslow')
+                       sauce_weekly + weight_weekly +
+                      #other variables
+                      age_strata + region + sex +
+                      alcohol_spline + ethnicity + deprivation + education +
+                      cohabitation + physical_activity + smoking +
+                      related_disease + disease_family + yearly_income,
+                    data = data, ties='breslow')
 
 # Extract HR and 95% CI for the first coefficient
 coef_summary <- summary(fish_data3)$coefficients
@@ -337,11 +359,13 @@ meat_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                      sauce_weekly + weight_weekly + age_strata + region + sex +
-                      alcohol_spline + ethnicity + deprivation_quint + education +
-                      cohabitation + physical_activity + smoking + diabetes + cancer +
-                      non_cancer_illness + family_illness + yearly_income,
-                    data = data4, ties='breslow')
+                      sauce_weekly + weight_weekly +
+                      #other variables
+                      age_strata + region + sex +
+                      alcohol_spline + ethnicity + deprivation + education +
+                      cohabitation + physical_activity + smoking +
+                      related_disease + disease_family + yearly_income,
+                    data = data, ties='breslow')
 
 # Extract HR and 95% CI for the first coefficient
 coef_summary <- summary(meat_data4)$coefficients
@@ -364,11 +388,13 @@ poultry_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                          dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                          veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                          non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                         sauce_weekly + weight_weekly + age_strata + region + sex +
-                         alcohol_spline + ethnicity + deprivation_quint + education +
-                         cohabitation + physical_activity + smoking + diabetes + cancer +
-                         non_cancer_illness + family_illness + yearly_income,
-                       data = data4, ties='breslow')
+                         sauce_weekly + weight_weekly +
+                         #other variables
+                         age_strata + region + sex +
+                         alcohol_spline + ethnicity + deprivation + education +
+                         cohabitation + physical_activity + smoking +
+                         related_disease + disease_family + yearly_income,
+                       data = data, ties='breslow')
 
 # Extract HR and 95% CI for the first coefficient
 coef_summary <- summary(poultry_data4)$coefficients
@@ -392,11 +418,13 @@ fish_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                      sauce_weekly + weight_weekly + age_strata + region + sex +
-                      alcohol_spline + ethnicity + deprivation_quint + education +
-                      cohabitation + physical_activity + smoking + diabetes + cancer +
-                      non_cancer_illness + family_illness + yearly_income,
-                    data = data4, ties='breslow')
+                      sauce_weekly + weight_weekly +
+                      #other variables
+                      age_strata + region + sex +
+                      alcohol_spline + ethnicity + deprivation + education +
+                      cohabitation + physical_activity + smoking +
+                      related_disease + disease_family + yearly_income,
+                    data = data, ties='breslow')
 
 # Extract HR and 95% CI for the first coefficient
 coef_summary <- summary(fish_data4)$coefficients
@@ -425,11 +453,13 @@ meat_data5 <- coxph(Surv(survival_time, nafld == 1) ~
                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                      sauce_weekly + weight_weekly + age_strata + region + sex +
-                      alcohol_spline + ethnicity + deprivation_quint + education +
-                      cohabitation + physical_activity + smoking + diabetes + cancer +
-                      non_cancer_illness + family_illness + yearly_income,
-                    data = data5, ties='breslow')
+                      sauce_weekly + weight_weekly +
+                      #other variables
+                      age_strata + region + sex +
+                      alcohol_spline + ethnicity + deprivation + education +
+                      cohabitation + physical_activity + smoking +
+                      related_disease + disease_family + yearly_income,
+                    data = data, ties='breslow')
 
 # Extract HR and 95% CI for the first coefficient
 coef_summary <- summary(meat_data5)$coefficients
@@ -452,11 +482,13 @@ poultry_data5 <- coxph(Surv(survival_time, nafld == 1) ~
                          dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                          veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                          non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                         sauce_weekly + weight_weekly + age_strata + region + sex +
-                         alcohol_spline + ethnicity + deprivation_quint + education +
-                         cohabitation + physical_activity + smoking + diabetes + cancer +
-                         non_cancer_illness + family_illness + yearly_income,
-                       data = data5, ties='breslow')
+                         sauce_weekly + weight_weekly +
+                         #other variables
+                         age_strata + region + sex +
+                         alcohol_spline + ethnicity + deprivation + education +
+                         cohabitation + physical_activity + smoking +
+                         related_disease + disease_family + yearly_income,
+                       data = data, ties='breslow')
 
 # Extract HR and 95% CI for the first coefficient
 coef_summary <- summary(poultry_data5)$coefficients
@@ -480,11 +512,13 @@ fish_data5 <- coxph(Surv(survival_time, nafld == 1) ~
                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                      sauce_weekly + weight_weekly + age_strata + region + sex +
-                      alcohol_spline + ethnicity + deprivation_quint + education +
-                      cohabitation + physical_activity + smoking + diabetes + cancer +
-                      non_cancer_illness + family_illness + yearly_income,
-                    data = data5, ties='breslow')
+                      sauce_weekly + weight_weekly +
+                      #other variables
+                      age_strata + region + sex +
+                      alcohol_spline + ethnicity + deprivation + education +
+                      cohabitation + physical_activity + smoking +
+                      related_disease + disease_family + yearly_income,
+                    data = data, ties='breslow')
 
 # Extract HR and 95% CI for the first coefficient
 coef_summary <- summary(fish_data5)$coefficients
