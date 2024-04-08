@@ -63,3 +63,10 @@ table1_excl <- filtered_data %>%
 
 flextable::save_as_html(table1_excl, path = here("doc", "table1_excl.html"))
 flextable::save_as_docx(table1_excl, path = here("doc", "table1_excl.docx"))
+
+#save data without outliers
+data <- filtered_data
+arrow::write_parquet(data, here("data/data.parquet"))
+
+# Upload to the project RAP folder.
+ukbAid::upload_data(here("data/data.parquet"), username = "FieLangmann")
