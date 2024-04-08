@@ -66,16 +66,14 @@ fit_meat <- eventglm::cumincglm(Surv(time, nafld == 1) ~
                                   cohabitation + physical_activity + smoking +
                                   related_disease + disease_family + yearly_income,
                                 time = 5, data = data)
-summary(fit_meat)
-exp(coef(fit_meat))
-exp(confint(fit_meat))
 
 meat_pseudo <- tidy(fit_meat, exponentiate = TRUE, conf.int = TRUE, digits = 2)
+fit_meat <- tidy(fit_meat, exponentiate = FALSE, conf.int = TRUE, digits = 2)
 
 
 # poultry
-fit_poultry <- coxph(Surv(time, nafld == 1) ~
-                          # removing meat
+fit_poultry <- eventglm::cumincglm(Surv(time, nafld == 1) ~
+                          # removing poultry
                           legumes80 + meats80 + fish80+
                           #other food components
                           cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
@@ -90,14 +88,11 @@ fit_poultry <- coxph(Surv(time, nafld == 1) ~
                           related_disease + disease_family + yearly_income,
                         time = 5, data = data)
 
-summary(fit_poultry)
-exp(coef(fit_poultry))
-exp(confint(fit_poultry))
-
 poultry_pseudo <- tidy(fit_poultry, exponentiate = TRUE, conf.int = TRUE, digits = 2)
+fit_poultry <- tidy(fit_poultry, exponentiate = FALSE, conf.int = TRUE, digits = 2)
 
 # fish
-fit_fish <- coxph(Surv(time, nafld == 1) ~
+fit_fish <- eventglm::cumincglm(Surv(time, nafld == 1) ~
                        # removing meat
                        legumes80 + meats80 + poultry80+
                        #other food components
@@ -113,11 +108,8 @@ fit_fish <- coxph(Surv(time, nafld == 1) ~
                     related_disease + disease_family + yearly_income,
                   time = 5, data = data)
 
-summary(fit_fish)
-exp(coef(fit_fish))
-exp(confint(fit_fish))
-
 fish_pseudo <- tidy(fit_fish, exponentiate = TRUE, conf.int = TRUE, digits = 2)
+fit_fish <- tidy(fit_fish, exponentiate = FALSE, conf.int = TRUE, digits = 2)
 
 # Non specific substitutions ----------------------------------------------
 # Leaving one portion of legumes (80g) out weekly
