@@ -143,7 +143,6 @@ meat_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                        related_disease + disease_family + yearly_income,
                      data = data, ties='breslow')
 
-
 meat_model2 <- tidy(meat_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2 digits doesn't work
 
 # poultry
