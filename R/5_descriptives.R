@@ -70,3 +70,24 @@ arrow::write_parquet(data, here("data/data.parquet"))
 
 # Upload to the project RAP folder.
 ukbAid::upload_data(here("data/data.parquet"), username = "FieLangmann")
+
+# food group intakes
+
+
+table_foods <- filtered_data %>%
+  select(nafld, legume_weekly, meats_weekly, poultry_weekly, fish_weekly,
+         cereal_refined_weekly, whole_grain_weekly, mixed_dish_weekly,
+         dairy_weekly, fats_weekly, fruit_weekly, nut_weekly, veggie_weekly,
+         potato_weekly, egg_weekly, meat_sub_weekly, non_alc_beverage_weekly,
+         alc_beverage_weekly, snack_weekly, sauce_weekly, weight_weekly) %>%
+  tbl_summary(by = nafld,
+              statistic = list(all_continuous() ~  "{median} ({p10}, {p90})",
+                               all_categorical() ~ "{n} ({p}%)"),
+              digits = all_continuous() ~ 1,
+              missing_text = "n missing") %>%
+  add_overall() %>%
+  bold_labels() %>%
+  modify_caption("Table X. Median and 10-90 percentiles of weekly intake of food groups included in substitution analyses") %>%
+  as_flex_table()
+
+flextable::save_as_html(table_foods, path = here("doc", "table_foods.html"))
