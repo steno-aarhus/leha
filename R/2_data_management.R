@@ -250,6 +250,7 @@ data <- data %>%
   )
 
 
+
 # Remove recoded variables from sorted_data -------------------------------
 variables_to_remove <- c("p20111", "p20110", "p20107", "p23104",
                          "p6150", "p20002", "p2453", "p2443", "p31",
