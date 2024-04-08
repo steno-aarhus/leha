@@ -36,7 +36,7 @@ data <- data %>%
   mutate(alcohol_spline = predict(bs(alcohol_weekly, df = df, degree = 3, knots = NULL)))
 
 # meats
-meat_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+meat_pea <- coxph(Surv(survival_time, nafld == 1) ~
                        # removing meat
                        legumepea80 + poultry80 + fish80+
                        #other food components
@@ -52,22 +52,10 @@ meat_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                        related_disease + disease_family + yearly_income,
                      data = data, ties='breslow')
 
-meat_model2 <- tidy(meat_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2 digits doesn't work
-
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(meat_model2)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(meat_model2)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-meat_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+meat_pea <- tidy(meat_pea, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2 digits doesn't work
 
 # poultry
-poultry_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+poultry_pea <- coxph(Surv(survival_time, nafld == 1) ~
                           # removing meat
                           legumepea80 + meats80 + fish80+
                           #other food components
@@ -83,23 +71,10 @@ poultry_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                           related_disease + disease_family + yearly_income,
                         data = data, ties='breslow')
 
-meat_model2 <- tidy(meat_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2 digits doesn't work
-
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(poultry_model2)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(poultry_model2)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-poultry_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
-
+poultry_pea <- tidy(poultry_pea, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2 digits doesn't work
 
 # fish
-fish_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+fish_pea <- coxph(Surv(survival_time, nafld == 1) ~
                        # removing meat
                        legumepea80 + meats80 + poultry80+
                        #other food components
@@ -115,38 +90,9 @@ fish_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                        related_disease + disease_family + yearly_income,
                      data = data, ties='breslow')
 
-meat_model2 <- tidy(meat_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2 digits doesn't work
-
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(fish_model2)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(fish_model2)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-fish_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
-
-
-### Extract results ---------------------------------------------------------
-# combine first row from each model in df
-first_row_df1 <- meat_model2[1, ]
-first_row_df2 <- poultry_model2[1, ]
-first_row_df3 <- fish_model2[1, ]
-first_rows_combined <- rbind(first_row_df1, first_row_df2, first_row_df3)
-rownames(first_rows_combined) <- c("meat_model2", "poultry_model2", "fish_model2")
-
-#create html table
-legume_pea_analysis <- first_rows_combined %>%
-  kable("html") %>%
-  kable_styling()
-writeLines(as.character(legume_pea_analysis), "doc/sensitivity_legume_pea.html")
-
+fish_pea <- tidy(fish_pea, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2 digits doesn't work
 
 # Varying 24h recalls -----------------------------------------------------
-data2 <- data
 data3 <- data %>%
   subset(p20077>=3)
 data4 <- data %>%
@@ -154,100 +100,6 @@ data4 <- data %>%
 data5 <- data %>%
   subset(p20077>=5)
 
-
-## data2 = two 24h recalls -------------------------------------------------
-
-df <- 4
-data2 <- data2 %>%
-  mutate(alcohol_spline = predict(bs(alcohol_weekly, df = df, degree = 3, knots = NULL)))
-
-# meats
-meat_data2 <- coxph(Surv(survival_time, nafld == 1) ~
-                       # removing meat
-                       legumes80 + poultry80 + fish80+
-                       #other food components
-                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
-                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly +
-                      #other variables
-                      age_strata + region + sex +
-                      alcohol_spline + ethnicity + deprivation + education +
-                      cohabitation + physical_activity + smoking +
-                      related_disease + disease_family + yearly_income,
-                    data = data, ties='breslow')
-
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(meat_data2)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(meat_data2)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-meat_data2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
-
-# poultry
-poultry_data2 <- coxph(Surv(survival_time, nafld == 1) ~
-                          # removing meat
-                          legumes80 + meats80 + fish80+
-                          #other food components
-                          cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                          dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                          veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
-                          non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                          sauce_weekly + weight_weekly +
-                         #other variables
-                         age_strata + region + sex +
-                         alcohol_spline + ethnicity + deprivation + education +
-                         cohabitation + physical_activity + smoking +
-                         related_disease + disease_family + yearly_income,
-                       data = data, ties='breslow')
-
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(poultry_data2)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(poultry_data2)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-poultry_data2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
-
-
-# fish
-fish_data2 <- coxph(Surv(survival_time, nafld == 1) ~
-                       # removing meat
-                       legumes80 + meats80 + poultry80+
-                       #other food components
-                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
-                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly +
-                      #other variables
-                      age_strata + region + sex +
-                      alcohol_spline + ethnicity + deprivation + education +
-                      cohabitation + physical_activity + smoking +
-                      related_disease + disease_family + yearly_income,
-                    data = data, ties='breslow')
-
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(fish_data2)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(fish_data2)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-fish_data2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
 
 ## data3 = three 24h recalls -----------------------------------------------------------------
 # Alcohol as spline with 4 knots for adjustment
@@ -270,19 +122,9 @@ meat_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                       alcohol_spline + ethnicity + deprivation + education +
                       cohabitation + physical_activity + smoking +
                       related_disease + disease_family + yearly_income,
-                    data = data, ties='breslow')
+                    data = data3, ties='breslow')
 
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(meat_data3)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(meat_data3)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-meat_data3 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+meat_data3 <- tidy(meat_data3, exponentiate = TRUE, conf.int = TRUE)
 
 # poultry
 poultry_data3 <- coxph(Surv(survival_time, nafld == 1) ~
@@ -299,19 +141,9 @@ poultry_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                          alcohol_spline + ethnicity + deprivation + education +
                          cohabitation + physical_activity + smoking +
                          related_disease + disease_family + yearly_income,
-                       data = data, ties='breslow')
+                       data = data3, ties='breslow')
 
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(poultry_data3)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(poultry_data3)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-poultry_data3 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+poultry_data3 <- tidy(poultry_data3, exponentiate = TRUE, conf.int = TRUE)
 
 
 # fish
@@ -329,19 +161,9 @@ fish_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                       alcohol_spline + ethnicity + deprivation + education +
                       cohabitation + physical_activity + smoking +
                       related_disease + disease_family + yearly_income,
-                    data = data, ties='breslow')
+                    data = data3, ties='breslow')
 
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(fish_data3)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(fish_data3)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-fish_data3 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+fish_data3 <- tidy(fish_data3, exponentiate = TRUE, conf.int = TRUE)
 
 
 ## data4 = four 24h recalls -----------------------------------------------------------------
@@ -365,19 +187,9 @@ meat_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                       alcohol_spline + ethnicity + deprivation + education +
                       cohabitation + physical_activity + smoking +
                       related_disease + disease_family + yearly_income,
-                    data = data, ties='breslow')
+                    data = data4, ties='breslow')
 
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(meat_data4)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(meat_data4)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-meat_data4 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+meat_data4 <- tidy(meat_data4, exponentiate = TRUE, conf.int = TRUE)
 
 # poultry
 poultry_data4 <- coxph(Surv(survival_time, nafld == 1) ~
@@ -394,19 +206,9 @@ poultry_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                          alcohol_spline + ethnicity + deprivation + education +
                          cohabitation + physical_activity + smoking +
                          related_disease + disease_family + yearly_income,
-                       data = data, ties='breslow')
+                       data = data4, ties='breslow')
 
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(poultry_data4)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(poultry_data4)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-poultry_data4 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+poultry_data4 <- tidy(poultry_data4, exponentiate = TRUE, conf.int = TRUE)
 
 
 # fish
@@ -424,19 +226,10 @@ fish_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                       alcohol_spline + ethnicity + deprivation + education +
                       cohabitation + physical_activity + smoking +
                       related_disease + disease_family + yearly_income,
-                    data = data, ties='breslow')
+                    data = data4, ties='breslow')
 
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(fish_data4)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(fish_data4)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-fish_data4 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+fish_data4 <- tidy(fish_data4, exponentiate = TRUE, conf.int = TRUE)
+
 
 ## data5 = five 24h recalls -----------------------------------------------------------------
 # Alcohol as spline with 4 knots for adjustment
@@ -459,19 +252,9 @@ meat_data5 <- coxph(Surv(survival_time, nafld == 1) ~
                       alcohol_spline + ethnicity + deprivation + education +
                       cohabitation + physical_activity + smoking +
                       related_disease + disease_family + yearly_income,
-                    data = data, ties='breslow')
+                    data = data5, ties='breslow')
 
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(meat_data5)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(meat_data5)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-meat_data5 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+meat_data5 <- tidy(meat_data5, exponentiate = TRUE, conf.int = TRUE)
 
 # poultry
 poultry_data5 <- coxph(Surv(survival_time, nafld == 1) ~
@@ -488,19 +271,9 @@ poultry_data5 <- coxph(Surv(survival_time, nafld == 1) ~
                          alcohol_spline + ethnicity + deprivation + education +
                          cohabitation + physical_activity + smoking +
                          related_disease + disease_family + yearly_income,
-                       data = data, ties='breslow')
+                       data = data5, ties='breslow')
 
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(poultry_data5)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(poultry_data5)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-poultry_data5 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+poultry_data5 <- tidy(poultry_data5, exponentiate = TRUE, conf.int = TRUE)
 
 
 # fish
@@ -518,45 +291,10 @@ fish_data5 <- coxph(Surv(survival_time, nafld == 1) ~
                       alcohol_spline + ethnicity + deprivation + education +
                       cohabitation + physical_activity + smoking +
                       related_disease + disease_family + yearly_income,
-                    data = data, ties='breslow')
+                    data = data5, ties='breslow')
 
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(fish_data5)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(fish_data5)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-fish_data5 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+fish_data5 <- tidy(fish_data5, exponentiate = TRUE, conf.int = TRUE)
 
-
-### Extract results ---------------------------------------------------------
-first_row_df1 <- meat_data2[1, ]
-first_row_df2 <- meat_data3[1, ]
-first_row_df3 <- meat_data4[1, ]
-first_row_df4 <- meat_data5[1, ]
-first_row_df5 <- poultry_data2[1, ]
-first_row_df6 <- poultry_data3[1, ]
-first_row_df7 <- poultry_data4[1, ]
-first_row_df8 <- poultry_data5[1, ]
-first_row_df9 <- fish_data2[1, ]
-first_row_df10 <- fish_data3[1, ]
-first_row_df11 <- fish_data4[1, ]
-first_row_df12 <- fish_data5[1, ]
-first_rows_combined <- rbind(first_row_df1, first_row_df2, first_row_df3, first_row_df4,
-                             first_row_df5, first_row_df6, first_row_df7, first_row_df8,
-                             first_row_df9, first_row_df10, first_row_df11, first_row_df12)
-rownames(first_rows_combined) <- c("meat_data2", "meat_data3", "meat_data4", "meat_data5",
-                                   "poultry_data2", "poultry_data3", "poultry_data4", "poultry_data5",
-                                   "fish_data2", "fish_data3", "fish_data4", "fish_data5")
-#create html table
-diff_recalls <- first_rows_combined %>%
-  kable("html") %>%
-  kable_styling()
-writeLines(as.character(diff_recalls), "doc/sensitivity_diff_recalls.html")
 
 # Removing high ALT and AST from analysis-----------------------------------------------
 # removing high ALT and AST
@@ -590,7 +328,7 @@ normal_liver <- normal_liver %>%
   mutate(alcohol_spline = predict(bs(alcohol_weekly, df = df, degree = 3, knots = NULL)))
 
 # meats
-meat_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+meat_liver <- coxph(Surv(survival_time, nafld == 1) ~
                        # removing meat
                        legumes80 + poultry80 + fish80+
                        #other food components
@@ -598,26 +336,18 @@ meat_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly + age_strata + region + sex +
-                       alcohol_spline + ethnicity + deprivation_quint + education +
-                       cohabitation + physical_activity + smoking + diabetes + cancer +
-                       non_cancer_illness + family_illness + yearly_income,
-                     data = normal_liver, ties='breslow')
+                       sauce_weekly + weight_weekly +
+                      #other variables
+                      age_strata + region + sex +
+                      alcohol_spline + ethnicity + deprivation + education +
+                      cohabitation + physical_activity + smoking +
+                      related_disease + disease_family + yearly_income,
+                    data = normal_liver, ties='breslow')
 
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(meat_model2)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(meat_model2)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-meat_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+meat_liver <- tidy(meat_liver, exponentiate = TRUE, conf.int = TRUE)
 
 # poultry
-poultry_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+poultry_liver <- coxph(Surv(survival_time, nafld == 1) ~
                           # removing meat
                           legumes80 + meats80 + fish80+
                           #other food components
@@ -625,27 +355,19 @@ poultry_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                           veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                          sauce_weekly + weight_weekly + age_strata + region + sex +
-                          alcohol_spline + ethnicity + deprivation_quint + education +
-                          cohabitation + physical_activity + smoking + diabetes + cancer +
-                          non_cancer_illness + family_illness + yearly_income,
-                        data = normal_liver, ties='breslow')
+                          sauce_weekly + weight_weekly +
+                         #other variables
+                         age_strata + region + sex +
+                         alcohol_spline + ethnicity + deprivation + education +
+                         cohabitation + physical_activity + smoking +
+                         related_disease + disease_family + yearly_income,
+                       data = normal_liver, ties='breslow')
 
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(poultry_model2)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(poultry_model2)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-poultry_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+poultry_liver <- tidy(poultry_liver, exponentiate = TRUE, conf.int = TRUE)
 
 
 # fish
-fish_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+fish_liver <- coxph(Surv(survival_time, nafld == 1) ~
                        # removing meat
                        legumes80 + meats80 + poultry80+
                        #other food components
@@ -653,37 +375,15 @@ fish_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly + age_strata + region + sex +
-                       alcohol_spline + ethnicity + deprivation_quint + education +
-                       cohabitation + physical_activity + smoking + diabetes + cancer +
-                       non_cancer_illness + family_illness + yearly_income,
-                     data = normal_liver, ties='breslow')
+                       sauce_weekly + weight_weekly +
+                      #other variables
+                      age_strata + region + sex +
+                      alcohol_spline + ethnicity + deprivation + education +
+                      cohabitation + physical_activity + smoking +
+                      related_disease + disease_family + yearly_income,
+                    data = normal_liver, ties='breslow')
 
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(fish_model2)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(fish_model2)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-fish_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
-
-### Extract results ---------------------------------------------------------
-# combine first row from each model in df
-first_row_df1 <- meat_model2[1, ]
-first_row_df2 <- poultry_model2[1, ]
-first_row_df3 <- fish_model2[1, ]
-first_rows_combined <- rbind(first_row_df1, first_row_df2, first_row_df3)
-rownames(first_rows_combined) <- c("meat_model2", "poultry_model2", "fish_model2")
-
-#create html table
-normal_liver <- first_rows_combined %>%
-  kable("html") %>%
-  kable_styling()
-writeLines(as.character(normal_liver), "doc/sensitivity_normal_liver.html")
+fish_liver <- tidy(fish_liver, exponentiate = TRUE, conf.int = TRUE)
 
 # Remove high alcohol intake --------------------------------------------------
 percentile_90 <- quantile(data$alcohol_weekly, probs = 0.90, na.rm = TRUE)
@@ -695,7 +395,7 @@ lower_alc <- lower_alc %>%
   mutate(alcohol_spline = predict(bs(alcohol_weekly, df = 4, degree = 3, knots = NULL)))
 
 # meats
-meat_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+meat_alc <- coxph(Surv(survival_time, nafld == 1) ~
                        # removing meat
                        legumes80 + poultry80 + fish80+
                        #other food components
@@ -703,26 +403,18 @@ meat_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly + age_strata + region + sex +
-                       alcohol_spline + ethnicity + deprivation_quint + education +
-                       cohabitation + physical_activity + smoking + diabetes + cancer +
-                       non_cancer_illness + family_illness + yearly_income,
-                     data = lower_alc, ties='breslow')
+                       sauce_weekly + weight_weekly +
+                    #other variables
+                    age_strata + region + sex +
+                    alcohol_spline + ethnicity + deprivation + education +
+                    cohabitation + physical_activity + smoking +
+                    related_disease + disease_family + yearly_income,
+                  data = lower_alc, ties='breslow')
 
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(meat_model2)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(meat_model2)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-meat_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+meat_alc <- tidy(meat_alc, exponentiate = TRUE, conf.int = TRUE)
 
 # poultry
-poultry_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+poultry_alc <- coxph(Surv(survival_time, nafld == 1) ~
                           # removing meat
                           legumes80 + meats80 + fish80+
                           #other food components
@@ -730,27 +422,18 @@ poultry_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                           veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                          sauce_weekly + weight_weekly + age_strata + region + sex +
-                          alcohol_spline + ethnicity + deprivation_quint + education +
-                          cohabitation + physical_activity + smoking + diabetes + cancer +
-                          non_cancer_illness + family_illness + yearly_income,
-                        data = lower_alc, ties='breslow')
+                          sauce_weekly + weight_weekly +
+                       #other variables
+                       age_strata + region + sex +
+                       alcohol_spline + ethnicity + deprivation + education +
+                       cohabitation + physical_activity + smoking +
+                       related_disease + disease_family + yearly_income,
+                     data = lower_alc, ties='breslow')
 
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(poultry_model2)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(poultry_model2)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-poultry_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
-
+poultry_alc <- tidy(poultry_alc, exponentiate = TRUE, conf.int = TRUE)
 
 # fish
-fish_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+fish_alc <- coxph(Surv(survival_time, nafld == 1) ~
                        # removing meat
                        legumes80 + meats80 + poultry80+
                        #other food components
@@ -758,33 +441,13 @@ fish_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly + age_strata + region + sex +
-                       alcohol_spline + ethnicity + deprivation_quint + education +
-                       cohabitation + physical_activity + smoking + diabetes + cancer +
-                       non_cancer_illness + family_illness + yearly_income,
-                     data = lower_alc, ties='breslow')
+                       sauce_weekly + weight_weekly +
+                    #other variables
+                    age_strata + region + sex +
+                    alcohol_spline + ethnicity + deprivation + education +
+                    cohabitation + physical_activity + smoking +
+                    related_disease + disease_family + yearly_income,
+                  data = lower_alc, ties='breslow')
 
-# Extract HR and 95% CI for the first coefficient
-coef_summary <- summary(fish_model2)$coefficients
-row_name <- rownames(coef_summary)
-HR <- exp(coef_summary[1, "coef"])
-CI <- confint(fish_model2)[1, ]
-CI <- exp(CI)
-# Round to two decimals
-HR <- round(HR, 2)
-CI <- round(CI, 2)
-# Convert to dataframe
-fish_model2 <- data.frame(row_name = row_name, HR = HR, Lower_CI = CI[1], Upper_CI = CI[2])
+fish_alc <- tidy(fish_alc, exponentiate = TRUE, conf.int = TRUE)
 
-### Extract results ---------------------------------------------------------
-first_row_df1 <- meat_model2[1, ]
-first_row_df2 <- poultry_model2[1, ]
-first_row_df3 <- fish_model2[1, ]
-first_rows_combined <- rbind(first_row_df1, first_row_df2, first_row_df3)
-rownames(first_rows_combined) <- c("meat_model2", "poultry_model2", "fish_model2")
-
-#create html table
-lower_alc <- first_rows_combined %>%
-  kable("html") %>%
-  kable_styling()
-writeLines(as.character(lower_alc), "doc/sensitivity_lower_alc.html")
