@@ -249,7 +249,21 @@ data <- data %>%
     )
   )
 
-
+# Removing individuals with missing information on covariates
+filtered_data <- subset(data, !is.na(age))
+filtered_data <- subset(filtered_data, !is.na(region))
+filtered_data <- subset(filtered_data, !is.na(sex))
+filtered_data <- subset(filtered_data, !is.na(ethnicity)) #126770
+filtered_data <- subset(filtered_data, !is.na(deprivation)) #126621
+filtered_data <- subset(filtered_data, !is.na(education)) #126261
+filtered_data <- subset(filtered_data, !is.na(cohabitation)) # 125641
+filtered_data <- subset(filtered_data, !is.na(physical_activity)) # no change
+filtered_data <- subset(filtered_data, !is.na(smoking)) # no change
+filtered_data <- subset(filtered_data, !is.na(related_disease)) # no change
+filtered_data <- subset(filtered_data, !is.na(disease_family)) # no change
+filtered_data <- subset(filtered_data, !is.na(yearly_income)) # no change
+filtered_data <- subset(filtered_data, !is.na(bmi30)) #123821
+data <- filtered_data
 
 # Remove recoded variables from sorted_data -------------------------------
 variables_to_remove <- c("p20111", "p20110", "p20107", "p23104",
@@ -263,4 +277,10 @@ variables_to_remove <- c("p20111", "p20110", "p20107", "p23104",
 data <- data %>%
   select(-matches(variables_to_remove))
 
+
+# save data
+arrow::write_parquet(data, here("data/data.parquet"))
+
+# Upload to the project RAP folder.
+ukbAid::upload_data(here("data/data.parquet"), username = "FieLangmann")
 
