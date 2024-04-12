@@ -13,6 +13,7 @@ library(tidyr)
 library(here)
 library(splines)
 library(kableExtra)
+library(broom)
 
 # Load data --------------------------------------------------------
 targets::tar_make()
@@ -100,7 +101,11 @@ data4 <- data %>%
 data5 <- data %>%
   subset(p20077>=5)
 
-
+data4 <- data4 %>%
+  mutate(legumes80 = legume_weekly/80,
+         meats80 = meats_weekly/80,
+         poultry80 = poultry_weekly/80,
+         fish80 = fish_weekly/80)
 ## data3 = three 24h recalls -----------------------------------------------------------------
 # Alcohol as spline with 4 knots for adjustment
 df <- 4
@@ -119,7 +124,7 @@ meat_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                        sauce_weekly + weight_weekly +
                       #other variables
                       age_strata + region + sex +
-                      alcohol_spline + ethnicity + deprivation + education +
+                      alcohol_weekly + ethnicity + deprivation + education +
                       cohabitation + physical_activity + smoking +
                       related_disease + disease_family + yearly_income,
                     data = data3, ties='breslow')
@@ -138,7 +143,7 @@ poultry_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                           sauce_weekly + weight_weekly +
                          #other variables
                          age_strata + region + sex +
-                         alcohol_spline + ethnicity + deprivation + education +
+                         alcohol_weekly + ethnicity + deprivation + education +
                          cohabitation + physical_activity + smoking +
                          related_disease + disease_family + yearly_income,
                        data = data3, ties='breslow')
@@ -158,7 +163,7 @@ fish_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                        sauce_weekly + weight_weekly +
                       #other variables
                       age_strata + region + sex +
-                      alcohol_spline + ethnicity + deprivation + education +
+                      alcohol_weekly + ethnicity + deprivation + education +
                       cohabitation + physical_activity + smoking +
                       related_disease + disease_family + yearly_income,
                     data = data3, ties='breslow')
@@ -184,7 +189,7 @@ meat_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                       sauce_weekly + weight_weekly +
                       #other variables
                       age_strata + region + sex +
-                      alcohol_spline + ethnicity + deprivation + education +
+                      alcohol_weekly + ethnicity + deprivation + education +
                       cohabitation + physical_activity + smoking +
                       related_disease + disease_family + yearly_income,
                     data = data4, ties='breslow')
@@ -203,7 +208,7 @@ poultry_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                          sauce_weekly + weight_weekly +
                          #other variables
                          age_strata + region + sex +
-                         alcohol_spline + ethnicity + deprivation + education +
+                         alcohol_weekly + ethnicity + deprivation + education +
                          cohabitation + physical_activity + smoking +
                          related_disease + disease_family + yearly_income,
                        data = data4, ties='breslow')
@@ -223,7 +228,7 @@ fish_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                       sauce_weekly + weight_weekly +
                       #other variables
                       age_strata + region + sex +
-                      alcohol_spline + ethnicity + deprivation + education +
+                      alcohol_weekly + ethnicity + deprivation + education +
                       cohabitation + physical_activity + smoking +
                       related_disease + disease_family + yearly_income,
                     data = data4, ties='breslow')
