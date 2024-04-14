@@ -23,31 +23,7 @@ data <- data %>%
          poultry80 = poultry_weekly/80,
          fish80 = fish_weekly/80)
 
-# defining time in study
-data <- data %>%
-  mutate(
-    survival_time_nafld = case_when(
-      !is.na(icd10_nafld_date) ~ as.numeric(difftime(icd10_nafld_date, date_filled, units = "days")),
-      TRUE ~ NA),
-    survival_time_nash = case_when(
-      !is.na(icd10_nash_date) ~ as.numeric(difftime(icd10_nash_date, date_filled, units = "days")),
-      TRUE ~ NA),
-    survival_time_ltfu = case_when(
-      !is.na(loss_to_follow_up) ~ as.numeric(difftime(loss_to_follow_up, date_filled, units = "days")),
-      TRUE ~ NA),
-    survival_time_death = case_when(
-      !is.na(date_of_death) ~ as.numeric(difftime(date_of_death, date_filled, units = "days")),
-      TRUE ~ NA),
-    survival_time_cenc = difftime(censoring, date_filled, units = "days"),
-    time = pmin(survival_time_death, survival_time_cenc, survival_time_ltfu,
-                survival_time_nash, survival_time_nafld, na.rm = TRUE),
-    time = time/365.25
-  )
-
-
 # meats
-
-
 fit_meat <- eventglm::cumincglm(Surv(time, nafld == 1) ~
                                   # removing meat
                                   legumes80 + poultry80 + fish80+
@@ -62,9 +38,8 @@ fit_meat <- eventglm::cumincglm(Surv(time, nafld == 1) ~
                                   alcohol_weekly + ethnicity + deprivation + education +
                                   cohabitation + physical_activity + smoking +
                                   related_disease + disease_family + yearly_income,
-                                time = 5, data = data)
+                                time = 10, data = data)
 
-meat_pseudo <- tidy(fit_meat, exponentiate = TRUE, conf.int = TRUE, digits = 2)
 fit_meat <- tidy(fit_meat, exponentiate = FALSE, conf.int = TRUE, digits = 2)
 
 
@@ -83,9 +58,8 @@ fit_poultry <- eventglm::cumincglm(Surv(time, nafld == 1) ~
                           alcohol_weekly + ethnicity + deprivation + education +
                           cohabitation + physical_activity + smoking +
                           related_disease + disease_family + yearly_income,
-                        time = 5, data = data)
+                        time = 10, data = data)
 
-poultry_pseudo <- tidy(fit_poultry, exponentiate = TRUE, conf.int = TRUE, digits = 2)
 fit_poultry <- tidy(fit_poultry, exponentiate = FALSE, conf.int = TRUE, digits = 2)
 
 # fish
@@ -103,9 +77,8 @@ fit_fish <- eventglm::cumincglm(Surv(time, nafld == 1) ~
                     alcohol_weekly + ethnicity + deprivation + education +
                     cohabitation + physical_activity + smoking +
                     related_disease + disease_family + yearly_income,
-                  time = 5, data = data)
+                  time = 10, data = data)
 
-fish_pseudo <- tidy(fit_fish, exponentiate = TRUE, conf.int = TRUE, digits = 2)
 fit_fish <- tidy(fit_fish, exponentiate = FALSE, conf.int = TRUE, digits = 2)
 
 # Non specific substitutions ----------------------------------------------
@@ -122,4 +95,4 @@ fit_nonspecific <- coxph(Surv(survival_time, nafld == 1) ~ legumes80 +
                               related_disease + disease_family + yearly_income,
                             data = data, ties='breslow')
 
-nonspecific_pseudo <- tidy(fit_nonspecific, exponentiate = TRUE, conf.int = TRUE, digits = 2)
+nonspecific<- tidy(fit_nonspecific, exponentiate = TRUE, conf.int = TRUE, digits = 2)
