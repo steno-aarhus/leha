@@ -23,9 +23,6 @@ data <- data %>%
          poultry80 = poultry_weekly/80,
          fish80 = fish_weekly/80)
 
-data <- data %>%
-  mutate(alcohol_spline = predict(bs(alcohol_weekly, df = 4, degree = 3, knots = NULL)))
-
 # defining time in study
 data <- data %>%
   mutate(
@@ -61,8 +58,8 @@ fit_meat <- eventglm::cumincglm(Surv(time, nafld == 1) ~
                                   non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                                   sauce_weekly + weight_weekly +
                                   #other variables
-                                  age_strata + region + sex +
-                                  alcohol_spline + ethnicity + deprivation + education +
+                                  age + region + sex +
+                                  alcohol_weekly + ethnicity + deprivation + education +
                                   cohabitation + physical_activity + smoking +
                                   related_disease + disease_family + yearly_income,
                                 time = 5, data = data)
@@ -82,8 +79,8 @@ fit_poultry <- eventglm::cumincglm(Surv(time, nafld == 1) ~
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                           sauce_weekly + weight_weekly +
                           #other variables
-                          age_strata + region + sex +
-                          alcohol_spline + ethnicity + deprivation + education +
+                          age + region + sex +
+                          alcohol_weekly + ethnicity + deprivation + education +
                           cohabitation + physical_activity + smoking +
                           related_disease + disease_family + yearly_income,
                         time = 5, data = data)
@@ -102,8 +99,8 @@ fit_fish <- eventglm::cumincglm(Surv(time, nafld == 1) ~
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                        sauce_weekly + weight_weekly +
                     #other variables
-                    age_strata + region + sex +
-                    alcohol_spline + ethnicity + deprivation + education +
+                    age + region + sex +
+                    alcohol_weekly + ethnicity + deprivation + education +
                     cohabitation + physical_activity + smoking +
                     related_disease + disease_family + yearly_income,
                   time = 5, data = data)
@@ -118,14 +115,9 @@ data <- data %>%
 
 
 ## model 2 -----------------------------------------------------------------
-#alcohol spline
-df <- 4
-data <- data %>%
-  mutate(alcohol_spline = predict(bs(alcohol_weekly, df = df, degree = 3, knots = NULL)))
-
 fit_nonspecific <- coxph(Surv(survival_time, nafld == 1) ~ legumes80 +
-                              weight_weekly + age_strata + region + sex +
-                              alcohol_spline + ethnicity + deprivation + education +
+                              weight_weekly + age + region + sex +
+                              alcohol_weekly + ethnicity + deprivation + education +
                               cohabitation + physical_activity + smoking +
                               related_disease + disease_family + yearly_income,
                             data = data, ties='breslow')
