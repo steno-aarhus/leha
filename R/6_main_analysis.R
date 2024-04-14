@@ -1,7 +1,6 @@
 #6. Main analyses
 
 # Load packages
-
 library(tidyverse)
 library(broom)
 library(Hmisc)
@@ -15,12 +14,10 @@ library(here)
 library(splines)
 library(kableExtra)
 
-
 # Load data --------------------------------------------------------
 targets::tar_make()
 # Restart session
 source(here::here("R/1_data_start.R"))
-
 
 # Weekly substituting 80 g legumes (NHS 1 portion beans = 80 g) https://www.nhs.uk/live-well/eat-well/5-a-day/5-a-day-what-counts/
 # defining 80 g/week variable for each food
