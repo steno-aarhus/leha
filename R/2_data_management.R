@@ -125,9 +125,15 @@ data <- data %>% mutate(
     str_detect(p2453_i0, "Do not know") ~ "don't know",
     str_detect(p2453_i0, "Yes") ~ "yes",
     p2453_i0 == "No" ~ "no",
-    str_detect(p2453_i0, "answer") ~ "unknown",
-    TRUE ~ "unknown"
+    str_detect(p2453_i0, "answer") ~ "no answer",
+    TRUE ~ "no answer"
     ),
+  cancer = case_when(
+    cancer == "don't know" ~ "unknown",
+    cancer == "yes" ~ "yes",
+    cancer == "no" ~ "no",
+    cancer == "no answer" ~ "unknown"
+  ),
   cancer = as.factor(cancer),
     bmi = p23104_i0,
   bmi = as.numeric(bmi),
