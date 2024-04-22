@@ -49,3 +49,10 @@ table_foods <- data %>%
   as_flex_table()
 
 flextable::save_as_html(table_foods, path = here("doc", "table_foods.html"))
+
+
+
+# Person-years of follow-up -----------------------------------------------
+
+sum(data$time)
+summary(data$time)
