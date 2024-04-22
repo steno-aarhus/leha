@@ -272,49 +272,7 @@ filtered_data <- subset(filtered_data, !is.na(bmi30)) #123821
 data <- filtered_data
 
 
-# counting and removing those with event before baseline
-# defining time in study
-data <- data %>%
-  mutate(
-    survival_time_nafld = case_when(
-      !is.na(icd10_nafld_date) ~ as.numeric(difftime(icd10_nafld_date, date_filled, units = "days")),
-      TRUE ~ NA),
-    survival_time_nash = case_when(
-      !is.na(icd10_nash_date) ~ as.numeric(difftime(icd10_nash_date, date_filled, units = "days")),
-      TRUE ~ NA),
-    survival_time_ltfu = case_when(
-      !is.na(loss_to_follow_up) ~ as.numeric(difftime(loss_to_follow_up, date_filled, units = "days")),
-      TRUE ~ NA),
-    survival_time_death = case_when(
-      !is.na(date_of_death) ~ as.numeric(difftime(date_of_death, date_filled, units = "days")),
-      TRUE ~ NA),
-    survival_time_cenc = difftime(censoring, date_filled, units = "days"),
-    time = pmin(survival_time_death, survival_time_cenc, survival_time_ltfu,
-                survival_time_nash, survival_time_nafld, na.rm = TRUE),
-    time = time/365.25
-  )
 
-# counting and removing those with event before baseline
-data_time <- data %>%
-  subset(data$time<0)
-
-nafld_nash <-sum(!is.na(data_time$survival_time_nafld)
-            | !is.na(data_time$survival_time_nash))
-
-ltfu <- sum(!is.na(data_time$survival_time_ltfu)
-            & is.na(data_time$survival_time_nafld)
-            & is.na(data_time$survival_time_nash)
-            & is.na(data_time$survival_time_death))
-
-death <- sum(!is.na(data_time$survival_time_death)
-             & is.na(data_time$survival_time_nafld)
-             & is.na(data_time$survival_time_nash)
-             & is.na(data_time$survival_time_ltfu))
-
-
-# remove those with event before baseline
-data <- data %>%
-  subset(data$time>=0)
 
 # Remove recoded variables from sorted_data -------------------------------
 variables_to_remove <- c("p20111", "p20110", "p20107", "p23104",
