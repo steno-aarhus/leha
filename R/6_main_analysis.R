@@ -9,10 +9,8 @@ library(gtsummary)
 library(ggsurvfit)
 library(ggplot2)
 library(dplyr)
-library(tidyr)
 library(here)
-library(splines)
-library(kableExtra)
+
 
 # Load data --------------------------------------------------------
 targets::tar_make()
@@ -193,3 +191,72 @@ fish_model3 <- coxph(Surv(survival_time, nafld == 1) ~
                      data = data, ties='breslow')
 
 fish_model3 <- tidy(fish_model3, exponentiate = TRUE, conf.int = TRUE, digits = 2)
+
+
+
+# Model assumptions log-log plot ------------------------------------------
+
+data <- data %>%
+  mutate(legumes80 = legume_weekly/80,
+         meats80 = meats_weekly/80,
+         poultry80 = poultry_weekly/80,
+         fish80 = fish_weekly/80)
+
+meat_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+                       # removing meat
+                       legumes80 + poultry80 + fish80+
+                       #other food components
+                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                       sauce_weekly + weight_weekly +
+                       #other variables
+                       age + region + sex +
+                       alcohol_weekly + ethnicity + deprivation + education +
+                       cohabitation + physical_activity + smoking +
+                       related_disease + disease_family + yearly_income,
+                     data = data, ties='breslow')
+
+ph_test1 <- cox.zph(meat_model2)
+print(ph_test1)
+
+# poultry
+poultry_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+                          # removing meat
+                          legumes80 + meats80 + fish80+
+                          #other food components
+                          cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                          dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                          veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                          non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                          sauce_weekly + weight_weekly +
+                          #other variables
+                          age + region + sex +
+                          alcohol_weekly + ethnicity + deprivation + education +
+                          cohabitation + physical_activity + smoking +
+                          related_disease + disease_family + yearly_income,
+                        data = data, ties='breslow')
+
+ph_test2 <- cox.zph(poultry_model2)
+print(ph_test2)
+
+# fish
+fish_model2 <- coxph(Surv(survival_time, nafld == 1) ~
+                       # removing meat
+                       legumes80 + meats80 + poultry80+
+                       #other food components
+                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                       sauce_weekly + weight_weekly +
+                       #other variables
+                       age + region + sex +
+                       alcohol_weekly + ethnicity + deprivation + education +
+                       cohabitation + physical_activity + smoking +
+                       related_disease + disease_family + yearly_income,
+                     data = data, ties='breslow')
+
+ph_test3 <- cox.zph(fish_model2)
+print(ph_test3)
