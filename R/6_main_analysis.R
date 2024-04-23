@@ -194,8 +194,8 @@ fish_model3 <- tidy(fish_model3, exponentiate = TRUE, conf.int = TRUE, digits = 
 
 
 
-# Model assumptions log-log plot ------------------------------------------
-
+# Model assumptions proportional hazards ------------------------------------------
+# Schoenfeld residuals
 data <- data %>%
   mutate(legumes80 = legume_weekly/80,
          meats80 = meats_weekly/80,
