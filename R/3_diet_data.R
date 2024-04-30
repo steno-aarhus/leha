@@ -59,6 +59,11 @@ library(dplyr)
 #   return(diet_data)
 # }
 
+# data <- data %>%
+#   calculate_food_intake() %>%
+#   select(-matches(remove_diet))
+
+
 # Average dietary intake of food groups -----------------------------------
 # estimating average daily and weekly intakes of food groups in g
 data <- data %>%
@@ -221,9 +226,7 @@ remove_diet <- c(
   "p26070", "p26109", "p26132", "p26149", "p26000"
 )
 
-data <- data %>%
-  calculate_food_intake() %>%
-  select(-matches(remove_diet))
+
 
 # Save data ---------------------------------------------------------------
 # arrow::write_parquet(data, here("data/data.parquet"))
