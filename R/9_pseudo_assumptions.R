@@ -24,7 +24,7 @@ fit_meat <- eventglm::cumincglm(Surv(time, nafld == 1) ~
                                   #other food components
                                   cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                                   dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                                  veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                                  veggie_weekly + potato_weekly + egg_weekly +
                                   non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                                   sauce_weekly + weight_weekly +
                                   #other variables
@@ -43,7 +43,7 @@ meat_model2 <- coxph(Surv(survival_time, nafld == 1) ~
                        #other food components
                        cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                        sauce_weekly + weight_weekly +
                        #other variables
@@ -65,7 +65,7 @@ data <- data %>% mutate(
   were_censored = case_when(nafld != 1 ~ "yes",
                             nafld == 1 ~ "no")
 )
-# Start of follow-up = date_filled
+# Start of follow-up = date_filled (Calendar date for last filled questionnaire)
 # Baseline age
 data <- data %>%
   mutate(baseline_age = (date_filled - date_birth)/365.25)

@@ -1,18 +1,14 @@
 #7. Sensitivity analyses
 
 # Load packages
-
 library(tidyverse)
 library(Hmisc)
 library(survival)
-library(gtsummary)
 library(ggsurvfit)
 library(ggplot2)
 library(dplyr)
 library(tidyr)
 library(here)
-library(splines)
-library(kableExtra)
 library(broom)
 
 # Load data --------------------------------------------------------
@@ -38,7 +34,7 @@ meat_pea <- coxph(Surv(survival_time, nafld == 1) ~
                        #other food components
                        cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_pea_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       veggie_pea_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                        sauce_weekly + weight_weekly +
                        #other variables
@@ -57,7 +53,7 @@ poultry_pea <- coxph(Surv(survival_time, nafld == 1) ~
                           #other food components
                           cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                          veggie_pea_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                          veggie_pea_weekly + potato_weekly + egg_weekly +
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                           sauce_weekly + weight_weekly +
                           #other variables
@@ -76,7 +72,7 @@ fish_pea <- coxph(Surv(survival_time, nafld == 1) ~
                        #other food components
                        cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_pea_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       veggie_pea_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                        sauce_weekly + weight_weekly +
                        #other variables
@@ -108,7 +104,7 @@ meat_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                        #other food components
                        cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                        sauce_weekly + weight_weekly +
                       #other variables
@@ -127,7 +123,7 @@ poultry_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                           #other food components
                           cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                          veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                          veggie_weekly + potato_weekly + egg_weekly +
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                           sauce_weekly + weight_weekly +
                          #other variables
@@ -147,7 +143,7 @@ fish_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                        #other food components
                        cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                        sauce_weekly + weight_weekly +
                       #other variables
@@ -168,7 +164,7 @@ meat_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                       #other food components
                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                      veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                      veggie_weekly + potato_weekly + egg_weekly +
                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                       sauce_weekly + weight_weekly +
                       #other variables
@@ -187,7 +183,7 @@ poultry_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                          #other food components
                          cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                          dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                         veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                         veggie_weekly + potato_weekly + egg_weekly +
                          non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                          sauce_weekly + weight_weekly +
                          #other variables
@@ -207,7 +203,7 @@ fish_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                       #other food components
                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                      veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                      veggie_weekly + potato_weekly + egg_weekly +
                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                       sauce_weekly + weight_weekly +
                       #other variables
@@ -224,18 +220,12 @@ fish_data4 <- tidy(fish_data4, exponentiate = TRUE, conf.int = TRUE)
 # removing high ALT and AST
 data <- data %>% mutate(
   alt_level = case_when(
-    alt <= 45 & sex == "Female" | alt <= 70 & sex == "Male" ~ 0,
-    alt > 45 & sex == "Female" | alt > 70 & sex == "Male" ~ 1
-  ),
-  ast_level = case_when(
-    ast <= 35 & sex == "Female" | ast <= 45 & sex == "Male" ~ 0,
-    ast > 35 & sex == "Female" | ast > 45 & sex == "Male" ~ 1
-  )
-)
+    alt < 40 ~ 0,
+    alt >= 40 ~ 1))
 
 # Subsetting data
 normal_liver <- data %>%
-  subset(alt_level !=1 & ast_level != 1)
+  subset(alt_level !=1)
 
 
 ## Running main analysis on subsample --------------------------------------
@@ -254,7 +244,7 @@ meat_liver <- coxph(Surv(survival_time, nafld == 1) ~
                        #other food components
                        cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                        sauce_weekly + weight_weekly +
                       #other variables
@@ -273,7 +263,7 @@ poultry_liver <- coxph(Surv(survival_time, nafld == 1) ~
                           #other food components
                           cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                          veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                          veggie_weekly + potato_weekly + egg_weekly +
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                           sauce_weekly + weight_weekly +
                          #other variables
@@ -293,7 +283,7 @@ fish_liver <- coxph(Surv(survival_time, nafld == 1) ~
                        #other food components
                        cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                        sauce_weekly + weight_weekly +
                       #other variables
@@ -319,7 +309,7 @@ meat_alc <- coxph(Surv(survival_time, nafld == 1) ~
                        #other food components
                        cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                        sauce_weekly + weight_weekly +
                     #other variables
@@ -338,7 +328,7 @@ poultry_alc <- coxph(Surv(survival_time, nafld == 1) ~
                           #other food components
                           cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                          veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                          veggie_weekly + potato_weekly + egg_weekly +
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                           sauce_weekly + weight_weekly +
                        #other variables
@@ -357,7 +347,7 @@ fish_alc <- coxph(Surv(survival_time, nafld == 1) ~
                        #other food components
                        cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                        sauce_weekly + weight_weekly +
                     #other variables

@@ -1,7 +1,6 @@
 #3. Descriptive
 
 # Load packages -----------------------------------------------------------
-
 library(tidyverse)
 library(dplyr)
 library(magrittr)
@@ -36,7 +35,7 @@ table_foods <- data %>%
   select(nafld, legume_weekly, meats_weekly, poultry_weekly, fish_weekly,
          cereal_refined_weekly, whole_grain_weekly, mixed_dish_weekly,
          dairy_weekly, fats_weekly, fruit_weekly, nut_weekly, veggie_weekly,
-         potato_weekly, egg_weekly, meat_sub_weekly, non_alc_beverage_weekly,
+         potato_weekly, egg_weekly, non_alc_beverage_weekly,
          alc_beverage_weekly, snack_weekly, sauce_weekly, weight_weekly) %>%
   tbl_summary(by = nafld,
               statistic = list(all_continuous() ~  "{median} ({p10}, {p90})",
