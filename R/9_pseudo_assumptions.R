@@ -97,15 +97,14 @@ fit_meat2 <- tidy(fit_meat2, exponentiate = FALSE, conf.int = TRUE)
 
 
 # Linear association between baseline date and event risk stratified on age
-# Hvor kommer censoring ind?
-model0 <- lm(nafld ~ date_filled, data = age0)
-# model1 <- lm(nafld ~ date_filled, data = age1)
-# model2 <- lm(nafld ~ date_filled, data = age2)
-# model3 <- lm(nafld ~ date_filled, data = age3)
-# model4 <- lm(nafld ~ date_filled, data = age4)
-# model5 <- lm(nafld ~ date_filled, data = age5)
-
 # plots??
+
+
+
+
+
+
+
 
 
 # Assumption 4: Censoring is independent of covariates
@@ -153,8 +152,26 @@ cox_results <- data %>%
 print(cox_results)
 
 
+assump4_region <- coxph(Surv(survival_time, censored == "yes") ~ region, # eller baseline_age? og within strata?
+                     data = data, ties = 'breslow')
+assump4_region <- tidy(assump4_region, exponentiate = TRUE, conf.int = TRUE)
+# within each age strata
+cox_region <- function(df) {
+  cox_model <- coxph(Surv(survival_time, censored == "yes") ~ region, data = df, ties = 'breslow')
+  tidy(cox_model, exponentiate = TRUE, conf.int = TRUE)
+}
 
-# Covariates (måske ikke kostvariable?)
+# Group by base_age_strata, fit Cox model, and tidy the results for each group
+cox_results <- data %>%
+  group_by(base_age_strata) %>%
+  nest() %>%
+  mutate(cox_results = map(data, cox_region)) %>%
+  unnest(cox_results)
+# View the results
+print(cox_results)
+
+
+# Covariates
 # age
 # region
 # sex
