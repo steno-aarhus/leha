@@ -46,14 +46,25 @@ data <- data %>%
 data <- data %>%
   mutate(base_age_strata = ntile(baseline_age, 5))
 
+# Assumption 1: Entry is independent of event risk (The independent entry assumption)
+# Test: Investigate the association between baseline age and event risk using Cox regression
+
+assump1 <- coxph(Surv(time, nafld == 1) ~ date_filled,
+                 data = data, ties='breslow')
 
 # Assumption 2: Event risk is independent of censoring (The independent censoring assumption)
 # This assumption can only be examined with regard to administrative censoring
 # Test: Investigate the association between baseline date and event risk within strata of baseline age using Cox
 # regression.
 
+assump2_age <- coxph(Surv(time, nafld ==1) ~ baseline_age,
+                     data = data, ties='breslow')
+assump2_baseline_dato <- coxph(Surv(time, nafld == 1) ~ date_filled,
+                 data = data, ties='breslow')
+
+
 # Cox model
-cox <- coxph(Surv(survival_time, nafld == 1) ~ date_filled,
+cox <- coxph(Surv(time, nafld == 1) ~ date_filled,
                      data = data, ties='breslow')
 cox <- tidy(cox, exponentiate = TRUE, conf.int = TRUE)
 # association between censoring and outcome
