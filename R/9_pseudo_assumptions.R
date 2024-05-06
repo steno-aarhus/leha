@@ -49,62 +49,67 @@ data <- data %>%
       TRUE ~ "censored"
     )
   )
-
-# estimate survival time
 data <- data %>%
-  mutate(
-    survival_time_tmp = case_when(
-      !is.na(icd10_nafld_date) ~ as.numeric(difftime(icd10_nafld_date, date_birth, units = "days")),
-      !is.na(icd10_nash_date) ~ as.numeric(difftime(icd10_nash_date, date_birth, units = "days")),
-      !is.na(date_of_death) ~ as.numeric(difftime(date_of_death, date_birth, units = "days")),
-      !is.na(loss_to_follow_up) ~ as.numeric(difftime(loss_to_follow_up, date_birth, units = "days")),
-      TRUE ~ as.numeric(difftime(censoring, date_birth, units = "days"))
-    ),
-    # Use min to get the minimum survival time across columns
-    survival_time = pmin(survival_time_tmp, na.rm = TRUE),
-    survival_time = survival_time/365.25,
-    # Remove temporary variable
-    survival_time_tmp = NULL
-  )
-
-# binary variable to indicate if nafld happened
-data <- data %>%
-  mutate(nafld = case_when(
-    !is.na(icd10_nafld_date) | !is.na(icd10_nash_date) |
-      !is.na(icd9_nafld_date) | !is.na(icd9_nash_date) ~ 1,
-    TRUE ~ 0))
-
-
-
-
+  mutate(censored = case_when(
+    status == "censored" ~ "yes",
+    status != "censored" ~ "no"
+  ))
 
 # Assumption 2: Event risk is independent of censoring (The independent censoring assumption)
 # This assumption can only be examined with regard to administrative censoring
 # Test: Investigate the association between baseline date and event risk within strata of baseline age using Cox
 # regression.
 
-# individuals who were administratively censored
-data <- data %>% mutate(
-  were_censored = case_when(nafld != 1 ~ "yes",
-                            nafld == 1 ~ "no")
-)
+# Cox model
+cox <- coxph(Surv(survival_time, nafld == 1) ~ date_filled,
+                     data = data, ties='breslow')
+cox <- tidy(cox, exponentiate = TRUE, conf.int = TRUE)
+# association between censoring and outcome
+
+# within age strata
+cox <- data %>% filter(base_age_strata==3) %>% coxph(Surv(survival_time, nafld == 1) ~ date_filled,
+                                              data = ., ties='breslow')
+
+
+# Aldersstrata er væsentlige og bør tilføjes til Pseudo koden nedenfor:
+# model.censoring = "stratified",
+# formula.censoring = ~ sex, <- skal være aldersstrata
+
+Censorering som udfald i antagelse 4
+fit_meat <- eventglm::cumincglm(Surv(time, nafld == 1) ~
+                                  # removing meat
+                                  legumes80 + poultry80 + fish80+
+                                  #other food components
+                                  cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                                  dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                                  veggie_weekly + potato_weekly + egg_weekly +
+                                  non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                                  sauce_weekly + weight_weekly +
+                                  #other variables
+                                  age + region + sex +
+                                  alcohol_weekly + ethnicity + deprivation + education +
+                                  cohabitation + physical_activity + smoking +
+                                  related_disease + disease_family + yearly_income,
+                                time = 10, data = data)
+
+fit_meat <- tidy(fit_meat, exponentiate = FALSE, conf.int = TRUE, digits = 2)
+
+
+
+
+
+
+
+
 # Start of follow-up = date_filled (Calendar date for last filled questionnaire)
 # Baseline age
 data <- data %>%
   mutate(baseline_age = (date_filled - date_birth)/365.25)
 # age strata
-age0 <- data %>%
-  subset(age_strata==0)
-age1 <- data %>%
-  subset(age_strata==1)
-age2 <- data %>%
-  subset(age_strata==2)
-age3 <- data %>%
-  subset(age_strata==3)
-age4 <- data %>%
-  subset(age_strata==4)
-age5 <- data %>%
-  subset(age_strata==5)
+data <- data %>%
+  mutate(base_age_strata = ntile(baseline_age, 5))
+
+
 
 # Linear association between baseline date and event risk stratified on age
 # Hvor kommer censoring ind?
@@ -157,46 +162,8 @@ model0 <- lm(nafld ~ date_filled, data = age0)
 
 
 # Pseudo model
-data <- data %>%
-  mutate(legumes80 = legume_weekly/80,
-         meats80 = meats_weekly/80,
-         poultry80 = poultry_weekly/80,
-         fish80 = fish_weekly/80)
+
 
 # meats
-fit_meat <- eventglm::cumincglm(Surv(time, nafld == 1) ~
-                                  # removing meat
-                                  legumes80 + poultry80 + fish80+
-                                  #other food components
-                                  cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                                  dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                                  veggie_weekly + potato_weekly + egg_weekly +
-                                  non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                                  sauce_weekly + weight_weekly +
-                                  #other variables
-                                  age + region + sex +
-                                  alcohol_weekly + ethnicity + deprivation + education +
-                                  cohabitation + physical_activity + smoking +
-                                  related_disease + disease_family + yearly_income,
-                                time = 10, data = data)
 
-fit_meat <- tidy(fit_meat, exponentiate = FALSE, conf.int = TRUE, digits = 2)
 
-# Cox model
-meat_model2 <- coxph(Surv(survival_time, nafld == 1) ~
-                       # removing meat
-                       legumes80 + poultry80 + fish80+
-                       #other food components
-                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly +
-                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly +
-                       #other variables
-                       age + region + sex +
-                       alcohol_weekly + ethnicity + deprivation + education +
-                       cohabitation + physical_activity + smoking +
-                       related_disease + disease_family + yearly_income,
-                     data = data, ties='breslow')
-
-meat_model2 <- tidy(meat_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2 digits doesn't work
