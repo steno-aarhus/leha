@@ -34,7 +34,7 @@ covariates_model1 <- (~ cereal_refined_weekly + whole_grain_weekly + mixed_dish_
   sauce_weekly + weight_weekly + age + region + sex) |>
   all.vars()
 
-create_formulate <- function(xvars, covars) {
+create_formula <- function(xvars, covars) {
   outcome <- "Surv(survival_time, nafld == 1)"
   reformulate(c(xvars, covars), response = outcome)
 }
