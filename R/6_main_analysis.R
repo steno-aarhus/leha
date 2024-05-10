@@ -65,7 +65,7 @@ meat_model1 <- coxph(
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
     sauce_weekly + weight_weekly +
     # other variables
-    sex + strata(region, age_strata),
+    strata(region, age_strata, sex),
   data = data, ties = "breslow"
 )
 
@@ -83,7 +83,7 @@ poultry_model1 <- coxph(
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
     sauce_weekly + weight_weekly +
     # other variables
-    sex + strata(region, age_strata),
+    strata(region, age_strata, sex),
   data = data, ties = "breslow"
 )
 
@@ -102,7 +102,7 @@ fish_model1 <- coxph(
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
     sauce_weekly + weight_weekly +
     # other variables
-    sex + strata(region, age_strata),
+    strata(region, age_strata, sex),
   data = data, ties = "breslow"
 )
 
@@ -123,11 +123,10 @@ meat_model2 <- coxph(
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
     sauce_weekly + weight_weekly +
     # other variables
-    sex +
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
     related_disease + disease_family + yearly_income +
-    strata(region, age_strata),
+    strata(region, age_strata, sex),
   data = data, ties = "breslow"
 )
 
@@ -146,11 +145,10 @@ poultry_model2 <- coxph(
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
     sauce_weekly + weight_weekly +
     # other variables
-    sex +
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
     related_disease + disease_family + yearly_income +
-    strata(region, age_strata),
+    strata(region, age_strata, sex),
   data = data, ties = "breslow"
 )
 
@@ -169,11 +167,10 @@ fish_model2 <- coxph(
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
     sauce_weekly + weight_weekly +
     # other variables
-    sex +
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
     related_disease + disease_family + yearly_income +
-    strata(region, age_strata),
+    strata(region, age_strata, sex),
   data = data, ties = "breslow"
 )
 
@@ -194,11 +191,10 @@ meat_model3 <- coxph(
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
     sauce_weekly + weight_weekly +
     # other variables
-    sex +
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
     related_disease + disease_family + yearly_income + bmi30 +
-    strata(region, age_strata),
+    strata(region, age_strata, sex),
   data = data, ties = "breslow"
 )
 
@@ -216,11 +212,10 @@ poultry_model3 <- coxph(
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
     sauce_weekly + weight_weekly +
     # other variables
-    sex +
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
     related_disease + disease_family + yearly_income + bmi30 +
-    strata(region, age_strata),
+    strata(region, age_strata, sex),
   data = data, ties = "breslow"
 )
 
@@ -239,11 +234,10 @@ fish_model3 <- coxph(
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
     sauce_weekly + weight_weekly +
     # other variables
-    sex +
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
     related_disease + disease_family + yearly_income + bmi30 +
-    strata(region, age_strata),
+    strata(region, age_strata, sex),
   data = data, ties = "breslow"
 )
 
@@ -272,11 +266,10 @@ meat_model2 <- coxph(
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
     sauce_weekly + weight_weekly +
     # other variables
-    sex +
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
     related_disease + disease_family + yearly_income +
-    strata(region, age_strata),
+    strata(region, age_strata, sex),
   data = data, ties = "breslow"
 )
 
@@ -295,11 +288,10 @@ poultry_model2 <- coxph(
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
     sauce_weekly + weight_weekly +
     # other variables
-    sex +
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
     related_disease + disease_family + yearly_income +
-    strata(region, age_strata),
+    strata(region, age_strata, sex),
   data = data, ties = "breslow"
 )
 
@@ -318,11 +310,10 @@ fish_model2 <- coxph(
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
     sauce_weekly + weight_weekly +
     # other variables
-    sex +
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
     related_disease + disease_family + yearly_income +
-    strata(region, age_strata),
+    strata(region, age_strata, sex),
   data = data, ties = "breslow"
 )
 
