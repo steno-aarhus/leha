@@ -13,6 +13,7 @@ Imports:
     gert,
     ggplot2,
     ggsurvfit,
+    graphPAF,
     gtsummary,
     here,
     Hmisc,
