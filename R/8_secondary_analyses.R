@@ -89,7 +89,7 @@ data <- data %>%
 
 ## model 2 -----------------------------------------------------------------
 fit_nonspecific <- coxph(Surv(survival_time, nafld == 1) ~ legumes80 +
-                              weight_weekly + age + region + sex +
+                              weight_weekly + strata(age_strata, region, sex) +
                               alcohol_weekly + ethnicity + deprivation + education +
                               cohabitation + physical_activity + smoking +
                               related_disease + disease_family + yearly_income,
