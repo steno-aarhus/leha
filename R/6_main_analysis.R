@@ -44,7 +44,7 @@ data <- data %>%
 # model_formulas <- list(
 #   meat_model1 = create_formula(c("legumes80", "poultry80", "fish80"), covariates_model1),
 #   poultry_model1 = create_formula(c("meats80", "legumes80", "fish80"), covariates_model1),
-#   fish_model1 = create_formula(c("meats80", "legumes80", "poultry80"), covariates_model1),
+#   fish_model1 = create_formula(c("meats80", "legumes80", "poultry80"), covariates_model1)
 # )
 #
 # model_results <- model_formulas |>
