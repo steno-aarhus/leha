@@ -1,5 +1,6 @@
 # Load packages required to define the pipeline:
 library(targets)
+library(magrittr)
 # library(tarchetypes) # Load other packages as needed.
 
 # Set target options:
@@ -42,10 +43,13 @@ list(
   tar_target(
     name = cleaned_data,
     command = import_csv_parquet_prep |>
+      # Need to add ID before converting to duckdb
+      add_id() |>
       arrow::to_duckdb() |>
       drop_ineligible_recalls() |>
-      add_id() |>
-      clean_data()
+      clean_data() |>
+      # Need to end with converting to tibble
+      dplyr::as_tibble()
   ),
   tar_target(
     name = saved_as_parquet_path,

@@ -36,12 +36,11 @@ drop_ineligible_recalls <- function(data) {
 }
 
 add_id <- function(data) {
-  dplyr::mutate(data, id = 1:n(), .before = dplyr::everything())
+  dplyr::mutate(data, id = 1:dplyr::n(), .before = dplyr::everything())
 }
 
 clean_data <- function(data) {
-  data %>%
-    dplyr::mutate(p20077 = as.numeric(p20077))
+  dplyr::mutate(data, p20077 = as.numeric(p20077))
 }
 
 save_to_parquet <- function(data, path) {
