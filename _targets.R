@@ -20,13 +20,39 @@ tar_option_set(
 # Run the R scripts in the R/ folder with your custom functions:
 # tar_source()
 # Or just some files:
-# source(here::here("R/functions.R"))
+source(here::here("R/functions.R"))
+
+# Constants
+
+username <- "FieLangmann"
+parquet_path <- here::here("data/data.parquet")
 
 # Things to run in order to work.
 list(
-    tar_target(
-        name = download_project_data,
-        command = ukbAid::download_data(username = "FieLangmann", file_ext = "parquet"),
-        format = "file"
-    )
+  tar_target(
+    name = project_data_csv_path,
+    command = ukbAid::download_data(username = username, file_ext = "csv"),
+    format = "file"
+  ),
+  tar_target(
+    name = project_data_parquet_prep,
+    command = csv_to_parquet_prep(project_data_csv_path)
+  ),
+  tar_target(
+    name = saved_as_parquet_path,
+    command = project_data_parquet_prep |>
+      arrow::write_parquet(parquet_path),
+    format = "file"
+  ),
+  tar_target(
+    name = uploaded_rap_path,
+    command = saved_as_parquet_path |>
+      ukbAid::upload_data(username = username),
+    format = "file"
+  ),
+  tar_target(
+    name = project_data_path,
+    command = ukbAid::download_data(username = username, file_ext = "parquet"),
+    format = "file"
+  )
 )
