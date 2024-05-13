@@ -14,7 +14,7 @@ library(broom)
 # Load data --------------------------------------------------------
 targets::tar_make()
 # Restart session
-source(here::here("R/1_data_start.R"))
+data <- arrow::read_parquet(here("data/data.parquet"))
 
 # Legumes including peas; substitution models ------------------------------
 # Weekly substituting 80 g legumes including peas (NHS 1 portion beans = 80 g)

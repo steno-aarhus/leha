@@ -11,7 +11,6 @@ library(ggsurvfit)
 library(ggplot2)
 
 # 1. change /targets.R to "csv", run targets::tar_make(), and convert to parquet (without saving data on RAP)
-# 2. run 1_data_start.R
 # 3. run 2_data_management.R (without saving data on RAP)
 
 

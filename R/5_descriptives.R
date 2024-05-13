@@ -12,7 +12,7 @@ library(flextable)
 # Load data ---------------------------------------------------------------
 targets::tar_make()
 # Restart session
-source(here::here("R/1_data_start.R"))
+data <- arrow::read_parquet(here("data/data.parquet"))
 
 # Table 1 -----------------------------------------------------------------
 table1 <- data %>%
