@@ -35,18 +35,22 @@ list(
     format = "file"
   ),
   tar_target(
-    name = project_data_parquet_prep,
+    name = import_csv_parquet_prep,
     command = project_data_csv_path |>
-      csv_to_parquet_prep() |>
-      arrow::as_arrow_table() |>
+      csv_to_parquet_prep()
+  ),
+  tar_target(
+    name = cleaned_data,
+    command = import_csv_parquet_prep |>
+      arrow::to_duckdb() |>
       drop_ineligible_recalls() |>
       add_id() |>
       clean_data()
   ),
   tar_target(
     name = saved_as_parquet_path,
-    command = project_data_parquet_prep |>
-      arrow::write_parquet(parquet_path),
+    command = cleaned_data |>
+      save_to_parquet(parquet_path),
     format = "file"
   )
   # tar_target(

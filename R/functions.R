@@ -43,3 +43,8 @@ clean_data <- function(data) {
   data %>%
     dplyr::mutate(p20077 = as.numeric(p20077))
 }
+
+save_to_parquet <- function(data, path) {
+  arrow::write_parquet(data, path)
+  path
+}
