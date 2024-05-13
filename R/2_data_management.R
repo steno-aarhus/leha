@@ -5,14 +5,6 @@ library(tidyr)
 library(stringr)
 
 # Remove ineligible number of recalls ------------
-data <- data %>%
-subset(p20077>=2)
-data <- data %>%
-  mutate(p20077 = as.numeric(p20077))
-
-# Add ID ------------------------------------------------------------------
-data <- data %>%
-  mutate(id = 1:n(), .before = everything())
 
 # Remove variables and columns --------------------------------------------
 # Delete follow-up instances for confounder variables

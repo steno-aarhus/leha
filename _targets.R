@@ -36,23 +36,28 @@ list(
   ),
   tar_target(
     name = project_data_parquet_prep,
-    command = csv_to_parquet_prep(project_data_csv_path)
+    command = project_data_csv_path |>
+      csv_to_parquet_prep() |>
+      arrow::as_arrow_table() |>
+      drop_ineligible_recalls() |>
+      add_id() |>
+      clean_data()
   ),
   tar_target(
     name = saved_as_parquet_path,
     command = project_data_parquet_prep |>
       arrow::write_parquet(parquet_path),
     format = "file"
-  ),
-  tar_target(
-    name = uploaded_rap_path,
-    command = saved_as_parquet_path |>
-      ukbAid::upload_data(username = username),
-    format = "file"
-  ),
-  tar_target(
-    name = project_data_path,
-    command = ukbAid::download_data(username = username, file_ext = "parquet"),
-    format = "file"
   )
+  # tar_target(
+  #   name = uploaded_rap_path,
+  #   command = saved_as_parquet_path |>
+  #     ukbAid::upload_data(username = username),
+  #   format = "file"
+  # ),
+  # tar_target(
+  #   name = project_data_path,
+  #   command = ukbAid::download_data(username = username, file_ext = "parquet"),
+  #   format = "file"
+  # )
 )

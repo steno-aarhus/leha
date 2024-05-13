@@ -30,3 +30,16 @@ csv_to_parquet_prep <- function(path) {
     data_csv_dates
   ))
 }
+
+drop_ineligible_recalls <- function(data) {
+  dplyr::filter(data, p20077>=2)
+}
+
+add_id <- function(data) {
+  dplyr::mutate(data, id = 1:n(), .before = dplyr::everything())
+}
+
+clean_data <- function(data) {
+  data %>%
+    dplyr::mutate(p20077 = as.numeric(p20077))
+}
