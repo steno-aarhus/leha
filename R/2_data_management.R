@@ -4,41 +4,10 @@ library(magrittr)
 library(tidyr)
 library(stringr)
 
-# Remove ineligible number of recalls ------------
-
-# Remove variables and columns --------------------------------------------
-# Delete follow-up instances for confounder variables
-variables_to_edit <- c("p738", "p2443", "p2453", "p3456", "p6150",
-                       "p20002","p20107", "p20110", "p20111", "p20161", "p20162",
-                       "p21000", "p22040", "p22506", "p23104", "p2443",
-                       "p2453", "p6141", "p709")
-data <- data %>%
-  select(-matches(paste0(variables_to_edit, "_i[1-4]")))
-
-
 # Recoding covariables (not foods) ------------------------------------------------------
 
-data <- data %>% mutate(
-  sex = p31,
-  sex = as.factor(sex),
-  age = p21022,
-  age = as.numeric(age),
-  age_strata = case_when(
-    age < 45 ~ 0,
-    age >= 45 & age <= 49 ~ 1,
-    age >= 50 & age <= 54 ~ 2,
-    age >= 55 & age <= 59 ~ 3,
-    age >= 60 & age <= 64 ~ 4,
-    age >= 65 ~ 5
-    ),
-  age_strata = as.factor(age_strata),
-  ethnicity = case_when(
-    p21000_i0 == "White" | p21000_i0 == "British" | p21000_i0 == "Irish" | p21000_i0 == "Any other white background" ~ "white",
-    p21000_i0 == "Chinese" | p21000_i0 == "Asian or Asian British" | p21000_i0 =="Indian" | p21000_i0 == "Pakistani" | p21000_i0 == "Bangladeshi" | p21000_i0 == "Any other Asian background" ~ "asian",
-    p21000_i0 == "Black or Black British" | p21000_i0 == "Caribbean" | p21000_i0 == "African" | p21000_i0 == "Any other Black background" ~ "black",
-    p21000_i0 == "Mixed" | p21000_i0 == "White and Black Caribbean" |p21000_i0 == "White and Black African" | p21000_i0 == "White and Asian" | p21000_i0 == "Any other mixed background" |
-    p21000_i0 == "Other ethnic group" | p21000_i0 == "Do not know" | p21000_i0 == "Prefer not to answer" | str_detect(p21000_i0, "NA") ~ "mixed or other"
-    ),
+data <- data |>
+  mutate(
   deprivation = p22189,
   deprivation_quint = ntile(deprivation, 5),
   deprivation_quint = as.factor(deprivation_quint),

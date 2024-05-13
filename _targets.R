@@ -46,8 +46,12 @@ list(
       # Need to add ID before converting to duckdb
       add_id() |>
       arrow::to_duckdb() |>
-      drop_ineligible_recalls() |>
+      remove_ineligible_recalls() |>
+      drop_followup_confounders() |>
+      rename_variables() |>
       clean_data() |>
+      add_age_strata() |>
+      add_ethnicity() |>
       # Need to end with converting to tibble
       dplyr::as_tibble()
   ),
