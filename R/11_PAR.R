@@ -53,12 +53,15 @@ meat_model2 <- coxph(
 )
 # PAF
 paf_meat <- PAF_calc_continuous(model = meat_model2, riskfactor_vec = c("legumes80"),
-                                q_vec = c(0.1), calculation_method = "D",
+                                q_vec = c(0.5), calculation_method = "D",
                                 data = data, ci = TRUE, boot_rep = 10, verbose=TRUE,
                                 # ci_level = 0.95, ci_type = c("norm"),
                                 t_vector=65)
 
 
+
+
+# incidence rate differences between unadjusted and substitution
 poisson <- rqlm(nafld ~ legumes80 + poultry80 + fish80 +
                   # other food components
                   cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
