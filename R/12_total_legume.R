@@ -13,16 +13,15 @@ targets::tar_make()
 # Restart session
 source(here::here("R/1_data_start.R"))
 
-# main analyses
+# one serving of legumes/week (80 g)
 data <- data %>%
   mutate(
-    legumes80 = legume_weekly / 80,
+    legumes80 = legume_weekly / 80
   )
 
 # model 2
 total_model2 <- coxph(
   Surv(survival_time, nafld == 1) ~ legumes80 +
-    # removing meat
     # other food components
     cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
     dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
