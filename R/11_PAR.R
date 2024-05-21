@@ -13,7 +13,6 @@ library(ggsurvfit)
 library(ggplot2)
 library(dplyr)
 library(here)
-library(graphPAF)
 library(rqlm)
 
 # load data
