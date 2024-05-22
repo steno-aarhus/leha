@@ -119,6 +119,43 @@ data <- data %>%
   select(-matches(paste0(delete)))
 
 
+# time of last completed 24h recall as baseline date
+data <- data %>%
+  mutate(ques_comp_t0 = p105010_i0,
+         ques_comp_t1 = p105010_i1,
+         ques_comp_t2 = p105010_i2,
+         ques_comp_t3 = p105010_i3,
+         ques_comp_t4 = p105010_i4,
+         # Removing specific time stamp
+         ques_comp_t0 = substr(ques_comp_t0, 1, 10),
+         ques_comp_t1 = substr(ques_comp_t1, 1, 10),
+         ques_comp_t2 = substr(ques_comp_t2, 1, 10),
+         ques_comp_t3 = substr(ques_comp_t3, 1, 10),
+         ques_comp_t4 = substr(ques_comp_t4, 1, 10)
+  )
+
+
+# New column with baseline start date as last completed questionnaire
+data <- data %>%
+  # Convert ques_0 to ques_4 to date format
+  mutate(across(starts_with("ques_"), as.Date)) %>%
+  # Gather all columns into key-value pairs
+  pivot_longer(cols = starts_with("ques_"), names_to = "questionnaire", values_to = "date_filled") %>%
+  # Group by participant ID and select the row with the latest date_filled for each participant
+  group_by(id) %>%
+  slice(which.max(date_filled)) %>%
+  ungroup() %>%
+  # Rename the remaining column to indicate the last filled questionnaire
+  rename(last_filled_questionnaire = questionnaire)
+
+
+data <- data %>%
+  mutate(date_filled = as.Date(date_filled))
+
+remove <- c("p105010_i0", "p105010_i1", "p105010_i2", "p105010_i3","p105010_i4")
+data <- data %>%
+  select(-matches(remove))
+
 
 # Define variables for survival analysis ----------------------------------
 # Date of death and loss to follow up
@@ -149,7 +186,6 @@ remove(month_names)
 
 
 # adding 15 as DD for all participants:
-
 data$date_birth <- as.Date(paste0(data$date_birth, "-15"))
 
 
@@ -204,6 +240,51 @@ data <- data %>%
     !is.na(icd10_nafld_date) | !is.na(icd10_nash_date) |
       !is.na(icd9_nafld_date) | !is.na(icd9_nash_date) ~ 1,
     TRUE ~ 0))
+
+# counting and removing those with event before baseline
+# defining time in study
+data <- data %>%
+  mutate(
+    survival_time_nafld = case_when(
+      !is.na(icd10_nafld_date) ~ as.numeric(difftime(icd10_nafld_date, date_filled, units = "days")),
+      TRUE ~ NA),
+    survival_time_nash = case_when(
+      !is.na(icd10_nash_date) ~ as.numeric(difftime(icd10_nash_date, date_filled, units = "days")),
+      TRUE ~ NA),
+    survival_time_ltfu = case_when(
+      !is.na(loss_to_follow_up) ~ as.numeric(difftime(loss_to_follow_up, date_filled, units = "days")),
+      TRUE ~ NA),
+    survival_time_death = case_when(
+      !is.na(date_of_death) ~ as.numeric(difftime(date_of_death, date_filled, units = "days")),
+      TRUE ~ NA),
+    survival_time_cenc = difftime(censoring, date_filled, units = "days"),
+    time = pmin(survival_time_death, survival_time_cenc, survival_time_ltfu,
+                survival_time_nash, survival_time_nafld, na.rm = TRUE),
+    time = time/365.25
+  )
+
+# counting and removing those with event before baseline
+data_time <- data %>%
+  subset(data$time<0)
+
+nafld_nash <-sum(!is.na(data_time$survival_time_nafld)
+            | !is.na(data_time$survival_time_nash))
+
+ltfu <- sum(!is.na(data_time$survival_time_ltfu)
+            & is.na(data_time$survival_time_nafld)
+            & is.na(data_time$survival_time_nash)
+            & is.na(data_time$survival_time_death))
+
+death <- sum(!is.na(data_time$survival_time_death)
+             & is.na(data_time$survival_time_nafld)
+             & is.na(data_time$survival_time_nash)
+             & is.na(data_time$survival_time_ltfu))
+
+
+# remove those with event before baseline
+data <- data %>%
+  subset(data$time>=0)
+
 
 # Save data ---------------------------------------------------------------
 arrow::write_parquet(data, here("data/data.parquet"))

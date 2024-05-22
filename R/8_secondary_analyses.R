@@ -30,7 +30,7 @@ fit_meat <- eventglm::cumincglm(Surv(time, nafld == 1) ~
                                   #other food components
                                   cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                                   dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                                  veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                                  veggie_weekly + potato_weekly + egg_weekly +
                                   non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                                   sauce_weekly + weight_weekly +
                                   #other variables
@@ -50,7 +50,7 @@ fit_poultry <- eventglm::cumincglm(Surv(time, nafld == 1) ~
                           #other food components
                           cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                          veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                          veggie_weekly + potato_weekly + egg_weekly +
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                           sauce_weekly + weight_weekly +
                           #other variables
@@ -69,7 +69,7 @@ fit_fish <- eventglm::cumincglm(Surv(time, nafld == 1) ~
                        #other food components
                        cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly + meat_sub_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                        sauce_weekly + weight_weekly +
                     #other variables
@@ -89,7 +89,7 @@ data <- data %>%
 
 ## model 2 -----------------------------------------------------------------
 fit_nonspecific <- coxph(Surv(survival_time, nafld == 1) ~ legumes80 +
-                              weight_weekly + age + region + sex +
+                              weight_weekly + strata(age_strata, region, sex) +
                               alcohol_weekly + ethnicity + deprivation + education +
                               cohabitation + physical_activity + smoking +
                               related_disease + disease_family + yearly_income,
