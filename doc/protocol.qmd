@@ -293,7 +293,7 @@ liver disease.
 
 ## Measured variables
 
-**Exposures:** g/day consumption of legumes, meats, poultry, and fish
+**Exposures:** g/week consumption of legumes, meats, poultry, and fish
 
 **Outcomes:** non-alcoholic fatty liver disease (NAFLD) and
 non-alcoholic steatohepatitis (NASH)
