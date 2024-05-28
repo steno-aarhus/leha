@@ -119,13 +119,13 @@ non-meat components for legumes on the risk of NAFLD and NASH.
 **Hypothesis**
 
 -   Replacing meats and poultry intakes with legumes is associated with
-    a lower risk of MASLD and MASH.
+    a lower risk of NAFLD and NASH.
 
 -   Replacing fish intake with legumes is not associated with a lower
-    risk of MASLD and MASH.
+    risk of NAFLD and NASH.
 
 -   Replacing non-specific foods with legumes is not associated with a
-    lower risk of MASLD and MASH.
+    lower risk of NAFLD and NASH.
 
 # Design plan
 
@@ -255,7 +255,7 @@ NASH are diagnosed based on ICD-10-code, K75.8 [@Biobank2020;
 
 Directed acyclic graphs were used to illustrate the potential and known
 association between covariates of the association between substituting
-meat, poultry or fish for legumes and development of MAFLD and MASH.
+meat, poultry or fish for legumes and development of NAFLD and NASH.
 Information on covariates will include information on all other dietary
 components based on total weight by food group intakes as g/day
 retrieved from the Oxford WebQ (fruits, vegetables, cereal products,
@@ -328,7 +328,7 @@ participants in UKB are still followed-up today, participants will be
 right censored at the date of the most recent registry update of full
 follow-up for the outcomes. Otherwise, censoring will occur at the event
 of death, loss to follow-up from the study, or date of diagnosis of
-MASLD or MASH, whichever comes first. The substitution analyses will be
+NAFLD or NASH, whichever comes first. The substitution analyses will be
 conducted with different adjustment levels.
 
 **Model 1** will be minimally adjusted for strata of age at recruitment
@@ -351,7 +351,7 @@ and cancer (yes, no, unknown).
 
 **Model 3** will further adjust for anthropometry (BMI ≥ 30 kg/m2), as
 obesity may either confound or mediate the association between replacing
-red and processed meats, poultry, or fish with legumes and risk of MASLD
+red and processed meats, poultry, or fish with legumes and risk of NAFLD
 
 ### Secondary and sensitivity analyses
 
