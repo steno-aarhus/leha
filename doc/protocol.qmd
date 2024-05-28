@@ -1,5 +1,5 @@
 ---
-title: "Protocol: Legume consumption and risk of metabolic dysfunction-associated steatotic liver disease in the UK Biobank Study: a prospective follow-up"
+title: "Protocol: Legume consumption and risk of gallbladder diseases in the UK Biobank Study: a prospective follow-up"
 author:
   - name: Fie Langmann
     orcid: "0000-0003-3474-9346"
@@ -62,7 +62,7 @@ library(ukbAid)
 
 # Study information
 
-## Legume consumption and risk of metabolic dysfunction-associated steatotic liver disease in the UK Biobank Study: a prospective follow-up
+## Legume consumption and risk of gallbladder diseases in the UK Biobank Study: a prospective follow-up
 
 ## Description
 
@@ -120,13 +120,13 @@ non-meat components for legumes on the risk of MASLD and MASH.
 **Hypothesis**
 
 -   Replacing meats and poultry intakes with legumes is associated with
-    a lower risk of MASLD and MASH.
+    an increased risk of gallbladder diseases.
 
--   Replacing fish intake with legumes is not associated with a lower
-    risk of MASLD and MASH.
+-   Replacing fish intake with legumes is not associated with the risk
+    of gallbladder diseases.
 
--   Replacing non-specific foods with legumes is not associated with a
-    lower risk of MASLD and MASH.
+-   Replacing non-specific foods with legumes is not associated with
+    gallbladder diseases.
 
 # Design plan
 
@@ -166,11 +166,10 @@ All data was collected in UK Biobank prior to access and data analyses.
 ## Explanation of existing data
 
 The UK Biobank is a large national cohort of participants in the UK,
-with data collected in a standardized format the the sole purpose of
+with data collected in a standardized format with the sole purpose of
 providing a data resource for researchers to use for health research.
 All information about collection procedures, limitations, and sources of
 bias are well established and described by the UK Biobank resource.
-
 
 ## Data collection procedures
 
@@ -183,10 +182,10 @@ computer assisted personal interview [@Fry2017]. Professionally trained
 staff did physical, anthropometric, and biomedical measures following
 standardized procedures [@Sudlow2015]. Diet was assessed through a
 touchscreen questionnaire at baseline and a 24-hour dietary assessment
-tool designed for the UK Biobank study. The 24-hour dietary assessment
-tool was completed by participants up to five times and 210,965
-individuals completed one or more 24-hour dietary assessments
-[@Biobank2021].
+tool (Oxford WebQ) designed for the UK Biobank study. The 24-hour
+dietary assessment tool was completed by participants up to five times
+and 210,965 individuals completed one or more 24-hour dietary
+assessments [@Biobank2021].
 
 **Assessment of diet**
 
@@ -198,17 +197,17 @@ questionnaire aims to measure the type and quantity of food and
 beverages consumed in the last 24 hours and estimate nutrients from the
 entered information through the UK Nutrient Databank Food Composition
 Tables [@Liu2011; @PerezCornago2021]. The Oxford WebQ was compared with
-interviewer-administered 24-hour dietary recalls and validated for
-macronutrients and total energy intake using recovery biomarkers and
-compared with a single food frequency questionnaire [@Liu2011;
-@Greenwood2019; @Carter2019]. Recently, the Oxford WebQ nutrient
-calculation was updated to provide more detailed information on nutrient
-intakes and to incorporate new dietary variables [@PerezCornago2021].
-Participants recruited between April 2009 and September 2010 completed
-the Oxford WebQ at baseline (n=70,747). The Oxford WebQ was not
-available until April 2009 and participants recruited before that date
-who provided a valid email address were invited to complete the four
-subsequent 24-hour dietary assessments online [@Kelly2021].
+interviewer-administered 24-hour dietary recalls and validated for macro
+nutrients and total energy intake using recovery biomarkers and compared
+with a single food frequency questionnaire [@Liu2011; @Greenwood2019;
+@Carter2019]. Recently, the Oxford WebQ nutrient calculation was updated
+to provide more detailed information on nutrient intakes and to
+incorporate new dietary variables [@PerezCornago2021]. Participants
+recruited between April 2009 and September 2010 completed the Oxford
+WebQ at baseline (n=70,747). The Oxford WebQ was not available until
+April 2009 and participants recruited before that date who provided a
+valid email address were invited to complete the four subsequent 24-hour
+dietary assessments online [@Kelly2021].
 
 **Legumes**
 
@@ -264,13 +263,15 @@ beverages), sex (male, female), age (years), alcohol consumption (g
 ethanol/day as restricted cubic splines), ethnic group (white, mixed
 background, Asian, black, other, and unknown), socioeconomic status
 (Townsend deprivation score \[quintiles\], educational level),
-geographical region of recruitment (ten UK regions), cohabitation (partner, children, sibling, parent, grandparent, grandchild, other related, other unrelated, no answer), anthropometry (BMI \[kg/m2\]), physical activity
-(low \≤918 MET-min/week\], moderate \[918-3706 MET-min/week\], and high \[≥3706
-MET-min/week\], unknown) [@Cassidy2016], smoking status (never, former, current 1-15
-cigarettes per day, current ≥15 cigarettes per day, and smoking status unknown); metabolic
-risk factors (self-reported \[yes, no, unknown\] diagnoses of
+geographical region of recruitment (ten UK regions), cohabitation
+(partner, children, sibling, parent, grandparent, grandchild, other
+related, other unrelated, no answer), anthropometry (BMI \[kg/m2\]),
+physical activity (low ≤918 MET-min/week\], moderate \[918-3706
+MET-min/week\], and high \[≥3706 MET-min/week\], unknown)
+[@Cassidy2016], smoking status (never, former, current 1-15 cigarettes
+per day, current ≥15 cigarettes per day, and smoking status unknown);
+metabolic risk factors (self-reported \[yes, no, unknown\] diagnoses of
 diabetes, hypertension, and high cholesterol).
-
 
 ## Sample size
 
