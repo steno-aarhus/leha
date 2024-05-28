@@ -298,7 +298,7 @@ liver disease.
 **Outcomes:** non-alcoholic fatty liver disease (NAFLD) and
 non-alcoholic steatohepatitis (NASH)
 
-**Covariates:** g/day consumption of fruits, vegetables, cereal
+**Covariates:** g/week consumption of fruits, vegetables, cereal
 products, dairy products, egg products, nuts, mixed dishes, condiments,
 added sugar and sweets, non-alcoholic beverages, and alcoholic
 beverages. Sex, age, ethnic group, Townsend deprivation score,
