@@ -257,23 +257,25 @@ Directed acyclic graphs were used to illustrate the potential and known
 association between covariates of the association between substituting
 meat, poultry or fish for legumes and development of MAFLD and MASH.
 Information on covariates will include information on all other dietary
-components based on total weight by food group intakes as g/day and
-kcal/day retrieved from the Oxford WebQ (fruits, vegetables, cereal
-products, dairy products, egg products, nuts, mixed dishes, condiments,
-added sugar and sweets, non-alcoholic beverages, and alcoholic
-beverages), sex (male, female), age (years), alcohol consumption (g
-ethanol/day as restricted cubic splines), ethnic group (white, mixed
-background, Asian, black, other, and unknown), socioeconomic status
+components based on total weight by food group intakes as g/day
+retrieved from the Oxford WebQ (fruits, vegetables, cereal products,
+dairy products, egg products, nuts, mixed dishes, condiments, added
+sugar and sweets, non-alcoholic beverages, and alcoholic beverages), sex
+(male, female), age (years), alcohol consumption (g ethanol/day), ethnic
+group (white, mixed or other, Asian, black), socioeconomic status
 (Townsend deprivation score \[quintiles\], educational level),
 geographical region of recruitment (ten UK regions), cohabitation
-(partner, children, sibling, parent, grandparent, grandchild, other
-related, other unrelated, no answer), anthropometry (BMI \[kg/m2\]),
-physical activity (low ≤918 MET-min/week\], moderate \[918-3706
-MET-min/week\], and high \[≥3706 MET-min/week\], unknown)
-[@Cassidy2016], smoking status (never, former, current 1-15 cigarettes
-per day, current ≥15 cigarettes per day, and smoking status unknown);
-metabolic risk factors (self-reported \[yes, no, unknown\] diagnoses of
-diabetes, hypertension, and high cholesterol).
+(alone, with spouse/partner, with other non-partner, no answer),
+anthropometry (BMI \[kg/m2\]), physical activity (low \[≤918
+MET-min/week\], moderate \[918-3706 MET-min/week\], high \[≥3706
+MET-min/week\], and unknown) [@Cassidy2016], smoking status (never,
+former, current 1-15 cigarettes per day, current ≥15 cigarettes per day,
+and smoking status unknown); metabolic risk factors (self-reported \[yes
+or no/unknown\] diagnoses of diabetes, hypertension, stroke, myocardial
+infarction, gallbladder disease, alcoholic liver disease or high
+cholesterol); family history of metabolic risk factors (self-reported
+\[yes or no/unknown\] diagnoses of diabetes, hypertension, stroke, or
+heart disease), and cancer (yes, no, unknown).
 
 ## Sample size
 
@@ -291,19 +293,18 @@ liver disease.
 
 ## Measured variables
 
-**Exposures:** g/day and kcal/day consumption of legumes, meats,
-poultry, and fish
+**Exposures:** g/day consumption of legumes, meats, poultry, and fish
 
-**Outcomes:** metabolic dysfunction-associated steatotic liver disease
-(MASLD) and metabolic dysfunction-associated steatohepatitis (MASH)
+**Outcomes:** non-alcoholic fatty liver disease (NAFLD) and
+non-alcoholic steatohepatitis (NASH)
 
-**Covariates:** g/day and kcal/day consumption of fruits, vegetables,
-cereal products, dairy products, egg products, nuts, mixed dishes,
-condiments, added sugar and sweets, non-alcoholic beverages, and
-alcoholic beverages. Sex, age, ethnic group, Townsend deprivation score,
+**Covariates:** g/day consumption of fruits, vegetables, cereal
+products, dairy products, egg products, nuts, mixed dishes, condiments,
+added sugar and sweets, non-alcoholic beverages, and alcoholic
+beverages. Sex, age, ethnic group, Townsend deprivation score,
 educational level, geographical region of recruitment (ten UK regions),
-lives with a wife or partner, BMI, physical activity, smoking status,
-and self-reported diabetes, hypertension, and high cholesterol.
+cohabitation, BMI, physical activity, smoking status, own and family
+history of metabolic risk factors, and cancer.
 
 # Analysis plan
 
@@ -312,15 +313,14 @@ and self-reported diabetes, hypertension, and high cholesterol.
 ### Main analyses
 
 Standard summary statistics will be performed to describe the
-distribution of total legume consumption as an average g/day based on
-participants' 24-h WebQ responses and across baseline characteristics of
-participants in the study. Multi-variable adjusted Cox Proportional
-Hazards regression models will be used to estimate the hazard ratios for
-each of the outcomes based on replacing meats, poultry, or fish with
-legumes.
+distribution of baseline characteristics and food consumption as an
+average g/day based on participants' 24-h WebQ responses. Multi-variable
+adjusted Cox Proportional Hazards regression models will be used to
+estimate the hazard ratios for NAFLD based on replacing meats, poultry,
+or fish with legumes.
 
 -   Replacing red and processed meats, poultry, or fish with legumes
-    (e.g., per 30 g/day)
+    (e.g., per 80 g/week)
 
 Age will be used as the underlying time scale in the analyses. Follow-up
 time will begin with participants' last completed Oxford WebQ. As
@@ -339,16 +339,15 @@ meats; poultry; fish). When substituting g legumes/day, the unit for all
 dietary components will be g/day and the analyses will be adjusted for
 total amount of consumed foods in g/day.
 
-**Model 2** will be further adjusted for alcohol consumption (g/day as
-restricted cubic splines), ethnic group (white, mixed, Asian, black,
-other, unknown), socioeconomic status (Townsend deprivation score,
-educational level), living with a wife or partner (yes, no), physical
-activity (low \[0-9.9 METs/week\], moderate \[10-49.9 METs/week\], and
-high \[≥50 METs/week\], unknown), smoking status (never, former, current
-1-15 cigarettes per day, current ≥15 cigarettes per day, current but
-number of cigarettes per day unknown, and smoking status unknown), and
-self-reported diagnosis of diabetes, hypertension, or high cholesterol
-(yes, no, unknown).
+**Model 2** will be further adjusted for alcohol consumption (g/day),
+ethnic group (white, mixed, Asian, black), socioeconomic status
+(Townsend deprivation score, educational level), cohabitation (alone,
+with partner, with other non-partner, unknown), physical activity (low
+\[≤918 MET-min/week\], moderate \[918-3706 MET-min/week\], high \[≥3706
+MET-min/week\], and unknown), smoking status (never, former, current
+1-15 cigarettes per day, current ≥15 cigarettes per day, and unknown),
+own and family history of metabolic risk factors (yes or no/unknown),
+and cancer (yes, no, unknown).
 
 **Model 3** will further adjust for anthropometry (BMI ≥ 30 kg/m2), as
 obesity may either confound or mediate the association between replacing
@@ -356,9 +355,9 @@ red and processed meats, poultry, or fish with legumes and risk of MASLD
 
 ### Secondary and sensitivity analyses
 
-To evaluate the association between overall legume intake and
-hepatobiliary disease risk, quintiles of legume intake (g/day) will be
-evaluated with adjustment levels similar to the substitution models.
+To evaluate the association between overall legume intake and NAFLD
+risk, hazard ratios associated with a 80 g/week increase in legumes will
+be estimated following adjustment levels in model 2.
 
 Peas are increasingly used as a plant-based meat alternative in the food
 industry [@Maningat2022]. Despite this, peas are also included in the
@@ -372,12 +371,9 @@ portion size of peas weighing 80 g [@Services2021].
 To evaluate the robustness of the main analyses, sensitivity analyses
 will include varying numbers of Oxford WebQ returns, and removal of
 participants with increased serum levels of alanine-aminotransferase
-(\>45 U/L for women and \>70 U/L for men) and aspartate-aminotransferase
-(\>35 U/L for women and \>45 U/L for men). Sensitivity analyses will
+(\>40 U/L) and aspartate-aminotransferase. Sensitivity analyses will
 further include removal of participants in the highest 10% percentile of
-alcohol intake and removal of those with previous diseases of the liver,
-although not necessarily MAFLD, as they may be predisposed for
-developing further liver diseases.
+alcohol intake.
 
 All analyses will be conducted in R with a significance level of 5%.
 
@@ -400,4 +396,3 @@ containing 1 or 0, for ratios or absolute measures respectively.
 # Other
 
 # References
-
