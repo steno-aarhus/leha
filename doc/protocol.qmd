@@ -1,5 +1,5 @@
 ---
-title: "Protocol: Legume consumption and risk of metabolic dysfunction-associated steatotic liver disease in the UK Biobank Study: a prospective follow-up"
+title: "Protocol: Substituting red and processed meat, poultry, and fish with legumes and risk of non-alcoholic fatty liver disease in a large prospective cohort"
 author:
   - name: Fie Langmann
     orcid: "0000-0003-3474-9346"
@@ -62,18 +62,17 @@ library(ukbAid)
 
 # Study information
 
-## Legume consumption and risk of metabolic dysfunction-associated steatotic liver disease in the UK Biobank Study: a prospective follow-up
+## Substituting red and processed meat, poultry, and fish with legumes and risk of non-alcoholic fatty liver disease in a large prospective cohort
 
 ## Description
 
 Western diets has been shown to cause a multitude of non-communicable
-diseases. Metabolic dysfunction-associated steatotic liver disease
-(MASLD) is the leading chronic disease globally and strongly associated
-with Western dietary patterns. Based on a combined environmental and
-health related focus, legumes are increasingly being recommended as a
-meat substitute, and this study therefore investigates the association
-between substituting legumes for meats, poultry, and fish and the risk
-of developing MASLD.
+diseases. Non-alcoholic fatty liver disease (NAFLD) is the leading
+chronic disease globally and strongly associated with Western dietary
+patterns. Based on a combined environmental and health related focus,
+legumes are increasingly being recommended as a meat substitute, and
+this study therefore investigates the association between substituting
+legumes for meats, poultry, and fish and the risk of developing NAFLD.
 
 `r ukbAid::statements$protocol`
 
@@ -85,12 +84,12 @@ The EAT-Lancet reference diet was introduced in 2019 as a globally
 sustainable and healthy diet emphasizing plant-based proteins instead of
 animal-based proteins, e.g., with a recommendation of 100 g legumes
 daily [@Loken2020; @Springmann2020; @Willett2019]. Legume consumption
-minimizes the risk of metabolic dysfunction-associated steatotic liver
-disease (MASLD) in animals, by reducing build-up of fats in the liver
-[@Hong2016; @Zhang2023; @Bouchenak2013; @Son2014; @Rigotti1989]. MASLD
-is the most prevalent chronic liver disease in the Western countries
-with a prevalence of 15-45 % [@Benedict2017; @Younossi2016]. The disease
-is caused by Western diets high in red meat, fats, and sugars, obesity,
+minimizes the risk of non-alcoholic fatty liver disease (NAFLD) in
+animals, by reducing build-up of fats in the liver [@Hong2016;
+@Zhang2023; @Bouchenak2013; @Son2014; @Rigotti1989]. NAFLD is the most
+prevalent chronic liver disease in the Western countries with a
+prevalence of 15-45 % [@Benedict2017; @Younossi2016]. The disease is
+caused by Western diets high in red meat, fats, and sugars, obesity,
 physical inactivity, and smoking [@Benedict2017; @Younossi2016;
 @Younossi2018; @AlDayyat2018]. As legumes are a source of both
 carbohydrates and proteins, research frequently compares legumes with
@@ -105,17 +104,17 @@ association of such food intake will not only be caused by the increased
 consumption of one food, but rather the substitution effect including
 various foods. Replacing protein from animal sources with protein from
 plant sources has previously been associated with a substantially lower
-mortality rate and lower risk of MASLD [@Song2016; @Zhang2023].
+mortality rate and lower risk of NAFLD [@Song2016; @Zhang2023].
 Consumption of legumes in Western countries has been negligible to date
 and the impact of markedly increasing intakes of legumes on
 hepatobiliary and other diseases is understudied. Therefore, this study
 aims to investigate the effect of replacing meats, poultry, or fish with
-legumes and the risk of metabolic dysfunction-associated steatohepatitis
-(MASH) or MASLD contingent on potential confounding factors. As it might
-be more feasible for Western populations to include legumes and
-substitute dietary components that are not meats, this study will also
-aim to investigate the effect of a non-specific substitution of dietary
-non-meat components for legumes on the risk of MASLD and MASH.
+legumes and the risk of non-alcoholic steatohepatitis (NASH) or NAFLD
+contingent on potential confounding factors. As it might be more
+feasible for Western populations to include legumes and substitute
+dietary components that are not meats, this study will also aim to
+investigate the effect of a non-specific substitution of dietary
+non-meat components for legumes on the risk of NAFLD and NASH.
 
 **Hypothesis**
 
@@ -233,21 +232,24 @@ as poultry with or without skin, and fried poultry with batter or
 breadcrumbs. Fish will be defined as oily fish, white fish and tinned
 tuna, fried fish with batter or breadcrumbs, and shellfish.
 
-**Metabolic dysfunction-associated steatotic liver disease**
+**Non-alcoholic fatty liver disease**
 
-Incident cases of MASH and MAFLD will be assessed through linkage to the
+Incident cases of NASH and NAFLD will be assessed through linkage to the
 National Health Service registers where diagnosis after hospital
 admission or primary care visits are coded according to the
 International Classification of Diseases and Related Health Problems
-(ICD-10) [@Digital2021]. MASLD was previously known as non-alcoholic
-fatty liver disease (NAFLD), but the nomenclature was changed in 2023 to
-shift focus towards the metabolic factors underlying the disease and not
-merely the lack of alcohol consumption and to aid the prevention and
-early diagnoses of MASLD [@Thornton2023]. Due to this change in
-nomenclature, incident cases of MASLD are diagnosed based on ICD-10-code
-for NAFLD, K76.0, at first admission to hospital, while incident cases
-of MASH are diagnosed based on ICD-10-code for NASH, K75.8
-[@Biobank2020; @Zhang2023a].
+(ICD-10) [@Digital2021]. In 2023, NAFLD underwent a change in
+nomenclature to metabolic dysfunction-associated steatotic liver disease
+(MASLD) to shift focus towards the metabolic factors underlying the
+disease and not merely the lack of alcohol consumption and to aid the
+prevention and early diagnoses of MASLD [@Thornton2023]. However, as
+data was collected prior to this change in nomenclature, cases will be
+classified based on the ICD-10-codes and diagnosis criteria for NAFLD
+and NASH. To avoid assuming that NAFLD and MASLD are the same, this
+study will define incident cases of NAFLD based on ICD-10-code for
+NAFLD, K76.0, at first admission to hospital, while incident cases of
+NASH are diagnosed based on ICD-10-code, K75.8 [@Biobank2020;
+@Zhang2023a].
 
 **Covariates**
 
@@ -398,3 +400,4 @@ containing 1 or 0, for ratios or absolute measures respectively.
 # Other
 
 # References
+
