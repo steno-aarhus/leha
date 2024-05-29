@@ -257,7 +257,7 @@ Directed acyclic graphs were used to illustrate the potential and known
 association between covariates of the association between substituting
 meat, poultry or fish for legumes and development of NAFLD and NASH.
 Information on covariates will include information on all other dietary
-components based on total weight by food group intakes as g/day
+components based on total weight by food group intakes as g/week
 retrieved from the Oxford WebQ (fruits, vegetables, cereal products,
 dairy products, egg products, nuts, mixed dishes, condiments, added
 sugar and sweets, non-alcoholic beverages, and alcoholic beverages), sex
