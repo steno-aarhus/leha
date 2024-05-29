@@ -357,7 +357,7 @@ red and processed meats, poultry, or fish with legumes and risk of NAFLD
 
 To evaluate the association between overall legume intake and NAFLD
 risk, hazard ratios associated with a 80 g/week increase in legumes will
-be estimated following adjustment levels in model 2.
+be estimated following adjustment levels in model 2. A non-specific substitution, adjusted like model 2, will also be conducted to evaluate the association between substituting 80 g/week of legumes for any other dietary component. 
 
 Peas are increasingly used as a plant-based meat alternative in the food
 industry [@Maningat2022]. Despite this, peas are also included in the
