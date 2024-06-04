@@ -10,6 +10,9 @@ library(dplyr)
 library(here)
 library(ggplot2)
 
+# Load data
+data <- read_csv(here("data/data.csv"))
+
 
 # ICD10 codes ---------------------------------------------------------
 # Split the diagnosis-variable into separate columns based on delimiter "|"
