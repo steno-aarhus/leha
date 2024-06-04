@@ -4,6 +4,10 @@ library(magrittr)
 library(tidyr)
 library(stringr)
 
+# Load data
+data <- read_csv(here("data/data.csv"))
+
+
 # Remove ineligible number of recalls ------------
 data <- data %>%
 subset(p20077>=2)
@@ -13,16 +17,6 @@ data <- data %>%
 # Add ID ------------------------------------------------------------------
 data <- data %>%
   mutate(id = 1:n(), .before = everything())
-
-# Remove variables and columns --------------------------------------------
-# Delete follow-up instances for confounder variables
-variables_to_edit <- c("p738", "p2443", "p2453", "p3456", "p6150",
-                       "p20002","p20107", "p20110", "p20111", "p20161", "p20162",
-                       "p21000", "p22040", "p22506", "p23104", "p2443",
-                       "p2453", "p6141", "p709")
-data <- data %>%
-  select(-matches(paste0(variables_to_edit, "_i[1-4]")))
-
 
 # Recoding covariables (not foods) ------------------------------------------------------
 
@@ -233,8 +227,7 @@ data <- data %>% mutate(
   peas = pea_servings * 80) #assuming 1 serving 80g
 
 data <- data %>%
-  rename(alt = p30620_i0,
-         ast = p30650_i0)
+  rename(alt = p30620_i0)
 
 
 # recoding variables for analyses -----------------------------------------
@@ -259,19 +252,17 @@ data <- data %>%
 filtered_data <- subset(data, !is.na(age))
 filtered_data <- subset(filtered_data, !is.na(region))
 filtered_data <- subset(filtered_data, !is.na(sex))
-filtered_data <- subset(filtered_data, !is.na(ethnicity)) #126770
-filtered_data <- subset(filtered_data, !is.na(deprivation)) #126621
-filtered_data <- subset(filtered_data, !is.na(education)) #126261
-filtered_data <- subset(filtered_data, !is.na(cohabitation)) # 125641
-filtered_data <- subset(filtered_data, !is.na(physical_activity)) # no change
-filtered_data <- subset(filtered_data, !is.na(smoking)) # no change
-filtered_data <- subset(filtered_data, !is.na(related_disease)) # no change
-filtered_data <- subset(filtered_data, !is.na(disease_family)) # no change
-filtered_data <- subset(filtered_data, !is.na(yearly_income)) # no change
-filtered_data <- subset(filtered_data, !is.na(bmi30)) #123821
+filtered_data <- subset(filtered_data, !is.na(ethnicity))
+filtered_data <- subset(filtered_data, !is.na(deprivation))
+filtered_data <- subset(filtered_data, !is.na(education))
+filtered_data <- subset(filtered_data, !is.na(cohabitation))
+filtered_data <- subset(filtered_data, !is.na(physical_activity))
+filtered_data <- subset(filtered_data, !is.na(smoking))
+filtered_data <- subset(filtered_data, !is.na(related_disease))
+filtered_data <- subset(filtered_data, !is.na(disease_family))
+filtered_data <- subset(filtered_data, !is.na(yearly_income))
+filtered_data <- subset(filtered_data, !is.na(bmi30)) #123822
 data <- filtered_data
-
-
 
 
 # Remove recoded variables from sorted_data -------------------------------
