@@ -3,7 +3,7 @@
 library(tidyverse)
 
 # Load saved data:
-source(here::here("R/1_data_start.R")) #loads data
+# source(here::here("R/1_data_start.R")) #loads data
 # source(here::here("R/2_data_management.R")) #runs data management
 # source(here::here("R/3_diet_data.R")) #runs diet code
 # source(here::here("R/4_icd10_outcomes_tte.R")) #runs outcome code
