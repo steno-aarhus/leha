@@ -41,7 +41,17 @@ author:
     affiliations:
       - name: Aarhus University
 date: May 28, 2024
-format: html
+format: 
+  pdf: 
+    classoption: twocolumn
+    fontsize: 11pt
+    geometry:
+      - top=2cm
+      - bottom=2cm
+      - left=2cm
+      - right=2cm
+    papersize: a4
+  html: default
 embed-resources: true
 bibliography: masld.bib
 # You can browse all the Citation Styles here: https://github.com/citation-style-language/styles
