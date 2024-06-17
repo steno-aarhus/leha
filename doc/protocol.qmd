@@ -41,7 +41,17 @@ author:
     affiliations:
       - name: Aarhus University
 date: May 28, 2024
-format: html
+format: 
+  pdf: 
+    classoption: twocolumn
+    fontsize: 11pt
+    geometry:
+      - top=2cm
+      - bottom=2cm
+      - left=2cm
+      - right=2cm
+    papersize: a4
+  html: default
 embed-resources: true
 bibliography: masld.bib
 # You can browse all the Citation Styles here: https://github.com/citation-style-language/styles
@@ -60,9 +70,27 @@ editor:
 library(ukbAid)
 ```
 
+```{r upload-protocol}
+#| eval: false
+#| echo: false
+# This is only for uploading to Zenodo.
+library(ukbAid)
+path <- here::here("doc/protocol.qmd")
+pdf_path <- zen_create_protocol_pdf(path)
+client <- zen_create_file_record(
+  path = pdf_path,
+  metadata = zen_create_protocol_metadata(path),
+  token = zen_get_token(),
+  # Test it in the sandbox first
+  sandbox = TRUE
+)
+```
+
 # Study information
 
-## Substituting red and processed meat, poultry, and fish with legumes and risk of non-alcoholic fatty liver disease in a large prospective cohort
+Title: Substituting red and processed meat, poultry, and fish with
+legumes and risk of non-alcoholic fatty liver disease in a large
+prospective cohort
 
 ## Description
 
@@ -357,7 +385,10 @@ red and processed meats, poultry, or fish with legumes and risk of NAFLD
 
 To evaluate the association between overall legume intake and NAFLD
 risk, hazard ratios associated with a 80 g/week increase in legumes will
-be estimated following adjustment levels in model 2. A non-specific substitution, adjusted like model 2, will also be conducted to evaluate the association between substituting 80 g/week of legumes for any other dietary component. 
+be estimated following adjustment levels in model 2. A non-specific
+substitution, adjusted like model 2, will also be conducted to evaluate
+the association between substituting 80 g/week of legumes for any other
+dietary component.
 
 Peas are increasingly used as a plant-based meat alternative in the food
 industry [@Maningat2022]. Despite this, peas are also included in the
@@ -377,8 +408,6 @@ alcohol intake.
 
 All analyses will be conducted in R with a significance level of 5%.
 
-## Transformations
-
 ## Inference criteria
 
 All analyses will be evaluated based on two-sided p-values. Values below
@@ -386,13 +415,5 @@ All analyses will be evaluated based on two-sided p-values. Values below
 and significance and the evaluation of, whether a result is meaningful
 will be based on the size of the estimate, and confidence intervals
 containing 1 or 0, for ratios or absolute measures respectively.
-
-## Data exclusion
-
-## Missing data
-
-## Exploratory analyses (optional)
-
-# Other
 
 # References
