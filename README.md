@@ -1,5 +1,8 @@
 # leha: Legume consumption and hepatobiliary disease
 
+-   Protocol:
+    [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11670547.svg)](https://doi.org/10.5281/zenodo.11670547)
+
 This project investigates the association between substituting legumes
 for meats, fish, or poultry and the risk of developing NAFLD and
 gallbladder diseases.
