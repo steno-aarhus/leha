@@ -75,3 +75,16 @@ flextable::save_as_html(suppl_table2, path = here("doc", "suppl_table2.html"))
 
 sum(data$time)
 summary(data$time)
+
+
+# correlation between touchscreen and WebQ
+# Estimating correlation between habitual intake (touchscreen) and WebQ reported
+# average intake for the substitute foods
+fish =p1329 + p1339
+meat =p1349 +p1369 + p1379 + p1389
+poultry = p1359
+
+
+cor
+cor(meat, meat_weekly, method = ("pearson", "spearman"))
+cor()
