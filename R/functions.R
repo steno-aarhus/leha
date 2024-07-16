@@ -262,6 +262,18 @@ diet_data <- function(data) {
   return(data)
 }
 
+habitual_diet <- function(data) {
+  data <- data %>% mutate(
+    total_meat = rowSums(pick(matches("p26066|p26100|p26104|p26117|p26122")), na.rm = TRUE),
+    total_poultry = rowSums(pick(matches("p26121|p26069")), na.rm = TRUE),
+    total_fish = rowSums(pick(matches("p26070|p26109|p26132|p26149")), na.rm = TRUE),
+    habitual_meat = rowSums(pick(matches("p1349|p1369|p1379|p1389")), na.rm = TRUE),
+    habitual_poultry = rowSums(pick(matches("p1359")), na.rm = TRUE),
+    habitual_fish = rowSums(pick(matches("p1329|p1339")), na.rm = TRUE)
+  )
+  return(data)
+}
+
 # remove recoded diet p-variables before modelling outcomes
 remove_diet_p_vars <- function(data) {
   data <- data %>% select(-matches(c(
@@ -280,7 +292,8 @@ remove_diet_p_vars <- function(data) {
     "p26134", "p26084", "p26085", "p26064", "p26080", "p26129",
     "p26130", "p26086", "p26101", "p26136", "p26137", "p26066",
     "p26100", "p26104", "p26117", "p26122", "p26121", "p26069",
-    "p26070", "p26109", "p26132", "p26149", "p26000", "p104280")))
+    "p26070", "p26109", "p26132", "p26149", "p26000", "p104280",
+    "p1329", "p1339", "p1349", "p1359", "p1369", "p1379", "p1389")))
   return(data)
 }
 
