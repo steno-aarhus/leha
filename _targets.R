@@ -26,13 +26,13 @@ tar_option_set(
 # tar_source()
 # Or just some files:
 source(here::here("R/functions.R"))
-source()
-source()
-source()
-source()
-source()
-source()
-source()
+# source()
+# source()
+# source()
+# source()
+# source()
+# source()
+# source()
 
 
 # Things to run in order to work.
@@ -79,6 +79,7 @@ list(
       pea_servings() |>
       calculate_weekly_diet() |>
       diet_data() |>
+      habitual_diet() |>
       remove_diet_p_vars()
   ),
   # wrangle outcome variables
