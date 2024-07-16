@@ -80,23 +80,45 @@ list(
       calculate_weekly_diet() |>
       diet_data() |>
       remove_diet_p_vars()
-
-
-
   ),
   # wrangle outcome variables
   tar_target(
     name = outcome_data,
     command = diet_data |>
-
-
-
-
+      icd10_diagnoses() |>
+      left_join_icd10() |>
+      idc9_diagnoses() |>
+      left_join_icd9() |>
+      date_birth() |>
+      censoring_date() |>
+      outcome_variables() |>
+      remove_outcome_p_vars()
   ),
-  # remove old variables with p-numbers
+  # eligibility criteria based on outcomes
+  tar_target(
+    name = eligible_participants,
+    command = outcome_data |>
+      last_completed_recall() |>
+      baseline_start_date() |>
+      time_in_study() |>
+      event_before_base()
+    ),
+  # define survival time
+  tar_target(
+    name = survival_time,
+    command = eligible_participants |>
+      survival_time()
+  ),
+  # preparing data for analyses
   tar_target(
     name = sorted_data,
-    command = outcome_data |>
+    command = survival_time |>
+
+
+
+
+
+
 
 
 
