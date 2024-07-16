@@ -7,6 +7,34 @@ p190,Reason lost to follow-up
 p191,Date lost to follow-up
 p709_i0,Number in household | Instance 0
 p738_i0,Average total household income before tax | Instance 0
+p1329_i0,Oily fish intake | Instance 0
+p1329_i1,Oily fish intake | Instance 1
+p1329_i2,Oily fish intake | Instance 2
+p1329_i3,Oily fish intake | Instance 3
+p1339_i0,Non-oily fish intake | Instance 0
+p1339_i1,Non-oily fish intake | Instance 1
+p1339_i2,Non-oily fish intake | Instance 2
+p1339_i3,Non-oily fish intake | Instance 3
+p1349_i0,Processed meat intake | Instance 0
+p1349_i1,Processed meat intake | Instance 1
+p1349_i2,Processed meat intake | Instance 2
+p1349_i3,Processed meat intake | Instance 3
+p1359_i0,Poultry intake | Instance 0
+p1359_i1,Poultry intake | Instance 1
+p1359_i2,Poultry intake | Instance 2
+p1359_i3,Poultry intake | Instance 3
+p1369_i0,Beef intake | Instance 0
+p1369_i1,Beef intake | Instance 1
+p1369_i2,Beef intake | Instance 2
+p1369_i3,Beef intake | Instance 3
+p1379_i0,Lamb/mutton intake | Instance 0
+p1379_i1,Lamb/mutton intake | Instance 1
+p1379_i2,Lamb/mutton intake | Instance 2
+p1379_i3,Lamb/mutton intake | Instance 3
+p1389_i0,Pork intake | Instance 0
+p1389_i1,Pork intake | Instance 1
+p1389_i2,Pork intake | Instance 2
+p1389_i3,Pork intake | Instance 3
 p2443_i0,Diabetes diagnosed by doctor | Instance 0
 p2453_i0,Cancer diagnosed by doctor | Instance 0
 p3456_i0,Number of cigarettes currently smoked daily (current cigarette smokers) | Instance 0
