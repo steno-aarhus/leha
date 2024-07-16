@@ -57,7 +57,7 @@ suppl_table2 <- data %>%
          cereal_refined_weekly, whole_grain_weekly, mixed_dish_weekly,
          dairy_weekly, fats_weekly, fruit_weekly, nut_weekly, veggie_weekly,
          potato_weekly, egg_weekly, non_alc_beverage_weekly,
-         alc_beverage_weekly, snack_weekly, sauce_weekly, weight_weekly) %>%
+         alc_beverage_weekly, snack_weekly, sauce_weekly, food_weight_weekly) %>%
   tbl_summary(by = legume_groups,
               statistic = list(all_continuous() ~  "{median} ({p10}, {p90})",
                                all_categorical() ~ "{n} ({p}%)"),
@@ -79,13 +79,9 @@ summary(data$time)
 
 
 # correlation between touchscreen and WebQ
-# Estimating correlation between habitual intake (touchscreen) and WebQ reported
-# average intake for the substitute foods
-fish =p1329 + p1339
-meat =p1349 +p1369 + p1379 + p1389
-poultry = p1359
-
-
-cor
-cor(meat, meat_weekly, method = ("pearson", "spearman"))
-cor()
+# Estimating correlation between habitual and total food intakes
+meat_correlation <- data %>% cor(total_meat, habitual_meat) %>% print()
+poultry_correlation <- data %>% cor(total_poultry, habitual_poultry) %>% print()
+fish_correlation <- data %>% cor(total_fish, habitual_fish) %>% print()
+# correlation <- cor(df$var1, df$var2, use = "complete.obs")
+# print(correlation)
