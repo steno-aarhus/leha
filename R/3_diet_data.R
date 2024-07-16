@@ -43,12 +43,16 @@ data <- data %>%
     veggie_pea = ((rowSums(pick(matches("p26065|p26098|p26147|p26123|p26125|p26143|p26146")), na.rm = TRUE) - peas) / p20077) * 7
   )
 
-data <- data %>%
-  mutate(weight_weekly = legume_weekly + meats_weekly+  poultry_weekly + fish_weekly +
-           cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly + veggie_weekly +
-           potato_weekly + egg_weekly + non_alc_beverage_weekly +
-           alc_beverage_weekly + snack_weekly + sauce_weekly)
+# estimating total intakes of certain foods based on 24 h dietary assessments and touchscreens
+data <- data %>% mutate(
+  total_meat = rowSums(pick(matches("p26066|p26100|p26104|p26117|p26122")), na.rm = TRUE),
+  total_poultry = rowSums(pick(matches("p26121|p26069")), na.rm = TRUE),
+  total_fish = rowSums(pick(matches("p26070|p26109|p26132|p26149")), na.rm = TRUE),
+  habitual_meat = rowSums(pick(matches("p1349|p1369|p1379|p1389")), na.rm = TRUE),
+  habitual_poultry = rowSums(pick(matches("p1359")), na.rm = TRUE),
+  habitual_fish = rowSums(pick(matches("p1329|p1339")), na.rm = TRUE)
+)
+
 
 # # Drop p-variables for diet ------------------------------------------------------
 # remove_diet <- c(
