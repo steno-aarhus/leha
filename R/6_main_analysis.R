@@ -31,7 +31,7 @@ data <- data %>%
 #   dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
 #   veggie_weekly + potato_weekly + egg_weekly +
 #   non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-#   sauce_weekly + weight_weekly + age + region + sex) |>
+#   sauce_weekly + food_weight_weekly + age + region + sex) |>
 #   all.vars()
 #
 # create_formula <- function(xvars, covars) {
@@ -63,7 +63,7 @@ meat_model1 <- coxph(
     dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
     veggie_weekly + potato_weekly + egg_weekly +
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-    sauce_weekly + weight_weekly +
+    sauce_weekly + food_weight_weekly +
     # other variables
     strata(region, age_strata, sex),
   data = data, ties = "breslow"
@@ -81,7 +81,7 @@ poultry_model1 <- coxph(
     dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
     veggie_weekly + potato_weekly + egg_weekly +
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-    sauce_weekly + weight_weekly +
+    sauce_weekly + food_weight_weekly +
     # other variables
     strata(region, age_strata, sex),
   data = data, ties = "breslow"
@@ -100,7 +100,7 @@ fish_model1 <- coxph(
     dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
     veggie_weekly + potato_weekly + egg_weekly +
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-    sauce_weekly + weight_weekly +
+    sauce_weekly + food_weight_weekly +
     # other variables
     strata(region, age_strata, sex),
   data = data, ties = "breslow"
@@ -121,7 +121,7 @@ meat_model2 <- coxph(
     dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
     veggie_weekly + potato_weekly + egg_weekly +
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-    sauce_weekly + weight_weekly +
+    sauce_weekly + food_weight_weekly +
     # other variables
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
@@ -143,7 +143,7 @@ poultry_model2 <- coxph(
     dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
     veggie_weekly + potato_weekly + egg_weekly +
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-    sauce_weekly + weight_weekly +
+    sauce_weekly + food_weight_weekly +
     # other variables
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
@@ -165,7 +165,7 @@ fish_model2 <- coxph(
     dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
     veggie_weekly + potato_weekly + egg_weekly +
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-    sauce_weekly + weight_weekly +
+    sauce_weekly + food_weight_weekly +
     # other variables
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
@@ -189,7 +189,7 @@ meat_model3 <- coxph(
     dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
     veggie_weekly + potato_weekly + egg_weekly +
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-    sauce_weekly + weight_weekly +
+    sauce_weekly + food_weight_weekly +
     # other variables
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
@@ -210,7 +210,7 @@ poultry_model3 <- coxph(
     dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
     veggie_weekly + potato_weekly + egg_weekly +
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-    sauce_weekly + weight_weekly +
+    sauce_weekly + food_weight_weekly +
     # other variables
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
@@ -232,7 +232,7 @@ fish_model3 <- coxph(
     dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
     veggie_weekly + potato_weekly + egg_weekly +
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-    sauce_weekly + weight_weekly +
+    sauce_weekly + food_weight_weekly +
     # other variables
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
@@ -264,7 +264,7 @@ meat_model2 <- coxph(
     dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
     veggie_weekly + potato_weekly + egg_weekly +
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-    sauce_weekly + weight_weekly +
+    sauce_weekly + food_weight_weekly +
     # other variables
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
@@ -286,7 +286,7 @@ poultry_model2 <- coxph(
     dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
     veggie_weekly + potato_weekly + egg_weekly +
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-    sauce_weekly + weight_weekly +
+    sauce_weekly + food_weight_weekly +
     # other variables
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
@@ -308,7 +308,7 @@ fish_model2 <- coxph(
     dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
     veggie_weekly + potato_weekly + egg_weekly +
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-    sauce_weekly + weight_weekly +
+    sauce_weekly + food_weight_weekly +
     # other variables
     alcohol_weekly + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
