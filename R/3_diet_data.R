@@ -49,7 +49,7 @@ data <- data %>%
            dairy_weekly + fats_weekly + fruit_weekly + nut_weekly + veggie_weekly +
            potato_weekly + egg_weekly + non_alc_beverage_weekly +
            alc_beverage_weekly + snack_weekly + sauce_weekly)
-#
+
 # # Drop p-variables for diet ------------------------------------------------------
 # remove_diet <- c(
 #   "p26113", "p26079", "p26071", "p26072", "p26073", "p26075",

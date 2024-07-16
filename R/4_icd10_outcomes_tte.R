@@ -290,5 +290,5 @@ data <- data %>%
 
 
 # Save data ---------------------------------------------------------------
-arrow::write_parquet(data, here("data/data.parquet"))
-ukbAid::upload_data(here("data/data.parquet"), username = "FieLangmann")
+# arrow::write_parquet(data, here("data/data.parquet"))
+# ukbAid::upload_data(here("data/data.parquet"), username = "FieLangmann")

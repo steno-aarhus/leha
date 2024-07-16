@@ -278,9 +278,9 @@ data <- data %>%
   select(-matches(variables_to_remove))
 
 
-# save data
-arrow::write_parquet(data, here("data/data.parquet"))
-
-# Upload to the project RAP folder.
-ukbAid::upload_data(here("data/data.parquet"), username = "FieLangmann")
+# # save data
+# arrow::write_parquet(data, here("data/data.parquet"))
+#
+# # Upload to the project RAP folder.
+# ukbAid::upload_data(here("data/data.parquet"), username = "FieLangmann")
 

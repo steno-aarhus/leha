@@ -8,6 +8,7 @@ library(tidyr)
 library(splines)
 library(gtsummary)
 library(flextable)
+library(here)
 
 # Load data
 data <- read_csv(here("data/data.csv"))
