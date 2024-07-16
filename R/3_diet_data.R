@@ -5,7 +5,7 @@ library(magrittr)
 library(dplyr)
 
 # Load data
-data <- read_csv(here("data/data.csv"))
+# data <- read_csv(here("data/data.csv"))
 
 # Average weekly dietary intake of food groups -----------------------------------
 # Food groups intakes are summed across rows and divided by the number of 24h recalls
@@ -36,7 +36,7 @@ data <- data %>%
     alc_beverage_weekly = calculate_weekly_diet("p26151|p26152|p26153|p26067|p26138", p20077),
     snack_weekly = calculate_weekly_diet("p26106|p26140|p26134|p26084|p26085|p26064|p26080", p20077),
     sauce_weekly = calculate_weekly_diet("p26129|p26130", p20077),
-    food_weight_weekly = legumes_weekly + meats_weekly + poultry_weekly + fish_weekly + cereal_refined_weekly + whole_grain_weekly +
+    food_weight_weekly = legume_weekly + meats_weekly + poultry_weekly + fish_weekly + cereal_refined_weekly + whole_grain_weekly +
       mixed_dish_weekly + dairy_weekly + fats_weekly + fruit_weekly + nut_weekly + veggie_weekly + potato_weekly + egg_weekly +
       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly + sauce_weekly,
     legume_pea_weekly = calculate_weekly_diet("p26086|p26101|p26136|p26137|peas", p20077),
@@ -52,6 +52,34 @@ data <- data %>% mutate(
   habitual_poultry = rowSums(pick(matches("p1359")), na.rm = TRUE),
   habitual_fish = rowSums(pick(matches("p1329|p1339")), na.rm = TRUE)
 )
+
+data <- data %>% mutate(
+  p1329_i0 = case_when(
+    str_detect(p1329_i0, "Never") | str_detect(p1329_i0, "know")  ~ 0,
+    str_detect(p1329_i0, "Less") ~ 1,
+    p1329_i0 == "Once a week" ~ 2,
+    str_detect(p1329_i0, "2-4 times") ~ 3,
+    str_detect(p1329_i0, "5-6 times") ~ 4,
+    str_detect(p1329_i0, "Once or more") ~ 5,
+    TRUE ~ NA_character_),
+  p1329_i0 = as.numeric(p1329_i0))
+
+
+  )
+
+    as.numeric(p1329_i0))
+
+)
+str_detect(p104280_i0, "1") | str_detect(p104280_i1, "1") | str_detect(p104280_i2, "1") |
+  str_detect(p104280_i3, "1") | str_detect(p104280_i4, "1") ~ 1,
+str_detect(p104280_i0, "2") | str_detect(p104280_i1, "2") | str_detect(p104280_i2, "2") |
+  str_detect(p104280_i3, "2") | str_detect(p104280_i4, "2") ~ 2,
+str_detect(p104280_i0, "3+") | str_detect(p104280_i1, "3+") | str_detect(p104280_i2, "3+") |
+  str_detect(p104280_i3, "3+") | str_detect(p104280_i4, "3+") ~ 3,
+str_detect(p104280_i0, "half") | str_detect(p104280_i1, "half") | str_detect(p104280_i2, "half") |
+  str_detect(p104280_i3, "half") | str_detect(p104280_i4, "half") ~ 0.5,
+str_detect(p104280_i0, "quarter") | str_detect(p104280_i1, "quarter") | str_detect(p104280_i2, "quarter") |
+  str_detect(p104280_i3, "quarter") | str_detect(p104280_i4, "quarter") ~ 0.25),
 
 
 # # Drop p-variables for diet ------------------------------------------------------
