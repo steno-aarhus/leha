@@ -87,6 +87,13 @@ fish_pea <- coxph(Surv(survival_time, nafld == 1) ~
 
 fish_pea <- tidy(fish_pea, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2 digits doesn't work
 
+
+
+# Removing soy from legumes -----------------------------------------------
+
+legume_no_soymilk #removing soy milk from legumes
+legume_soy_meat # removing soy milk and soy desert from legumes
+
 # Varying 24h recalls -----------------------------------------------------
 data <- data %>%
   mutate(legumes80 = legume_weekly/80,
