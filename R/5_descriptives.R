@@ -77,7 +77,6 @@ flextable::save_as_html(suppl_table2, path = here("doc", "suppl_table2.html"))
 sum(data$time)
 summary(data$time)
 
-
 # correlation between touchscreen and WebQ
 # Estimating correlation between habitual and total food intakes
 meat_correlation <- data %>% cor(total_meat, habitual_meat) %>% print()

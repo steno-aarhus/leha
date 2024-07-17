@@ -68,6 +68,9 @@ person_years_followup <- function(data) {
 }
 
 
+# flowchart information
+
+
 # correlation between touchscreen and WebQ reported foods
 meat_correlation <- function(data){
   meat_correlation <- cor(data$total_meat, data$habitual_meat) %>% print()
