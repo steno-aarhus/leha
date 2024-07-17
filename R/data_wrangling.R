@@ -1,5 +1,4 @@
-# Functions
-
+# Data wrangling functions
 
 # Data management ---------------------------------------------------------
 
@@ -10,7 +9,6 @@ two_recalls <- function(data) {
     mutate(p20077 = as.numeric(p20077))
   return(data)
 }
-
 
 ## Add id number -----------------------------------------------------------
 data_id <- function(data) {
@@ -270,12 +268,40 @@ total_diet <- function(data) {
   return(data)
 }
 
+transform_touchscreen <- function(data) {
+  convert_frequency <- function(column) {
+    case_when(
+      str_detect(column, "Never") | str_detect(column, "know")  ~ 0,
+      str_detect(column, "Less") ~ 1,
+      column == "Once a week" ~ 2,
+      str_detect(column, "2-4 times") ~ 3,
+      str_detect(column, "5-6 times") ~ 4,
+      str_detect(column, "Once or more") ~ 5,
+      TRUE ~ NA
+    ) %>% as.numeric()
+  }
+
+  columns_to_transform <- data %>%
+    select(matches("p1329|p1339|1349|1359|1369|1379|1389")) %>%
+    names()
+
+  for (column in columns_to_transform) {
+    data <- data %>%
+      mutate(!!sym(column) := convert_frequency(.data[[column]]))
+  }
+  return(data)
+}
+
+
 habitual_diet <- function(data) {
   data <- data %>% mutate(
-habitual_meat = rowSums(pick(matches("p1349|p1369|p1379|p1389")), na.rm = TRUE),
-habitual_poultry = rowSums(pick(matches("p1359")), na.rm = TRUE),
-habitual_fish = rowSums(pick(matches("p1329|p1339")), na.rm = TRUE)
-)
+    habitual_meat = rowSums(pick(matches("p1349|p1369|p1379|p1389")), na.rm = TRUE),
+    habitual_meat = as.numeric(habitual_meat),
+    habitual_poultry = rowSums(pick(matches("p1359")), na.rm = TRUE),
+    habitual_poultry = as.numeric(habitual_poultry),
+    habitual_fish = rowSums(pick(matches("p1329|p1339")), na.rm = TRUE),
+    habitual_fish = as.numeric(habitual_fish)
+  )
   return(data)
 }
 
@@ -530,23 +556,3 @@ survival_time <- function(data) {
       survival_time_tmp = NULL)
   return(data)
 }
-
-
-# Preparing data for analyses ---------------------------------------------
-
-
-
-
-
-
-# Run analyses ------------------------------------------------------------
-
-
-# Add data to tables ------------------------------------------------------
-
-# from Niels' repository for inspiration
-# tar_target(
-#   name = table_cancer_type,
-#   command = create_table_cancer(table_hcc$row1,table_hcc$row2,table_hcc$row3,
-#                                 table_icc$row4,table_icc$row5,table_icc$row6, gt_theme)
-# ),
