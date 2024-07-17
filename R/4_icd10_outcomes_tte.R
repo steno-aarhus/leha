@@ -11,7 +11,7 @@ library(here)
 library(ggplot2)
 
 # Load data
-data <- read_csv(here("data/data.csv"))
+# data <- read_csv(here("data/data.csv"))
 
 
 # ICD10 codes ---------------------------------------------------------
