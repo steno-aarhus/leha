@@ -64,7 +64,7 @@ list(
   # wrangle covariates (not food)
   tar_target(
     name = covariates,
-    command = adequate_recalls |>
+    command = id_data |>
       sociodemographics() |>
       lifestyle() |>
       illness() |>
