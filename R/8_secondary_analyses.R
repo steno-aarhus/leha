@@ -30,11 +30,18 @@ nonspecific<- tidy(fit_nonspecific, exponentiate = TRUE, conf.int = TRUE, digits
 # Legume as continuous exposure 80 g/week ---------------------------------
 
 # one serving of legumes/week (80 g)
-data <- data %>%
-  mutate(
-    legumes80 = legume_weekly / 80
+consumers <- data %>%
+  subset(legume_weekly > 0)
+
+consumers <- consumers %>% mutate(
+  legumes80 = legume_weekly / 80,
+  meats80 = meats_weekly / 80,
+  poultry80 = poultry_weekly / 80,
+  fish80 = fish_weekly / 80
+)
   )
 
+# total intake without substitution
 # model 2
 total_model2 <- coxph(
   Surv(survival_time, nafld == 1) ~ legumes80 +
@@ -49,8 +56,73 @@ total_model2 <- coxph(
     cohabitation + physical_activity + smoking +
     related_disease + disease_family + yearly_income +
     strata(region, age_strata, sex),
-  data = data, ties = "breslow"
+  data = consumers, ties = "breslow"
 )
 total <- tidy(total_model2, exponentiate = TRUE, conf.int = TRUE)
 
 
+
+# meats
+meat_model2 <- coxph(
+  Surv(survival_time, nafld == 1) ~
+    # removing meat
+    legumes80 + poultry80 + fish80 +
+    # other food components
+    cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+    dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+    veggie_weekly + potato_weekly + egg_weekly +
+    non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+    sauce_weekly + food_weight_weekly +
+    # other variables
+    alcohol_weekly + ethnicity + deprivation + education +
+    cohabitation + physical_activity + smoking +
+    related_disease + disease_family + yearly_income +
+    strata(region, age_strata, sex),
+  data = consumers, ties = "breslow"
+)
+
+meat_model2 <- tidy(meat_model2, exponentiate = TRUE, conf.int = TRUE)
+
+
+# poultry
+poultry_model2 <- coxph(
+  Surv(survival_time, nafld == 1) ~
+    # removing meat
+    legumes80 + meats80 + fish80 +
+    # other food components
+    cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+    dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+    veggie_weekly + potato_weekly + egg_weekly +
+    non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+    sauce_weekly + food_weight_weekly +
+    # other variables
+    alcohol_weekly + ethnicity + deprivation + education +
+    cohabitation + physical_activity + smoking +
+    related_disease + disease_family + yearly_income +
+    strata(region, age_strata, sex),
+  data = consumers, ties = "breslow"
+)
+
+poultry_model2 <- tidy(poultry_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2)
+
+
+# fish
+fish_model2 <- coxph(
+  Surv(survival_time, nafld == 1) ~
+    # removing meat
+    legumes80 + meats80 + poultry80 +
+    # other food components
+    cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+    dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+    veggie_weekly + potato_weekly + egg_weekly +
+    non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+    sauce_weekly + food_weight_weekly +
+    # other variables
+    alcohol_weekly + ethnicity + deprivation + education +
+    cohabitation + physical_activity + smoking +
+    related_disease + disease_family + yearly_income +
+    strata(region, age_strata, sex),
+  data = consumers, ties = "breslow"
+)
+
+fish_model2 <- tidy(fish_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2)
