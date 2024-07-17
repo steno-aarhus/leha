@@ -112,42 +112,42 @@ list(
     command = eligible_participants |>
       survival_time()
   ))
-,
-  # descriptive analyses
-  tar_target(
-    name = descriptives,
-    command = sorted_data |>
-      baseline_table()|>
-      supplementary_baseline_table() |>
-      person_years_followup()
-  ),
-
-  tar_target(
-    name = descriptives,
-    command = sorted_data |>
-  ),
-  tar_target(
-    name = descriptives,
-    command = sorted_data |>
-  ),
-  tar_target(
-    name = descriptives,
-    command = sorted_data |>
-  ),
-  tar_target(
-    name = descriptives,
-    command = sorted_data |>
-  ),
-  tar_target(
-    name = descriptives,
-    command = sorted_data |>
-
-
-
-)
-
-
-# # From Niels' repository
+# ,
+#   # descriptive analyses
+#   tar_target(
+#     name = descriptives,
+#     command = sorted_data |>
+#       baseline_table()|>
+#       supplementary_baseline_table() |>
+#       person_years_followup()
+#   ),
+#
+#   tar_target(
+#     name = descriptives,
+#     command = sorted_data |>
+#   ),
+#   tar_target(
+#     name = descriptives,
+#     command = sorted_data |>
+#   ),
+#   tar_target(
+#     name = descriptives,
+#     command = sorted_data |>
+#   ),
+#   tar_target(
+#     name = descriptives,
+#     command = sorted_data |>
+#   ),
+#   tar_target(
+#     name = descriptives,
+#     command = sorted_data |>
+#
+#
+#
+# )
+#
+#
+# # # From Niels' repository
 # ),
 # tar_target(
 #   name = data_with_death,
