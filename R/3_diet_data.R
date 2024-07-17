@@ -48,59 +48,69 @@ data <- data %>% mutate(
   total_meat = rowSums(pick(matches("p26066|p26100|p26104|p26117|p26122")), na.rm = TRUE),
   total_poultry = rowSums(pick(matches("p26121|p26069")), na.rm = TRUE),
   total_fish = rowSums(pick(matches("p26070|p26109|p26132|p26149")), na.rm = TRUE),
-  habitual_meat = rowSums(pick(matches("p1349|p1369|p1379|p1389")), na.rm = TRUE),
-  habitual_poultry = rowSums(pick(matches("p1359")), na.rm = TRUE),
-  habitual_fish = rowSums(pick(matches("p1329|p1339")), na.rm = TRUE)
 )
+
+
+
+transform_touchscreen <- function(data) {
+  convert_frequency <- function(column) {
+    case_when(
+      str_detect(column, "Never") | str_detect(column, "know")  ~ 0,
+      str_detect(column, "Less") ~ 1,
+      column == "Once a week" ~ 2,
+      str_detect(column, "2-4 times") ~ 3,
+      str_detect(column, "5-6 times") ~ 4,
+      str_detect(column, "Once or more") ~ 5,
+      TRUE ~ NA
+    ) %>% as.numeric()
+  }
+
+  columns_to_transform <- data %>%
+    select(matches("p1329|p1339|1349|1359|1369|1379|1389")) %>%
+    names()
+
+
+  for (column in columns_to_transform) {
+    data <- data %>%
+      mutate(!!sym(column) := convert_frequency(.data[[column]]))
+  }
+
+  return(data)
+}
+data <-transform_touchscreen(data)
 
 data <- data %>% mutate(
-  p1329_i0 = case_when(
-    str_detect(p1329_i0, "Never") | str_detect(p1329_i0, "know")  ~ 0,
-    str_detect(p1329_i0, "Less") ~ 1,
-    p1329_i0 == "Once a week" ~ 2,
-    str_detect(p1329_i0, "2-4 times") ~ 3,
-    str_detect(p1329_i0, "5-6 times") ~ 4,
-    str_detect(p1329_i0, "Once or more") ~ 5,
-    TRUE ~ NA_character_),
-  p1329_i0 = as.numeric(p1329_i0))
-
-
-  )
-
-    as.numeric(p1329_i0))
-
+  habitual_meat = rowSums(pick(matches("p1349|p1369|p1379|p1389")), na.rm = TRUE),
+  habitual_meat = as.numeric(habitual_meat),
+  habitual_poultry = rowSums(pick(matches("p1359")), na.rm = TRUE),
+  habitual_poultry = as.numeric(habitual_poultry),
+  habitual_fish = rowSums(pick(matches("p1329|p1339")), na.rm = TRUE),
+  habitual_fish = as.numeric(habitual_fish)
 )
-str_detect(p104280_i0, "1") | str_detect(p104280_i1, "1") | str_detect(p104280_i2, "1") |
-  str_detect(p104280_i3, "1") | str_detect(p104280_i4, "1") ~ 1,
-str_detect(p104280_i0, "2") | str_detect(p104280_i1, "2") | str_detect(p104280_i2, "2") |
-  str_detect(p104280_i3, "2") | str_detect(p104280_i4, "2") ~ 2,
-str_detect(p104280_i0, "3+") | str_detect(p104280_i1, "3+") | str_detect(p104280_i2, "3+") |
-  str_detect(p104280_i3, "3+") | str_detect(p104280_i4, "3+") ~ 3,
-str_detect(p104280_i0, "half") | str_detect(p104280_i1, "half") | str_detect(p104280_i2, "half") |
-  str_detect(p104280_i3, "half") | str_detect(p104280_i4, "half") ~ 0.5,
-str_detect(p104280_i0, "quarter") | str_detect(p104280_i1, "quarter") | str_detect(p104280_i2, "quarter") |
-  str_detect(p104280_i3, "quarter") | str_detect(p104280_i4, "quarter") ~ 0.25),
 
 
 # # Drop p-variables for diet ------------------------------------------------------
-# remove_diet <- c(
-#   "p26113", "p26079", "p26071", "p26072", "p26073", "p26075",
-#   "p26068", "p26083", "p26074", "p26076", "p26077", "p26078",
-#   "p26105", "p26114", "p26128", "p26097", "p26116", "p26135",
-#   "p26139", "p26154", "p26087", "p26096", "p26102", "p26103",
-#   "p26099", "p26131", "p26133", "p26150", "p26112", "p26062",
-#   "p26063", "p26155", "p26110", "p26111", "p26089", "p26090",
-#   "p26091", "p26092", "p26093", "p26094", "p26107", "p26108",
-#   "p26065", "p26098", "p26115", "p26123", "p26125", "p26143",
-#   "p26146", "p26147", "p26144", "p26118", "p26119", "p26120",
-#   "p26088", "p26145", "p26124", "p26141", "p26142", "p26148",
-#   "p26081", "p26082", "p26095", "p26126", "p26127", "p26151",
-#   "p26152", "p26153", "p26067", "p26138", "p26106", "p26140",
-#   "p26134", "p26084", "p26085", "p26064", "p26080", "p26129",
-#   "p26130", "p26086", "p26101", "p26136", "p26137", "p26066",
-#   "p26100", "p26104", "p26117", "p26122", "p26121", "p26069",
-#   "p26070", "p26109", "p26132", "p26149", "p26000"
-# )
+remove_diet <- c(
+"p26113", "p26079", "p26071", "p26072", "p26073", "p26075",
+"p26068", "p26083", "p26074", "p26076", "p26077", "p26078",
+"p26105", "p26114", "p26128", "p26097", "p26116", "p26135",
+"p26139", "p26154", "p26087", "p26096", "p26102", "p26103",
+"p26099", "p26131", "p26133", "p26150", "p26112", "p26062",
+"p26063", "p26155", "p26110", "p26111", "p26089", "p26090",
+"p26091", "p26092", "p26093", "p26094", "p26107", "p26108",
+"p26065", "p26098", "p26115", "p26123", "p26125", "p26143",
+"p26146", "p26147", "p26144", "p26118", "p26119", "p26120",
+"p26088", "p26145", "p26124", "p26141", "p26142", "p26148",
+"p26081", "p26082", "p26095", "p26126", "p26127", "p26151",
+"p26152", "p26153", "p26067", "p26138", "p26106", "p26140",
+"p26134", "p26084", "p26085", "p26064", "p26080", "p26129",
+"p26130", "p26086", "p26101", "p26136", "p26137", "p26066",
+"p26100", "p26104", "p26117", "p26122", "p26121", "p26069",
+"p26070", "p26109", "p26132", "p26149", "p26000", "p104280",
+"p1329", "p1339", "p1349", "p1359", "p1369", "p1379", "p1389"
+)
+data <- data %>%
+  select(-matches(remove_diet))
 #
 # # Save data ---------------------------------------------------------------
 # arrow::write_parquet(data, here("data/data.parquet"))
