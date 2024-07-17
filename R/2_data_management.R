@@ -3,6 +3,7 @@ library(dplyr)
 library(magrittr)
 library(tidyr)
 library(stringr)
+library(here)
 
 # Load data
 data <- read_csv(here("data/data.csv"))
@@ -140,36 +141,8 @@ data <- data %>% mutate(
    cohabitation = case_when(
      p709_i0 == 1 ~ "alone",
      str_detect(p6141_i0, "Husband, wife or partner") ~ "with spouse/partner",
-     p6141_i0 == "Son and/or daughter (include step-children)" |
-       p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister"|
-       p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father" |
-       p6141_i0 == "Son and/or daughter (include step-children)|Other related" |
-       p6141_i0 == "Son and/or daughter (include step-children)|Grandchild" |
-       p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other related" |
-       p6141_i0 == "Son and/or daughter (include step-children)|Grandparent"|
-       p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other related|Other unrelated" |
-       p6141_i0 == "Son and/or daughter (include step-children)|Grandchild|Other unrelated" |
-       p6141_i0 == "Son and/or daughter (include step-children)|Other related|Other unrelated" |
-       p6141_i0 == "Son and/or daughter (include step-children)|Other unrelated" |
-       p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Other related" |
-       p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Other unrelated" |
-       p6141_i0 == "Mother and/or father" |
-       p6141_i0 == "Mother and/or father|Grandchild" |
-       p6141_i0 == "Mother and/or father|Grandparent" |
-       p6141_i0 == "Mother and/or father|Other related" |
-       p6141_i0 == "Mother and/or father|Other unrelated" |
-       p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father" |
-       p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Grandchild"|
-       p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Other related" |
-       p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Other unrelated" |
-       p6141_i0 == "Son and/or daughter (include step-children)|Mother and/or father|Grandchild|Other unrelated" |
-       p6141_i0 == "Son and/or daughter (include step-children)|Brother and/or sister|Mother and/or father|Other related" |
-       p6141_i0 == "Other related" |
-       p6141_i0 == "Other unrelated"
-     ~ "other non-partner",
-     p6141_i0 == "Prefer not to answer"
-      ~ "no answer"
-  ))
+     p6141_i0 == "Prefer not to answer" ~ "no answer",
+     TRUE ~ "other non-partner"))
 
 data <- data %>% mutate(
     smoking = case_when(
