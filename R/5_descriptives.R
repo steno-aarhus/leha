@@ -79,8 +79,11 @@ summary(data$time)
 
 # correlation between touchscreen and WebQ
 # Estimating correlation between habitual and total food intakes
-meat_correlation <- data %>% cor(total_meat, habitual_meat) %>% print()
-poultry_correlation <- data %>% cor(total_poultry, habitual_poultry) %>% print()
-fish_correlation <- data %>% cor(total_fish, habitual_fish) %>% print()
-# correlation <- cor(df$var1, df$var2, use = "complete.obs")
-# print(correlation)
+# spearman
+meat_correlation <- cor(data$total_meat, data$habitual_meat, use = "complete.obs", method = c("spearman")) %>% print()
+poultry_correlation <- cor(data$total_poultry, data$habitual_poultry, use = "complete.obs", method = c("spearman")) %>% print()
+fish_correlation <- cor(data$total_fish, data$habitual_fish, use = "complete.obs", method = c("spearman")) %>% print()
+# pearson
+meat_correlation <- cor(data$total_meat, data$habitual_meat, use = "complete.obs", method = c("pearson")) %>% print()
+poultry_correlation <- cor(data$total_poultry, data$habitual_poultry, use = "complete.obs", method = c("pearson")) %>% print()
+fish_correlation <- cor(data$total_fish, data$habitual_fish, use = "complete.obs", method = c("pearson")) %>% print()
