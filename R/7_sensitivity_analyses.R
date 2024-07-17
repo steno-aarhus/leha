@@ -90,9 +90,82 @@ fish_pea <- tidy(fish_pea, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2
 
 
 # Removing soy from legumes -----------------------------------------------
+data <- data %>%
+  mutate(legumenosoy80 = legume_no_soymilk/80,
+         meats80 = meats_weekly/80,
+         poultry80 = poultry_weekly/80,
+         fish80 = fish_weekly/80)
+
 
 legume_no_soymilk #removing soy milk from legumes
-legume_soy_meat # removing soy milk and soy desert from legumes
+
+
+## model 2 -----------------------------------------------------------------
+# meats
+meat_nosoy <- coxph(Surv(survival_time, nafld == 1) ~
+                    # removing meat
+                    legumenosoy80 + poultry80 + fish80 +
+                    #other food components
+                    soymilk_weekly + cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                    dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                    veggie_pea_weekly + potato_weekly + egg_weekly +
+                    non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                    sauce_weekly + weight_weekly +
+                    # other variables
+                    alcohol_weekly + ethnicity + deprivation + education +
+                    cohabitation + physical_activity + smoking +
+                    related_disease + disease_family + yearly_income +
+                    strata(region, age_strata, sex),
+                  data = data, ties = "breslow"
+)
+
+meat_nosoy <- tidy(meat_nosoy, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
+
+# poultry
+poultry_nosoy <- coxph(Surv(survival_time, nafld == 1) ~
+                       # removing poultry
+                       legumenosoy80 + meats80 + fish80+
+                       #other food components
+                       soymilk_weekly + cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                       veggie_pea_weekly + potato_weekly + egg_weekly +
+                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                       sauce_weekly + weight_weekly +
+                       # other variables
+                       alcohol_weekly + ethnicity + deprivation + education +
+                       cohabitation + physical_activity + smoking +
+                       related_disease + disease_family + yearly_income +
+                       strata(region, age_strata, sex),
+                     data = data, ties = "breslow"
+)
+
+poultry_nosoy <- tidy(poultry_nosoy, exponentiate = TRUE, conf.int = TRUE)%>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
+
+# fish
+fish_nosoy <- coxph(Surv(survival_time, nafld == 1) ~
+                    # removing fish
+                    legumenosoy80 + meats80 + poultry80+
+                    #other food components
+                    soymilk_weekly + cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                    dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                    veggie_pea_weekly + potato_weekly + egg_weekly +
+                    non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                    sauce_weekly + weight_weekly +
+                    # other variables
+                    alcohol_weekly + ethnicity + deprivation + education +
+                    cohabitation + physical_activity + smoking +
+                    related_disease + disease_family + yearly_income +
+                    strata(region, age_strata, sex),
+                  data = data, ties = "breslow"
+)
+
+fish_nosoy <- tidy(fish_nosoy, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
+
+
+
 
 # Varying 24h recalls -----------------------------------------------------
 data <- data %>%
