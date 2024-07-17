@@ -25,14 +25,14 @@ tar_option_set(
 # Run the R scripts in the R/ folder with your custom functions:
 # tar_source()
 # Or just some files:
-source(here::here("R/functions.R"))
-# source()
-# source()
-# source()
-# source()
-# source()
-# source()
-# source()
+source(here::here("R/data_wrangling.R"))
+# source(here::here("R/descriptives.R"))
+# source(here::here("R/main_analysis.R"))
+# source(here::here("R/secondary_analysis.R"))
+# source(here::here("R/sensitivity_analysis.R"))
+# source(here::here("R/main_analysis.R"))
+# source(here::here("R/main_analysis.R"))
+# source(here::here("R/main_analysis.R"))
 
 
 # Things to run in order to work.
@@ -80,6 +80,7 @@ list(
       calculate_weekly_diet() |>
       diet_data() |>
       total_diet() |>
+      transform_touchscreen() |>
       habitual_diet() |>
       remove_diet_p_vars()
   ),
@@ -107,14 +108,42 @@ list(
     ),
   # define survival time
   tar_target(
-    name = survival_time,
+    name = sorted_data,
     command = eligible_participants |>
       survival_time()
-  ),
-  # preparing data for analyses
+  ))
+,
+  # descriptive analyses
   tar_target(
-    name = sorted_data,
-    command = survival_time |>
+    name = descriptives,
+    command = sorted_data |>
+      baseline_table()|>
+      supplementary_baseline_table() |>
+      person_years_followup()
+  ),
+
+  tar_target(
+    name = descriptives,
+    command = sorted_data |>
+  ),
+  tar_target(
+    name = descriptives,
+    command = sorted_data |>
+  ),
+  tar_target(
+    name = descriptives,
+    command = sorted_data |>
+  ),
+  tar_target(
+    name = descriptives,
+    command = sorted_data |>
+  ),
+  tar_target(
+    name = descriptives,
+    command = sorted_data |>
+
+
+
 )
 
 
