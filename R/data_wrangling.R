@@ -229,7 +229,7 @@ calculate_weekly_diet <- function(variables, number_recalls) {
 }
 
 # creating food groups from UKB Aurora Perez
-diet_data <- function(data) {
+food_groups <- function(data) {
   data <- data %>%
     mutate(
       legume_weekly = calculate_weekly_diet("p26086|p26101|p26136|p26137", p20077),

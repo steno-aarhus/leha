@@ -78,7 +78,7 @@ list(
     command = covariates |>
       pea_servings() |>
       calculate_weekly_diet() |>
-      diet_data() |>
+      food_groups() |>
       total_diet() |>
       transform_touchscreen() |>
       habitual_diet() |>
