@@ -7,7 +7,6 @@ Imports:
     arrow,
     broom,
     dplyr,
-    duckdb,
     eventglm,
     flextable,
     gert,
