@@ -223,20 +223,25 @@ data <- data %>%
   )
 
 # Removing individuals with missing information on covariates
-filtered_data <- subset(data, !is.na(age))
-filtered_data <- subset(filtered_data, !is.na(region))
-filtered_data <- subset(filtered_data, !is.na(sex))
-filtered_data <- subset(filtered_data, !is.na(ethnicity))
-filtered_data <- subset(filtered_data, !is.na(deprivation))
-filtered_data <- subset(filtered_data, !is.na(education))
-filtered_data <- subset(filtered_data, !is.na(cohabitation))
-filtered_data <- subset(filtered_data, !is.na(physical_activity))
-filtered_data <- subset(filtered_data, !is.na(smoking))
-filtered_data <- subset(filtered_data, !is.na(related_disease))
-filtered_data <- subset(filtered_data, !is.na(disease_family))
-filtered_data <- subset(filtered_data, !is.na(yearly_income))
-filtered_data <- subset(filtered_data, !is.na(bmi30)) #123822
-data <- filtered_data
+remove_missings <- function(data) {
+  data <- data %>%
+    filter(
+      !is.na(age),
+      !is.na(region),
+      !is.na(sex),
+      !is.na(ethnicity),
+      !is.na(deprivation),
+      !is.na(education),
+      !is.na(cohabitation),
+      !is.na(physical_activity),
+      !is.na(smoking),
+      !is.na(related_disease),
+      !is.na(disease_family),
+      !is.na(yearly_income),
+      !is.na(bmi30))
+  return(data)
+}
+data <- remove_missings(data)
 
 
 # Remove recoded variables from sorted_data -------------------------------
