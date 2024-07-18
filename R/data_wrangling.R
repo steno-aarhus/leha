@@ -168,7 +168,6 @@ aminotransferase <- function(data) {
 }
 
 # Removing individuals with missing information on covariates
-## should result in 123822 individuals in df
 remove_missings <- function(data) {
   data <- data %>%
     filter(
@@ -360,18 +359,16 @@ icd10_diagnoses <- function(data) {
     slice(1) %>%
     pivot_wider(names_from = condition, values_from = date) %>%
     ungroup()
-  return(data)
-}
 
-# rejoin diagnoses back to original data
-left_join_icd10 <- function(data) {
   data <- data %>%
     left_join(icd10_subset, by = "id")
+
   return(data)
 }
 
+
 # ICD9 diagnoses codes
-idc9_diagnoses <- function(data) {
+icd9_diagnoses <- function(data) {
   icd9_subset <- data %>%
     select(starts_with("p41271"), starts_with("p41281"), "id") %>%
     # splitting diagnoses string-variable each time a | is in the string
@@ -396,13 +393,10 @@ idc9_diagnoses <- function(data) {
     slice(1) %>%
     pivot_wider(names_from = condition, values_from = date) %>%
     ungroup()
-  return(data)
-}
 
-# rejoin diagnoses back to original data
-left_join_icd9 <- function(data) {
   data <- data %>%
     left_join(icd9_subset, by = "id")
+
   return(data)
 }
 
@@ -424,25 +418,12 @@ date_birth <- function(data) {
 
 # Estimate last follow-up date for ICD10 codes (stagnation of diagnoses)
 censoring_date <- function(data) {
-  # Create plot
-ggplot(data, aes(x = icd10_nafld_date, y = id)) +
-  geom_point() + # Use points to show individual data points
-  geom_smooth(method = "lm", se = FALSE) + # Add linear regression line
-  annotate("text", x = max(data$icd10_nafld_date), y = min(data$id),
-           label = paste("Last observed date:", max(data$icd10_nafld_date)),
-           hjust = 1, vjust = -0.5, size = 4) +  # Add annotation for the last observed date
-  labs(title = "Dates of Disease Over Time", x = "Date of Disease", y = "Participant ID")
-
-# The density is very high in the right of the plot
-# Estimate last date of diagnoses and check with plot
+# Estimate last date of diagnoses
   dates <- data %>%
   subset(!is.na(icd10_nafld_date))
 
   # Find the last date of diagnosis
-  last_date <- max(dates$icd10_nafld_date)
-
-  # Print or use the last date as needed
-  print(last_date)
+  last_date <- max(dates$icd10_nafld_date) %>% print()
 
   data <- data %>%
     mutate(censoring = as.Date(last_date))
@@ -458,21 +439,12 @@ outcome_variables <- function(data) {
            loss_to_follow_up = as.Date(loss_to_follow_up),
            # binary variable to indicate if nafld happened
            nafld = case_when(
-             !is.na(icd10_nafld_date) | !is.na(icd10_nash_date) |
-               !is.na(icd9_nafld_date) | !is.na(icd9_nash_date) ~ 1,
+             !is.na(icd10_nafld_date) | !is.na(icd10_nash_date) ~ 1,
+             # no icd9 diagnoses were found and they are therefore not included
+             # in outcome variable
              TRUE ~ 0))
   return(data)
 }
-
-# delete recoded outcome variables
-remove_outcome_p_vars <- function(data) {
-  data <- data %>% select(-matches(c(
-    "p41280", "p41270","p41281", "p41271", "p105010_i0",
-    "p105010_i1", "p105010_i2", "p105010_i3","p105010_i4",
-    "p191", "p40000_i0", "p40000_i1", "p34", "p52")))
-  return(data)
-}
-
 
 # Eligibility criteria based on outcomes ----------------------------------
 # time of last completed 24h recall as baseline date
@@ -492,20 +464,26 @@ last_completed_recall <- function(data) {
   return(data)
 }
 
+
 # setting baseline start date as last completed questionnaire
-baseline_start_date <- function(data) {
-  data <- data %>%
-    # Convert ques_0 to ques_4 to date format
-    mutate(across(starts_with("ques_"), as.Date)) %>%
-    # Gather all columns into key-value pairs
-    pivot_longer(cols = starts_with("ques_"), names_to = "questionnaire", values_to = "date_filled") %>%
-    # Group by participant ID and select the row with the latest date_filled for each participant
+# New column with baseline start date set as last completed questionnaire
+baseline_date <- function(data) {
+  baseline_start_date <- data %>%
+    select(p20077, starts_with("ques_comp_t"), id) %>%
+    pivot_longer(
+      cols = starts_with("ques_comp_t"),
+      names_to = "instance",
+      values_to = "completion_date"
+    ) %>%
+    filter(!is.na(completion_date)) %>%
     group_by(id) %>%
-    slice(which.max(date_filled)) %>%
+    arrange(completion_date, .by_group = TRUE) %>%
+    slice_tail() %>%
+    rename(baseline_start_date = completion_date) %>%
     ungroup() %>%
-    # Rename the remaining column to indicate the last filled questionnaire
-    rename(last_filled_questionnaire = questionnaire) %>%
-    mutate(date_filled = as.Date(date_filled))
+    select(id, baseline_start_date)
+  data <- data %>%
+    left_join(baseline_start_date, by = "id")
   return(data)
 }
 
@@ -513,18 +491,18 @@ baseline_start_date <- function(data) {
 time_in_study <- function(data) {
   data <- data %>% mutate(
     survival_time_nafld = case_when(
-      !is.na(icd10_nafld_date) ~ as.numeric(difftime(icd10_nafld_date, date_filled, units = "days")),
+      !is.na(icd10_nafld_date) ~ as.numeric(difftime(icd10_nafld_date, baseline_start_date, units = "days")),
       TRUE ~ NA),
     survival_time_nash = case_when(
-      !is.na(icd10_nash_date) ~ as.numeric(difftime(icd10_nash_date, date_filled, units = "days")),
+      !is.na(icd10_nash_date) ~ as.numeric(difftime(icd10_nash_date, baseline_start_date, units = "days")),
       TRUE ~ NA),
     survival_time_ltfu = case_when(
-      !is.na(loss_to_follow_up) ~ as.numeric(difftime(loss_to_follow_up, date_filled, units = "days")),
+      !is.na(loss_to_follow_up) ~ as.numeric(difftime(loss_to_follow_up, baseline_start_date, units = "days")),
       TRUE ~ NA),
     survival_time_death = case_when(
-      !is.na(date_of_death) ~ as.numeric(difftime(date_of_death, date_filled, units = "days")),
+      !is.na(date_of_death) ~ as.numeric(difftime(date_of_death, baseline_start_date, units = "days")),
       TRUE ~ NA),
-    survival_time_cenc = difftime(censoring, date_filled, units = "days"),
+    survival_time_cenc = difftime(censoring, baseline_start_date, units = "days"),
     time = pmin(survival_time_death, survival_time_cenc, survival_time_ltfu,
                 survival_time_nash, survival_time_nafld, na.rm = TRUE),
     time = time/365.25)
@@ -538,7 +516,14 @@ event_before_base <- function(data) {
   return(data)
 }
 
-
+# delete recoded outcome variables
+remove_outcome_p_vars <- function(data) {
+  data <- data %>% select(-matches(c(
+    "p41280", "p41270","p41281", "p41271", "p105010_i0",
+    "p105010_i1", "p105010_i2", "p105010_i3","p105010_i4",
+    "p191", "p40000_i0", "p40000_i1", "p34", "p52")))
+  return(data)
+}
 # Define survival time ----------------------------------------------------
 survival_time <- function(data) {
   data <- data %>%
