@@ -132,6 +132,10 @@ baseline_date <- function(data) {
     select(id, baseline_start_date)
   data <- data %>%
     left_join(baseline_start_date, by = "id")
+
+  data <- data %>%
+    filter(!is.na(baseline_start_date))
+
   return(data)
 }
 
@@ -206,8 +210,7 @@ data <- data %>%
 # binary variable to indicate if nafld happened
 data <- data %>%
   mutate(nafld = case_when(
-    !is.na(icd10_nafld_date) | !is.na(icd10_nash_date) |
-      !is.na(icd9_nafld_date) | !is.na(icd9_nash_date) ~ 1,
+    !is.na(icd10_nafld_date) | !is.na(icd10_nash_date)  ~ 1,
     TRUE ~ 0))
 
 # counting and removing those with event before baseline
@@ -231,41 +234,29 @@ data <- data %>%
                 survival_time_nash, survival_time_nafld, na.rm = TRUE),
     time = time/365.25
   )
-
+######################################################
 # counting and removing those with event before baseline
-data2 <- data %>%
-  mutate(data_time = data$time <= 0 | data$time == NA)
-table(data2$data_time)
-
-sorted <- data2 %>%
-  filter(data2$data_time==FALSE)
-table(data$time==0)
-
 
 data_time <- data %>%
-  subset(data$time<=0 | data$time == NA)
+  filter(data$time<=0)
 
+#those with event before baseline
 nafld_nash <-sum(!is.na(data_time$survival_time_nafld)
-            | !is.na(data_time$survival_time_nash))
+            | !is.na(data_time$survival_time_nash)) %>%
+  print()
 
-ltfu <- sum(!is.na(data_time$survival_time_ltfu)
+ltfu_or_dead <- sum(!is.na(data_time$survival_time_ltfu)
+            | !is.na(data_time$survival_time_death)
             & is.na(data_time$survival_time_nafld)
             & is.na(data_time$survival_time_nash)
-            & is.na(data_time$survival_time_death))
+            & is.na(data_time$survival_time_death)) %>%
+  print()
 
-death <- sum(!is.na(data_time$survival_time_death)
-             & is.na(data_time$survival_time_nafld)
-             & is.na(data_time$survival_time_nash)
-             & is.na(data_time$survival_time_ltfu))
-
-
-# remove those with event before baseline
+# removing those with no time in study
 data <- data %>%
-  subset(data$time>=0)
+  subset(data$time>0)
 
-data2 <- data %>%
-  subset(!is(data_time))
-
+table(data$sex)
 # Save data ---------------------------------------------------------------
 # arrow::write_parquet(data, here("data/data.parquet"))
 # ukbAid::upload_data(here("data/data.parquet"), username = "FieLangmann")
