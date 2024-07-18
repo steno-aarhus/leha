@@ -36,7 +36,7 @@ meat_pea <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_pea_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly +
+                       sauce_weekly + food_weight_weekly +
                     # other variables
                     alcohol_weekly + ethnicity + deprivation + education +
                     cohabitation + physical_activity + smoking +
@@ -45,7 +45,8 @@ meat_pea <- coxph(Surv(survival_time, nafld == 1) ~
                   data = data, ties = "breslow"
 )
 
-meat_pea <- tidy(meat_pea, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2 digits doesn't work
+meat_pea <- tidy(meat_pea, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 # poultry
 poultry_pea <- coxph(Surv(survival_time, nafld == 1) ~
@@ -56,7 +57,7 @@ poultry_pea <- coxph(Surv(survival_time, nafld == 1) ~
                           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                           veggie_pea_weekly + potato_weekly + egg_weekly +
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                          sauce_weekly + weight_weekly +
+                          sauce_weekly + food_weight_weekly +
                        # other variables
                        alcohol_weekly + ethnicity + deprivation + education +
                        cohabitation + physical_activity + smoking +
@@ -65,7 +66,8 @@ poultry_pea <- coxph(Surv(survival_time, nafld == 1) ~
                      data = data, ties = "breslow"
 )
 
-poultry_pea <- tidy(poultry_pea, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2 digits doesn't work
+poultry_pea <- tidy(poultry_pea, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 # fish
 fish_pea <- coxph(Surv(survival_time, nafld == 1) ~
@@ -76,7 +78,7 @@ fish_pea <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_pea_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly +
+                       sauce_weekly + food_weight_weekly +
                     # other variables
                     alcohol_weekly + ethnicity + deprivation + education +
                     cohabitation + physical_activity + smoking +
@@ -85,20 +87,17 @@ fish_pea <- coxph(Surv(survival_time, nafld == 1) ~
                   data = data, ties = "breslow"
 )
 
-fish_pea <- tidy(fish_pea, exponentiate = TRUE, conf.int = TRUE, digits = 2) # 2 digits doesn't work
+fish_pea <- tidy(fish_pea, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 
 
-# Removing soy from legumes -----------------------------------------------
+# Removing soymilk from legumes -----------------------------------------------
 data <- data %>%
   mutate(legumenosoy80 = legume_no_soymilk/80,
          meats80 = meats_weekly/80,
          poultry80 = poultry_weekly/80,
          fish80 = fish_weekly/80)
-
-
-legume_no_soymilk #removing soy milk from legumes
-
 
 ## model 2 -----------------------------------------------------------------
 # meats
@@ -106,11 +105,11 @@ meat_nosoy <- coxph(Surv(survival_time, nafld == 1) ~
                     # removing meat
                     legumenosoy80 + poultry80 + fish80 +
                     #other food components
-                    soymilk_weekly + cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                    cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                     dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                    veggie_pea_weekly + potato_weekly + egg_weekly +
-                    non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                    sauce_weekly + weight_weekly +
+                    veggie_weekly + potato_weekly + egg_weekly +
+                    non_alc_beverage_soymilk_weekly + alc_beverage_weekly + snack_weekly +
+                    sauce_weekly + food_weight_weekly +
                     # other variables
                     alcohol_weekly + ethnicity + deprivation + education +
                     cohabitation + physical_activity + smoking +
@@ -126,12 +125,12 @@ meat_nosoy <- tidy(meat_nosoy, exponentiate = TRUE, conf.int = TRUE) %>%
 poultry_nosoy <- coxph(Surv(survival_time, nafld == 1) ~
                        # removing poultry
                        legumenosoy80 + meats80 + fish80+
-                       #other food components
-                       soymilk_weekly + cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                         #other food components
+                         cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_pea_weekly + potato_weekly + egg_weekly +
-                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly +
+                         non_alc_beverage_soymilk_weekly + alc_beverage_weekly + snack_weekly +
+                       sauce_weekly + food_weight_weekly +
                        # other variables
                        alcohol_weekly + ethnicity + deprivation + education +
                        cohabitation + physical_activity + smoking +
@@ -148,11 +147,11 @@ fish_nosoy <- coxph(Surv(survival_time, nafld == 1) ~
                     # removing fish
                     legumenosoy80 + meats80 + poultry80+
                     #other food components
-                    soymilk_weekly + cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                    cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                     dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                     veggie_pea_weekly + potato_weekly + egg_weekly +
-                    non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                    sauce_weekly + weight_weekly +
+                      non_alc_beverage_soymilk_weekly + alc_beverage_weekly + snack_weekly +
+                    sauce_weekly + food_weight_weekly +
                     # other variables
                     alcohol_weekly + ethnicity + deprivation + education +
                     cohabitation + physical_activity + smoking +
@@ -189,7 +188,7 @@ meat_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly +
+                       sauce_weekly + food_weight_weekly +
                       #other variables
                       strata(region, age_strata, sex) +
                       alcohol_weekly + ethnicity + deprivation + education +
@@ -197,7 +196,8 @@ meat_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                       related_disease + disease_family + yearly_income,
                     data = data3, ties='breslow')
 
-meat_data3 <- tidy(meat_data3, exponentiate = TRUE, conf.int = TRUE)
+meat_data3 <- tidy(meat_data3, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 # poultry
 poultry_data3 <- coxph(Surv(survival_time, nafld == 1) ~
@@ -208,7 +208,7 @@ poultry_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                           veggie_weekly + potato_weekly + egg_weekly +
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                          sauce_weekly + weight_weekly +
+                          sauce_weekly + food_weight_weekly +
                          #other variables
                          strata(region, age_strata, sex) +
                          alcohol_weekly + ethnicity + deprivation + education +
@@ -216,7 +216,8 @@ poultry_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                          related_disease + disease_family + yearly_income,
                        data = data3, ties='breslow')
 
-poultry_data3 <- tidy(poultry_data3, exponentiate = TRUE, conf.int = TRUE)
+poultry_data3 <- tidy(poultry_data3, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 
 # fish
@@ -228,7 +229,7 @@ fish_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly +
+                       sauce_weekly + food_weight_weekly +
                       #other variables
                       strata(region, age_strata, sex)+
                       alcohol_weekly + ethnicity + deprivation + education +
@@ -236,7 +237,8 @@ fish_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                       related_disease + disease_family + yearly_income,
                     data = data3, ties='breslow')
 
-fish_data3 <- tidy(fish_data3, exponentiate = TRUE, conf.int = TRUE)
+fish_data3 <- tidy(fish_data3, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 
 ## data4 = four 24h recalls -----------------------------------------------------------------
@@ -249,7 +251,7 @@ meat_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                       veggie_weekly + potato_weekly + egg_weekly +
                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                      sauce_weekly + weight_weekly +
+                      sauce_weekly + food_weight_weekly +
                       #other variables
                       strata(region, age_strata, sex) +
                       alcohol_weekly + ethnicity + deprivation + education +
@@ -257,7 +259,8 @@ meat_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                       related_disease + disease_family + yearly_income,
                     data = data4, ties='breslow')
 
-meat_data4 <- tidy(meat_data4, exponentiate = TRUE, conf.int = TRUE)
+meat_data4 <- tidy(meat_data4, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 # poultry
 poultry_data4 <- coxph(Surv(survival_time, nafld == 1) ~
@@ -268,7 +271,7 @@ poultry_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                          dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                          veggie_weekly + potato_weekly + egg_weekly +
                          non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                         sauce_weekly + weight_weekly +
+                         sauce_weekly + food_weight_weekly +
                          #other variables
                          strata(region, age_strata, sex) +
                          alcohol_weekly + ethnicity + deprivation + education +
@@ -276,7 +279,8 @@ poultry_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                          related_disease + disease_family + yearly_income,
                        data = data4, ties='breslow')
 
-poultry_data4 <- tidy(poultry_data4, exponentiate = TRUE, conf.int = TRUE)
+poultry_data4 <- tidy(poultry_data4, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 
 # fish
@@ -288,7 +292,7 @@ fish_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                       veggie_weekly + potato_weekly + egg_weekly +
                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                      sauce_weekly + weight_weekly +
+                      sauce_weekly + food_weight_weekly +
                       #other variables
                       strata(region, age_strata, sex) +
                       alcohol_weekly + ethnicity + deprivation + education +
@@ -296,7 +300,8 @@ fish_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                       related_disease + disease_family + yearly_income,
                     data = data4, ties='breslow')
 
-fish_data4 <- tidy(fish_data4, exponentiate = TRUE, conf.int = TRUE)
+fish_data4 <- tidy(fish_data4, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 
 # Removing high ALT and AST from analysis-----------------------------------------------
@@ -329,7 +334,7 @@ meat_liver <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly +
+                       sauce_weekly + food_weight_weekly +
                       #other variables
                       strata(region, age_strata, sex)+
                       alcohol_weekly + ethnicity + deprivation + education +
@@ -337,7 +342,8 @@ meat_liver <- coxph(Surv(survival_time, nafld == 1) ~
                       related_disease + disease_family + yearly_income,
                     data = normal_liver, ties='breslow')
 
-meat_liver <- tidy(meat_liver, exponentiate = TRUE, conf.int = TRUE)
+meat_liver <- tidy(meat_liver, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 # poultry
 poultry_liver <- coxph(Surv(survival_time, nafld == 1) ~
@@ -348,7 +354,7 @@ poultry_liver <- coxph(Surv(survival_time, nafld == 1) ~
                           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                           veggie_weekly + potato_weekly + egg_weekly +
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                          sauce_weekly + weight_weekly +
+                          sauce_weekly + food_weight_weekly +
                          #other variables
                          strata(region, age_strata, sex)+
                          alcohol_weekly + ethnicity + deprivation + education +
@@ -356,7 +362,8 @@ poultry_liver <- coxph(Surv(survival_time, nafld == 1) ~
                          related_disease + disease_family + yearly_income,
                        data = normal_liver, ties='breslow')
 
-poultry_liver <- tidy(poultry_liver, exponentiate = TRUE, conf.int = TRUE)
+poultry_liver <- tidy(poultry_liver, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 
 # fish
@@ -368,7 +375,7 @@ fish_liver <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly +
+                       sauce_weekly + food_weight_weekly +
                       #other variables
                       strata(region, age_strata, sex)+
                       alcohol_weekly + ethnicity + deprivation + education +
@@ -376,7 +383,8 @@ fish_liver <- coxph(Surv(survival_time, nafld == 1) ~
                       related_disease + disease_family + yearly_income,
                     data = normal_liver, ties='breslow')
 
-fish_liver <- tidy(fish_liver, exponentiate = TRUE, conf.int = TRUE)
+fish_liver <- tidy(fish_liver, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 # Remove high alcohol intake --------------------------------------------------
 percentile_90 <- quantile(data$alcohol_weekly, probs = 0.90, na.rm = TRUE)
@@ -394,7 +402,7 @@ meat_alc <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly +
+                       sauce_weekly + food_weight_weekly +
                     #other variables
                     strata(region, age_strata, sex)+
                     alcohol_weekly + ethnicity + deprivation + education +
@@ -402,7 +410,8 @@ meat_alc <- coxph(Surv(survival_time, nafld == 1) ~
                     related_disease + disease_family + yearly_income,
                   data = lower_alc, ties='breslow')
 
-meat_alc <- tidy(meat_alc, exponentiate = TRUE, conf.int = TRUE)
+meat_alc <- tidy(meat_alc, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 # poultry
 poultry_alc <- coxph(Surv(survival_time, nafld == 1) ~
@@ -413,7 +422,7 @@ poultry_alc <- coxph(Surv(survival_time, nafld == 1) ~
                           dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                           veggie_weekly + potato_weekly + egg_weekly +
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                          sauce_weekly + weight_weekly +
+                          sauce_weekly + food_weight_weekly +
                        #other variables
                        strata(region, age_strata, sex) +
                        alcohol_weekly + ethnicity + deprivation + education +
@@ -421,7 +430,8 @@ poultry_alc <- coxph(Surv(survival_time, nafld == 1) ~
                        related_disease + disease_family + yearly_income,
                      data = lower_alc, ties='breslow')
 
-poultry_alc <- tidy(poultry_alc, exponentiate = TRUE, conf.int = TRUE)
+poultry_alc <- tidy(poultry_alc, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 # fish
 fish_alc <- coxph(Surv(survival_time, nafld == 1) ~
@@ -432,7 +442,7 @@ fish_alc <- coxph(Surv(survival_time, nafld == 1) ~
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
                        veggie_weekly + potato_weekly + egg_weekly +
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + weight_weekly +
+                       sauce_weekly + food_weight_weekly +
                     #other variables
                     strata(region, age_strata, sex) +
                     alcohol_weekly + ethnicity + deprivation + education +
@@ -440,5 +450,6 @@ fish_alc <- coxph(Surv(survival_time, nafld == 1) ~
                     related_disease + disease_family + yearly_income,
                   data = lower_alc, ties='breslow')
 
-fish_alc <- tidy(fish_alc, exponentiate = TRUE, conf.int = TRUE)
+fish_alc <- tidy(fish_alc, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
