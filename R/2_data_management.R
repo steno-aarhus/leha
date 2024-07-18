@@ -4,6 +4,7 @@ library(magrittr)
 library(tidyr)
 library(stringr)
 library(here)
+library(readr)
 
 # Load data
 data <- read_csv(here("data/data.csv"))
