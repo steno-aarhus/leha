@@ -26,7 +26,7 @@ tar_option_set(
 # tar_source()
 # Or just some files:
 source(here::here("R/data_wrangling.R"))
-# source(here::here("R/descriptives.R"))
+source(here::here("R/descriptives.R"))
 # source(here::here("R/main_analysis.R"))
 # source(here::here("R/secondary_analysis.R"))
 # source(here::here("R/sensitivity_analysis.R"))
