@@ -89,22 +89,20 @@ list(
     name = outcome_data,
     command = diet_data |>
       icd10_diagnoses() |>
-      left_join_icd10() |>
-      idc9_diagnoses() |>
-      left_join_icd9() |>
+      icd9_diagnoses() |>
       date_birth() |>
       censoring_date() |>
-      outcome_variables() |>
-      remove_outcome_p_vars()
+      outcome_variables()
   ),
   # eligibility criteria based on outcomes
   tar_target(
     name = eligible_participants,
     command = outcome_data |>
       last_completed_recall() |>
-      baseline_start_date() |>
+      baseline_date() |>
       time_in_study() |>
-      event_before_base()
+      event_before_base()|>
+      remove_outcome_p_vars()
     ),
   # define survival time
   tar_target(
