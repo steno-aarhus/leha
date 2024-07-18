@@ -67,6 +67,8 @@ list(
     command = id_data |>
       sociodemographics() |>
       lifestyle() |>
+      alcohol() |>
+      alcohol_intake() |>
       illness() |>
       aminotransferase() |>
       remove_missings() |>
@@ -108,18 +110,21 @@ list(
   tar_target(
     name = sorted_data,
     command = eligible_participants |>
-      survival_time()
+      survival_time() |>
+      number_events()
+  ),
+  # descriptive analyses
+  tar_target(
+    name = descriptives,
+    command = sorted_data |>
+      baseline_table()|>
+      supplementary_baseline_table() |>
+      person_years_followup() |>
+      spearman_correlation() |>
+      pearson_correlation()
   ))
-# ,
-#   # descriptive analyses
-#   tar_target(
-#     name = descriptives,
-#     command = sorted_data |>
-#       baseline_table()|>
-#       supplementary_baseline_table() |>
-#       person_years_followup()
-#   ),
-#
+
+#   ,
 #   tar_target(
 #     name = descriptives,
 #     command = sorted_data |>
