@@ -22,10 +22,8 @@ data_id <- function(data) {
 # sociodemographic factors
 sociodemographics <- function(data) {
   data <- data %>% mutate(
-    sex = p31,
-    sex = as.factor(sex),
-    age = p21022,
-    age = as.numeric(age),
+    sex = as.factor(p31),
+    age = as.numeric(p21022),
     age_strata = case_when(
       age < 45 ~ 0,
       age >= 45 & age <= 49 ~ 1,
@@ -37,14 +35,14 @@ sociodemographics <- function(data) {
     age_strata = as.factor(age_strata),
     ethnicity = case_when(
       p21000_i0 == "White" | p21000_i0 == "British" | p21000_i0 == "Irish" | p21000_i0 == "Any other white background" ~ "white",
-      p21000_i0 == "Chinese" | p21000_i0 == "Asian or Asian British" | p21000_i0 =="Indian" | p21000_i0 == "Pakistani" | p21000_i0 == "Bangladeshi" | p21000_i0 == "Any other Asian background" ~ "asian",
-      p21000_i0 == "Black or Black British" | p21000_i0 == "Caribbean" | p21000_i0 == "African" | p21000_i0 == "Any other Black background" ~ "black",
-      p21000_i0 == "Mixed" | p21000_i0 == "White and Black Caribbean" |p21000_i0 == "White and Black African" | p21000_i0 == "White and Asian" | p21000_i0 == "Any other mixed background" |
-        p21000_i0 == "Other ethnic group" | p21000_i0 == "Do not know" | p21000_i0 == "Prefer not to answer" | str_detect(p21000_i0, "NA") ~ "mixed or other"
-    ),
+      p21000_i0 == "Chinese" | p21000_i0 == "Asian or Asian British" | p21000_i0 =="Indian" | p21000_i0 == "Pakistani" |
+        p21000_i0 == "Bangladeshi" | p21000_i0 == "Any other Asian background" | p21000_i0 == "Black or Black British" |
+        p21000_i0 == "Caribbean" | p21000_i0 == "African" | p21000_i0 == "Any other Black background" |
+        p21000_i0 == "Mixed" | p21000_i0 == "White and Black Caribbean" |p21000_i0 == "White and Black African" |
+        p21000_i0 == "White and Asian" | p21000_i0 == "Any other mixed background" | p21000_i0 == "Other ethnic group" |
+        p21000_i0 == "Do not know" | p21000_i0 == "Prefer not to answer" | str_detect(p21000_i0, "NA") ~ "other"
+      ),
     deprivation = p22189,
-    deprivation_quint = ntile(deprivation, 5),
-    deprivation_quint = as.factor(deprivation_quint),
     yearly_income = case_when(
       str_detect(p738_i0, "18,000 to") ~ "18,000-30,999",
       str_detect(p738_i0, "31,000") ~ "31,000-51,999",
@@ -52,7 +50,6 @@ sociodemographics <- function(data) {
       str_detect(p738_i0, "know") ~ "don't know",
       str_detect(p738_i0, "Greater") ~ ">100,000",
       str_detect(p738_i0, "Less") ~ "<18,000",
-      str_detect(p738_i0, "answer") ~ "no answer",
       TRUE ~ "no answer"
     ),
     yearly_income = as.factor(yearly_income),
@@ -106,21 +103,29 @@ lifestyle <- function(data) {
       str_detect(p20116_i0, "Previous") ~ "former",
       str_detect(p20116_i0, "Current") & as.numeric(p3456_i0) > 0 & as.numeric(p3456_i0) <= 15 ~ "current <15",
       str_detect(p20116_i0, "Current") & as.numeric(p3456_i0) > 15 ~ "current > 15",
-      str_detect(p20116_i0, "answer") ~ "no answer",
       TRUE ~ "no answer"  # Handling cases not covered by the conditions
     ),
     # bmi
     bmi = p23104_i0,
     bmi = as.numeric(bmi),
     bmi30 = ifelse(p23104_i0 >= 30, 1, 0),
-    bmi30 = as.numeric(bmi30),
-    # alcohol
+    bmi30 = as.numeric(bmi30))
+  return(data)
+}
+
+alcohol <- function(data){
+  data <- data %>% mutate(
     p26030_i0 = ifelse(is.na(p26030_i0), 0, p26030_i0),
     p26030_i1 = ifelse(is.na(p26030_i1), 0, p26030_i1),
     p26030_i2 = ifelse(is.na(p26030_i2), 0, p26030_i2),
     p26030_i3 = ifelse(is.na(p26030_i3), 0, p26030_i3),
-    p26030_i4 = ifelse(is.na(p26030_i4), 0, p26030_i4),
-    alcohol_intake = rowSums(select(., starts_with("p26030"))),
+    p26030_i4 = ifelse(is.na(p26030_i4), 0, p26030_i4))
+  return(data)
+}
+
+alcohol_intake <- function(data) {
+  data <- data %>% mutate(
+    alcohol_intake = rowSums(pick(matches("p26030")), na.rm = TRUE),
     alcohol_daily = alcohol_intake/p20077,
     alcohol_weekly = alcohol_daily * 7)
   return(data)
@@ -250,9 +255,9 @@ food_groups <- function(data) {
       snack_weekly = calculate_weekly_diet("p26106|p26140|p26134|p26084|p26085|p26064|p26080", p20077),
       sauce_weekly = calculate_weekly_diet("p26129|p26130", p20077),
       legume_pea_weekly = calculate_weekly_diet("p26086|p26101|p26136|p26137|peas", p20077),
-      veggie_pea = ((rowSums(pick(matches("p26065|p26098|p26147|p26123|p26125|p26143|p26146")), na.rm = TRUE) - peas) / p20077) * 7,
+      veggie_pea_weekly = ((rowSums(pick(matches("p26065|p26098|p26147|p26123|p26125|p26143|p26146")), na.rm = TRUE) - peas) / p20077) * 7,
       legume_no_soymilk = calculate_weekly_diet("p26086|p26101|p26137", p20077), #removing soy milk from legumes
-      soymilk_weekly = calculate_weekly_diet("p26136", p20077),
+      non_alc_beverage_soymilk_weekly = calculate_weekly_diet("p26136|p26124|p26141|p26142|p26148|p26081|p26082|p26095|p26126|p26127", p20077),
       legume_soy_meat = calculate_weekly_diet("p26086|p26101|p26137", p20077), # removing soy milk and soy desert from legumes
       food_weight_weekly = legume_weekly + meats_weekly + poultry_weekly + fish_weekly + cereal_refined_weekly + whole_grain_weekly +
         mixed_dish_weekly + dairy_weekly + fats_weekly + fruit_weekly + nut_weekly + veggie_weekly + potato_weekly + egg_weekly +
@@ -300,8 +305,7 @@ habitual_diet <- function(data) {
     habitual_poultry = rowSums(pick(matches("p1359")), na.rm = TRUE),
     habitual_poultry = as.numeric(habitual_poultry),
     habitual_fish = rowSums(pick(matches("p1329|p1339")), na.rm = TRUE),
-    habitual_fish = as.numeric(habitual_fish)
-  )
+    habitual_fish = as.numeric(habitual_fish))
   return(data)
 }
 
@@ -484,6 +488,9 @@ baseline_date <- function(data) {
     select(id, baseline_start_date)
   data <- data %>%
     left_join(baseline_start_date, by = "id")
+
+  data <- data %>%
+    filter(!is.na(baseline_start_date))
   return(data)
 }
 
@@ -509,10 +516,27 @@ time_in_study <- function(data) {
   return(data)
 }
 
-# remove those with event before baseline (time < 0)
+# count and remove those with event before baseline (time < 0)
 event_before_base <- function(data) {
+
+  data_time <- data %>%
+    filter(data$time<=0)
+  # counting those with event before baseline
+  nafld_nash <-sum(!is.na(data_time$survival_time_nafld)
+                   | !is.na(data_time$survival_time_nash)) %>%
+    print()
+  # counting those lost to follow-up or dead before baseline
+  ltfu_or_dead <- sum(!is.na(data_time$survival_time_ltfu)
+                      | !is.na(data_time$survival_time_death)
+                      & is.na(data_time$survival_time_nafld)
+                      & is.na(data_time$survival_time_nash)
+                      & is.na(data_time$survival_time_death)) %>%
+    print()
+
+  # removing those with no time in study
   data <- data %>%
-    subset(data$time>=0)
+    subset(data$time>0)
+
   return(data)
 }
 
@@ -541,4 +565,10 @@ survival_time <- function(data) {
       # Remove temporary variable
       survival_time_tmp = NULL)
   return(data)
+}
+
+
+# number of events --------------------------------------------------------
+number_events <- function(data){
+  table(data$nafld) %>% print()
 }
