@@ -1,5 +1,12 @@
 # Data wrangling functions
 
+
+# load data ---------------------------------------------------------------
+# should eventually be deleted when targets works
+library(here)
+library(readr)
+data <- read_csv(here("data/data.csv"))
+
 # Data management ---------------------------------------------------------
 
 ## Remove participants with less than 2 diet assessments -------------------------------------
@@ -66,7 +73,7 @@ sociodemographics <- function(data) {
     ),
     education = as.factor(education),
     physical_activity = case_when(
-      p22040_i0 >0 & p22040_i0 <=918 ~ "low",
+      p22040_i0 <=918 ~ "low",
       p22040_i0 >918 & p22040_i0 <=3706 ~ "moderate",
       p22040_i0 >3706 ~ "high",
       TRUE ~ "unknown"
@@ -126,7 +133,8 @@ alcohol_intake <- function(data) {
   data <- data %>% mutate(
     alcohol_intake = rowSums(pick(matches("p26030")), na.rm = TRUE),
     alcohol_daily = alcohol_intake/p20077,
-    alcohol_weekly = alcohol_daily * 7)
+    alcohol_weekly = alcohol_daily * 7,
+    alc_spline = bs(alcohol_weekly, knots = 4, degree = 3))
   return(data)
 }
 
