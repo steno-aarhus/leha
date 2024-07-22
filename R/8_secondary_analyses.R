@@ -16,7 +16,7 @@ library(broom)
 # ## model 2 -----------------------------------------------------------------
 # fit_nonspecific <- coxph(Surv(survival_time, nafld == 1) ~ legumes80 +
 #                               weight_weekly + strata(age_strata, region, sex) +
-#                               alcohol_weekly + ethnicity + deprivation + education +
+#                               alc_spline + ethnicity + deprivation + education +
 #                               cohabitation + physical_activity + smoking +
 #                               related_disease + disease_family + yearly_income,
 #                             data = data, ties='breslow')
@@ -51,7 +51,7 @@ total_model2 <- coxph(
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
     sauce_weekly + meats_weekly + poultry_weekly + fish_weekly+
     # other variables
-    alcohol_weekly + ethnicity + deprivation + education +
+    alc_spline + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
     related_disease + disease_family + yearly_income +
     strata(region, age_strata, sex),
@@ -74,7 +74,7 @@ meat_model2 <- coxph(
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
     sauce_weekly + food_weight_weekly +
     # other variables
-    alcohol_weekly + ethnicity + deprivation + education +
+    alc_spline + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
     related_disease + disease_family + yearly_income +
     strata(region, age_strata, sex),
@@ -97,7 +97,7 @@ poultry_model2 <- coxph(
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
     sauce_weekly + food_weight_weekly +
     # other variables
-    alcohol_weekly + ethnicity + deprivation + education +
+    alc_spline + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
     related_disease + disease_family + yearly_income +
     strata(region, age_strata, sex),
@@ -120,7 +120,7 @@ fish_model2 <- coxph(
     non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
     sauce_weekly + food_weight_weekly +
     # other variables
-    alcohol_weekly + ethnicity + deprivation + education +
+    alc_spline + ethnicity + deprivation + education +
     cohabitation + physical_activity + smoking +
     related_disease + disease_family + yearly_income +
     strata(region, age_strata, sex),

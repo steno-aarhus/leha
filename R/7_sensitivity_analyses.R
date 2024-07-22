@@ -38,7 +38,7 @@ meat_pea <- coxph(Surv(survival_time, nafld == 1) ~
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                        sauce_weekly + food_weight_weekly +
                     # other variables
-                    alcohol_weekly + ethnicity + deprivation + education +
+                    alc_spline + ethnicity + deprivation + education +
                     cohabitation + physical_activity + smoking +
                     related_disease + disease_family + yearly_income +
                     strata(region, age_strata, sex),
@@ -59,7 +59,7 @@ poultry_pea <- coxph(Surv(survival_time, nafld == 1) ~
                           non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                           sauce_weekly + food_weight_weekly +
                        # other variables
-                       alcohol_weekly + ethnicity + deprivation + education +
+                       alc_spline + ethnicity + deprivation + education +
                        cohabitation + physical_activity + smoking +
                        related_disease + disease_family + yearly_income +
                        strata(region, age_strata, sex),
@@ -80,7 +80,7 @@ fish_pea <- coxph(Surv(survival_time, nafld == 1) ~
                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
                        sauce_weekly + food_weight_weekly +
                     # other variables
-                    alcohol_weekly + ethnicity + deprivation + education +
+                    alc_spline + ethnicity + deprivation + education +
                     cohabitation + physical_activity + smoking +
                     related_disease + disease_family + yearly_income +
                     strata(region, age_strata, sex),
@@ -111,7 +111,7 @@ meat_nosoy <- coxph(Surv(survival_time, nafld == 1) ~
                     non_alc_beverage_soymilk_weekly + alc_beverage_weekly + snack_weekly +
                     sauce_weekly + food_weight_weekly +
                     # other variables
-                    alcohol_weekly + ethnicity + deprivation + education +
+                    alc_spline + ethnicity + deprivation + education +
                     cohabitation + physical_activity + smoking +
                     related_disease + disease_family + yearly_income +
                     strata(region, age_strata, sex),
@@ -132,7 +132,7 @@ poultry_nosoy <- coxph(Surv(survival_time, nafld == 1) ~
                          non_alc_beverage_soymilk_weekly + alc_beverage_weekly + snack_weekly +
                        sauce_weekly + food_weight_weekly +
                        # other variables
-                       alcohol_weekly + ethnicity + deprivation + education +
+                       alc_spline + ethnicity + deprivation + education +
                        cohabitation + physical_activity + smoking +
                        related_disease + disease_family + yearly_income +
                        strata(region, age_strata, sex),
@@ -153,7 +153,7 @@ fish_nosoy <- coxph(Surv(survival_time, nafld == 1) ~
                       non_alc_beverage_soymilk_weekly + alc_beverage_weekly + snack_weekly +
                     sauce_weekly + food_weight_weekly +
                     # other variables
-                    alcohol_weekly + ethnicity + deprivation + education +
+                    alc_spline + ethnicity + deprivation + education +
                     cohabitation + physical_activity + smoking +
                     related_disease + disease_family + yearly_income +
                     strata(region, age_strata, sex),
@@ -191,7 +191,7 @@ meat_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                        sauce_weekly + food_weight_weekly +
                       #other variables
                       strata(region, age_strata, sex) +
-                      alcohol_weekly + ethnicity + deprivation + education +
+                      alc_spline + ethnicity + deprivation + education +
                       cohabitation + physical_activity + smoking +
                       related_disease + disease_family + yearly_income,
                     data = data3, ties='breslow')
@@ -211,7 +211,7 @@ poultry_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                           sauce_weekly + food_weight_weekly +
                          #other variables
                          strata(region, age_strata, sex) +
-                         alcohol_weekly + ethnicity + deprivation + education +
+                         alc_spline + ethnicity + deprivation + education +
                          cohabitation + physical_activity + smoking +
                          related_disease + disease_family + yearly_income,
                        data = data3, ties='breslow')
@@ -232,7 +232,7 @@ fish_data3 <- coxph(Surv(survival_time, nafld == 1) ~
                        sauce_weekly + food_weight_weekly +
                       #other variables
                       strata(region, age_strata, sex)+
-                      alcohol_weekly + ethnicity + deprivation + education +
+                      alc_spline + ethnicity + deprivation + education +
                       cohabitation + physical_activity + smoking +
                       related_disease + disease_family + yearly_income,
                     data = data3, ties='breslow')
@@ -254,7 +254,7 @@ meat_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                       sauce_weekly + food_weight_weekly +
                       #other variables
                       strata(region, age_strata, sex) +
-                      alcohol_weekly + ethnicity + deprivation + education +
+                      alc_spline + ethnicity + deprivation + education +
                       cohabitation + physical_activity + smoking +
                       related_disease + disease_family + yearly_income,
                     data = data4, ties='breslow')
@@ -274,7 +274,7 @@ poultry_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                          sauce_weekly + food_weight_weekly +
                          #other variables
                          strata(region, age_strata, sex) +
-                         alcohol_weekly + ethnicity + deprivation + education +
+                         alc_spline + ethnicity + deprivation + education +
                          cohabitation + physical_activity + smoking +
                          related_disease + disease_family + yearly_income,
                        data = data4, ties='breslow')
@@ -295,7 +295,7 @@ fish_data4 <- coxph(Surv(survival_time, nafld == 1) ~
                       sauce_weekly + food_weight_weekly +
                       #other variables
                       strata(region, age_strata, sex) +
-                      alcohol_weekly + ethnicity + deprivation + education +
+                      alc_spline + ethnicity + deprivation + education +
                       cohabitation + physical_activity + smoking +
                       related_disease + disease_family + yearly_income,
                     data = data4, ties='breslow')
@@ -337,7 +337,7 @@ meat_liver <- coxph(Surv(survival_time, nafld == 1) ~
                        sauce_weekly + food_weight_weekly +
                       #other variables
                       strata(region, age_strata, sex)+
-                      alcohol_weekly + ethnicity + deprivation + education +
+                      alc_spline + ethnicity + deprivation + education +
                       cohabitation + physical_activity + smoking +
                       related_disease + disease_family + yearly_income,
                     data = normal_liver, ties='breslow')
@@ -357,7 +357,7 @@ poultry_liver <- coxph(Surv(survival_time, nafld == 1) ~
                           sauce_weekly + food_weight_weekly +
                          #other variables
                          strata(region, age_strata, sex)+
-                         alcohol_weekly + ethnicity + deprivation + education +
+                         alc_spline + ethnicity + deprivation + education +
                          cohabitation + physical_activity + smoking +
                          related_disease + disease_family + yearly_income,
                        data = normal_liver, ties='breslow')
@@ -378,7 +378,7 @@ fish_liver <- coxph(Surv(survival_time, nafld == 1) ~
                        sauce_weekly + food_weight_weekly +
                       #other variables
                       strata(region, age_strata, sex)+
-                      alcohol_weekly + ethnicity + deprivation + education +
+                      alc_spline + ethnicity + deprivation + education +
                       cohabitation + physical_activity + smoking +
                       related_disease + disease_family + yearly_income,
                     data = normal_liver, ties='breslow')
@@ -405,7 +405,7 @@ meat_alc <- coxph(Surv(survival_time, nafld == 1) ~
                        sauce_weekly + food_weight_weekly +
                     #other variables
                     strata(region, age_strata, sex)+
-                    alcohol_weekly + ethnicity + deprivation + education +
+                    alc_spline + ethnicity + deprivation + education +
                     cohabitation + physical_activity + smoking +
                     related_disease + disease_family + yearly_income,
                   data = lower_alc, ties='breslow')
@@ -425,7 +425,7 @@ poultry_alc <- coxph(Surv(survival_time, nafld == 1) ~
                           sauce_weekly + food_weight_weekly +
                        #other variables
                        strata(region, age_strata, sex) +
-                       alcohol_weekly + ethnicity + deprivation + education +
+                       alc_spline + ethnicity + deprivation + education +
                        cohabitation + physical_activity + smoking +
                        related_disease + disease_family + yearly_income,
                      data = lower_alc, ties='breslow')
@@ -445,7 +445,7 @@ fish_alc <- coxph(Surv(survival_time, nafld == 1) ~
                        sauce_weekly + food_weight_weekly +
                     #other variables
                     strata(region, age_strata, sex) +
-                    alcohol_weekly + ethnicity + deprivation + education +
+                    alc_spline + ethnicity + deprivation + education +
                     cohabitation + physical_activity + smoking +
                     related_disease + disease_family + yearly_income,
                   data = lower_alc, ties='breslow')
