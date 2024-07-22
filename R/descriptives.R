@@ -22,7 +22,7 @@ baseline_table <- function(data) {
   table1 <- data %>%
     select(legume_groups, legume_weekly, nafld, age, sex, yearly_income, education,
            deprivation, cohabitation, ethnicity, physical_activity, smoking,
-           alcohol_weekly, region, bmi30, related_disease, cancer, disease_family,
+           alcohol_daily, bmi30, related_disease, disease_family,
            meats_weekly, poultry_weekly, fish_weekly,
            cereal_refined_weekly, whole_grain_weekly, mixed_dish_weekly,
            dairy_weekly, fats_weekly, fruit_weekly, nut_weekly, veggie_weekly,
@@ -45,7 +45,7 @@ baseline_table <- function(data) {
 # baseline characteristics across outcome status
 supplementary_baseline_table <- function(data){
   suppl_base <- data %>%
-    select(nafld, age, sex, yearly_income, education, deprivation, cohabitation, ethnicity, physical_activity, smoking, alcohol_daily, region, bmi30, related_disease, cancer, disease_family) %>%
+    select(nafld, age, sex, yearly_income, education, deprivation, cohabitation, ethnicity, physical_activity, smoking, alcohol_daily, region, bmi30, related_disease, disease_family) %>%
     tbl_summary(by = nafld,
                 statistic = list(all_continuous() ~  "{median} ({p10}, {p90})",
                                  all_categorical() ~ "{n} ({p}%)"),
