@@ -11,19 +11,18 @@ library(broom)
 
 # Non specific substitutions ----------------------------------------------
 # Leaving one portion of legumes (80g) out weekly
-data <- data %>%
-  mutate(legumes80 = legume_weekly/80)
-
-
-## model 2 -----------------------------------------------------------------
-fit_nonspecific <- coxph(Surv(survival_time, nafld == 1) ~ legumes80 +
-                              weight_weekly + strata(age_strata, region, sex) +
-                              alcohol_weekly + ethnicity + deprivation + education +
-                              cohabitation + physical_activity + smoking +
-                              related_disease + disease_family + yearly_income,
-                            data = data, ties='breslow')
-
-nonspecific<- tidy(fit_nonspecific, exponentiate = TRUE, conf.int = TRUE, digits = 2)
+# data <- data %>%
+#   mutate(legumes80 = legume_weekly/80)
+# ## model 2 -----------------------------------------------------------------
+# fit_nonspecific <- coxph(Surv(survival_time, nafld == 1) ~ legumes80 +
+#                               weight_weekly + strata(age_strata, region, sex) +
+#                               alcohol_weekly + ethnicity + deprivation + education +
+#                               cohabitation + physical_activity + smoking +
+#                               related_disease + disease_family + yearly_income,
+#                             data = data, ties='breslow')
+#
+# nonspecific<- tidy(fit_nonspecific, exponentiate = TRUE, conf.int = TRUE) %>%
+#   mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 
 
@@ -39,7 +38,7 @@ consumers <- consumers %>% mutate(
   poultry80 = poultry_weekly / 80,
   fish80 = fish_weekly / 80
 )
-  )
+
 
 # total intake without substitution
 # model 2
@@ -58,7 +57,8 @@ total_model2 <- coxph(
     strata(region, age_strata, sex),
   data = consumers, ties = "breslow"
 )
-total <- tidy(total_model2, exponentiate = TRUE, conf.int = TRUE)
+total <- tidy(total_model2, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 
 
@@ -81,7 +81,8 @@ meat_model2 <- coxph(
   data = consumers, ties = "breslow"
 )
 
-meat_model2 <- tidy(meat_model2, exponentiate = TRUE, conf.int = TRUE)
+meat_model2 <- tidy(meat_model2, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 
 # poultry
@@ -103,7 +104,8 @@ poultry_model2 <- coxph(
   data = consumers, ties = "breslow"
 )
 
-poultry_model2 <- tidy(poultry_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2)
+poultry_model2 <- tidy(poultry_model2, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 
 # fish
@@ -125,4 +127,10 @@ fish_model2 <- coxph(
   data = consumers, ties = "breslow"
 )
 
-fish_model2 <- tidy(fish_model2, exponentiate = TRUE, conf.int = TRUE, digits = 2)
+fish_model2 <- tidy(fish_model2, exponentiate = TRUE, conf.int = TRUE) %>%
+  mutate(across(where(is.numeric), ~ round(.x, 2)))
+
+hr <- print(fish_model2[1,2])
+ci_low <- print(fish_model2[1,6])
+ci_high <- print(fish_model2[1,7])
+

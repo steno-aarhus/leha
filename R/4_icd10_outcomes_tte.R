@@ -12,54 +12,44 @@ library(ggplot2)
 
 # Load data
 # data <- read_csv(here("data/data.csv"))
-
+before_outcome <- data
+data <- before_outcome
 
 # ICD10 codes ---------------------------------------------------------
-# Split the diagnosis-variable into separate columns based on delimiter "|"
-icd <- data %>%
-  select(starts_with("p41270"), starts_with("p41280"), "id") %>%
-  separate_wider_delim(p41270,
-                       delim = "|",
-                       names = paste0("p41270var_a", 0:258), too_few = "debug")
+icd10_diagnoses <- function(data) {
+  icd10_subset <- data %>%
+    select(starts_with("p41270"), starts_with("p41280"), "id") %>%
 
-# Transform from wide to long format to match ICD-codes with date of diagnosis
-icd10_subset <- icd %>%
-  select(matches("p41270|p41280|id")) %>%
-  pivot_longer(cols = matches("_a[0-9]*$"),
-               names_to = c(".value", "a"),
-               names_sep = "_")
+    # splitting diagnoses string-variable each time a | is in the string
+    separate_wider_delim(p41270, delim = "|", names = paste0("p41270var_a", 0:258), too_few = "debug") %>%
+    select(matches("p41270|p41280|id")) %>%
+    pivot_longer(cols = matches("_a[0-9]*$"), names_to = c(".value", "a"), names_sep = "_") %>%
 
-# Defining dates of NAFLD
-icd10_nafld <- icd10_subset %>%
-  mutate(icd10_nafld_date = ifelse(str_detect(p41270var, "K76.0"),
-                                   as.character(c_across(starts_with("p41280"))),
-                                   NA),
-         icd10_nafld_date = as.Date(icd10_nafld_date, format = "%Y-%m-%d"))
+    # creating outcome variables with date info from p41280
+    mutate(
+      #NAFLD
+      icd10_nafld_date = ifelse(str_detect(p41270var, "K76.0"), as.character(c_across(starts_with("p41280"))), NA),
+      icd10_nafld_date = as.Date(icd10_nafld_date, format = "%Y-%m-%d"),
+      #NASH
+      icd10_nash_date = ifelse(str_detect(p41270var, "K75.8"), as.character(c_across(starts_with("p41280"))), NA),
+      icd10_nash_date = as.Date(icd10_nash_date, format = "%Y-%m-%d")) %>%
 
-first_non_na_nafld <- icd10_nafld %>%
-  filter(!is.na(icd10_nafld_date)) %>%
-  group_by(id) %>%
-  slice(1) %>%
-  ungroup()
+    # retrieve first diagnosis date
+    select(id, icd10_nafld_date, icd10_nash_date) %>%
+    pivot_longer(cols = starts_with("icd10_"), names_to = "condition", values_to = "date") %>%
+    filter(!is.na(date)) %>%
+    group_by(id, condition) %>%
+    slice(1) %>%
+    pivot_wider(names_from = condition, values_from = date) %>%
+    ungroup()
 
-data <- data %>%
-  left_join(first_non_na_nafld %>% select(id, icd10_nafld_date), by = "id")
+  data <- data %>%
+    left_join(icd10_subset, by = "id")
 
-# Defining dates of NASH
-icd10_nash <- icd10_subset %>%
-  mutate(icd10_nash_date = ifelse(str_detect(p41270var, "K75.8"),
-                                   as.character(c_across(starts_with("p41280"))),
-                                   NA),
-         icd10_nash_date = as.Date(icd10_nash_date, format = "%Y-%m-%d"))
+  return(data)
+}
+data <- icd10_diagnoses(data)
 
-first_non_na_nash <- icd10_nash %>%
-  filter(!is.na(icd10_nash_date)) %>%
-  group_by(id) %>%
-  slice(1) %>%
-  ungroup()
-
-data <- data %>%
-  left_join(first_non_na_nash %>% select(id, icd10_nash_date), by = "id")
 
 # Delete old ICD10 diagnosis and dates ------------------------------------
 delete <- c("p41280", "p41270")
@@ -67,60 +57,46 @@ data <- data %>%
   select(-matches(paste0(delete)))
 
 
+# ICD9 diagnoses codes
+icd9_diagnoses <- function(data) {
+  icd9_subset <- data %>%
+    select(starts_with("p41271"), starts_with("p41281"), "id") %>%
+    # splitting diagnoses string-variable each time a | is in the string
+    separate_wider_delim(p41271, delim = "|", names = paste0("p41271var_a", 0:46), too_few = "debug") %>%
+    select(matches("p41271|p41281|id")) %>%
+    pivot_longer(cols = matches("_a[0-9]*$"), names_to = c(".value", "a"), names_sep = "_") %>%
 
+    # creating outcome variables with date info from p41281
+    mutate(
+      # NAFLD
+      icd9_nafld_date = ifelse(str_detect(p41271var, "5718"), as.character(c_across(starts_with("p41281"))), NA),
+      icd9_nafld_date = as.Date(icd9_nafld_date, format = "%Y-%m-%d"),
+      # NASH
+      icd9_nash_date = ifelse(str_detect(p41271var, "5715"), as.character(c_across(starts_with("p41281"))), NA),
+      icd9_nash_date = as.Date(icd9_nash_date, format = "%Y-%m-%d")) %>%
 
-# ICD9 codes ---------------------------------------------------------
-# Split the diagnosis-variable into separate columns based on delimiter "|"
-icd9 <- data %>%
-  select(starts_with("p41271"), starts_with("p41281"), "id") %>%
-  separate_wider_delim(p41271,
-                       delim = "|",
-                       names = paste0("p41271var_a", 0:46), too_few = "debug")
+    # retrieve first diagnosis date
+    select(id, icd9_nafld_date, icd9_nash_date) %>%
+    pivot_longer(cols = starts_with("icd9_"), names_to = "condition", values_to = "date") %>%
+    filter(!is.na(date)) %>%
+    group_by(id, condition) %>%
+    slice(1) %>%
+    pivot_wider(names_from = condition, values_from = date) %>%
+    ungroup()
 
-# Transform from wide to long format to match ICD-codes with date of diagnosis
-icd9_subset <- icd9 %>%
-  select(matches("p41271|p41281|id")) %>%
-  pivot_longer(cols = matches("_a[0-9]*$"),
-               names_to = c(".value", "a"),
-               names_sep = "_")
+  data <- data %>%
+    left_join(icd9_subset, by = "id")
 
-# Defining dates of NAFLD
-icd9_nafld <- icd9_subset %>%
-  mutate(icd9_nafld_date = ifelse(str_detect(p41271var, "5718"),
-                                   as.character(c_across(starts_with("p41281"))),
-                                   NA),
-         icd9_nafld_date = as.Date(icd9_nafld_date, format = "%Y-%m-%d"))
+  return(data)
+}
 
-first_non_na_nafld <- icd9_nafld %>%
-  filter(!is.na(icd9_nafld_date)) %>%
-  group_by(id) %>%
-  slice(1) %>%
-  ungroup()
+data <- icd9_diagnoses(data)
 
-data <- data %>%
-  left_join(first_non_na_nafld %>% select(id, icd9_nafld_date), by = "id")
-
-# Defining dates of NASH
-icd9_nash <- icd9_subset %>%
-  mutate(icd9_nash_date = ifelse(str_detect(p41271var, "5715"),
-                                  as.character(c_across(starts_with("p41281"))),
-                                  NA),
-         icd9_nash_date = as.Date(icd9_nash_date, format = "%Y-%m-%d"))
-
-first_non_na_nash <- icd9_nash %>%
-  filter(!is.na(icd9_nash_date)) %>%
-  group_by(id) %>%
-  slice(1) %>%
-  ungroup()
-
-data <- data %>%
-  left_join(first_non_na_nash %>% select(id, icd9_nash_date), by = "id")
 
 # Delete old ICD9 diagnosis and dates ------------------------------------
 delete <- c("p41281", "p41271")
 data <- data %>%
   select(-matches(paste0(delete)))
-
 
 # time of last completed 24h recall as baseline date
 data <- data %>%
@@ -138,22 +114,32 @@ data <- data %>%
   )
 
 
-# New column with baseline start date as last completed questionnaire
-data <- data %>%
-  # Convert ques_0 to ques_4 to date format
-  mutate(across(starts_with("ques_"), as.Date)) %>%
-  # Gather all columns into key-value pairs
-  pivot_longer(cols = starts_with("ques_"), names_to = "questionnaire", values_to = "date_filled") %>%
-  # Group by participant ID and select the row with the latest date_filled for each participant
-  group_by(id) %>%
-  slice(which.max(date_filled)) %>%
-  ungroup() %>%
-  # Rename the remaining column to indicate the last filled questionnaire
-  rename(last_filled_questionnaire = questionnaire)
+# New column with baseline start date set as last completed questionnaire
+baseline_date <- function(data) {
+  baseline_start_date <- data %>%
+    select(p20077, starts_with("ques_comp_t"), id) %>%
+    pivot_longer(
+      cols = starts_with("ques_comp_t"),
+      names_to = "instance",
+      values_to = "completion_date"
+    ) %>%
+    filter(!is.na(completion_date)) %>%
+    group_by(id) %>%
+    arrange(completion_date, .by_group = TRUE) %>%
+    slice_tail() %>%
+    rename(baseline_start_date = completion_date) %>%
+    ungroup() %>%
+    select(id, baseline_start_date)
+  data <- data %>%
+    left_join(baseline_start_date, by = "id")
 
+  data <- data %>%
+    filter(!is.na(baseline_start_date))
 
-data <- data %>%
-  mutate(date_filled = as.Date(date_filled))
+  return(data)
+}
+
+data <- baseline_date(data)
 
 remove <- c("p105010_i0", "p105010_i1", "p105010_i2", "p105010_i3","p105010_i4")
 data <- data %>%
@@ -168,7 +154,7 @@ data <- data %>%
          loss_to_follow_up = p191,
          loss_to_follow_up = as.Date(loss_to_follow_up))
 
-# remove p-values
+# # remove p-values
 remove <- c("p191", "p40000_i0", "p40000_i1")
 data <- data %>%
   select(-matches(remove))
@@ -193,31 +179,15 @@ data$date_birth <- as.Date(paste0(data$date_birth, "-15"))
 
 
 # Set cut-off date for follow-up ------------------------------------------
-# Estimated last follow-up date for ICD10 codes (stagnation of diagnoses)
-# Create the plot
-ggplot(data, aes(x = icd10_nafld_date, y = id)) +
-  geom_point() + # Use points to show individual data points
-  geom_smooth(method = "lm", se = FALSE) + # Add linear regression line
-  annotate("text", x = max(data$icd10_nafld_date), y = min(data$id),
-           label = paste("Last observed date:", max(data$icd10_nafld_date)),
-           hjust = 1, vjust = -0.5, size = 4) +  # Add annotation for the last observed date
-  labs(title = "Dates of Disease Over Time", x = "Date of Disease", y = "Participant ID")
-
-# The density is very high in the right of the plot - I will estimate the last
-# diagnosis date in data:
-
-dates <- data %>%
-  subset(!is.na(icd10_nafld_date))
-
-# Find the last date of diagnosis
-last_date <- max(dates$icd10_nafld_date)
-
-# Print or use the last date as needed
-print(last_date)
+# Estimated last follow-up date for
+clean_data <- data %>%
+  filter(!is.na(icd10_nafld_date), !is.na(id))  # Remove rows with NA values
+last_date <- max(clean_data$icd10_nafld_date) %>% print()
 
 # Administrative censoring at October 31st, 2022
 data <- data %>%
   mutate(censoring = as.Date("2022-10-31"))
+
 
 
 # estimate survival time
@@ -240,8 +210,7 @@ data <- data %>%
 # binary variable to indicate if nafld happened
 data <- data %>%
   mutate(nafld = case_when(
-    !is.na(icd10_nafld_date) | !is.na(icd10_nash_date) |
-      !is.na(icd9_nafld_date) | !is.na(icd9_nash_date) ~ 1,
+    !is.na(icd10_nafld_date) | !is.na(icd10_nash_date)  ~ 1,
     TRUE ~ 0))
 
 # counting and removing those with event before baseline
@@ -249,46 +218,45 @@ data <- data %>%
 data <- data %>%
   mutate(
     survival_time_nafld = case_when(
-      !is.na(icd10_nafld_date) ~ as.numeric(difftime(icd10_nafld_date, date_filled, units = "days")),
+      !is.na(icd10_nafld_date) ~ as.numeric(difftime(icd10_nafld_date, baseline_start_date, units = "days")),
       TRUE ~ NA),
     survival_time_nash = case_when(
-      !is.na(icd10_nash_date) ~ as.numeric(difftime(icd10_nash_date, date_filled, units = "days")),
+      !is.na(icd10_nash_date) ~ as.numeric(difftime(icd10_nash_date, baseline_start_date, units = "days")),
       TRUE ~ NA),
     survival_time_ltfu = case_when(
-      !is.na(loss_to_follow_up) ~ as.numeric(difftime(loss_to_follow_up, date_filled, units = "days")),
+      !is.na(loss_to_follow_up) ~ as.numeric(difftime(loss_to_follow_up, baseline_start_date, units = "days")),
       TRUE ~ NA),
     survival_time_death = case_when(
-      !is.na(date_of_death) ~ as.numeric(difftime(date_of_death, date_filled, units = "days")),
+      !is.na(date_of_death) ~ as.numeric(difftime(date_of_death, baseline_start_date, units = "days")),
       TRUE ~ NA),
-    survival_time_cenc = difftime(censoring, date_filled, units = "days"),
+    survival_time_cenc = difftime(censoring, baseline_start_date, units = "days"),
     time = pmin(survival_time_death, survival_time_cenc, survival_time_ltfu,
                 survival_time_nash, survival_time_nafld, na.rm = TRUE),
     time = time/365.25
   )
-
+######################################################
 # counting and removing those with event before baseline
+
 data_time <- data %>%
-  subset(data$time<0)
+  filter(data$time<=0)
 
+#those with event before baseline
 nafld_nash <-sum(!is.na(data_time$survival_time_nafld)
-            | !is.na(data_time$survival_time_nash))
+            | !is.na(data_time$survival_time_nash)) %>%
+  print()
 
-ltfu <- sum(!is.na(data_time$survival_time_ltfu)
+ltfu_or_dead <- sum(!is.na(data_time$survival_time_ltfu)
+            | !is.na(data_time$survival_time_death)
             & is.na(data_time$survival_time_nafld)
             & is.na(data_time$survival_time_nash)
-            & is.na(data_time$survival_time_death))
+            & is.na(data_time$survival_time_death)) %>%
+  print()
 
-death <- sum(!is.na(data_time$survival_time_death)
-             & is.na(data_time$survival_time_nafld)
-             & is.na(data_time$survival_time_nash)
-             & is.na(data_time$survival_time_ltfu))
-
-
-# remove those with event before baseline
+# removing those with no time in study
 data <- data %>%
-  subset(data$time>=0)
+  subset(data$time>0)
 
-
+table(data$sex)
 # Save data ---------------------------------------------------------------
 # arrow::write_parquet(data, here("data/data.parquet"))
 # ukbAid::upload_data(here("data/data.parquet"), username = "FieLangmann")

@@ -40,7 +40,7 @@ data <- data %>%
       mixed_dish_weekly + dairy_weekly + fats_weekly + fruit_weekly + nut_weekly + veggie_weekly + potato_weekly + egg_weekly +
       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly + sauce_weekly,
     legume_pea_weekly = calculate_weekly_diet("p26086|p26101|p26136|p26137|peas", p20077),
-    veggie_pea = ((rowSums(pick(matches("p26065|p26098|p26147|p26123|p26125|p26143|p26146")), na.rm = TRUE) - peas) / p20077) * 7,
+    veggie_pea_weekly = ((rowSums(pick(matches("p26065|p26098|p26147|p26123|p26125|p26143|p26146")), na.rm = TRUE) - peas) / p20077) * 7,
     legume_no_soymilk = calculate_weekly_diet("p26086|p26101|p26137", p20077), #removing soy milk from legumes
     legume_soy_meat = calculate_weekly_diet("p26086|p26101|p26137", p20077) # removing soy milk and soy desert from legumes
   )

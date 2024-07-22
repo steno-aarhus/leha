@@ -26,7 +26,7 @@ tar_option_set(
 # tar_source()
 # Or just some files:
 source(here::here("R/data_wrangling.R"))
-# source(here::here("R/descriptives.R"))
+source(here::here("R/descriptives.R"))
 # source(here::here("R/main_analysis.R"))
 # source(here::here("R/secondary_analysis.R"))
 # source(here::here("R/sensitivity_analysis.R"))
@@ -67,6 +67,8 @@ list(
     command = id_data |>
       sociodemographics() |>
       lifestyle() |>
+      alcohol() |>
+      alcohol_intake() |>
       illness() |>
       aminotransferase() |>
       remove_missings() |>
@@ -89,39 +91,40 @@ list(
     name = outcome_data,
     command = diet_data |>
       icd10_diagnoses() |>
-      left_join_icd10() |>
-      idc9_diagnoses() |>
-      left_join_icd9() |>
+      icd9_diagnoses() |>
       date_birth() |>
       censoring_date() |>
-      outcome_variables() |>
-      remove_outcome_p_vars()
+      outcome_variables()
   ),
   # eligibility criteria based on outcomes
   tar_target(
     name = eligible_participants,
     command = outcome_data |>
       last_completed_recall() |>
-      baseline_start_date() |>
+      baseline_date() |>
       time_in_study() |>
-      event_before_base()
+      event_before_base()|>
+      remove_outcome_p_vars()
     ),
   # define survival time
   tar_target(
     name = sorted_data,
     command = eligible_participants |>
-      survival_time()
+      survival_time() |>
+      number_events()
+  ),
+  # descriptive analyses
+  tar_target(
+    name = descriptives,
+    command = sorted_data |>
+      baseline_table()|>
+      supplementary_baseline_table() |>
+      person_years_followup() |>
+      spearman_correlation() |>
+      pearson_correlation()
   ))
-# ,
-#   # descriptive analyses
-#   tar_target(
-#     name = descriptives,
-#     command = sorted_data |>
-#       baseline_table()|>
-#       supplementary_baseline_table() |>
-#       person_years_followup()
-#   ),
-#
+
+#   ,
 #   tar_target(
 #     name = descriptives,
 #     command = sorted_data |>
