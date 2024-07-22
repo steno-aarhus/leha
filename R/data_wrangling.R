@@ -49,11 +49,7 @@ sociodemographics <- function(data) {
       str_detect(p738_i0, "52,000") ~ "52,000-100,000",
       str_detect(p738_i0, "Greater") ~ ">100,000",
       str_detect(p738_i0, "Less") ~ "<18,000",
-<<<<<<< HEAD
       TRUE ~ "unknown"
-=======
-      TRUE ~ "no answer"
->>>>>>> 6934a5c21b13c2b8afd50289f38023b3f82dd316
     ),
     yearly_income = as.factor(yearly_income),
     education_short = as.character(str_sub(p6138_i0, start = 1, end = 28)),
