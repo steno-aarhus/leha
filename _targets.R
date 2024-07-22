@@ -28,8 +28,8 @@ tar_option_set(
 source(here::here("data-raw/download_data.R"))
 source(here::here("R/data_wrangling.R"))
 source(here::here("R/descriptives.R"))
-# source(here::here("R/main_analysis.R"))
-# source(here::here("R/secondary_analysis.R"))
+source(here::here("R/model_control.R"))
+source(here::here("R/analyses.R"))
 # source(here::here("R/sensitivity_analysis.R"))
 # source(here::here("R/main_analysis.R"))
 # source(here::here("R/main_analysis.R"))
@@ -127,8 +127,24 @@ list(
 
 #   ,
 #   tar_target(
-#     name = descriptives,
+#     name = analyses,
 #     command = sorted_data |>
+# create_formula() |>
+#   define_exposure_variables() |>
+#   # main analyses
+#   main_model1() |>
+#   main_model2() |>
+#   main_model3() |>
+#   model_assumption() |>
+#   # secondary analyses
+#   consumers_analyses() |>
+#   total_intake() |>
+#   # sensitivity analyses
+#   legumes_and_peas() |>
+#   legumes_without_soy() |>
+#   alcohol_restricted_analyses() |>
+#   normal_liver_analyses() |>
+#   three_recalls_analyses()
 #   ),
 #   tar_target(
 #     name = descriptives,
