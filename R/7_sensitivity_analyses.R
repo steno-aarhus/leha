@@ -12,83 +12,48 @@ library(here)
 library(broom)
 
 # Load data --------------------------------------------------------
-targets::tar_make()
-# Restart session
-source(here::here("R/1_data_start.R"))
+# targets::tar_make()
+# # Restart session
+# source(here::here("R/1_data_start.R"))
 
-# Legumes including peas; substitution models ------------------------------
-# Weekly substituting 80 g legumes including peas (NHS 1 portion beans = 80 g)
-# https://www.nhs.uk/live-well/eat-well/5-a-day/5-a-day-what-counts/
-# defining 80 g/week variable for each food
+# Legumes including peas ------------------------------
 data <- data %>%
   mutate(legumepea80 = legume_pea_weekly/80,
          meats80 = meats_weekly/80,
          poultry80 = poultry_weekly/80,
          fish80 = fish_weekly/80)
 
-## model 2 -----------------------------------------------------------------
-# meats
-meat_pea <- coxph(Surv(survival_time, nafld == 1) ~
-                       # removing meat
-                       legumepea80 + poultry80 + fish80+
-                       #other food components
-                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_pea_weekly + potato_weekly + egg_weekly +
-                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + food_weight_weekly +
-                    # other variables
-                    alc_spline + ethnicity + deprivation + education +
-                    cohabitation + physical_activity + smoking +
-                    related_disease + disease_family + yearly_income +
-                    strata(region, age_strata, sex),
-                  data = data, ties = "breslow"
+create_formula <- function(xvars, covars) {
+  outcome <- "Surv(survival_time, nafld == 1)"
+  reformulate(c(xvars, covars), response = outcome)
+}
+
+covariates_pea <- (~ # other food components
+                        cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                        veggie_pea_weekly + potato_weekly + egg_weekly +
+                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                        sauce_weekly + food_weight_weekly +
+                        # other variables
+                        alc_spline + ethnicity + deprivation + education +
+                        cohabitation + physical_activity + smoking +
+                        related_disease + disease_family + yearly_income +
+                        # baseline strata
+                        strata(region, age_strata, sex)) |>
+  all.vars()
+
+model2_formulas_pea <- list(
+  meat_model2 = create_formula(c("legumepea80", "poultry80", "fish80"), covariates_pea),
+  poultry_model2 = create_formula(c("legumepea80","meats80", "fish80"), covariates_pea),
+  fish_model2 = create_formula(c("legumepea80", "meats80", "poultry80"), covariates_pea)
 )
 
-meat_pea <- tidy(meat_pea, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
-
-# poultry
-poultry_pea <- coxph(Surv(survival_time, nafld == 1) ~
-                          # removing meat
-                          legumepea80 + meats80 + fish80+
-                          #other food components
-                          cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                          dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                          veggie_pea_weekly + potato_weekly + egg_weekly +
-                          non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                          sauce_weekly + food_weight_weekly +
-                       # other variables
-                       alc_spline + ethnicity + deprivation + education +
-                       cohabitation + physical_activity + smoking +
-                       related_disease + disease_family + yearly_income +
-                       strata(region, age_strata, sex),
-                     data = data, ties = "breslow"
-)
-
-poultry_pea <- tidy(poultry_pea, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
-
-# fish
-fish_pea <- coxph(Surv(survival_time, nafld == 1) ~
-                       # removing meat
-                       legumepea80 + meats80 + poultry80+
-                       #other food components
-                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_pea_weekly + potato_weekly + egg_weekly +
-                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + food_weight_weekly +
-                    # other variables
-                    alc_spline + ethnicity + deprivation + education +
-                    cohabitation + physical_activity + smoking +
-                    related_disease + disease_family + yearly_income +
-                    strata(region, age_strata, sex),
-                  data = data, ties = "breslow"
-)
-
-fish_pea <- tidy(fish_pea, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
+model2_results_pea <- model2_formulas_pea |>
+  map(~ coxph(.x, data = data, ties = "breslow")) |>
+  map2(names(model2_formulas_pea), ~ tidy(.x, exponentiate = TRUE, conf.int = TRUE) |>
+         mutate(across(where(is.numeric), ~ round(.x, 2))) |>
+         mutate(model = .y)) |>
+  print()
 
 
 
@@ -99,70 +64,33 @@ data <- data %>%
          poultry80 = poultry_weekly/80,
          fish80 = fish_weekly/80)
 
-## model 2 -----------------------------------------------------------------
-# meats
-meat_nosoy <- coxph(Surv(survival_time, nafld == 1) ~
-                    # removing meat
-                    legumenosoy80 + poultry80 + fish80 +
-                    #other food components
-                    cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                    dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                    veggie_weekly + potato_weekly + egg_weekly +
-                    non_alc_beverage_soymilk_weekly + alc_beverage_weekly + snack_weekly +
-                    sauce_weekly + food_weight_weekly +
-                    # other variables
-                    alc_spline + ethnicity + deprivation + education +
-                    cohabitation + physical_activity + smoking +
-                    related_disease + disease_family + yearly_income +
-                    strata(region, age_strata, sex),
-                  data = data, ties = "breslow"
-)
 
-meat_nosoy <- tidy(meat_nosoy, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
-
-# poultry
-poultry_nosoy <- coxph(Surv(survival_time, nafld == 1) ~
-                       # removing poultry
-                       legumenosoy80 + meats80 + fish80+
-                         #other food components
-                         cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+covariates_nosoy <- (~ # other food components
+                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_pea_weekly + potato_weekly + egg_weekly +
-                         non_alc_beverage_soymilk_weekly + alc_beverage_weekly + snack_weekly +
+                       veggie_weekly + potato_weekly + egg_weekly +
+                       non_alc_beverage_soymilk_weekly + alc_beverage_weekly + snack_weekly +
                        sauce_weekly + food_weight_weekly +
                        # other variables
                        alc_spline + ethnicity + deprivation + education +
                        cohabitation + physical_activity + smoking +
                        related_disease + disease_family + yearly_income +
-                       strata(region, age_strata, sex),
-                     data = data, ties = "breslow"
+                       # baseline strata
+                       strata(region, age_strata, sex)) |>
+  all.vars()
+
+model2_formulas_nosoy <- list(
+  meat_model2 = create_formula(c("legumenosoy80", "poultry80", "fish80"), covariates_nosoy),
+  poultry_model2 = create_formula(c("legumenosoy80","meats80", "fish80"), covariates_nosoy),
+  fish_model2 = create_formula(c("legumenosoy80", "meats80", "poultry80"), covariates_nosoy)
 )
 
-poultry_nosoy <- tidy(poultry_nosoy, exponentiate = TRUE, conf.int = TRUE)%>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
-
-# fish
-fish_nosoy <- coxph(Surv(survival_time, nafld == 1) ~
-                    # removing fish
-                    legumenosoy80 + meats80 + poultry80+
-                    #other food components
-                    cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                    dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                    veggie_pea_weekly + potato_weekly + egg_weekly +
-                      non_alc_beverage_soymilk_weekly + alc_beverage_weekly + snack_weekly +
-                    sauce_weekly + food_weight_weekly +
-                    # other variables
-                    alc_spline + ethnicity + deprivation + education +
-                    cohabitation + physical_activity + smoking +
-                    related_disease + disease_family + yearly_income +
-                    strata(region, age_strata, sex),
-                  data = data, ties = "breslow"
-)
-
-fish_nosoy <- tidy(fish_nosoy, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
-
+model2_results_nosoy <- model2_formulas_nosoy |>
+  map(~ coxph(.x, data = data, ties = "breslow")) |>
+  map2(names(model2_formulas_nosoy), ~ tidy(.x, exponentiate = TRUE, conf.int = TRUE) |>
+         mutate(across(where(is.numeric), ~ round(.x, 2))) |>
+         mutate(model = .y)) |>
+  print()
 
 
 
@@ -175,216 +103,76 @@ data <- data %>%
 
 data3 <- data %>%
   subset(p20077>=3)
-data4 <- data %>%
-  subset(p20077>=4)
 
-## data3 = three 24h recalls -----------------------------------------------------------------
-# meats
-meat_data3 <- coxph(Surv(survival_time, nafld == 1) ~
-                       # removing meat
-                       legumes80 + poultry80 + fish80+
-                       #other food components
-                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly +
-                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + food_weight_weekly +
-                      #other variables
-                      strata(region, age_strata, sex) +
-                      alc_spline + ethnicity + deprivation + education +
-                      cohabitation + physical_activity + smoking +
-                      related_disease + disease_family + yearly_income,
-                    data = data3, ties='breslow')
+covariates_model2 <- (~ # other food components
+                        cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                        veggie_weekly + potato_weekly + egg_weekly +
+                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                        sauce_weekly + food_weight_weekly +
+                        # other variables
+                        alc_spline + ethnicity + deprivation + education +
+                        cohabitation + physical_activity + smoking +
+                        related_disease + disease_family + yearly_income +
+                        # baseline strata
+                        strata(region, age_strata, sex)) |>
+  all.vars()
 
-meat_data3 <- tidy(meat_data3, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
+model2_formulas <- list(
+  meat_model2 = create_formula(c("legumes80", "poultry80", "fish80"), covariates_model2),
+  poultry_model2 = create_formula(c("legumes80","meats80", "fish80"), covariates_model2),
+  fish_model2 = create_formula(c("legumes80", "meats80", "poultry80"), covariates_model2)
+)
 
-# poultry
-poultry_data3 <- coxph(Surv(survival_time, nafld == 1) ~
-                          # removing meat
-                          legumes80 + meats80 + fish80+
-                          #other food components
-                          cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                          dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                          veggie_weekly + potato_weekly + egg_weekly +
-                          non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                          sauce_weekly + food_weight_weekly +
-                         #other variables
-                         strata(region, age_strata, sex) +
-                         alc_spline + ethnicity + deprivation + education +
-                         cohabitation + physical_activity + smoking +
-                         related_disease + disease_family + yearly_income,
-                       data = data3, ties='breslow')
-
-poultry_data3 <- tidy(poultry_data3, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
+model2_results_3recalls <- model2_formulas |>
+  map(~ coxph(.x, data = data3, ties = "breslow")) |>
+  map2(names(model2_formulas), ~ tidy(.x, exponentiate = TRUE, conf.int = TRUE) |>
+         mutate(across(where(is.numeric), ~ round(.x, 2))) |>
+         mutate(model = .y)) |>
+  print()
 
 
-# fish
-fish_data3 <- coxph(Surv(survival_time, nafld == 1) ~
-                       # removing meat
-                       legumes80 + meats80 + poultry80+
-                       #other food components
-                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly +
-                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + food_weight_weekly +
-                      #other variables
-                      strata(region, age_strata, sex)+
-                      alc_spline + ethnicity + deprivation + education +
-                      cohabitation + physical_activity + smoking +
-                      related_disease + disease_family + yearly_income,
-                    data = data3, ties='breslow')
 
-fish_data3 <- tidy(fish_data3, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
-
-
-## data4 = four 24h recalls -----------------------------------------------------------------
-# meats
-meat_data4 <- coxph(Surv(survival_time, nafld == 1) ~
-                      # removing meat
-                      legumes80 + poultry80 + fish80+
-                      #other food components
-                      cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                      dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                      veggie_weekly + potato_weekly + egg_weekly +
-                      non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                      sauce_weekly + food_weight_weekly +
-                      #other variables
-                      strata(region, age_strata, sex) +
-                      alc_spline + ethnicity + deprivation + education +
-                      cohabitation + physical_activity + smoking +
-                      related_disease + disease_family + yearly_income,
-                    data = data4, ties='breslow')
-
-meat_data4 <- tidy(meat_data4, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
-
-# poultry
-poultry_data4 <- coxph(Surv(survival_time, nafld == 1) ~
-                         # removing meat
-                         legumes80 + meats80 + fish80+
-                         #other food components
-                         cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                         dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                         veggie_weekly + potato_weekly + egg_weekly +
-                         non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                         sauce_weekly + food_weight_weekly +
-                         #other variables
-                         strata(region, age_strata, sex) +
-                         alc_spline + ethnicity + deprivation + education +
-                         cohabitation + physical_activity + smoking +
-                         related_disease + disease_family + yearly_income,
-                       data = data4, ties='breslow')
-
-poultry_data4 <- tidy(poultry_data4, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
-
-
-# fish
-fish_data4 <- coxph(Surv(survival_time, nafld == 1) ~
-                      # removing meat
-                      legumes80 + meats80 + poultry80+
-                      #other food components
-                      cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                      dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                      veggie_weekly + potato_weekly + egg_weekly +
-                      non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                      sauce_weekly + food_weight_weekly +
-                      #other variables
-                      strata(region, age_strata, sex) +
-                      alc_spline + ethnicity + deprivation + education +
-                      cohabitation + physical_activity + smoking +
-                      related_disease + disease_family + yearly_income,
-                    data = data4, ties='breslow')
-
-fish_data4 <- tidy(fish_data4, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
-
-
-# Removing high ALT and AST from analysis-----------------------------------------------
-# removing high ALT and AST
-data <- data %>% mutate(
-  alt_level = case_when(
-    alt < 40 ~ 0,
-    alt >= 40 ~ 1))
+# Removing high ALT from analysis-----------------------------------------------
 
 # Subsetting data
 normal_liver <- data %>%
-  subset(alt_level !=1)
-
+  subset(alt < 40)
 
 ## Running main analysis on subsample --------------------------------------
-# Weekly substituting 80 g legumes (NHS 1 portion beans = 80 g) https://www.nhs.uk/live-well/eat-well/5-a-day/5-a-day-what-counts/
-# defining 80 g/week variable for each food
 normal_liver <- normal_liver %>%
   mutate(legumes80 = legume_weekly/80,
          meats80 = meats_weekly/80,
          poultry80 = poultry_weekly/80,
          fish80 = fish_weekly/80)
 
-# meats
-meat_liver <- coxph(Surv(survival_time, nafld == 1) ~
-                       # removing meat
-                       legumes80 + poultry80 + fish80+
-                       #other food components
-                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly +
-                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + food_weight_weekly +
-                      #other variables
-                      strata(region, age_strata, sex)+
-                      alc_spline + ethnicity + deprivation + education +
-                      cohabitation + physical_activity + smoking +
-                      related_disease + disease_family + yearly_income,
-                    data = normal_liver, ties='breslow')
+covariates_model2 <- (~ # other food components
+                        cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                        veggie_weekly + potato_weekly + egg_weekly +
+                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                        sauce_weekly + food_weight_weekly +
+                        # other variables
+                        alc_spline + ethnicity + deprivation + education +
+                        cohabitation + physical_activity + smoking +
+                        related_disease + disease_family + yearly_income +
+                        # baseline strata
+                        strata(region, age_strata, sex)) |>
+  all.vars()
 
-meat_liver <- tidy(meat_liver, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
+model2_formulas <- list(
+  meat_model2 = create_formula(c("legumes80", "poultry80", "fish80"), covariates_model2),
+  poultry_model2 = create_formula(c("legumes80","meats80", "fish80"), covariates_model2),
+  fish_model2 = create_formula(c("legumes80", "meats80", "poultry80"), covariates_model2)
+)
 
-# poultry
-poultry_liver <- coxph(Surv(survival_time, nafld == 1) ~
-                          # removing meat
-                          legumes80 + meats80 + fish80+
-                          #other food components
-                          cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                          dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                          veggie_weekly + potato_weekly + egg_weekly +
-                          non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                          sauce_weekly + food_weight_weekly +
-                         #other variables
-                         strata(region, age_strata, sex)+
-                         alc_spline + ethnicity + deprivation + education +
-                         cohabitation + physical_activity + smoking +
-                         related_disease + disease_family + yearly_income,
-                       data = normal_liver, ties='breslow')
+model2_results_liver <- model2_formulas |>
+  map(~ coxph(.x, data = normal_liver, ties = "breslow")) |>
+  map2(names(model2_formulas), ~ tidy(.x, exponentiate = TRUE, conf.int = TRUE) |>
+         mutate(across(where(is.numeric), ~ round(.x, 2))) |>
+         mutate(model = .y)) |>
+  print()
 
-poultry_liver <- tidy(poultry_liver, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
-
-
-# fish
-fish_liver <- coxph(Surv(survival_time, nafld == 1) ~
-                       # removing meat
-                       legumes80 + meats80 + poultry80+
-                       #other food components
-                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly +
-                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + food_weight_weekly +
-                      #other variables
-                      strata(region, age_strata, sex)+
-                      alc_spline + ethnicity + deprivation + education +
-                      cohabitation + physical_activity + smoking +
-                      related_disease + disease_family + yearly_income,
-                    data = normal_liver, ties='breslow')
-
-fish_liver <- tidy(fish_liver, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
 
 # Remove high alcohol intake --------------------------------------------------
 percentile_90 <- quantile(data$alcohol_weekly, probs = 0.90, na.rm = TRUE)
@@ -392,64 +180,29 @@ lower_alc <- data %>%
   subset(alcohol_weekly < percentile_90)
 
 ## main analysis model 2 on subset -----------------------------------------------------------------
+covariates_model2 <- (~ # other food components
+                        cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
+                        dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
+                        veggie_weekly + potato_weekly + egg_weekly +
+                        non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
+                        sauce_weekly + food_weight_weekly +
+                        # other variables
+                        alc_spline + ethnicity + deprivation + education +
+                        cohabitation + physical_activity + smoking +
+                        related_disease + disease_family + yearly_income +
+                        # baseline strata
+                        strata(region, age_strata, sex)) |>
+  all.vars()
 
-# meats
-meat_alc <- coxph(Surv(survival_time, nafld == 1) ~
-                       # removing meat
-                       legumes80 + poultry80 + fish80+
-                       #other food components
-                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly +
-                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + food_weight_weekly +
-                    #other variables
-                    strata(region, age_strata, sex)+
-                    alc_spline + ethnicity + deprivation + education +
-                    cohabitation + physical_activity + smoking +
-                    related_disease + disease_family + yearly_income,
-                  data = lower_alc, ties='breslow')
+model2_formulas <- list(
+  meat_model2 = create_formula(c("legumes80", "poultry80", "fish80"), covariates_model2),
+  poultry_model2 = create_formula(c("legumes80","meats80", "fish80"), covariates_model2),
+  fish_model2 = create_formula(c("legumes80", "meats80", "poultry80"), covariates_model2)
+)
 
-meat_alc <- tidy(meat_alc, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
-
-# poultry
-poultry_alc <- coxph(Surv(survival_time, nafld == 1) ~
-                          # removing meat
-                          legumes80 + meats80 + fish80+
-                          #other food components
-                          cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                          dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                          veggie_weekly + potato_weekly + egg_weekly +
-                          non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                          sauce_weekly + food_weight_weekly +
-                       #other variables
-                       strata(region, age_strata, sex) +
-                       alc_spline + ethnicity + deprivation + education +
-                       cohabitation + physical_activity + smoking +
-                       related_disease + disease_family + yearly_income,
-                     data = lower_alc, ties='breslow')
-
-poultry_alc <- tidy(poultry_alc, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
-
-# fish
-fish_alc <- coxph(Surv(survival_time, nafld == 1) ~
-                       # removing meat
-                       legumes80 + meats80 + poultry80+
-                       #other food components
-                       cereal_refined_weekly + whole_grain_weekly + mixed_dish_weekly +
-                       dairy_weekly + fats_weekly + fruit_weekly + nut_weekly +
-                       veggie_weekly + potato_weekly + egg_weekly +
-                       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
-                       sauce_weekly + food_weight_weekly +
-                    #other variables
-                    strata(region, age_strata, sex) +
-                    alc_spline + ethnicity + deprivation + education +
-                    cohabitation + physical_activity + smoking +
-                    related_disease + disease_family + yearly_income,
-                  data = lower_alc, ties='breslow')
-
-fish_alc <- tidy(fish_alc, exponentiate = TRUE, conf.int = TRUE) %>%
-  mutate(across(where(is.numeric), ~ round(.x, 2)))
-
+model2_results_alc <- model2_formulas |>
+  map(~ coxph(.x, data = lower_alc, ties = "breslow")) |>
+  map2(names(model2_formulas), ~ tidy(.x, exponentiate = TRUE, conf.int = TRUE) |>
+         mutate(across(where(is.numeric), ~ round(.x, 2))) |>
+         mutate(model = .y)) |>
+  print()
