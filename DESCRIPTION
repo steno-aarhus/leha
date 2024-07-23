@@ -19,6 +19,7 @@ Imports:
     kableExtra,
     knitr,
     magrittr,
+    mice,
     readr,
     remotes,
     rmarkdown,
@@ -31,7 +32,8 @@ Imports:
     tidyr,
     tidyverse,
     ukbAid,
-    usethis
+    usethis,
+    qs
 Remotes: 
     steno-aarhus/ukbAid
 Encoding: UTF-8
