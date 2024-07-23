@@ -145,6 +145,9 @@ consumers_analyses<- function(data) {
 }
 
 total_intake <- function(data) {
+  consumers <- data %>%
+    subset(legume_weekly > 0)
+
   total_model2 <- coxph(
     Surv(survival_time, nafld == 1) ~ legumes80 +
       # other food components
