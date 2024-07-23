@@ -25,7 +25,7 @@ tar_option_set(
 # Run the R scripts in the R/ folder with your custom functions:
 # tar_source()
 # Or just some files:
-source(here::here("data-raw/download_data.R"))
+# source(here::here("data-raw/download_data.R"))
 source(here::here("R/data_wrangling.R"))
 source(here::here("R/descriptives.R"))
 source(here::here("R/model_control.R"))
@@ -80,11 +80,10 @@ list(
     name = diet_data,
     command = covariates |>
       pea_servings() |>
-      calculate_weekly_diet() |>
       food_groups() |>
       total_diet() |>
       transform_touchscreen() |>
-      habitual_diet() |>
+      habitual_diet()  |>
       remove_diet_p_vars()
   ),
   # wrangle outcome variables
@@ -112,39 +111,103 @@ list(
     name = sorted_data,
     command = eligible_participants |>
       survival_time() |>
+      define_exposure_variables()
+  ),
+  tar_target(
+    name = events,
+    command = sorted_data |>
       number_events()
   ),
-  # descriptive analyses
-  tar_target(
-    name = descriptives,
-    command = sorted_data |>
-      baseline_table()|>
-      supplementary_baseline_table() |>
-      person_years_followup() |>
-      spearman_correlation() |>
-      pearson_correlation()
-  ))
 
-#   ,
-#   tar_target(
-#     name = analyses,
-#     command = sorted_data |>
-# create_formula() |>
-#   define_exposure_variables() |>
-#   # main analyses
-#   main_model1() |>
-#   main_model2() |>
-#   main_model3() |>
-#   model_assumption() |>
-#   # secondary analyses
-#   consumers_analyses() |>
-#   total_intake() |>
-#   # sensitivity analyses
-#   legumes_and_peas() |>
-#   legumes_without_soy() |>
-#   alcohol_restricted_analyses() |>
-#   normal_liver_analyses() |>
-#   three_recalls_analyses()
+# descriptive analyses ----------------------------------------------------
+  tar_target(
+    name = table1,
+    command = sorted_data |>
+      baseline_table()
+  ),
+  tar_target(
+    name = suppl_base_table,
+    command = sorted_data |>
+      supplementary_baseline_table()
+  ),
+  tar_target(
+    name = follow_up_year,
+    command = sorted_data |>
+      person_years_followup()
+  ),
+  tar_target(
+    name = correlation_pearson,
+    command = sorted_data |>
+      pearson_correlation()
+  ),
+  tar_target(
+    name = correlation_spearman,
+    command = sorted_data |>
+      spearman_correlation()
+  ),
+
+# main analyses -----------------------------------------------------------
+  tar_target(
+    name = main_analyses1,
+    command = sorted_data |>
+      main_model1()
+  ),
+  tar_target(
+    name = main_analyses2,
+    command = sorted_data |>
+      main_model2()
+  ),
+  tar_target(
+    name = main_analyses3,
+    command = sorted_data |>
+      main_model3()
+  ),
+  tar_target(
+    name = proportional_hazard_assumption,
+    command = sorted_data |>
+      model_assumption()
+  ),
+
+# secondary analyses ------------------------------------------------------
+  tar_target(
+    name = consumers_main,
+    command = sorted_data |>
+      consumers_analyses()
+  ),
+  tar_target(
+    name = consumers_total,
+    command = sorted_data |>
+      total_intake()
+  ),
+
+# sensitivity analyses ----------------------------------------------------
+  tar_target(
+    name = legume_pea,
+    command = sorted_data |>
+      legumes_and_peas()
+  ),
+  tar_target(
+    name = no_soy,
+    command = sorted_data |>
+      legumes_without_soy()
+  ),
+  tar_target(
+    name = alcohol_restricted,
+    command = sorted_data |>
+      alcohol_restricted_analyses()
+  ),
+  tar_target(
+    name = normal_transferase,
+    command = sorted_data |>
+      normal_liver_analyses()
+  ),
+  tar_target(
+    name = multiple_recalls,
+    command = sorted_data |>
+      three_recalls_analyses()
+    ))
+
+
 #   ),
 #   tar_target(
 #     name = descriptives,
