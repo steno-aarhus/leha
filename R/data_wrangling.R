@@ -1,12 +1,5 @@
 # Data wrangling functions
 
-
-# load data ---------------------------------------------------------------
-# should eventually be deleted when targets works
-library(here)
-library(readr)
-data <- read_csv(here("data/data.csv"))
-
 # Data management ---------------------------------------------------------
 
 ## Remove participants with less than 2 diet assessments -------------------------------------
@@ -101,9 +94,14 @@ sociodemographics <- function(data) {
   return(data)
 }
 
+
 # lifestyle variables
 lifestyle <- function(data) {
   data <- data %>% mutate(
+    p3456_i0 = case_when(
+      str_detect(p3456_i0, "know") | str_detect(p3456_i0, "Less") | str_detect(p3456_i0, "answer") ~ NA_character_,
+      TRUE ~ p3456_i0
+    ),
     smoking = case_when(
       str_detect(p20116_i0, "Never") ~ "never",
       str_detect(p20116_i0, "Previous") ~ "former",
@@ -137,6 +135,7 @@ alcohol_intake <- function(data) {
     alc_spline = bs(alcohol_weekly, knots = 4, degree = 3))
   return(data)
 }
+
 
 # related diseases or family history of related diseases
 illness <- function(data) {

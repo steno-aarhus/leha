@@ -22,7 +22,7 @@ model_assumption <- function(data) {
       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
       sauce_weekly + food_weight_weekly +
       # other variables
-      alc_spline + ethnicity + deprivation + education +
+      alcohol_weekly + ethnicity + deprivation + education +
       cohabitation + physical_activity + smoking +
       related_disease + disease_family + yearly_income +
       strata(region, age_strata, sex),
@@ -44,7 +44,7 @@ model_assumption <- function(data) {
       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
       sauce_weekly + food_weight_weekly +
       # other variables
-      alc_spline + ethnicity + deprivation + education +
+      alcohol_weekly + ethnicity + deprivation + education +
       cohabitation + physical_activity + smoking +
       related_disease + disease_family + yearly_income +
       strata(region, age_strata, sex),
@@ -66,14 +66,13 @@ model_assumption <- function(data) {
       non_alc_beverage_weekly + alc_beverage_weekly + snack_weekly +
       sauce_weekly + food_weight_weekly +
       # other variables
-      alc_spline + ethnicity + deprivation + education +
+      alcohol_weekly + ethnicity + deprivation + education +
       cohabitation + physical_activity + smoking +
       related_disease + disease_family + yearly_income +
       strata(region, age_strata, sex),
     data = data, ties = "breslow"
   )
 
-  ph_test3 <- cox.zph(fish_model2)
-  print(ph_test3)
+  ph_test3 <- cox.zph(fish_model2) %>% print()
   return(data)
 }
