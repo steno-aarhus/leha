@@ -23,7 +23,6 @@ Imports:
     readr,
     remotes,
     rmarkdown,
-    rqlm,
     splines,
     stringr,
     survival,
