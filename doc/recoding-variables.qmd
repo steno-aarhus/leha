@@ -50,7 +50,7 @@ needs to be recoded
 When recoded we need to merge p20116 and new_variable somehow
 
 ```{r}
-data <- data %>% 
+data <- data %>%
   dplyr::mutate(smoke_heaviness = )
 ```
 
@@ -86,7 +86,7 @@ being "most deprived" [2].
 Missing/unknown have in the Nuffield Dept. group been coded as 9 (REF)
 
 ```{r}
-data <- data %>% 
+data <- data %>%
   dplyr::mutate(quintile = ntile(p22189, 5))
 ```
 
