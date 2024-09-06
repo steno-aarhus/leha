@@ -21,5 +21,5 @@ library(magrittr)
 # you need to re-create the dataset).
 
 readr::read_csv(here::here("data-raw/rap-variables.csv")) %>%
-    dplyr::pull(id) %>%
-    ukbAid::create_csv_from_database(username = "FieLangmann")
+  dplyr::pull(id) %>%
+  ukbAid::create_csv_from_database(username = "FieLangmann")

@@ -83,7 +83,7 @@ list(
       food_groups() |>
       total_diet() |>
       transform_touchscreen() |>
-      habitual_diet()  |>
+      habitual_diet() |>
       remove_diet_p_vars()
   ),
   # wrangle outcome variables
@@ -103,9 +103,9 @@ list(
       last_completed_recall() |>
       baseline_date() |>
       time_in_study() |>
-      event_before_base()|>
+      event_before_base() |>
       remove_outcome_p_vars()
-    ),
+  ),
   # define survival time
   tar_target(
     name = sorted_data,
@@ -119,7 +119,7 @@ list(
       number_events()
   ),
 
-# descriptive analyses ----------------------------------------------------
+  # descriptive analyses ----------------------------------------------------
   tar_target(
     name = table1,
     command = sorted_data |>
@@ -146,7 +146,7 @@ list(
       spearman_correlation()
   ),
 
-# main analyses -----------------------------------------------------------
+  # main analyses -----------------------------------------------------------
   tar_target(
     name = main_analyses1,
     command = sorted_data |>
@@ -168,7 +168,7 @@ list(
       model_assumption()
   ),
 
-# secondary analyses ------------------------------------------------------
+  # secondary analyses ------------------------------------------------------
   tar_target(
     name = consumers_main,
     command = sorted_data |>
@@ -180,7 +180,7 @@ list(
       total_intake()
   ),
 
-# sensitivity analyses ----------------------------------------------------
+  # sensitivity analyses ----------------------------------------------------
   tar_target(
     name = legume_pea,
     command = sorted_data |>
@@ -205,7 +205,8 @@ list(
     name = multiple_recalls,
     command = sorted_data |>
       three_recalls_analyses()
-    ))
+  )
+)
 
 
 #   ),
