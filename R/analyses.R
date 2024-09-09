@@ -29,7 +29,13 @@ main_model1 <- function(data) {
       # baseline strata
       strata(region, age_strata, sex)
   )
-
+covars1 <- c("cereal_refined_weekly", "whole_grain_weekly", "mixed_dish_weekly",
+            "dairy_weekly", "fats_weekly", "fruit_weekly", "nut_weekly",
+            "veggie_weekly", "potato_weekly", "egg_weekly",
+            "non_alc_beverage_weekly", "alc_beverage_weekly", "snack_weekly",
+            "sauce_weekly", "food_weight_weekly", "strata(region, age_strata, sex)")
+  
+  
   model1_formulas <- list(
     meat_model1 = create_formula(c("legumes80", "poultry80", "fish80"), covariates_model1),
     poultry_model1 = create_formula(c("legumes80", "meats80", "fish80"), covariates_model1),
