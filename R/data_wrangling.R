@@ -135,7 +135,7 @@ alcohol_intake <- function(data) {
     alcohol_intake = rowSums(pick(matches("p26030")), na.rm = TRUE),
     alcohol_daily = alcohol_intake / p20077,
     alcohol_weekly = alcohol_daily * 7,
-    alc_spline = bs(alcohol_weekly, knots = 4, degree = 3)
+    alc_spline = splines::bs(alcohol_weekly, knots = 4, degree = 3)
   )
   return(data)
 }
