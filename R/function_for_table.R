@@ -53,15 +53,19 @@ table_df <- data.frame(
   meat = data$meat1, data$meat2, data$meat3,
   )
 
+# From Luke:
+# Instead of working with three (or more) dataframes, combine them together into
+# one dataframe via bind_rows() or similar and then use filter() to take out what
+# you want.
 
-
-table_df <- data.frame(
-  model = c("Model 1", "Model 2", "Model 3"),
-  meat = c(data$meat1),
-  poultry = c(meat1, meat2, meat3),
-  fish = c(meat1, meat2, meat3)
-)
-knitr::kable(table_df, col.names = c("Statistical model", "Red and processed meat"), row.names = TRUE)
+#
+# table_df <- data.frame(
+#   model = c("Model 1", "Model 2", "Model 3"),
+#   meat = c(data$meat1),
+#   poultry = c(meat1, meat2, meat3),
+#   fish = c(meat1, meat2, meat3)
+# )
+# knitr::kable(table_df, col.names = c("Statistical model", "Red and processed meat"), row.names = TRUE)
 
 
 
