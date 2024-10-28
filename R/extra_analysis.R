@@ -2,8 +2,8 @@
 # excluding those with alcohol intake > 20 g/day for women and >30 g/day for men
 low_alc_analyses <- function(data) {
 
-  low_alc <- subset(data, (gender == "female" & alcohol_intake < 20) |
-                               (gender == "male" & alcohol_intake < 30))
+  low_alc <- subset(data, (sex == 0 & alcohol_intake < 20) |
+                               (sex == 1 & alcohol_intake < 30))
 
   covars2 <- c("cereal_refined_weekly", "whole_grain_weekly", "mixed_dish_weekly",
                "dairy_weekly", "fats_weekly", "fruit_weekly", "nut_weekly",
@@ -33,9 +33,9 @@ low_alc_analyses <- function(data) {
 # excluding only cases with alcohol intake > 20 g/day for women and >30 g/day for men
 low_alc_cases_analyses <- function(data) {
 
-  low_alc_cases <- subset(data, !(NAFLD == 1 & 
-                               ((gender == "female" & alcohol_intake >= 20) | 
-                                (gender == "male" & alcohol_intake >= 30))))
+  low_alc_cases <- subset(data, !(nafld == 1 &
+                               ((sex == 0 & alcohol_intake >= 20) |
+                                (sex == 0 & alcohol_intake >= 30))))
 
   covars2 <- c("cereal_refined_weekly", "whole_grain_weekly", "mixed_dish_weekly",
                "dairy_weekly", "fats_weekly", "fruit_weekly", "nut_weekly",
@@ -53,7 +53,7 @@ low_alc_cases_analyses <- function(data) {
   )
 
   model2_low_alc_cases <- model2_formulas |>
-    map(~ coxph(.x, data = low_alc, ties = "breslow")) |>
+    map(~ coxph(.x, data = low_alc_cases, ties = "breslow")) |>
     map2(names(model2_formulas), ~ tidy(.x, exponentiate = TRUE, conf.int = TRUE) |>
       mutate(across(where(is.numeric), ~ round(.x, 2))) |>
       mutate(model = .y))
