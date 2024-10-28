@@ -29,9 +29,9 @@ library(magrittr)
 #     )
 
 # # Move the created dataset over.
-ukbAid::rap_move_file(
-  dataset_filename,
-  ukbAid::rap_get_path_users() |>
-  # TODO: Change this to the actual user name
-  stringr::str_subset(ukbAid::rap_get_user())
-)
+# ukbAid::rap_move_file(
+#   dataset_filename,
+#   ukbAid::rap_get_path_users() |>
+#   # TODO: Change this to the actual user name
+#   stringr::str_subset(ukbAid::rap_get_user())
+# )
