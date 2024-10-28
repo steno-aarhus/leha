@@ -30,6 +30,7 @@ source(here::here("R/data_wrangling.R"))
 source(here::here("R/descriptives.R"))
 source(here::here("R/model_control.R"))
 source(here::here("R/analyses.R"))
+source(here::here("R/extra_analysis.R"))
 
 
 # Things to run in order to work.
@@ -50,7 +51,7 @@ list(
   # load data
   tar_target(
     name = unsorted_data,
-    command = readr::read_csv(download_data)
+    command = readr::read_csv(project_data)
   ),
   # remove those with less than 2 diet recalls
   tar_target(
@@ -207,199 +208,17 @@ list(
     name = multiple_recalls,
     command = sorted_data |>
       three_recalls_analyses()
+  ),
+  # extra analyses
+  tar_target(
+    name = extra_low_alc,
+    command = sorted_data |>
+      low_alc_analyses()
+  ),
+  tar_target(
+    name = extra_low_alc_cases,
+    command = sorted_data |>
+      low_alc_cases_analyses()
   )
 )
 
-
-#   ),
-#   tar_target(
-#     name = descriptives,
-#     command = sorted_data |>
-#   ),
-#   tar_target(
-#     name = descriptives,
-#     command = sorted_data |>
-#   ),
-#   tar_target(
-#     name = descriptives,
-#     command = sorted_data |>
-#   ),
-#   tar_target(
-#     name = descriptives,
-#     command = sorted_data |>
-#
-#
-#
-# )
-#
-#
-# # # From Niels' repository
-# ),
-# tar_target(
-#   name = data_with_death,
-#   command = data_prepare_death |>
-#     left_join(end_of_follow_up_death(data_prepare_death), by = "id") |>
-#     make_status_age() |>
-#     reduce_dataset()
-# ),
-# tar_target(
-#   name = data_with_alc,
-#   command = data_main |>
-#     high_alcohol()
-# ),
-# tar_target(
-#   name = data_with_misreporter,
-#   command = data_main |>
-#     energy_outlier()
-# ),
-# tar_target(
-#   name = data_with_3_ques_comp,
-#   command = data_main |>
-#     filter_ques_comp()
-# ),
-# tar_target(
-#   name = data_flowchart,
-#   command = data_with_id |>
-#     reduce_full_data() |>
-#     left_join(reduce_baseline_data(data_with_liver_cancer), by = "id")
-# ),
-# tar_target(
-#   name = flowchart,
-#   command = data_flowchart |>
-#     create_flowchart()
-# ),
-# tar_target(
-#   name = data_without_liver_disease,
-#   command = data_main |>
-#     left_join(icd_liver_disease(icd_subset), by = "id") |>
-#     remove_liver_disease_before()
-# ),
-# tar_target(
-#   name = data_without_cancer,
-#   command = data_main |>
-#     left_join(icd_any_cancer(cancer_subset), by = "id") |>
-#     remove_any_cancer_before()
-# ),
-# tar_target(
-#   name = data_nosoy,
-#   command = data_main |>
-#     remove_soymilk()
-# ),
-# tar_target(
-#   name = gt_theme,
-#   command = my_theme()
-# ),
-# tar_target(
-#   name = table_one,
-#   command = data_main |>
-#     create_table_one(gt_theme)
-# ),
-# tar_target(
-#   name = table_diet,
-#   command = data_main |>
-#     create_table_diet(gt_theme)
-# ),
-# tar_target(
-#   name = table_main_list,
-#   command = data_main |>
-#     reduce_data() |>
-#     create_table_main(gt_theme)
-# ),
-# tar_target(
-#   name = table_legume_quartiles_list,
-#   command = data_main |>
-#     create_table_legume_quartiles(gt_theme)
-# ),
-# tar_target(
-#   name = table_hcc,
-#   command = data_with_hcc |>
-#     reduce_data() |>
-#     prepare_table_hcc(gt_theme)
-# ),
-# tar_target(
-#   name = table_icc,
-#   command = data_with_icc |>
-#     reduce_data() |>
-#     prepare_table_icc(gt_theme)
-# ),
-# tar_target(
-#   name = table_cancer_type,
-#   command = create_table_cancer(table_hcc$row1,table_hcc$row2,table_hcc$row3,
-#                                 table_icc$row4,table_icc$row5,table_icc$row6, gt_theme)
-# ),
-# tar_target(
-#   name = table_alc,
-#   command = data_with_alc |>
-#     reduce_data() |>
-#     create_table_alc(gt_theme)
-# ),
-# tar_target(
-#   name = table_misreporter,
-#   command = data_with_misreporter |>
-#     reduce_data() |>
-#     create_table_misreporter(gt_theme)
-# ),
-# tar_target(
-#   name = table_3_ques_comp,
-#   command = data_with_3_ques_comp |>
-#     reduce_data() |>
-#     create_table_3_ques_comp(gt_theme)
-# ),
-# tar_target(
-#   name = table_liver_disease,
-#   command = data_without_liver_disease |>
-#     reduce_data() |>
-#     create_table_liver_disease(gt_theme)
-# ),
-# tar_target(
-#   name = table_death,
-#   command = data_with_death |>
-#     reduce_data() |>
-#     create_table_death(gt_theme)
-# ),
-# tar_target(
-#   name = table_nowc,
-#   command = data_main |>
-#     reduce_data() |>
-#     create_table_nowc(gt_theme)
-# ),
-# tar_target(
-#   name = table_any_cancer,
-#   command = data_without_cancer |>
-#     reduce_data() |>
-#     create_table_any_cancer(gt_theme)
-# ),
-# tar_target(
-#   name = table_nosoy,
-#   command = data_nosoy |>
-#     reduce_data() |>
-#     create_table_nosoy(gt_theme)
-# ),
-# tar_target(
-#   name = table_sens_rows,
-#   command = create_table_sens_rows(table_alc$m2t_alc, table_misreporter$m2t_misreporter, table_3_ques_comp$m2t_3_ques_comp, table_liver_disease$m2t_liver_disease, table_death$m2t_death, table_nowc$m2t_nowc, table_any_cancer$m2t_any_cancer, table_nosoy$m2t_nosoy,
-#                                    table_alc$m2r_alc, table_misreporter$m2r_misreporter, table_3_ques_comp$m2r_3_ques_comp, table_liver_disease$m2r_liver_disease, table_death$m2r_death, table_nowc$m2r_nowc, table_any_cancer$m2r_any_cancer, table_nosoy$m2r_nosoy,
-#                                    table_alc$m2p_alc, table_misreporter$m2p_misreporter, table_3_ques_comp$m2p_3_ques_comp, table_liver_disease$m2p_liver_disease, table_death$m2p_death, table_nowc$m2p_nowc, table_any_cancer$m2p_any_cancer, table_nosoy$m2p_nosoy,
-#                                    gt_theme)
-# ),
-# tar_target(
-#   name = table_sens,
-#   command = create_table_sens(table_sens_rows$row1,
-#                               table_sens_rows$row2,
-#                               table_sens_rows$row3,
-#                               gt_theme)
-# ),
-# tar_target(
-#   name = table_food_groups_df,
-#   command = create_table_food_groups_df(gt_theme)
-# ),
-# tar_target(
-#   name = table_food_groups,
-#   command = table_food_groups_df |>
-#     create_table_food_groups(gt_theme)
-# ),
-# tar_target(
-#   name = dag,
-#   command = create_dag()
-# )
-# )
