@@ -30,19 +30,21 @@ source(here::here("R/data_wrangling.R"))
 source(here::here("R/descriptives.R"))
 source(here::here("R/model_control.R"))
 source(here::here("R/analyses.R"))
-# source(here::here("R/sensitivity_analysis.R"))
-# source(here::here("R/main_analysis.R"))
-# source(here::here("R/main_analysis.R"))
-# source(here::here("R/main_analysis.R"))
 
 
 # Things to run in order to work.
 list(
   # download data
+  # TODO: Uncomment this *after* finishing running `data-raw/create-data.R`
   tar_target(
-    name = download_data,
+    name = project_data,
     # TODO: This will eventually need to be changed to "parquet".
-    command = ukbAid::download_data(file_ext = "csv", username = "FieLangmann"),
+    command = rap_copy_from(
+      rap_get_path_user_files(user = rap_get_user()) |>
+        sort() |>
+        head(1),
+      here::here("data/data.csv")
+    ),
     format = "file"
   ),
   # load data
