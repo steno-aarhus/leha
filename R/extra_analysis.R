@@ -1,4 +1,10 @@
 # Extra analysis
+
+create_formula_nafld_alc <- function(xvars, covars) {
+  outcome <- "Surv(survival_time, nafld_alc == 1)"
+  reformulate(c(xvars, covars), response = outcome)
+}
+
 # excluding those with alcohol intake > 20 g/day for women and >30 g/day for men
 low_alc_analyses <- function(data) {
 
@@ -15,9 +21,9 @@ low_alc_analyses <- function(data) {
                "strata(region, age_strata, sex)")
 
   model2_formulas <- list(
-    meat_model2 = create_formula(c("legumes80", "poultry80", "fish80"), covars2),
-    poultry_model2 = create_formula(c("legumes80", "meats80", "fish80"), covars2),
-    fish_model2 = create_formula(c("legumes80", "meats80", "poultry80"), covars2)
+    meat_model2 = create_formula_nafld_alc(c("legumes80", "poultry80", "fish80"), covars2),
+    poultry_model2 = create_formula_nafld_alc(c("legumes80", "meats80", "fish80"), covars2),
+    fish_model2 = create_formula_nafld_alc(c("legumes80", "meats80", "poultry80"), covars2)
   )
 
   model2_low_alc <- model2_formulas |>
@@ -33,10 +39,6 @@ low_alc_analyses <- function(data) {
 # excluding only cases with alcohol intake > 20 g/day for women and >30 g/day for men
 low_alc_cases_analyses <- function(data) {
 
-  low_alc_cases <- subset(data, !(nafld == 1 &
-                               ((sex == 0 & alcohol_intake >= 20) |
-                                (sex == 0 & alcohol_intake >= 30))))
-
   covars2 <- c("cereal_refined_weekly", "whole_grain_weekly", "mixed_dish_weekly",
                "dairy_weekly", "fats_weekly", "fruit_weekly", "nut_weekly",
                "veggie_weekly", "potato_weekly", "egg_weekly",
@@ -47,13 +49,13 @@ low_alc_cases_analyses <- function(data) {
                "strata(region, age_strata, sex)")
 
   model2_formulas <- list(
-    meat_model2 = create_formula(c("legumes80", "poultry80", "fish80"), covars2),
-    poultry_model2 = create_formula(c("legumes80", "meats80", "fish80"), covars2),
-    fish_model2 = create_formula(c("legumes80", "meats80", "poultry80"), covars2)
+    meat_model2 = create_formula_nafld_alc(c("legumes80", "poultry80", "fish80"), covars2),
+    poultry_model2 = create_formula_nafld_alc(c("legumes80", "meats80", "fish80"), covars2),
+    fish_model2 = create_formula_nafld_alc(c("legumes80", "meats80", "poultry80"), covars2)
   )
 
   model2_low_alc_cases <- model2_formulas |>
-    map(~ coxph(.x, data = low_alc_cases, ties = "breslow")) |>
+    map(~ coxph(.x, data = data, ties = "breslow")) |>
     map2(names(model2_formulas), ~ tidy(.x, exponentiate = TRUE, conf.int = TRUE) |>
       mutate(across(where(is.numeric), ~ round(.x, 2))) |>
       mutate(model = .y))
