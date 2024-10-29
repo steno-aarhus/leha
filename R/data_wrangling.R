@@ -453,8 +453,14 @@ outcome_variables <- function(data) {
         # no icd9 diagnoses were found and they are therefore not included
         # in outcome variable
         TRUE ~ 0
-      )
+      ),
+      nafld_alc = case_when(
+      (!is.na(icd10_nafld_date) | !is.na(icd10_nash_date)) & 
+      ((sex == 0 & alcohol_intake < 20) | 
+       (sex == 1 & alcohol_intake < 30)) ~ 1,
+      TRUE ~ 0
     )
+  )
   return(data)
 }
 
