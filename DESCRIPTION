@@ -21,6 +21,7 @@ Imports:
     magrittr,
     mice,
     qs,
+    qs2,
     readr,
     remotes,
     rmarkdown,
