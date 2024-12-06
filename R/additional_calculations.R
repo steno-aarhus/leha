@@ -98,26 +98,22 @@ data <- data %>% mutate(
 
 
 ## legumes -----------------------------------------------------------------
-
-
-## meat -----------------------------------------------------------------
-meat <- coxph(Surv(survival_time, event = nafld) ~ meats_weekly + alc_spline + ethnicity
+legume <- coxph(Surv(survival_time, event = nafld) ~ legume_weekly + alc_spline + ethnicity
               + deprivation + education + cohabitation + physical_activity + smoking
               + related_disease + disease_family + yearly_income + strata(region, age_strata, sex),
               data = data,
-              ties = 'breslow') %>%
-  tidy()
+              ties = 'breslow')
 
-meat_splines <- coxph(Surv(survival_time, event = nafld) ~ meat_spline + alc_spline + ethnicity
+legume_splines <- coxph(Surv(survival_time, event = nafld) ~ legume_spline + alc_spline + ethnicity
                       + deprivation + education + cohabitation + physical_activity + smoking
                       + related_disease + disease_family + yearly_income + strata(region, age_strata, sex),
                       data = data,
-                      ties = 'breslow') %>%
-  tidy()
+                      ties = 'breslow')
 
+# Perform a likelihood ratio test
+lrt_result <- anova(legume, legume_splines, test = "LRT") %>% print() # p = 0.9728
 
-
-# Fit the Cox models (you have already done this)
+## meat -----------------------------------------------------------------
 meat <- coxph(Surv(survival_time, event = nafld) ~ meats_weekly + alc_spline + ethnicity
               + deprivation + education + cohabitation + physical_activity + smoking
               + related_disease + disease_family + yearly_income + strata(region, age_strata, sex),
@@ -131,8 +127,36 @@ meat_splines <- coxph(Surv(survival_time, event = nafld) ~ meat_spline + alc_spl
                       ties = 'breslow')
 
 # Perform a likelihood ratio test
-lrt_result <- anova(meat, meat_splines, test = "LRT") %>% print()
+lrt_result <- anova(meat, meat_splines, test = "LRT") %>% print() # p = 0.6576
 
 ## poultry -----------------------------------------------------------------
+poultry <- coxph(Surv(survival_time, event = nafld) ~ poultry_weekly + alc_spline + ethnicity
+              + deprivation + education + cohabitation + physical_activity + smoking
+              + related_disease + disease_family + yearly_income + strata(region, age_strata, sex),
+              data = data,
+              ties = 'breslow')
+
+poultry_splines <- coxph(Surv(survival_time, event = nafld) ~ poultry_spline + alc_spline + ethnicity
+                      + deprivation + education + cohabitation + physical_activity + smoking
+                      + related_disease + disease_family + yearly_income + strata(region, age_strata, sex),
+                      data = data,
+                      ties = 'breslow')
+
+# Perform a likelihood ratio test
+lrt_result <- anova(poultry, poultry_splines, test = "LRT") %>% print() # p = 0.9392
 
 ## fish -----------------------------------------------------------------
+fish <- coxph(Surv(survival_time, event = nafld) ~ fish_weekly + alc_spline + ethnicity
+              + deprivation + education + cohabitation + physical_activity + smoking
+              + related_disease + disease_family + yearly_income + strata(region, age_strata, sex),
+              data = data,
+              ties = 'breslow')
+
+fish_splines <- coxph(Surv(survival_time, event = nafld) ~ fish_spline + alc_spline + ethnicity
+                      + deprivation + education + cohabitation + physical_activity + smoking
+                      + related_disease + disease_family + yearly_income + strata(region, age_strata, sex),
+                      data = data,
+                      ties = 'breslow')
+
+# Perform a likelihood ratio test
+lrt_result <- anova(fish, fish_splines, test = "LRT") %>% print() # p = 0.5011
