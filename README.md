@@ -4,6 +4,8 @@
     [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11670547.svg)](https://doi.org/10.5281/zenodo.11670547)
 -   Preprint:
     [doi.org/10.1101/2024.12.09.24315856](https://doi.org/10.1101/2024.12.09.24315856)
+-   Analysis code:
+    [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14598565.svg)](https://doi.org/10.5281/zenodo.14598565)
 
 This project investigates the association between substituting legumes
 for meats, fish, or poultry and the risk of developing NAFLD and
@@ -72,3 +74,4 @@ The following folders contain:
 
 -   `R/`: Contains the R scripts and functions to create the figures,
     tables, and results for the project.
+
