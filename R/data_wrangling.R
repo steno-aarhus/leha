@@ -153,6 +153,9 @@ illness <- function(data) {
         stringr::str_detect(p20107_i0, "\\b(1|2|8|9)\\b") |
           stringr::str_detect(p20110_i0, "\\b(1|2|8|9)\\b") |
           stringr::str_detect(p20111_i0, "\\b(1|2|8|9)\\b") ~ "yes",
+        p20107_i0 == -21 |
+        p20110_i0 == -21 |
+        p20111_i0 == -21 ~ "unknown",
         TRUE ~ "no"
       ),
     disease_family = as.factor(disease_family)
@@ -455,8 +458,8 @@ outcome_variables <- function(data) {
         TRUE ~ 0
       ),
       nafld_alc = case_when(
-      (!is.na(icd10_nafld_date) | !is.na(icd10_nash_date)) & 
-      ((sex == 0 & alcohol_intake < 20) | 
+      (!is.na(icd10_nafld_date) | !is.na(icd10_nash_date)) &
+      ((sex == 0 & alcohol_intake < 20) |
        (sex == 1 & alcohol_intake < 30)) ~ 1,
       TRUE ~ 0
     )
