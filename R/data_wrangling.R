@@ -153,9 +153,9 @@ illness <- function(data) {
         stringr::str_detect(p20107_i0, "\\b(1|2|8|9)\\b") |
           stringr::str_detect(p20110_i0, "\\b(1|2|8|9)\\b") |
           stringr::str_detect(p20111_i0, "\\b(1|2|8|9)\\b") ~ "yes",
-        p20107_i0 == -21 |
-        p20110_i0 == -21 |
-        p20111_i0 == -21 ~ "unknown",
+        stringr::str_detect(p20107_i0, "\\b(21)\\b") |
+          stringr::str_detect(p20110_i0, "\\b(21)\\b") |
+          stringr::str_detect(p20111_i0, "\\b(21)\\b") ~ "unknown",
         TRUE ~ "no"
       ),
     disease_family = as.factor(disease_family)
@@ -195,7 +195,8 @@ remove_missings <- function(data) {
 remove_p_vars <- function(data) {
   data <- data %>%
     select(-matches(c(
-      "p20111", "p20110", "p20107", "p23104",
+      "p20111", "p20110", "p20107",
+      "p23104",
       "p6150", "p20002", "p2453", "p2443", "p31",
       "p20116", "p26030", "p3456", "p21022",
       "p22040", "p6141", "p6138", "p22189",
