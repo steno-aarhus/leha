@@ -20,7 +20,7 @@ Imports:
     magrittr,
     mice,
     ps,
-    qs,
+    qs (>= 0.26.1)
     qs2,
     readr,
     remotes,
