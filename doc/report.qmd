@@ -1,7 +1,8 @@
 ---
 # Uses Quarto metadata: https://quarto.org/docs/journals/authors.html
 title: "Legumes  as a substitute for red and processed meat, poultry, and fish, and the risk of non-alcoholic fatty liver disease in a large prospective cohort"
-DOI: [10.1111/jhn.70004](https://doi.org/10.1111/jhn.70004)
+doi: 10.1111/jhn.70004
+
 author:
   - name: Fie Langmann
     orcid: "0000-0003-3474-9346"
@@ -51,13 +52,27 @@ author:
       - "conceptualization"
     affiliations:
       - name: Aarhus University
-date: "`r Sys.Date()`"
+date: today
 format: html
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+
+library(gt)
+library(gtsummary)
+library(tidyverse)
+main_analyses <- targets::tar_read(table_main)
+secondary_analyses <- targets::tar_read(table_secondary)
+sensitivity_analyses <- targets::tar_read(table_sensitivity)
+
+# flowchart <- targets::tar_read(flowchart)
+# table_sens <- targets::tar_read(table_sens)
+# table_food_groups <- targets::tar_read(table_food_groups)
+
 ```
+
+\`\`\`
 
 # Abstract
 
@@ -75,6 +90,12 @@ Conclusions:
 
 # Results
 
+```{r}
+time_between_webQ <- targets::tar_read(time_between_webQ) 
+
+person_year <- targets::tar_read(follow_up_year)
+```
+
 # Conclusions
 
 # Acknowledgements
@@ -82,6 +103,31 @@ Conclusions:
 # References
 
 # Tables
+
+## Table 1
+
+```{r}
+# table 1 here - how to?
+```
+
+## Consuming 80 g/week of legumes instead of:
+
+```{r}
+row_main <- tibble(model = "**Main analyses**")
+row_sec <- tibble(model = "**Secondary analyses**")
+row_sens <- tibble(model = "**Sensitivity analyses**")
+
+main_analyses <- targets::tar_read(table_main)
+secondary_analyses <- targets::tar_read(table_secondary)
+sensitivity_analyses <- targets::tar_read(table_sensitivity)
+
+
+table_results <- bind_rows(row_main, main_analyses, row_sec, secondary_analyses, row_sens, sensitivity_analyses) %>% 
+  mutate(across(everything(), ~ replace_na (.x, "")))
+  
+knitr::kable(table_results)
+
+```
 
 # Figures
 
