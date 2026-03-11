@@ -1,6 +1,6 @@
-# model control
+# Model control
 
-# Model assumptions proportional hazards ------------------------------------------
+# Proportional hazards assumption ------------------------------------------
 # Schoenfeld residuals
 model_assumption <- function(data) {
   data <- data %>%
