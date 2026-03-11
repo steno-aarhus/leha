@@ -87,17 +87,3 @@ person_years_followup <- function(data) {
   return(data)
 }
 
-# correlation between touchscreen and WebQ reported foods
-spearman_correlation <- function(data) {
-  meat_correlation <- cor(data$total_meat, data$habitual_meat, use = "complete.obs", method = c("spearman")) %>% print()
-  poultry_correlation <- cor(data$total_poultry, data$habitual_poultry, use = "complete.obs", method = c("spearman")) %>% print()
-  fish_correlation <- cor(data$total_fish, data$habitual_fish, use = "complete.obs", method = c("spearman")) %>% print()
-  return(data)
-}
-
-pearson_correlation <- function(data) {
-  meat_correlation <- cor(data$total_meat, data$habitual_meat, use = "complete.obs", method = c("pearson")) %>% print()
-  poultry_correlation <- cor(data$total_poultry, data$habitual_poultry, use = "complete.obs", method = c("pearson")) %>% print()
-  fish_correlation <- cor(data$total_fish, data$habitual_fish, use = "complete.obs", method = c("pearson")) %>% print()
-  return(data)
-}
