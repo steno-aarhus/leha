@@ -1,16 +1,12 @@
-# Additional calculations
-
-# Time between completed diet questionnaires ------------------------------
-
-
-
 # Printing knots of alc_spline --------------------------------------------
 library(dplyr)
 library(magrittr)
 library(tidyverse)
 
-data <- targets::tar_read(id_data)
 
+
+compute_alcohol_spline <- function(data) {
+data <- targets::tar_read(id_data)
 data <- data %>% mutate(
   alcohol_intake = rowSums(pick(matches("p26030")), na.rm = TRUE),
   alcohol_daily = alcohol_intake / p20077,
@@ -29,6 +25,7 @@ spline_basis <- splines::bs(data$alcohol_weekly, knots = internal_knots, degree 
 knots <- attr(spline_basis, "knots")
 
 cat("knots are placed at:", knots, "\n")
+}
 
 
-
+compute_alcohol_spline(data)
