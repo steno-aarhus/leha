@@ -29,7 +29,7 @@ tar_option_set(
 source(here::here("R/data_wrangling.R"))
 source(here::here("R/descriptives.R"))
 source(here::here("R/analyses.R"))
-
+source(here::here("R/model_assumptions.R"))
 
 # Things to run in order to work.
 list(
