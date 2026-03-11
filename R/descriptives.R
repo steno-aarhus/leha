@@ -87,3 +87,35 @@ person_years_followup <- function(data) {
   return(data)
 }
 
+diff_time_webQ <- function(data) {
+  data <- data %>%
+    mutate(
+      ques_comp_t1 = as.Date(ques_comp_t1),
+      ques_comp_t2 = as.Date(ques_comp_t2),
+      ques_comp_t3 = as.Date(ques_comp_t3),
+      ques_comp_t4 = as.Date(ques_comp_t4)
+    ) %>%
+    rowwise() %>%
+    mutate(
+      diff_t1_t2 = as.numeric(difftime(ques_comp_t2, ques_comp_t1, units = "days")),
+      diff_t2_t3 = as.numeric(difftime(ques_comp_t3, ques_comp_t2, units = "days")),
+      diff_t3_t4 = as.numeric(difftime(ques_comp_t4, ques_comp_t3, units = "days"))
+    ) %>%
+    ungroup()
+
+  all_differences <- data %>%
+    select(diff_t1_t2, diff_t2_t3, diff_t3_t4) %>%
+    pivot_longer(
+      cols = everything(),
+      values_to = "interval"
+    ) %>%
+    filter(!is.na(interval)) %>%
+    pull(interval)
+
+  tibble(
+    mean_interval_days = mean(all_differences),
+    sd_interval_days   = sd(all_differences),
+    n_intervals        = length(all_differences)
+  )
+}
+
