@@ -28,9 +28,7 @@ tar_option_set(
 # source(here::here("data-raw/download_data.R"))
 source(here::here("R/data_wrangling.R"))
 source(here::here("R/descriptives.R"))
-source(here::here("R/model_control.R"))
 source(here::here("R/analyses.R"))
-source(here::here("R/extra_analysis.R"))
 
 
 # Things to run in order to work.
