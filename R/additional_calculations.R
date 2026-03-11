@@ -2,44 +2,39 @@
 
 # Time between completed diet questionnaires ------------------------------
 
-library(dplyr)
-library(magrittr)
-library(tidyverse)
-data <- targets::tar_read(eligible_participants)
-
-data <- data %>% mutate(
-  ques_comp_t1 = as.Date(ques_comp_t1),
-  ques_comp_t2 = as.Date(ques_comp_t2),
-  ques_comp_t3 = as.Date(ques_comp_t3),
-  ques_comp_t4 = as.Date(ques_comp_t4)
-)
 
 
-data <- data %>%
-  rowwise() %>%
-  mutate(
-    # diff_t0_t1 = as.numeric(difftime(ques_comp_t1, ques_comp_t0, units = "days")),
-    diff_t1_t2 = as.numeric(difftime(ques_comp_t2, ques_comp_t1, units = "days")),
-    diff_t2_t3 = as.numeric(difftime(ques_comp_t3, ques_comp_t2, units = "days")),
-    diff_t3_t4 = as.numeric(difftime(ques_comp_t4, ques_comp_t3, units = "days"))
-  ) %>%
-  ungroup()
+diff_time_webQ <- function(data) {
+  data <- data %>%
+    mutate(
+      ques_comp_t1 = as.Date(ques_comp_t1),
+      ques_comp_t2 = as.Date(ques_comp_t2),
+      ques_comp_t3 = as.Date(ques_comp_t3),
+      ques_comp_t4 = as.Date(ques_comp_t4)
+    ) %>%
+    rowwise() %>%
+    mutate(
+      diff_t1_t2 = as.numeric(difftime(ques_comp_t2, ques_comp_t1, units = "days")),
+      diff_t2_t3 = as.numeric(difftime(ques_comp_t3, ques_comp_t2, units = "days")),
+      diff_t3_t4 = as.numeric(difftime(ques_comp_t4, ques_comp_t3, units = "days"))
+    ) %>%
+    ungroup()
 
-# Combine all differences into a single column, ignoring NAs
-all_differences <- data %>%
-  select(diff_t1_t2, diff_t2_t3, diff_t3_t4) %>%
-  pivot_longer(cols = everything(), values_to = "interval") %>%
-  filter(!is.na(interval)) %>%
-  pull(interval)
+  all_differences <- data %>%
+    select(diff_t1_t2, diff_t2_t3, diff_t3_t4) %>%
+    pivot_longer(
+      cols = everything(),
+      values_to = "interval"
+    ) %>%
+    filter(!is.na(interval)) %>%
+    pull(interval)
 
-# Calculate mean and standard deviation
-mean_interval <- mean(all_differences)
-sd_interval <- sd(all_differences)
-
-# Print results
-cat("Mean interval:", mean_interval, "days\n")
-cat("SD of interval:", sd_interval, "days\n")
-
+  tibble(
+    mean_interval_days = mean(all_differences),
+    sd_interval_days   = sd(all_differences),
+    n_intervals        = length(all_differences)
+  )
+}
 
 
 
@@ -111,7 +106,7 @@ legume_splines <- coxph(Surv(survival_time, event = nafld) ~ legume_spline + alc
                       ties = 'breslow')
 
 # Perform a likelihood ratio test
-lrt_result <- anova(legume, legume_splines, test = "LRT") %>% print() # p = 0.9728
+lrt_result <- anova(legume, legume_splines, test = "LRT") %>% print()
 
 ## meat -----------------------------------------------------------------
 meat <- coxph(Surv(survival_time, event = nafld) ~ meats_weekly + alc_spline + ethnicity
@@ -127,7 +122,7 @@ meat_splines <- coxph(Surv(survival_time, event = nafld) ~ meat_spline + alc_spl
                       ties = 'breslow')
 
 # Perform a likelihood ratio test
-lrt_result <- anova(meat, meat_splines, test = "LRT") %>% print() # p = 0.6576
+lrt_result <- anova(meat, meat_splines, test = "LRT") %>% print()
 
 ## poultry -----------------------------------------------------------------
 poultry <- coxph(Surv(survival_time, event = nafld) ~ poultry_weekly + alc_spline + ethnicity
@@ -143,7 +138,7 @@ poultry_splines <- coxph(Surv(survival_time, event = nafld) ~ poultry_spline + a
                       ties = 'breslow')
 
 # Perform a likelihood ratio test
-lrt_result <- anova(poultry, poultry_splines, test = "LRT") %>% print() # p = 0.9392
+lrt_result <- anova(poultry, poultry_splines, test = "LRT") %>% print()
 
 ## fish -----------------------------------------------------------------
 fish <- coxph(Surv(survival_time, event = nafld) ~ fish_weekly + alc_spline + ethnicity
@@ -159,4 +154,4 @@ fish_splines <- coxph(Surv(survival_time, event = nafld) ~ fish_spline + alc_spl
                       ties = 'breslow')
 
 # Perform a likelihood ratio test
-lrt_result <- anova(fish, fish_splines, test = "LRT") %>% print() # p = 0.5011
+lrt_result <- anova(fish, fish_splines, test = "LRT") %>% print()
