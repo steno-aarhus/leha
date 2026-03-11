@@ -79,95 +79,45 @@ proportionality_assumption <- function(data) {
 }
 
 
+# Linearity assumption
+# Investigating the association between weekly intakes of legumes, red and processed meat,
+# poultry, and fish and NAFLD for non-linearity using restricted cubic splines at the
+# 10th, 50th and 90th percentiles as proposed in: https://pubmed.ncbi.nlm.nih.gov/37694448/
 
-# # linearity assumption exposure variables for substitution analyses
-#
-# # Testing linearity assumption --------------------------------------------
-# # investigating the association between weekly intakes of legumes, red and processed meat,
-# # poultry, and fish and NAFLD for non-linearity using restricted cubic splines at the
-# # 10th, 50th and 90th percentiles as proposed in: https://pubmed.ncbi.nlm.nih.gov/37694448/
-# library(dplyr)
-# library(magrittr)
-# library(tidyverse)
-# library(survival)
-# library(splines)
-# library(broom)
-#
-# # Calculate the percentiles for the knots
-# knots_legume <- quantile(data$legume_weekly, probs = c(0.1, 0.5, 0.9), na.rm = TRUE)
-# knots_meat <- quantile(data$meats_weekly, probs = c(0.1, 0.5, 0.9), na.rm = TRUE)
-# knots_poultry <- quantile(data$poultry_weekly, probs = c(0.1, 0.5, 0.9), na.rm = TRUE)
-# knots_fish <- quantile(data$fish_weekly, probs = c(0.1, 0.5, 0.9), na.rm = TRUE)
-#
-# # Generate the spline basis with specified knots
-# data <- data %>% mutate(
-#   legume_spline = splines::bs(legume_weekly, knots = knots_legume, degree = 3),
-#   meat_spline = splines::bs(meats_weekly, knots = knots_meat, degree = 3),
-#   poultry_spline = splines::bs(poultry_weekly, knots = knots_poultry, degree = 3),
-#   fish_spline = splines::bs(fish_weekly, knots = knots_fish, degree = 3)
-# )
-#
-#
-# ## legumes -----------------------------------------------------------------
-# legume <- coxph(Surv(survival_time, event = nafld) ~ legume_weekly + alc_spline + ethnicity
-#                 + deprivation + education + cohabitation + physical_activity + smoking
-#                 + related_disease + disease_family + yearly_income + strata(region, age_strata, sex),
-#                 data = data,
-#                 ties = 'breslow')
-#
-# legume_splines <- coxph(Surv(survival_time, event = nafld) ~ legume_spline + alc_spline + ethnicity
-#                         + deprivation + education + cohabitation + physical_activity + smoking
-#                         + related_disease + disease_family + yearly_income + strata(region, age_strata, sex),
-#                         data = data,
-#                         ties = 'breslow')
-#
-# # Perform a likelihood ratio test
-# lrt_result <- anova(legume, legume_splines, test = "LRT") %>% print()
-#
-# ## meat -----------------------------------------------------------------
-# meat <- coxph(Surv(survival_time, event = nafld) ~ meats_weekly + alc_spline + ethnicity
-#               + deprivation + education + cohabitation + physical_activity + smoking
-#               + related_disease + disease_family + yearly_income + strata(region, age_strata, sex),
-#               data = data,
-#               ties = 'breslow')
-#
-# meat_splines <- coxph(Surv(survival_time, event = nafld) ~ meat_spline + alc_spline + ethnicity
-#                       + deprivation + education + cohabitation + physical_activity + smoking
-#                       + related_disease + disease_family + yearly_income + strata(region, age_strata, sex),
-#                       data = data,
-#                       ties = 'breslow')
-#
-# # Perform a likelihood ratio test
-# lrt_result <- anova(meat, meat_splines, test = "LRT") %>% print()
-#
-# ## poultry -----------------------------------------------------------------
-# poultry <- coxph(Surv(survival_time, event = nafld) ~ poultry_weekly + alc_spline + ethnicity
-#                  + deprivation + education + cohabitation + physical_activity + smoking
-#                  + related_disease + disease_family + yearly_income + strata(region, age_strata, sex),
-#                  data = data,
-#                  ties = 'breslow')
-#
-# poultry_splines <- coxph(Surv(survival_time, event = nafld) ~ poultry_spline + alc_spline + ethnicity
-#                          + deprivation + education + cohabitation + physical_activity + smoking
-#                          + related_disease + disease_family + yearly_income + strata(region, age_strata, sex),
-#                          data = data,
-#                          ties = 'breslow')
-#
-# # Perform a likelihood ratio test
-# lrt_result <- anova(poultry, poultry_splines, test = "LRT") %>% print()
-#
-# ## fish -----------------------------------------------------------------
-# fish <- coxph(Surv(survival_time, event = nafld) ~ fish_weekly + alc_spline + ethnicity
-#               + deprivation + education + cohabitation + physical_activity + smoking
-#               + related_disease + disease_family + yearly_income + strata(region, age_strata, sex),
-#               data = data,
-#               ties = 'breslow')
-#
-# fish_splines <- coxph(Surv(survival_time, event = nafld) ~ fish_spline + alc_spline + ethnicity
-#                       + deprivation + education + cohabitation + physical_activity + smoking
-#                       + related_disease + disease_family + yearly_income + strata(region, age_strata, sex),
-#                       data = data,
-#                       ties = 'breslow')
-#
-# # Perform a likelihood ratio test
-# lrt_result <- anova(fish, fish_splines, test = "LRT") %>% print()
+likelihood_ratio <- function(data) {
+
+  # Knots
+  knots_legume  <- quantile(data$legume_weekly,  c(0.1, 0.5, 0.9), na.rm = TRUE)
+  knots_meat    <- quantile(data$meats_weekly,   c(0.1, 0.5, 0.9), na.rm = TRUE)
+  knots_poultry <- quantile(data$poultry_weekly, c(0.1, 0.5, 0.9), na.rm = TRUE)
+  knots_fish    <- quantile(data$fish_weekly,    c(0.1, 0.5, 0.9), na.rm = TRUE)
+
+  # Splines
+  data <- data %>%
+    mutate(
+      legume_spline  = splines::bs(legume_weekly,  knots = knots_legume,  degree = 3),
+      meat_spline    = splines::bs(meats_weekly,   knots = knots_meat,    degree = 3),
+      poultry_spline = splines::bs(poultry_weekly, knots = knots_poultry, degree = 3),
+      fish_spline    = splines::bs(fish_weekly,    knots = knots_fish,    degree = 3)
+    )
+
+  # Base model
+  cox_model <- Surv(survival_time, event = nafld) ~ alc_spline + ethnicity +
+    deprivation + education + cohabitation + physical_activity + smoking +
+    related_disease + disease_family + yearly_income +
+    strata(region, age_strata, sex)
+
+  # Helper
+  lrt_p <- function(f_linear, f_spline) {
+    fit1 <- coxph(update(cox_model, f_linear), data = data, ties = "breslow")
+    fit2 <- coxph(update(cox_model, f_spline), data = data, ties = "breslow")
+    anova(fit1, fit2, test = "LRT")$`Pr(>|Chi|)`[2]
+  }
+
+  tibble(
+    lrt_legume  = round(lrt_p(~ legume_weekly  + ., ~ legume_spline  + .), 3),
+    lrt_meat    = round(lrt_p(~ meats_weekly   + ., ~ meat_spline    + .), 3),
+    lrt_poultry = round(lrt_p(~ poultry_weekly + ., ~ poultry_spline + .), 3),
+    lrt_fish    = round(lrt_p(~ fish_weekly    + ., ~ fish_spline    + .), 3)
+  )
+}
