@@ -30,6 +30,7 @@ source(here::here("R/data_wrangling.R"))
 source(here::here("R/descriptives.R"))
 source(here::here("R/analyses.R"))
 source(here::here("R/model_assumptions.R"))
+source(here::here("R/function_for_table.R"))
 
 # Things to run in order to work.
 list(
@@ -217,6 +218,21 @@ list(
     name = low_alc_cases,
     command = sorted_data |>
       low_alc_cases_analyses()
+  ),
+  # Result tables for report
+  tar_target(
+    name = table_main,
+    command = sorted_data |>
+      table_main_analyses()
+  ),
+  tar_target(
+    name = table_secondary,
+    command = sorted_data |>
+      table_secondary_analyses()
+  ),
+  tar_target(
+    name = table_sensitivity,
+    command = sorted_data |>
+      table_sensitivity_analyses()
   )
 )
-
