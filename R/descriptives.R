@@ -119,7 +119,6 @@ diff_time_webQ <- function(data) {
 
 # cut-offs for alcohol splines
 compute_alcohol_spline <- function(data) {
-  data <- targets::tar_read(id_data)
   data <- data %>% mutate(
     alcohol_intake = rowSums(pick(matches("p26030")), na.rm = TRUE),
     alcohol_daily = alcohol_intake / p20077,
@@ -127,11 +126,11 @@ compute_alcohol_spline <- function(data) {
     alc_spline = splines::bs(alcohol_weekly, knots = 4, degree = 3)
   )
 
-  # Calculate internal knots based on quantiles
-  nknots <- 4  # Number of knots (adjust as needed)
+  # Knots based on quantiles
+  nknots <- 4  # Number of knots
   internal_knots <- quantile(data$alcohol_weekly, probs = seq(0.25, 0.75, length.out = nknots), na.rm = TRUE)
 
-  # Generate the spline basis using specified knots
+  # Generate spline using specified knots
   spline_basis <- splines::bs(data$alcohol_weekly, knots = internal_knots, degree = 3)
 
   # Extract and print the knot positions
