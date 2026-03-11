@@ -210,7 +210,7 @@ list(
       three_recalls_analyses()
   ),
   tar_target(
-    name = extra_low_alc_cases,
+    name = low_alc_cases,
     command = sorted_data |>
       low_alc_cases_analyses()
   )
