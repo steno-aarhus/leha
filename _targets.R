@@ -138,16 +138,6 @@ list(
     command = sorted_data |>
       person_years_followup()
   ),
-  tar_target(
-    name = correlation_pearson,
-    command = sorted_data |>
-      pearson_correlation()
-  ),
-  tar_target(
-    name = correlation_spearman,
-    command = sorted_data |>
-      spearman_correlation()
-  ),
 
   # main analyses -----------------------------------------------------------
   tar_target(
