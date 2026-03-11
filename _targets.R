@@ -209,12 +209,6 @@ list(
     command = sorted_data |>
       three_recalls_analyses()
   ),
-  # extra analyses
-  tar_target(
-    name = extra_low_alc,
-    command = sorted_data |>
-      low_alc_analyses()
-  ),
   tar_target(
     name = extra_low_alc_cases,
     command = sorted_data |>
