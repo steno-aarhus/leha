@@ -1,6 +1,7 @@
 ---
 # Uses Quarto metadata: https://quarto.org/docs/journals/authors.html
 title: "Legumes  as a substitute for red and processed meat, poultry, and fish, and the risk of non-alcoholic fatty liver disease in a large prospective cohort"
+DOI: [10.1111/jhn.70004](https://doi.org/10.1111/jhn.70004)
 author:
   - name: Fie Langmann
     orcid: "0000-0003-3474-9346"
