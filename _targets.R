@@ -214,5 +214,10 @@ list(
     command = sorted_data |>
       low_alc_cases_analyses()
   )
+  tar_target(
+    name = model_control_ph,
+    command = sorted_data |>
+      proportionality_assumption()
+  )
 )
 
