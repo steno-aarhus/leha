@@ -123,20 +123,29 @@ list(
   ),
 
   # descriptive analyses ----------------------------------------------------
+  # table 1: across legume intake
   tar_target(
     name = table1,
     command = sorted_data |>
       baseline_table()
   ),
+  # suppl_table 1: across event
   tar_target(
     name = suppl_base_table,
     command = sorted_data |>
       supplementary_baseline_table()
   ),
+  # person-years of follow-up
   tar_target(
     name = follow_up_year,
     command = sorted_data |>
       person_years_followup()
+  ),
+  # time between completed webQ
+  tar_target(
+    name = time_between_webQ,
+    command = sorted_data |>
+      diff_time_webQ()
   ),
 
   # main analyses -----------------------------------------------------------
