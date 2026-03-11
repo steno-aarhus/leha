@@ -168,7 +168,7 @@ list(
   tar_target(
     name = proportional_hazard_assumption,
     command = sorted_data |>
-      model_assumption()
+      proportionality_assumption()
   ),
 
   # secondary analyses ------------------------------------------------------
@@ -213,11 +213,6 @@ list(
     name = low_alc_cases,
     command = sorted_data |>
       low_alc_cases_analyses()
-  )
-  tar_target(
-    name = model_control_ph,
-    command = sorted_data |>
-      proportionality_assumption()
   )
 )
 
