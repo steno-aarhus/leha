@@ -145,6 +145,13 @@ list(
     command = sorted_data |>
       diff_time_webQ()
   ),
+  # cut-off for alcohol spline knots
+  tar_target(
+    name = alc_spline,
+    command = id_data |>
+    compute_alcohol_spline()
+  ),
+
 
   # main analyses -----------------------------------------------------------
   tar_target(
