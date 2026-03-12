@@ -1,12 +1,12 @@
 #For oral defence
 
-#NAFLD diagnosed from proton density fat fraction (PDFF) - data field 40061
+# NAFLD diagnosed from proton density fat fraction (PDFF) - data field 40061 -----------------------------------------
 
 #PDFF of 5.4 or higher indicate mild steatosis. This threshold will be used in main
 # analysis, model 2, as outcome (https://pmc.ncbi.nlm.nih.gov/articles/PMC8108484/)
 # will run for 2014 and 2019 PDFF measures separately
 
-# Make PDFF binary cutting at 5.4 -----------------------------------------
+## Make PDFF binary cutting at 5.4 -----------------------------------------
 library(magrittr)
 library(dplyr)
 library(survival)
@@ -38,7 +38,7 @@ define_exposure_variables <- function(data) {
   return(data)
 }
 
-# Main analyses, 2014 measure -----------------------------------------------------------
+# * 2014 PDFF-measure * 
 model2_pdff14<- function(data) {
   covars2 <- c("cereal_refined_weekly", "whole_grain_weekly", "mixed_dish_weekly",
                "dairy_weekly", "fats_weekly", "fruit_weekly", "nut_weekly",
@@ -67,7 +67,7 @@ model2_pdff14<- function(data) {
 
 results14 <- model2_pdff14(oral_defence)
 
-# Main analyses 2019 measure------------------------------------------------------
+# * 2019 PDFF-measure * 
 create_formula <- function(xvars, covars) {
   outcome <- "Surv(survival_time, pdff54_2019 == 1)"
   reformulate(c(xvars, covars), response = outcome)
@@ -84,7 +84,7 @@ define_exposure_variables <- function(data) {
   return(data)
 }
 
-# Main analyses -----------------------------------------------------------
+ 
 model2_pdff19 <- function(data) {
   covars2 <- c("cereal_refined_weekly", "whole_grain_weekly", "mixed_dish_weekly",
                "dairy_weekly", "fats_weekly", "fruit_weekly", "nut_weekly",
@@ -115,7 +115,7 @@ results19 <- model2_pdff19(oral_defence)
 
 
 
-# Make PDFF binary cutting at 9 -----------------------------------------
+## Make PDFF binary cutting at 9 -----------------------------------------
 library(magrittr)
 library(dplyr)
 library(survival)
@@ -147,7 +147,7 @@ define_exposure_variables <- function(data) {
   return(data)
 }
 
-# Main analyses, 2014 measure -----------------------------------------------------------
+# * 2014 PDFF-measure * 
 model2_pdff14<- function(data) {
   covars2 <- c("cereal_refined_weekly", "whole_grain_weekly", "mixed_dish_weekly",
                "dairy_weekly", "fats_weekly", "fruit_weekly", "nut_weekly",
@@ -176,7 +176,7 @@ model2_pdff14<- function(data) {
 
 results14 <- model2_pdff14(oral_defence)
 
-# Main analyses 2019 measure------------------------------------------------------
+# * 2019 PDFF-measure * 
 create_formula <- function(xvars, covars) {
   outcome <- "Surv(survival_time, pdff54_2019 == 1)"
   reformulate(c(xvars, covars), response = outcome)
@@ -193,7 +193,7 @@ define_exposure_variables <- function(data) {
   return(data)
 }
 
-# Main analyses -----------------------------------------------------------
+
 model2_pdff19 <- function(data) {
   covars2 <- c("cereal_refined_weekly", "whole_grain_weekly", "mixed_dish_weekly",
                "dairy_weekly", "fats_weekly", "fruit_weekly", "nut_weekly",
