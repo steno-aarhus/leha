@@ -85,6 +85,7 @@ person_years_followup <- function(data) {
   return(data)
 }
 
+# Time between completed Oxford WebQs
 diff_time_webQ <- function(data) {
   data <- data %>%
     mutate(
