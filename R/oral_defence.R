@@ -1,4 +1,7 @@
-#For oral defence
+# For oral defence
+# This script is written solely for the purpose of conducting additional
+# statistics for inclusion into thesis and oral defence of a PhD project.
+# Any code is therefore not included in the targets pipeline
 
 # NAFLD diagnosed from proton density fat fraction (PDFF) - data field 40061 -----------------------------------------
 
@@ -38,7 +41,7 @@ define_exposure_variables <- function(data) {
   return(data)
 }
 
-# * 2014 PDFF-measure * 
+# * 2014 PDFF-measure *
 model2_pdff14<- function(data) {
   covars2 <- c("cereal_refined_weekly", "whole_grain_weekly", "mixed_dish_weekly",
                "dairy_weekly", "fats_weekly", "fruit_weekly", "nut_weekly",
@@ -67,7 +70,7 @@ model2_pdff14<- function(data) {
 
 results14 <- model2_pdff14(oral_defence)
 
-# * 2019 PDFF-measure * 
+# * 2019 PDFF-measure *
 create_formula <- function(xvars, covars) {
   outcome <- "Surv(survival_time, pdff54_2019 == 1)"
   reformulate(c(xvars, covars), response = outcome)
@@ -84,7 +87,7 @@ define_exposure_variables <- function(data) {
   return(data)
 }
 
- 
+
 model2_pdff19 <- function(data) {
   covars2 <- c("cereal_refined_weekly", "whole_grain_weekly", "mixed_dish_weekly",
                "dairy_weekly", "fats_weekly", "fruit_weekly", "nut_weekly",
@@ -147,7 +150,7 @@ define_exposure_variables <- function(data) {
   return(data)
 }
 
-# * 2014 PDFF-measure * 
+# * 2014 PDFF-measure *
 model2_pdff14<- function(data) {
   covars2 <- c("cereal_refined_weekly", "whole_grain_weekly", "mixed_dish_weekly",
                "dairy_weekly", "fats_weekly", "fruit_weekly", "nut_weekly",
@@ -176,7 +179,7 @@ model2_pdff14<- function(data) {
 
 results14 <- model2_pdff14(oral_defence)
 
-# * 2019 PDFF-measure * 
+# * 2019 PDFF-measure *
 create_formula <- function(xvars, covars) {
   outcome <- "Surv(survival_time, pdff54_2019 == 1)"
   reformulate(c(xvars, covars), response = outcome)
